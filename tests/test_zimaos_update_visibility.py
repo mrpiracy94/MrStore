@@ -74,6 +74,7 @@ class UpdateVisibilityTests(unittest.TestCase):
     def test_runtime_with_absent_digest_marks_unknown(self):
         runner = fake_run_for({
             "docker ps -a": "test-app\n",
+            "docker container inspect": "example/installed:latest",
             "docker image inspect": "[]",
         })
         outcome = runtime_check(catalog_item(fixture(name="test-app", service="test-app",
@@ -82,6 +83,27 @@ class UpdateVisibilityTests(unittest.TestCase):
         self.assertEqual(outcome["installed"], "found")
         self.assertEqual(outcome["update_evidence"], "unknown_missing_repodigests")
         self.assertTrue(outcome["zimaos_service_name_resolves"])
+
+    def test_runtime_uses_real_installed_image_reference_not_catalog_tag(self):
+        calls = []
+        def runner(command, **kwargs):
+            calls.append(command)
+            if command[:3] == ["docker", "ps", "-a"]:
+                value = "test-app\\n"
+            elif command[:3] == ["docker", "container", "inspect"]:
+                value = "example/installed:old"
+            elif command[:3] == ["docker", "image", "inspect"]:
+                value = '["example/installed@sha256:' + "a" * 64 + '"]'
+            else:
+                return subprocess.CompletedProcess(command, 1, "", "")
+            return subprocess.CompletedProcess(command, 0, value, "")
+        item = catalog_item(fixture(name="test-app", service="test-app",
+                                    container="test-app", image="example/catalog:latest"))
+        result = runtime_check(item, runner=runner)
+        self.assertEqual(result["installed_image"], "example/installed:old")
+        self.assertTrue(any(c[:3] == ["docker", "image", "inspect"]
+                            and c[3] == "example/installed:old" for c in calls))
+        self.assertEqual(result["update_evidence"], "unknown_remote_not_checked")
 
     def test_runtime_does_not_claim_absent_container_is_not_installed(self):
         runner = fake_run_for({"docker ps -a": "different-container\n"})
