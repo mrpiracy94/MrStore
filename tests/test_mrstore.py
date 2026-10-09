@@ -137,6 +137,15 @@ class StoreTests(unittest.TestCase):
             self.assertIn(f"- 'scripts/{script}'", publish)
         self.assertIn("- 'scripts/**'", validate)
 
+    def test_paperless_broker_uses_scanned_immutable_redis_image(self):
+        paperless = next(item for item in apps() if item.folder == 'paperless-ngx')
+        broker = paperless.source['services']['paperless-broker']
+        self.assertEqual(broker['image'],
+                         'docker.io/library/redis:8-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0')
+        self.assertTrue(any(v.get('target') == '/data' and
+                            v.get('source') == '/DATA/AppData/paperless/redis'
+                            for v in broker['volumes']))
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)
