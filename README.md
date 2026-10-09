@@ -30,7 +30,19 @@ Configurações perigosas e segredos predefinidos também impedem a aprovação 
 | Atualizações por digest | Compara a referência da imagem Docker com o digest anterior; gera relatório e issue por alterações efetivas | Diário, sem instalar atualizações |
 | Novas tags/versionamento | Renovate propõe pull requests de alterações nas imagens com tags suportadas | Depois de autorizar a GitHub App Renovate |
 
-**Limitações:** a alteração do digest de `latest`/`release` não é, por si só, uma nova versão upstream e não informa qual a versão instalada no ZimaOS. Para atualizar apps instaladas será necessária uma integração específica com a API da instalação. Os manifestos usam uma versão de revisão inicial `1.0.0` da loja, **não** a versão atual oficial de cada imagem. Não existem atualizações de containers automáticas.
+**Limitações:** a alteração do digest de `latest`/`release` não é, por si só, uma nova versão upstream e não informa qual a versão instalada no ZimaOS. Para atualizar apps instaladas será necessária uma integração específica com a API da instalação. Os manifests de origem podem ter uma revisão inicial `1.0.0`, mas a publicação compara a última versão em `gh-pages` e avança a revisão do **pacote MrStore** apenas quando a referência Docker aprovada muda (ou quando existe uma versão de pacote explicitamente superior). Isto **não** representa a versão oficial da aplicação. Não existem atualizações de containers automáticas.
+
+## Atualizações visíveis no ZimaOS
+
+A deteção de novas imagens no registry e a oferta de atualizações a uma instalação são operações diferentes:
+
+1. `scripts/updates.py` acompanha diariamente os digests dos tags, sem modificar containers nem declarar versões upstream.
+2. A publicação, agora também agendada semanalmente, reavalia **todas as arquiteturas** com Trivy. Apenas apps aprovadas são publicadas; imagens vulneráveis ou inconclusivas continuam em quarentena.
+3. `scripts/release_versions.py` lê o índice e os Compose da última publicação na branch `gh-pages`, conserva a versão anterior quando as imagens são iguais e incrementa a revisão SemVer do pacote quando uma imagem aprovada mudou. Nunca reduz versões (p. ex. de `1.0.2` para `1.0.0`).
+4. O builder oficial gera o novo `content_hash`, `index.json`, `meta.json` e os Compose; as verificações antes da publicação confirmam as versões e os digests.
+5. Na interface do ZimaOS, atualizar a fonte da loja e consultar as aplicações instaladas. Uma atualização só pode aparecer para apps instaladas com a identidade/contexto dessa mesma loja.
+
+**Limitação do sistema operativo:** algumas versões do ZimaOS podem marcar imagens `:latest` sem `RepoDigests` como atualizadas mesmo quando não estão. É um problema documentado no [ZimaOS #591](https://github.com/IceWhaleTech/ZimaOS/issues/591) e não pode ser corrigido apenas por metadados de uma loja externa. Nenhum aviso é garantido sem validação num NAS real. Não falsificamos tags nem desativamos as verificações HIGH/CRITICAL para produzir notificações.
 
 ## Segurança
 
