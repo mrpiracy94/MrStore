@@ -31,7 +31,7 @@ services:
         source: /DATA/Documents/consume
         target: /usr/src/paperless/consume
   paperless-broker:
-    image: docker.io/library/redis:7@sha256:cd745595f143052dd6a743bc5651d3ce4b03979fe5c99c7fcfab73461f6f217b
+    image: docker.io/library/redis:8@sha256:6e9101032a2126aeeb4b1e862ac77d2fcf26b831ae37e5ff2e69169f82ddd411
     container_name: paperless-broker
     restart: unless-stopped
     volumes:

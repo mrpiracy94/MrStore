@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-10-09T22:17:46Z",
+  "updated_at": "2026-10-09T22:26:57Z",
   "app_count": 254,
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "apps": [
@@ -3316,7 +3316,7 @@
       "thumbnail": "/apps/io.github.mrpiracy94.paperless-ngx/assets/paperless-ngx.webp",
       "compose_url": "/apps/io.github.mrpiracy94.paperless-ngx/docker-compose.yml",
       "meta_url": "/apps/io.github.mrpiracy94.paperless-ngx/meta.json",
-      "content_hash": "d8fff893",
+      "content_hash": "e7aaf39c",
       "version": "1.0.1"
     },
     {
