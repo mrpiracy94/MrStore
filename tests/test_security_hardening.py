@@ -35,10 +35,10 @@ class HardenedManifestTests(unittest.TestCase):
             for service in app.source['services'].values():
                 self.assertFalse(any(
                     v.get('source') == '/var/run/docker.sock'
-                    for v in service.get('volumes', []) if isinstance(v, dict)
+                    for v in (service.get('volumes') or []) if isinstance(v, dict)
                 ), app_name)
         remaining = [a.folder for a in self.apps.values() for spec in a.source['services'].values()
-                     for v in spec.get('volumes', []) if isinstance(v, dict)
+                     for v in (spec.get('volumes') or []) if isinstance(v, dict)
                      and v.get('source') == '/var/run/docker.sock']
         self.assertEqual(sorted(remaining), ['dockge', 'dozzle', 'socket-proxy'])
 

@@ -11,7 +11,7 @@ services:
       - target: 61208
         published: "61208"
         protocol: tcp
-    volumes:
+    volumes: []
     x-casaos:
       envs:
         - container: TZ
@@ -21,7 +21,7 @@ services:
         - container: "61208"
           description:
             en_US: Port 61208/tcp
-      volumes:
+      volumes: []
 
 x-casaos:
   id: io.github.mrpiracy94.glances
