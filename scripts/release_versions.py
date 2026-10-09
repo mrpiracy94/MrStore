@@ -13,7 +13,7 @@ from pathlib import Path
 import re
 import yaml
 
-VERSION = re.compile(r"^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$")
+VERSION = re.compile(r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$")
 
 
 def parse_version(value: object, app_id: str) -> tuple[int, int, int]:
@@ -186,7 +186,7 @@ def main() -> int:
     state = report.pop("state")
     for path, data in ((args.output, report), (args.state_output, state)):
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\\n", encoding="utf-8")
+        path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print("MrStore package versions:",
           report["image_updates"], "approved image changes;",
           report["carried_forward"], "versions retained;",
