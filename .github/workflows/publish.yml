@@ -18,12 +18,23 @@ on:
       - 'recommend-list.json'
       - 'requirements.txt'
       - '.github/workflows/publish.yml'
+  pull_request:
+    paths:
+      - 'Apps/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'data/taglines-pt.json'
+      - 'store-config.json'
+      - 'supported-languages.json'
+      - 'recommend-list.json'
+      - 'requirements.txt'
+      - '.github/workflows/publish.yml'
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: mrstore-publish
-  cancel-in-progress: false
+  group: mrstore-publish-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   preflight:
     runs-on: ubuntu-latest
@@ -43,7 +54,7 @@ jobs:
           python -m unittest discover -s tests -v
       - name: Reject newly introduced dangerous Docker privileges
         env:
-          BASE_SHA: ${{ github.event.before }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
@@ -93,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -154,8 +165,26 @@ jobs:
             dist/store.json
             dist/index.json
           if-no-files-found: warn
+      - name: Preserve complete approved catalog for release and ZimaOS preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-approved-dist
+          path: dist/
+          include-hidden-files: true
+          if-no-files-found: error
+  publish:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Retrieve validated catalog artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: mrstore-approved-dist
+          path: dist/
       - name: Publish approved catalog to gh-pages
-        if: success()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
