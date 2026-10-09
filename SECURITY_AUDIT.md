@@ -34,18 +34,13 @@ Os issues por grupo devem permanecer abertos até os fornecedores publicarem ver
 
 Provas: [publicação da imagem](https://github.com/mrpiracy94/MrStore/actions/runs/37997771065), [comparação e verificação do digest remoto](https://github.com/mrpiracy94/MrStore/actions/runs/37998362405).
 
-## Política de lançamento com quarentena por aplicação (2026-10-10)
+## Política obrigatória de lançamento: 0 HIGH / 0 CRITICAL
 
-A versão anterior exigia 0 HIGH/CRITICAL em **todas** as imagens, bloqueando a publicação da loja inteira. A nova política preserva a análise integral e os relatórios dos oito grupos, mas permite construir exclusivamente o subconjunto aprovado.
+A publicação do catálogo fica bloqueada por oito verificações independentes de Trivy, que analisam as **258 referências de imagens** em conjunto. Cada job é obrigatório e falha se tiver uma ocorrência HIGH, CRITICAL ou erro de consulta; o builder/publicador exige `needs: security_audit` e só pode publicar se **todos** tiverem resultado válido e sem vulnerabilidades detetadas. Todos os relatórios ficam guardados mesmo quando a execução falha.
 
-- O scan de lançamento obtém primeiro o digest SHA256 de cada imagem e verifica **todas as arquiteturas** indicadas no metadata (AMD64 e/ou ARM64) com Trivy e a referência imutável. As imagens sem digest, sem plataforma ou com falha de análise **não são aprovadas**.
-- A agregação valida a cobertura de todas as imagens, plataformas e oito grupos; ficheiros em falta, relatórios malformados ou incoerentes bloqueiam a publicação.
-- Se alguma imagem de um serviço tiver HIGH/CRITICAL, falhas de análise ou uma definição Compose exigir privilégios perigosos, toda a aplicação é colocada em quarentena, não incluída no catálogo gerado. Todas as contagens e motivos ficam preservados.
-- Os manifestos aprovados são fixados temporariamente aos digests validados na cópia de trabalho do GitHub Actions. **Os manifestos em `main` e instalações ZimaOS existentes não são modificados**.
-- O builder apenas publica se existir pelo menos uma aplicação aprovada e se o `index.json` contiver exatamente o número de aplicações aprovadas. Sem candidatas ou com relatórios ausentes, mantém-se a publicação anterior; esta não é automaticamente revogada.
-- Um novo gate de PR compara a configuração com a branch base e **impede a introdução de novas permissões Docker perigosas** sem apagar silenciosamente configurações antigas que exigem validação de compatibilidade.
+**Consequência imediata:** os relatórios atuais identificam muitas vulnerabilidades em imagens de terceiros; por isso, os próximos releases serão bloqueados até que todas as imagens sejam corrigidas e reanalisadas. Isto **não revoga** uma versão anteriormente publicada, **não remove** aplicações já instaladas nem corrige automaticamente os containers dos utilizadores. Essa decisão requer política de despublicação/quarentena e testes de migração específicos.
 
-Esta quarentena reduz a exposição do novo catálogo, mas não prova ausência de vulnerabilidades, não avalia exploração real e não protege instalações anteriores. Deve ser acompanhada pela análise manual dos motivos da quarentena e pela remediação individual das aplicações.
+A exigência é operacional e limitada às bases de dados e capacidades do Trivy usadas no scan. Tags flutuantes podem mudar entre a análise e o consumo da imagem; versões em digest imutável são preferíveis para evitar mudanças inesperadas.
 
 ## Reanálise das 25 imagens com resultado inconclusivo (2026-10-09)
 
@@ -54,3 +49,9 @@ Os oito relatórios de referência identificaram **25 imagens `lscr.io`** com er
 O scanner obriga agora `--image-src remote`, não utiliza Docker/containerd/podman, limita paralelismo interno, repete apenas erros temporários de rede/rate limit com espera progressiva e continua a falhar perante erros permanentes ou resultados JSON incompletos. Ambos os workflows de auditoria reduzem a concorrência de quatro para dois grupos. Nenhuma severidade foi ignorada e a política de lançamento de **0 HIGH / 0 CRITICAL / 0 scans incompletos** permanece inalterada.
 
 A lista auditável das **25 referências exatas** está em `data/cve-inconclusive-20261009.json`. O workflow `retry-inconclusive-cves.yml` verifica essas referências em quatro lotes, conserva cada resultado e reporta separadamente erros de scanner e CVEs efetivamente encontradas. Uma imagem passa de «inconclusiva» para «com CVEs» ou «sem alertas» **apenas** se o Trivy regressar um JSON válido e completo. A validação de cobertura é independente do número de vulnerabilidades; **nunca autoriza publicar** um catálogo com HIGH/CRITICAL.
+
+### Netboot.xyz — imagem oficial corrigida e evidência preservada
+
+A imagem descontinuada `lscr.io/linuxserver/netbootxyz:latest` foi substituída, **sem a tratar como scan limpo**, por uma imagem derivada da oficial e reconstruída com `apk upgrade` e atualizações verificadas das dependências Node.js. O Trivy detetava **1 CRITICAL e 48 HIGH** na imagem oficial sem correções; a variante corrigida passou com **0 HIGH / 0 CRITICAL em AMD64 e ARM64** e foi publicada no GHCR. O manifest passa a utilizar digest imutável após validação pública. A lista `data/cve-inconclusive-original-20261009.json` preserva as 25 referências antigas tal como surgiam nos relatórios; a lista `data/cve-inconclusive-20261009.json` representa as 25 imagens atuais que devem ser reanalisadas, incluindo a substituição corrigida.
+
+A imagem SteamOS permanece descontinuada e a tag `latest` é indisponível; não substituir silenciosamente por Steam (que já existe como entrada distinta). As CVEs das outras aplicações continuam pendentes.

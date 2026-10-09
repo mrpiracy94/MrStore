@@ -1,0 +1,72 @@
+name: Verify targeted LinuxServer code-server dependency patches
+on:
+  pull_request:
+    paths:
+      - 'security/images/code-server/Dockerfile'
+      - 'scripts/test_code_server_node_patches.sh'
+      - 'scripts/test_code_server_ftp_patch.sh'
+      - '.github/workflows/verify-code-server-patches.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Audit current vulnerable LinuxServer code-server
+        run: |
+          mkdir -p out
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output out/previous.json lscr.io/linuxserver/code-server:latest
+      - name: Build with only shell-quote and basic-ftp fixed
+        run: |
+          docker buildx build --pull --platform linux/${{ matrix.arch }} --load -f security/images/code-server/Dockerfile -t mrstore-code-server-patched:${{ matrix.arch }} .
+      - name: Scan exact patched image
+        run: |
+          trivy image --quiet --image-src docker --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output out/patched.json mrstore-code-server-patched:${{ matrix.arch }}
+      - name: Gate on complete zero-HIGH/CRITICAL scan
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def count(path):
+              with open(path,encoding='utf-8') as source:
+                  result=json.load(source)
+              if not isinstance(result.get('Results'),list) or not result['Results']:
+                  raise SystemExit('Incomplete Trivy report: '+path)
+              return Counter(v.get('Severity')
+                             for entry in result['Results']
+                             for v in entry.get('Vulnerabilities') or []
+                             if v.get('Severity') in ('HIGH','CRITICAL'))
+          old,new=count('out/previous.json'),count('out/patched.json')
+          summary=('## Code Server ${{ matrix.arch }} specific patches\n\n'
+                   '| Image | CRITICAL | HIGH |\n|---|---:|---:|\n'
+                   f"| LinuxServer original | {old['CRITICAL']} | {old['HIGH']} |\n"
+                   f"| Patched shell-quote/basic-ftp | {new['CRITICAL']} | {new['HIGH']} |\n")
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as dst:
+              dst.write(summary)
+          if new['CRITICAL'] or new['HIGH']:
+              raise SystemExit('Candidate has unfixed HIGH/CRITICAL findings, cannot release')
+          PY
+      - name: Verify web port 8443, PUID, and two volumes on disposable instance
+        run: bash scripts/test_code_server_node_patches.sh ${{ matrix.arch }}
+      - name: Exercise patched FTP client against a real disposable FTP server
+        run: bash scripts/test_code_server_ftp_patch.sh ${{ matrix.arch }}
+      - name: Keep old and new reports even when checks fail
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-server-${{ matrix.arch }}-specific-dependency-patches
+          path: out/*.json
+          if-no-files-found: warn

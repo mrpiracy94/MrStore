@@ -57,7 +57,7 @@ jobs:
           name: mrstore-compose-v2-preflight
           path: out/compose-preflight.*
           if-no-files-found: warn
-      - name: Block newly introduced dangerous Docker privileges
+      - name: Reject newly introduced dangerous Docker privileges
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |

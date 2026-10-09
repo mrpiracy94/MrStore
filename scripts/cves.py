@@ -35,11 +35,12 @@ BACKOFF_SECONDS = (12, 36)
 def scan(image: str, binary: str = 'trivy', platform: str | None = None) -> tuple[list[dict], str | None]:
     args = [binary, 'image', '--quiet', '--scanners', 'vuln', '--severity', 'HIGH,CRITICAL',
             '--image-src', 'remote', '--parallel', '2',
-            '--format', 'json', '--timeout', '8m', image]
-    if platform:
-        if platform not in ('linux/amd64', 'linux/arm64'):
-            raise ValueError(f'Invalid platform: {platform}')
-        args[-1:-1] = ['--platform', platform]
+            '--format', 'json', '--timeout', '8m']
+    if platform is not None:
+        if platform not in ('amd64', 'arm64'):
+            raise ValueError('Unsupported scan platform')
+        args.extend(['--platform', 'linux/' + platform])
+    args.append(image)
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
             p = subprocess.run(args, capture_output=True, text=True, check=False, timeout=550)
@@ -50,7 +51,7 @@ def scan(image: str, binary: str = 'trivy', platform: str | None = None) -> tupl
                     report = json.loads(p.stdout)
                 except ValueError:
                     return [], 'Invalid Trivy JSON output'
-                if not isinstance(report, dict) or not isinstance(report.get('Results'), list) or not report['Results']:
+                if not isinstance(report, dict) or not isinstance(report.get('Results'), list):
                     return [], 'Incomplete Trivy report (missing Results)'
                 hits = []
                 seen = set()

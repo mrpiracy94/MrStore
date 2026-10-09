@@ -55,7 +55,7 @@ class StoreTests(unittest.TestCase):
         self.assertIn('ghcr.io/actualbudget/actual:latest', usage)
         self.assertNotIn('actualbudget/actual-server:latest', usage)
 
-    def test_publication_requires_zero_high_and_critical_across_all_shards(self):
+    def test_publication_uses_full_evidence_and_per_app_quarantine(self):
         import yaml
         path = ROOT / '.github' / 'workflows' / 'publish.yml'
         workflow = yaml.safe_load(path.read_text(encoding='utf-8'))
@@ -66,16 +66,18 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(jobs['build']['needs'], 'security_audit')
         script = next(step['run'] for step in scan['steps']
                       if isinstance(step, dict) and 'run' in step
-                      and 'scripts/release_security.py' in step['run'])
+                      and 'scripts/release_scan.py' in step['run'])
         self.assertIn('--shards 8', script)
         self.assertIn('--shard', script)
         self.assertTrue(any(step.get('if') == 'always()' for step in scan['steps']))
-        self.assertIn("if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'",
-                      path.read_text(encoding='utf-8'))
-        self.assertEqual(jobs['publish']['needs'], 'build')
-        self.assertIn('pull_request', path.read_text(encoding='utf-8'))
-        self.assertIn('scripts/quarantine.py', path.read_text(encoding='utf-8'))
-        self.assertIn('scripts/privilege_policy.py', path.read_text(encoding='utf-8'))
+        build = jobs['build']['steps']
+        self.assertTrue(any('scripts/release_catalog.py' in str(step.get('run',''))
+                            for step in build))
+        builder = next(step for step in build if step.get('name') == 'Build official ZimaOS v2 catalog')
+        self.assertEqual(builder['with']['source'], 'release-source')
+        self.assertTrue(any('scripts/verify_dist.py' in str(step.get('run',''))
+                            for step in build))
+        self.assertIn('if: success()', path.read_text(encoding='utf-8'))
 
     def test_all_shards_are_disjoint_and_complete(self):
         keys=list(image_usage(apps()))
@@ -178,6 +180,11 @@ class StoreTests(unittest.TestCase):
     def test_inconclusive_rescan_covers_all_25_previous_failures(self):
         target = json.loads((ROOT / 'data/cve-inconclusive-20261009.json').read_text())
         self.assertEqual(len(target), 25)
+        original = json.loads((ROOT / 'data/cve-inconclusive-original-20261009.json').read_text())
+        self.assertEqual(len(original), 25)
+        self.assertIn('lscr.io/linuxserver/netbootxyz:latest', original)
+        self.assertNotIn('lscr.io/linuxserver/netbootxyz:latest', target)
+        self.assertTrue(any(x.startswith('ghcr.io/mrpiracy94/mrstore-netbootxyz:') for x in target))
         self.assertEqual(len(set(target)), 25)
         self.assertTrue(set(target).issubset(image_usage(apps())))
         workflow = (ROOT / '.github/workflows/retry-inconclusive-cves.yml').read_text()
@@ -253,6 +260,23 @@ class StoreTests(unittest.TestCase):
         self.assertTrue(any(p.get('target') == 80 and str(p.get('published')) == '30013'
                             for p in spec.get('ports', [])))
         self.assertEqual(spec.get('volumes', []), [], 'IT-Tools has no persisted state')
+
+    def test_netbootxyz_has_maintained_image_and_unchanged_network_ports(self):
+        entry = next(item for item in apps() if item.folder == 'netbootxyz')
+        service = entry.source['services']['netbootxyz']
+        self.assertTrue(service['image'].startswith(
+            'ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527'), service['image'])
+        self.assertEqual(set(entry.metadata['architectures']), {'amd64', 'arm64'})
+        ports = {(p['target'], str(p['published']), p['protocol'])
+                 for p in service['ports']}
+        self.assertEqual(ports, {(3000, '20013', 'tcp'), (8080, '20014', 'tcp'),
+                                 (69, '69', 'udp')})
+        self.assertIn('NGINX_PORT=8080', service['environment'])
+        self.assertIn('WEB_APP_PORT=3000', service['environment'])
+        self.assertTrue(any(v.get('source') == '/DATA/AppData/netbootxyz/config' and
+                            v.get('target') == '/config' for v in service['volumes']))
+        self.assertTrue(any(v.get('source') == '/DATA/AppData/netbootxyz/assets' and
+                            v.get('target') == '/assets' for v in service['volumes']))
 
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')

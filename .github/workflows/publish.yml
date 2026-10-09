@@ -5,28 +5,37 @@ on:
     paths:
       - 'Apps/**'
       - 'scripts/catalog.py'
+      - 'scripts/cves.py'
+      - 'scripts/release_scan.py'
+      - 'scripts/release_catalog.py'
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
-      - 'scripts/cves.py'
-      - 'scripts/release_security.py'
-      - 'scripts/quarantine.py'
-      - 'scripts/privilege_policy.py'
       - 'data/taglines-pt.json'
       - 'store-config.json'
-      - 'supported-languages.json'
+      - 'category-list.json'
       - 'recommend-list.json'
+      - 'supported-languages.json'
       - 'requirements.txt'
       - '.github/workflows/publish.yml'
   pull_request:
     paths:
       - 'Apps/**'
-      - 'scripts/**'
+      - 'scripts/catalog.py'
+      - 'scripts/cves.py'
+      - 'scripts/release_scan.py'
+      - 'scripts/release_catalog.py'
+      - 'scripts/curate_taglines.py'
+      - 'scripts/validate.py'
+      - 'scripts/verify_dist.py'
+      - 'scripts/privilege_policy.py'
+      - 'scripts/compose_preflight.py'
       - 'tests/**'
       - 'data/taglines-pt.json'
       - 'store-config.json'
-      - 'supported-languages.json'
+      - 'category-list.json'
       - 'recommend-list.json'
+      - 'supported-languages.json'
       - 'requirements.txt'
       - '.github/workflows/publish.yml'
   workflow_dispatch:
@@ -39,6 +48,8 @@ jobs:
   preflight:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
         with:
@@ -47,25 +58,25 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - name: Validate original 254 manifests and unit tests
+      - name: Validate original catalog and regression tests before expensive image audit
         run: |
           python scripts/validate.py
           python scripts/curate_taglines.py --check
           python -m unittest discover -s tests -v
-      - name: Reject newly introduced dangerous Docker privileges
+      - name: Reject new dangerous Docker privileges
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
   security_audit:
-    name: Dual-arch vulnerability and digest scan (shard ${{ matrix.shard }})
     needs: preflight
+    name: Scan release images and platforms (shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 4
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     permissions:
@@ -76,29 +87,29 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
-          go-version: '1.24.x'
-          cache: false
-      - name: Install immutable-digest registry lookup
+          go-version: '1.26'
+      - name: Install pinned crane registry client
         run: |
-          go install github.com/google/go-containerregistry/cmd/crane@v0.20.7
-          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
-      - name: Install pinned Trivy vulnerability scanner
+          go install github.com/google/go-containerregistry/cmd/crane@v0.21.7
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+      - name: Install pinned Trivy scanner
         uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
         with:
           version: v0.75.0
-      - name: Scan pinned manifest on every declared architecture
-        run: >
-          python scripts/release_security.py --shards 8 --shard ${{ matrix.shard }}
-          --output out/release-security-${{ matrix.shard }}.json
-      - name: Preserve all per-architecture vulnerabilities and failures
+      - name: Scan all catalog images by immutable digest on AMD64 and ARM64
+        run: >-
+          python scripts/release_scan.py --shards 8 --shard ${{ matrix.shard }}
+          --output-dir out
+      - name: Preserve complete per-image evidence, including vulnerable/inconclusive
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: mrstore-release-security-${{ matrix.shard }}
-          path: out/release-security-${{ matrix.shard }}.json
+          name: mrstore-release-security-shard-${{ matrix.shard }}
+          path: out/release-cves-shard-${{ matrix.shard }}.json
           if-no-files-found: error
+          retention-days: 30
   build:
     needs: security_audit
     runs-on: ubuntu-latest
@@ -111,48 +122,63 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - name: Download all 8 independent image reports
+      - name: Validate complete source catalog (254 apps) and regression tests
+        run: |
+          python scripts/validate.py
+          python -m unittest discover -s tests -v
+      - name: Fetch eight mandatory security evidence reports
         uses: actions/download-artifact@v4
         with:
-          pattern: mrstore-release-security-*
-          path: out/release-scans
-          merge-multiple: true
-      - name: Insert localized descriptions before staging
-        run: python scripts/curate_taglines.py
-      - name: Quarantine unsafe apps and pin approved images to scanned digest
-        run: >
-          python scripts/quarantine.py --reports-dir out/release-scans
-          --output out/quarantine.json --summary out/quarantine.md --apply
-      - name: Show quarantine report
-        if: always()
-        run: test ! -f out/quarantine.md || cat out/quarantine.md >> "$GITHUB_STEP_SUMMARY"
-      - name: Preserve quarantine decisions
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: mrstore-release-quarantine
-          path: |
-            out/quarantine.json
-            out/quarantine.md
-          if-no-files-found: warn
-      - name: Build official ZimaOS v2 catalog from approved apps only
+          pattern: mrstore-release-security-shard-*
+          path: out/release-evidence
+          merge-multiple: false
+      - name: Generate isolated approved release catalog; quarantine everything else
+        id: release
+        run: |
+          python scripts/release_catalog.py --reports out/release-evidence --stage release-source --report out/release-selection.json
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          selected = json.loads(Path("out/release-selection.json").read_text())
+          if selected["approved_count"] < 1:
+              raise SystemExit("Empty safe catalog; do not publish misleading empty release")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as file:
+              file.write(f"approved={selected['approved_count']}\n")
+          PY
+      - name: Validate staged Compose manifests with official Docker Compose parser
+        run: >-
+          python scripts/compose_preflight.py --root release-source
+          --json out/release-compose.json --md out/release-compose.md
+      - name: Build official ZimaOS v2 catalog
         uses: IceWhaleTech/build-appstore-action@v1
         with:
-          source: .
+          source: release-source
           output: dist
           base-url: https://mrpiracy94.github.io/MrStore
           cache-file: .cache/build_appstore/image-size-cache.json
           digest-cache-file: .cache/build_appstore/image-digest-cache.json
           report-json: out/build-report.json
-      - name: Verify approved catalog count (never assume all 254 are safe)
+      - name: Verify exact approved count and generated v2 files
+        run: python scripts/verify_dist.py --expected ${{ steps.release.outputs.approved }}
+      - name: Verify published app set and every image digest was retained
         run: |
-          EXPECTED=$(python -c 'import json; print(len(json.load(open("out/quarantine.json"))["approved_apps"]))')
-          python scripts/verify_dist.py --expected "$EXPECTED"
-      - name: Verify published translations
-        run: python -S scripts/curate_taglines.py --verify-dist dist/index.json --approved-json out/quarantine.json
-      - name: Disable Jekyll processing
-        run: touch dist/.nojekyll
-      - name: Upload build diagnostics
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from scripts.release_catalog import verify_published
+          report = json.loads(Path("out/release-selection.json").read_text())
+          verify_published(Path("dist"), report, Path("release-source"))
+          PY
+      - name: Verify PT subtitles of approved apps
+        run: >-
+          python -S scripts/curate_taglines.py --verify-dist dist/index.json
+          --approved-file out/release-selection.json
+      - name: Publish transparent quarantine details alongside the catalog
+        run: |
+          cp out/release-selection.json dist/release-status.json
+          touch dist/.nojekyll
+      - name: Upload publication/quarantine diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -160,31 +186,34 @@ jobs:
           path: |
             out/audit.json
             out/build-report.json
-            out/quarantine.json
-            out/quarantine.md
+            out/release-selection.json
+            out/release-compose.json
+            out/release-compose.md
             dist/store.json
             dist/index.json
+            dist/release-status.json
           if-no-files-found: warn
-      - name: Preserve complete approved catalog for release and ZimaOS preview
+      - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
         uses: actions/upload-artifact@v4
         with:
-          name: mrstore-approved-dist
+          name: mrstore-v2-approved-dist
           path: dist/
           include-hidden-files: true
           if-no-files-found: error
   publish:
-    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Retrieve validated catalog artifacts
+      - name: Retrieve validated approved ZimaOS catalog
         uses: actions/download-artifact@v4
         with:
-          name: mrstore-approved-dist
+          name: mrstore-v2-approved-dist
           path: dist/
-      - name: Publish approved catalog to gh-pages
+      - name: Publish approved dist to gh-pages
+        if: success()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

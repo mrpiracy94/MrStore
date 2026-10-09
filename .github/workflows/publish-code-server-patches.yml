@@ -1,0 +1,94 @@
+name: Publish tested Code Server Node security patches
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'security/images/code-server/Dockerfile'
+      - 'scripts/test_code_server_node_patches.sh'
+      - 'scripts/test_code_server_ftp_patch.sh'
+      - '.github/workflows/publish-code-server-patches.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: mrstore-code-server-security-publish
+  cancel-in-progress: false
+jobs:
+  verified_publication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-code-server
+      VERSION: lsio-node-deps-secfix-20261010
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Build AMD64 LinuxServer image with only two patched packages
+        run: docker buildx build --pull --platform linux/amd64 --load -f security/images/code-server/Dockerfile -t mrstore-code-server-patched:amd64 .
+      - name: Scan patched AMD64 image for CVEs
+        run: |
+          mkdir -p out
+          trivy image --quiet --image-src docker --platform linux/amd64 --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output out/amd64.json mrstore-code-server-patched:amd64
+      - name: Build ARM64 LinuxServer image with only two patched packages
+        run: docker buildx build --pull --platform linux/arm64 --load -f security/images/code-server/Dockerfile -t mrstore-code-server-patched:arm64 .
+      - name: Scan patched ARM64 image for CVEs
+        run: trivy image --quiet --image-src docker --platform linux/arm64 --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output out/arm64.json mrstore-code-server-patched:arm64
+      - name: "Hard block: both scans must be complete with zero HIGH/CRITICAL"
+        run: |
+          python - <<'PY'
+          import json,os
+          from collections import Counter
+          lines=['## Code Server LSIO targeted dependency remediation', '',
+                 '| Architecture | CRITICAL | HIGH |','|---|---:|---:|']
+          for arch in ('amd64','arm64'):
+              with open(f'out/{arch}.json',encoding='utf-8') as f:
+                  result=json.load(f)
+              if not isinstance(result.get('Results'),list) or not result['Results']:
+                  raise SystemExit('Incomplete Trivy result on '+arch)
+              counts=Counter(v.get('Severity') for entry in result['Results']
+                             for v in entry.get('Vulnerabilities') or []
+                             if v.get('Severity') in ('HIGH','CRITICAL'))
+              lines.append(f"| {arch} | {counts['CRITICAL']} | {counts['HIGH']} |")
+              if counts['CRITICAL'] or counts['HIGH']:
+                  raise SystemExit('Cannot publish: remaining HIGH/CRITICAL on '+arch)
+          summary='\n'.join(lines)+'\n'
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as out:
+              out.write(summary)
+          PY
+      - name: Test HTTP, both volumes and patched package versions on AMD64
+        run: bash scripts/test_code_server_node_patches.sh amd64
+      - name: Test real local FTP auth and listing on AMD64
+        run: bash scripts/test_code_server_ftp_patch.sh amd64
+      - name: Test HTTP, both volumes and patched package versions on ARM64
+        run: bash scripts/test_code_server_node_patches.sh arm64
+      - name: Test real local FTP auth and listing on ARM64
+        run: bash scripts/test_code_server_ftp_patch.sh arm64
+      - name: Keep original CVE evidence if any step fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-server-dependency-release-cves
+          path: out/*.json
+          if-no-files-found: warn
+      - name: Authenticate to GHCR only after all tests pass
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish both vetted architectures as a multiarch image
+        run: |
+          set -euo pipefail
+          docker tag mrstore-code-server-patched:amd64 "$IMAGE:$VERSION-amd64"
+          docker tag mrstore-code-server-patched:arm64 "$IMAGE:$VERSION-arm64"
+          docker push "$IMAGE:$VERSION-amd64"
+          docker push "$IMAGE:$VERSION-arm64"
+          docker buildx imagetools create -t "$IMAGE:$VERSION" \
+            "$IMAGE:$VERSION-amd64" "$IMAGE:$VERSION-arm64"
+          docker buildx imagetools inspect "$IMAGE:$VERSION"

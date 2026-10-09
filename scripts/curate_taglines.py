@@ -86,11 +86,11 @@ def prepare(*, check_only: bool) -> int:
     return len(updated)
 
 
-def verify_published(index_path: Path, approved_apps: set[str] | None = None) -> int:
+def verify_published(index_path: Path, expected_apps: set[str] | None = None) -> int:
     summaries = load_summaries()
-    expected = set(summaries) if approved_apps is None else approved_apps
-    if not expected or not expected.issubset(summaries):
-        raise ValueError("Invalid approved application set")
+    expected = set(summaries) if expected_apps is None else set(expected_apps)
+    if not expected or not expected <= set(summaries):
+        raise ValueError('Invalid selected application list')
     index = json.loads(index_path.read_text(encoding="utf-8"))
     entries = index.get("apps")
     if not isinstance(entries, list):
@@ -119,20 +119,16 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="validate without changing files")
     parser.add_argument("--verify-dist", type=Path, help="check published index.json subtitles")
-    parser.add_argument("--approved-json", type=Path,
-                        help="quarantine.json with exact approved app folders")
+    parser.add_argument("--approved-file", type=Path, help="JSON release-selection.json for filtered stores")
     args = parser.parse_args()
     if args.verify_dist:
-        approved = None
-        if args.approved_json:
-            data = json.loads(args.approved_json.read_text(encoding="utf-8"))
-            allowed = data.get("approved_apps")
-            if not isinstance(allowed, list) or not allowed or any(
-                not isinstance(x, str) for x in allowed
-            ) or len(set(allowed)) != len(allowed):
-                raise ValueError("Invalid quarantine approved_apps")
-            approved = set(allowed)
-        verify_published(args.verify_dist, approved)
+        expected = None
+        if args.approved_file:
+            data = json.loads(args.approved_file.read_text(encoding='utf-8'))
+            if data.get('approved_count') != len(data.get('approved', [])):
+                raise ValueError('Bad release selection')
+            expected = set(data['approved'])
+        verify_published(args.verify_dist, expected)
     else:
         prepare(check_only=args.check)
 

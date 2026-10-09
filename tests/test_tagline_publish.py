@@ -23,17 +23,12 @@ class PublishedSubtitleTests(unittest.TestCase):
     def setUpClass(cls):
         cls.summaries = json.loads(SUMMARIES.read_text(encoding="utf-8"))
 
-    def invoke(self, entries, approved=None):
+    def invoke(self, entries):
         with tempfile.TemporaryDirectory() as folder:
             p = Path(folder) / "index.json"
             p.write_text(json.dumps({"apps": entries}, ensure_ascii=False), encoding="utf-8")
-            args = [sys.executable, "-S", str(SCRIPT), "--verify-dist", str(p)]
-            if approved is not None:
-                allowlist = Path(folder) / "quarantine.json"
-                allowlist.write_text(json.dumps({"approved_apps": approved}))
-                args.extend(["--approved-json", str(allowlist)])
             return subprocess.run(
-                args,
+                [sys.executable, "-S", str(SCRIPT), "--verify-dist", str(p)],
                 capture_output=True, text=True, timeout=20, check=False,
                 cwd=ROOT,
             )
@@ -46,26 +41,6 @@ class PublishedSubtitleTests(unittest.TestCase):
         result = self.invoke(entries)
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("254", result.stdout)
-
-    def test_quarantined_subset_passes_without_pyyaml(self):
-        selected = list(self.summaries)[:3]
-        entries = [
-            {"id": PREFIX + app, "tagline": self.summaries[app]}
-            for app in selected
-        ]
-        result = self.invoke(entries, approved=selected)
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("3", result.stdout)
-
-    def test_not_approved_app_is_rejected(self):
-        selected = list(self.summaries)[:2]
-        wrong = list(self.summaries)[2]
-        entries = [
-            {"id": PREFIX + app, "tagline": self.summaries[app]}
-            for app in selected + [wrong]
-        ]
-        result = self.invoke(entries, approved=selected)
-        self.assertNotEqual(result.returncode, 0)
 
     def test_wrong_subtitle_causes_publication_failure(self):
         entries = [
