@@ -21,6 +21,13 @@ jobs:
         run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --exit-code 1 --format json --timeout 12m --output redis-amd64.json docker.io/library/redis:8-alpine
       - name: Scan official Redis 8 Alpine on ARM64
         run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --exit-code 1 --format json --timeout 12m --output redis-arm64.json docker.io/library/redis:8-alpine
+      - name: Record immutable multi-architecture image digest
+        run: |
+          set -euo pipefail
+          docker buildx imagetools inspect docker.io/library/redis:8-alpine | tee redis-digest.txt
+          digest="$(awk '/^Digest:/ {print $2; exit}' redis-digest.txt)"
+          [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]]
+          echo "Redis 8 Alpine image digest: $digest" >> "$GITHUB_STEP_SUMMARY"
       - name: Verify Redis 8 database survives Debian to Alpine switch
         run: |
           set -euo pipefail
@@ -52,4 +59,5 @@ jobs:
           path: |
             redis-amd64.json
             redis-arm64.json
+            redis-digest.txt
           if-no-files-found: warn
