@@ -173,6 +173,11 @@ class StoreTests(unittest.TestCase):
     def test_inconclusive_rescan_covers_all_25_previous_failures(self):
         target = json.loads((ROOT / 'data/cve-inconclusive-20261009.json').read_text())
         self.assertEqual(len(target), 25)
+        original = json.loads((ROOT / 'data/cve-inconclusive-original-20261009.json').read_text())
+        self.assertEqual(len(original), 25)
+        self.assertIn('lscr.io/linuxserver/netbootxyz:latest', original)
+        self.assertNotIn('lscr.io/linuxserver/netbootxyz:latest', target)
+        self.assertTrue(any(x.startswith('ghcr.io/mrpiracy94/mrstore-netbootxyz:') for x in target))
         self.assertEqual(len(set(target)), 25)
         self.assertTrue(set(target).issubset(image_usage(apps())))
         workflow = (ROOT / '.github/workflows/retry-inconclusive-cves.yml').read_text()
