@@ -1,15 +1,17 @@
 """Offline regression suite: no registry access and no Docker execution."""
 import json
 import sys
+import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from catalog import apps, image_usage, report, local_asset_missing
-from updates import monitor, summarize
-from cves import shard_images, evaluate, summarize as cve_summary
+from updates import monitor, summarize, digest
+from cves import shard_images, evaluate, summarize as cve_summary, audit_exit_status
 from verify_dist import verify
 
 ONLY_AMD64 = set('audacity cura dolphin handbrake joplin modrinth mullvad-browser onlyoffice opera signal steam zotero azahar bambustudio blade-of-agony digikam dogwalk dosbox-staging eden flycast intellij-idea krita lm-studio mediaelch msedge mysql-workbench openshot pcsx2 pelorus ppsspp pycharm scummvm shadps4 shotcut webstation winegui wps-office'.split())
@@ -24,6 +26,11 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(audit['summary']['errors'], 0, audit['findings'][:8])
         self.assertEqual(audit['summary']['services'], 260)
         self.assertEqual(audit['summary']['images'], 258)
+
+    def test_tcp_and_udp_do_not_collide(self):
+        audit = report()
+        self.assertNotIn('port_collision', audit['rules'],
+                         'TCP and UDP on the same numeric port are distinct bindings')
 
     def test_corrected_architecture(self):
         for item in apps():
@@ -64,6 +71,17 @@ class StoreTests(unittest.TestCase):
         self.assertNotIn('update', [x['image'] for x in changes['first_seen']])
         self.assertIn('digest',summarize(changes).lower())
 
+    def test_transient_registry_timeout_is_retried(self):
+        valid = 'sha256:' + 'a' * 64
+        replies = [subprocess.TimeoutExpired('crane digest', 90),
+                   subprocess.CompletedProcess('crane digest', 0, valid, '')]
+        with patch('updates.subprocess.run', side_effect=replies) as runner, \
+             patch('updates.time.sleep') as pause:
+            result, error = digest('example/image:latest')
+        self.assertEqual((result, error), (valid, None))
+        self.assertEqual(runner.call_count, 2)
+        pause.assert_called_once()
+
     def test_cve_error_is_not_clean(self):
         def mock_scan(image):
             if image=='fail':return [],'blocked'
@@ -72,6 +90,13 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(result['failures'],1)
         self.assertEqual(result['critical'],1)
         self.assertIn('CRITICAL',cve_summary(result,0,8))
+        self.assertEqual(audit_exit_status(result), 2)
+        self.assertEqual(audit_exit_status({**result, 'failures': 0}), 3)
+        self.assertEqual(audit_exit_status({**result, 'critical': 0, 'failures': 0}), 0)
+
+    def test_frigate_defaults_are_not_privileged(self):
+        frigate = next(item for item in apps() if item.folder == 'frigate')
+        self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)
 
     def test_generated_store_verification(self):
         with tempfile.TemporaryDirectory() as temp:

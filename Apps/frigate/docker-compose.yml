@@ -4,7 +4,6 @@ services:
     image: ghcr.io/blakeblackshear/frigate:stable
     container_name: frigate
     restart: unless-stopped
-    privileged: true
     shm_size: "512mb"
     environment:
       - "TZ=Europe/Lisbon"
@@ -55,7 +54,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.frigate
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -71,6 +70,6 @@ x-casaos:
   tagline:
     en_US: "NVR com deteção de objetos"
   description:
-    en_US: "NVR com deteção de objetos. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. Precisa de config.yml com as tuas câmaras. Aceleração por hardware exige mapear dispositivos (ver docs)."
+    en_US: "NVR com deteção de objetos. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. Precisa de config.yml com as tuas câmaras. Por segurança, o container não é privilegiado por omissão. Aceleração por hardware exige mapear explicitamente os dispositivos necessários (ver docs)."
   port_map: "8971"
   index: /

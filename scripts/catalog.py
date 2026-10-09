@@ -130,10 +130,12 @@ def report(root: Path = ROOT) -> dict:
                 add('warning', app.folder, 'change_me', f'{service}: configure secrets manually')
             for port in spec.get('ports') or []:
                 if isinstance(port, dict) and port.get('published'):
-                    used_ports[str(port['published'])].add(app.folder)
-    for port, users in used_ports.items():
+                    protocol = str(port.get('protocol', 'tcp')).lower()
+                    used_ports[(str(port['published']), protocol)].add(app.folder)
+    for (port, protocol), users in used_ports.items():
         if len(users) > 1:
-            add('warning', '*', 'port_collision', f'{port}: {", ".join(sorted(users))}')
+            add('warning', '*', 'port_collision',
+                f'{port}/{protocol}: {", ".join(sorted(users))}')
     usage = image_usage(items)
     from collections import Counter
     return {'summary': {'apps': len(items), 'services': sum(len(a.source.get('services') or {}) for a in items),

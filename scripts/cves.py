@@ -80,7 +80,30 @@ def summarize(report: dict, shard: int, shards: int) -> str:
             cr=sum(f['severity']=='CRITICAL' for f in entry['findings'])
             fixes=sum(bool(f.get('fixed')) for f in entry['findings'])
             lines.append(f"- `{entry['image']}`: {cr} CRITICAL, {hi} HIGH; {fixes} com versão corrigida ({', '.join(entry['apps'])})")
+            # Show actionable critical packages in GitHub issues, not just counts.
+            critical = sorted((v for v in entry['findings'] if v['severity'] == 'CRITICAL'),
+                              key=lambda v: (not bool(v.get('fixed')), v.get('cve') or ''))
+            for finding in critical[:4]:
+                available = (f" → `{finding['fixed']}`" if finding.get('fixed')
+                             else " (sem versão corrigida anunciada)")
+                lines.append(f"  - `{finding['cve']}` / `{finding['package']}`: "
+                             f"`{finding.get('installed') or 'desconhecida'}`{available}")
+            if len(critical) > 4:
+                lines.append(f"  - Mais {len(critical)-4} ocorrências CRITICAL no artifact JSON.")
+    lines.extend(['', 'Versões corrigidas referem-se a pacotes, não garantem '
+                  'que uma imagem Docker compatível já esteja disponível. '
+                  'Atualiza/testa a imagem e repete o scan; nunca migres uma base de dados '
+                  'sem backup e plano de compatibilidade.'])
     return '\n'.join(lines)+'\n'
+
+
+def audit_exit_status(report: dict) -> int:
+    """Never mark a scan clean when critical findings or lookup failures remain."""
+    if report['failures']:
+        return 2
+    if report['critical']:
+        return 3
+    return 0
 
 
 def main() -> int:
@@ -100,7 +123,7 @@ def main() -> int:
     opts.output.write_text(json.dumps(report, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
     opts.summary.write_text(summarize(report, opts.shard, opts.shards), encoding='utf-8')
     print(f"CVE: {report['critical']} CRITICAL; {report['high']} HIGH; errors {report['failures']}")
-    return 2 if report['failures'] else 0
+    return audit_exit_status(report)
 
 if __name__ == '__main__':
     raise SystemExit(main())

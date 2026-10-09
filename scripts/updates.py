@@ -10,20 +10,40 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import time
 from catalog import ROOT, apps, image_usage
 
 SHA256 = re.compile(r'^sha256:[a-f0-9]{64}$')
 
 
 def digest(image: str, binary: str = 'crane') -> tuple[str | None, str | None]:
-    try:
-        p = subprocess.run([binary, 'digest', image], capture_output=True, text=True, timeout=90, check=False)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        return None, str(exc)
-    actual = p.stdout.strip()
-    if p.returncode == 0 and SHA256.fullmatch(actual):
-        return actual, None
-    return None, (p.stderr or actual or f'crane exited {p.returncode}').strip()[:240]
+    """Retry short-lived registry outages; preserve persistent errors in the report."""
+    transient_signals = (
+        'timed out', 'timeout', '429', 'too many requests',
+        '502', '503', '504', 'connection reset', 'connection refused',
+        'temporary failure', 'temporarily unavailable', 'tls handshake',
+    )
+    for attempt in range(3):
+        timed_out = False
+        try:
+            p = subprocess.run([binary, 'digest', image], capture_output=True,
+                               text=True, timeout=90, check=False)
+        except subprocess.TimeoutExpired as exc:
+            error = str(exc)
+            timed_out = True
+        except OSError as exc:
+            error = str(exc)
+        else:
+            actual = p.stdout.strip()
+            if p.returncode == 0 and SHA256.fullmatch(actual):
+                return actual, None
+            error = (p.stderr or actual or f'crane exited {p.returncode}').strip()[:240]
+        transient = timed_out or any(signal in error.lower() for signal in transient_signals)
+        if attempt < 2 and transient:
+            time.sleep(3 * (attempt + 1))
+            continue
+        return None, error
+    raise AssertionError('Unreachable retry state')
 
 
 def monitor(usage: dict[str, list[str]], before: dict, resolver=digest, workers: int = 4) -> tuple[dict, dict]:
