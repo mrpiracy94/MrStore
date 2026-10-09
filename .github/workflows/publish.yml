@@ -4,16 +4,18 @@ on:
     branches: [main]
     paths:
       - 'Apps/**'
-      # Only catalog/build code should trigger eight security scans + publication.
-      # Monitoring scripts continue to run under Validate MrStore.
       - 'scripts/catalog.py'
+      - 'scripts/cves.py'
+      - 'scripts/release_scan.py'
+      - 'scripts/release_catalog.py'
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
       - 'data/taglines-pt.json'
       - 'store-config.json'
-      - 'supported-languages.json'
+      - 'category-list.json'
       - 'recommend-list.json'
+      - 'supported-languages.json'
       - 'requirements.txt'
       - '.github/workflows/publish.yml'
   workflow_dispatch:
@@ -24,12 +26,12 @@ concurrency:
   cancel-in-progress: false
 jobs:
   security_audit:
-    name: Zero HIGH/CRITICAL gate (shard ${{ matrix.shard }})
+    name: Scan release images and platforms (shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 4
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     permissions:
@@ -39,61 +41,99 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install Python dependencies
-        run: python -m pip install -r requirements.txt
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.26'
+      - name: Install pinned crane registry client
+        run: |
+          go install github.com/google/go-containerregistry/cmd/crane@v0.21.7
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
       - name: Install pinned Trivy scanner
         uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
         with:
           version: v0.75.0
-      - name: Block release on HIGH, CRITICAL, or incomplete image scans
-        run: >
-          python scripts/cves.py --shards 8 --shard ${{ matrix.shard }}
-          --output out/release-cves-${{ matrix.shard }}.json
-          --summary out/release-cves-${{ matrix.shard }}.md
-      - name: Preserve failing security evidence
+      - name: Scan all catalog images by immutable digest on AMD64 and ARM64
+        run: >-
+          python scripts/release_scan.py --shards 8 --shard ${{ matrix.shard }}
+          --output-dir out
+      - name: Preserve complete per-image evidence, including vulnerable/inconclusive
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: mrstore-release-security-shard-${{ matrix.shard }}
-          path: |
-            out/release-cves-${{ matrix.shard }}.json
-            out/release-cves-${{ matrix.shard }}.md
-          if-no-files-found: warn
+          path: out/release-cves-shard-${{ matrix.shard }}.json
+          if-no-files-found: error
+          retention-days: 30
   build:
-    # Only all eight successful, complete and zero-HIGH/CRITICAL scans can publish.
     needs: security_audit
     runs-on: ubuntu-latest
     timeout-minutes: 120
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - name: Validate 254 source manifests
-        run: python scripts/validate.py
-      - name: Run regression tests before the expensive catalog build
-        run: python -m unittest discover -s tests -v
-      - name: Insert Portuguese app summaries (no Docker configuration changes)
-        run: python scripts/curate_taglines.py
-      # The canonical ZimaOS builder owns the v2 protocol and content_hash.
-      # It verifies registry platforms and resolves/converts published icons.
+      - name: Validate complete source catalog (254 apps) and regression tests
+        run: |
+          python scripts/validate.py
+          python -m unittest discover -s tests -v
+      - name: Fetch eight mandatory security evidence reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: mrstore-release-security-shard-*
+          path: out/release-evidence
+          merge-multiple: false
+      - name: Generate isolated approved release catalog; quarantine everything else
+        id: release
+        run: |
+          python scripts/release_catalog.py --reports out/release-evidence --stage release-source --report out/release-selection.json
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          selected = json.loads(Path("out/release-selection.json").read_text())
+          if selected["approved_count"] < 1:
+              raise SystemExit("Empty safe catalog; do not publish misleading empty release")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as file:
+              file.write(f"approved={selected['approved_count']}\n")
+          PY
+      - name: Validate staged Compose manifests with official Docker Compose parser
+        run: >-
+          python scripts/compose_preflight.py --root release-source
+          --json out/release-compose.json --md out/release-compose.md
       - name: Build official ZimaOS v2 catalog
         uses: IceWhaleTech/build-appstore-action@v1
         with:
-          source: .
+          source: release-source
           output: dist
           base-url: https://mrpiracy94.github.io/MrStore
           cache-file: .cache/build_appstore/image-size-cache.json
           digest-cache-file: .cache/build_appstore/image-digest-cache.json
           report-json: out/build-report.json
-      - name: Validate generated store endpoints
-        run: python scripts/verify_dist.py --expected 254
-      - name: Verify 254 published ZimaOS subtitles without external dependencies
-        run: python -S scripts/curate_taglines.py --verify-dist dist/index.json
-      - name: Disable Jekyll processing
-        run: touch dist/.nojekyll
-      - name: Upload build diagnostics
+      - name: Verify exact approved count and generated v2 files
+        run: python scripts/verify_dist.py --expected ${{ steps.release.outputs.approved }}
+      - name: Verify published app set and every image digest was retained
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from scripts.release_catalog import verify_published
+          report = json.loads(Path("out/release-selection.json").read_text())
+          verify_published(Path("dist"), report, Path("release-source"))
+          PY
+      - name: Verify PT subtitles of approved apps
+        run: >-
+          python -S scripts/curate_taglines.py --verify-dist dist/index.json
+          --approved-file out/release-selection.json
+      - name: Publish transparent quarantine details alongside the catalog
+        run: |
+          cp out/release-selection.json dist/release-status.json
+          touch dist/.nojekyll
+      - name: Upload publication/quarantine diagnostics
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -101,10 +141,14 @@ jobs:
           path: |
             out/audit.json
             out/build-report.json
+            out/release-selection.json
+            out/release-compose.json
+            out/release-compose.md
             dist/store.json
             dist/index.json
+            dist/release-status.json
           if-no-files-found: warn
-      - name: Publish dist to gh-pages
+      - name: Publish approved dist to gh-pages
         if: success()
         uses: peaceiris/actions-gh-pages@v4
         with:

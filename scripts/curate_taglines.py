@@ -86,14 +86,17 @@ def prepare(*, check_only: bool) -> int:
     return len(updated)
 
 
-def verify_published(index_path: Path) -> int:
+def verify_published(index_path: Path, expected_apps: set[str] | None = None) -> int:
     summaries = load_summaries()
+    expected = set(summaries) if expected_apps is None else set(expected_apps)
+    if not expected or not expected <= set(summaries):
+        raise ValueError('Invalid selected application list')
     index = json.loads(index_path.read_text(encoding="utf-8"))
     entries = index.get("apps")
     if not isinstance(entries, list):
         raise ValueError("ZimaOS index.json is missing an apps list")
-    if len(entries) != 254:
-        raise ValueError(f"Expected 254 published apps, found {len(entries)}")
+    if len(entries) != len(expected):
+        raise ValueError(f"Expected {len(expected)} published apps, found {len(entries)}")
     seen = set()
     for item in entries:
         app_id = item["id"]
@@ -101,13 +104,13 @@ def verify_published(index_path: Path) -> int:
         if not app_id.startswith(prefix):
             raise ValueError(f"Unexpected app ID: {app_id}")
         app = app_id[len(prefix):]
-        if app not in summaries or app in seen:
+        if app not in expected or app in seen:
             raise ValueError(f"Unknown or duplicate published app {app}")
         seen.add(app)
         if item.get("tagline") != summaries[app]:
             raise ValueError(f"{app}: published subtitle differs from approved summary")
-    if seen != set(summaries):
-        raise ValueError(f"Missing published summaries: {sorted(set(summaries) - seen)}")
+    if seen != expected:
+        raise ValueError(f"Missing published summaries: {sorted(expected - seen)}")
     print(f"Verified all {len(seen)} published ZimaOS card subtitles")
     return len(seen)
 
@@ -116,9 +119,16 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="validate without changing files")
     parser.add_argument("--verify-dist", type=Path, help="check published index.json subtitles")
+    parser.add_argument("--approved-file", type=Path, help="JSON release-selection.json for filtered stores")
     args = parser.parse_args()
     if args.verify_dist:
-        verify_published(args.verify_dist)
+        expected = None
+        if args.approved_file:
+            data = json.loads(args.approved_file.read_text(encoding='utf-8'))
+            if data.get('approved_count') != len(data.get('approved', [])):
+                raise ValueError('Bad release selection')
+            expected = set(data['approved'])
+        verify_published(args.verify_dist, expected)
     else:
         prepare(check_only=args.check)
 
