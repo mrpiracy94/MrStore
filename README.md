@@ -35,6 +35,16 @@ O builder oficial do ZimaOS é responsável por gerar os JSON e `content_hash` c
 - Os scans dependem de acesso a registries e bases de dados Trivy; erros são **falhas**, não resultados limpos.
 - `x-casaos.version` e `content_hash` controlam atualizações do catálogo, não upgrades automáticos dos containers.
 
+## Compatibilidade comprovada no ZimaOS
+
+O catálogo de 254 apps publicado em formato v2 e os testes de CI **não são** equivalentes a instalações comprovadas num ZimaOS real.
+
+- Inventário estático por app: `python scripts/compatibility.py` (artefacto GitHub Actions `zimaos-compatibility-static`).
+- Smoke test opt-in de uma app já instalada num NAS: `python scripts/zimaos_runtime_probe.py --app actual-budget --host IP_DO_NAS`. O comando usa apenas Docker inspect e HTTP, sem modificar containers; não valida logins nem dados persistentes.
+- Critérios C0–C4, testes funcionais, registo de evidência e limitações: [docs/ZIMAOS_COMPATIBILITY.md](docs/ZIMAOS_COMPATIBILITY.md).
+
+**Nenhuma app é declarada validada em ambiente real apenas pelo inventário/CI.**
+
 ## Estrutura do projeto
 
 ```text
