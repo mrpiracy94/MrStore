@@ -70,7 +70,10 @@ class StoreTests(unittest.TestCase):
         self.assertIn('--shards 8', script)
         self.assertIn('--shard', script)
         self.assertTrue(any(step.get('if') == 'always()' for step in scan['steps']))
-        self.assertIn('if: success()', path.read_text(encoding='utf-8'))
+        self.assertIn("if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'",
+                      path.read_text(encoding='utf-8'))
+        self.assertEqual(jobs['publish']['needs'], 'build')
+        self.assertIn('pull_request', path.read_text(encoding='utf-8'))
         self.assertIn('scripts/quarantine.py', path.read_text(encoding='utf-8'))
         self.assertIn('scripts/privilege_policy.py', path.read_text(encoding='utf-8'))
 
