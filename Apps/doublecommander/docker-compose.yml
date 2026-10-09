@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/doublecommander.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/doublecommander.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/doublecommander/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/doublecommander/icon.svg
   title:
     en_US: "Double Commander"
   tagline:

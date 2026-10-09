@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Productivity
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kicad.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kicad.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/kicad/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/kicad/icon.svg
   title:
     en_US: "KiCad"
   tagline:

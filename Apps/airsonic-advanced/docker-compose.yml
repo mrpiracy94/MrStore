@@ -53,8 +53,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Media
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/airsonic-advanced.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/airsonic-advanced.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/airsonic-advanced/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/airsonic-advanced/icon.svg
   title:
     en_US: "Airsonic Advanced"
   tagline:

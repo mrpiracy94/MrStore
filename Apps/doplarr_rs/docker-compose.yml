@@ -33,8 +33,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Media
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/doplarr_rs.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/doplarr_rs.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/doplarr_rs/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/doplarr_rs/icon.svg
   title:
     en_US: "Doplarr RS"
   tagline:

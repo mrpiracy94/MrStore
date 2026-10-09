@@ -34,8 +34,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Home
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homeassistant.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homeassistant.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/homeassistant/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/homeassistant/icon.svg
   title:
     en_US: "Home Assistant"
   tagline:

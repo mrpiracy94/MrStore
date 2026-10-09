@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/yaak.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/yaak.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/yaak/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/yaak/icon.svg
   title:
     en_US: "Yaak"
   tagline:

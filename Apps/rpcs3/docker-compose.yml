@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/rpcs3.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/rpcs3.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/rpcs3/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/rpcs3/icon.svg
   title:
     en_US: "RPCS3"
   tagline:

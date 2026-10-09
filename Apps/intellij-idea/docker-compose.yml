@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/intellij-idea.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/intellij-idea.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/intellij-idea/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/intellij-idea/icon.svg
   title:
     en_US: "IntelliJ IDEA"
   tagline:

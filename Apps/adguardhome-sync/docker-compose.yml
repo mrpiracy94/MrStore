@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Networking
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/adguardhome-sync.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/adguardhome-sync.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/adguardhome-sync/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/adguardhome-sync/icon.svg
   title:
     en_US: "AdGuardHome Sync"
   tagline:

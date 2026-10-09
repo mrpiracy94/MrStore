@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Productivity
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/inkscape.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/inkscape.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/inkscape/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/inkscape/icon.svg
   title:
     en_US: "Inkscape"
   tagline:

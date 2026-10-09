@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/modmanager.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/modmanager.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/modmanager/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/modmanager/icon.svg
   title:
     en_US: "Mod Manager"
   tagline:

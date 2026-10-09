@@ -62,8 +62,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Networking
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/unifi-network-application.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/unifi-network-application.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/unifi-network-application/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/unifi-network-application/icon.svg
   title:
     en_US: "UniFi Network Application"
   tagline:

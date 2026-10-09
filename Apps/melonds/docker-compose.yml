@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/melonds.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/melonds.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/melonds/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/melonds/icon.svg
   title:
     en_US: "melonDS"
   tagline:

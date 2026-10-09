@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/github-desktop.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/github-desktop.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/github-desktop/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/github-desktop/icon.svg
   title:
     en_US: "GitHub Desktop"
   tagline:

@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/webstation.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/webstation.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/webstation/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/webstation/icon.svg
   title:
     en_US: "Webstation"
   tagline:

@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/vscodium-web.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/vscodium-web.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/vscodium-web/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/vscodium-web/icon.svg
   title:
     en_US: "VSCodium Web"
   tagline:

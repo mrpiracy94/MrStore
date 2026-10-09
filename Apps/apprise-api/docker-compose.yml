@@ -47,8 +47,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/apprise-api.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/apprise-api.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/apprise-api/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/apprise-api/icon.svg
   title:
     en_US: "Apprise API"
   tagline:

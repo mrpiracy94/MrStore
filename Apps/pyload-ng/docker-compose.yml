@@ -53,8 +53,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Networking
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pyload-ng.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pyload-ng.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/pyload-ng/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/pyload-ng/icon.svg
   title:
     en_US: "pyLoad-ng"
   tagline:

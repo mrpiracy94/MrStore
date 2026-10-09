@@ -49,8 +49,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Networking
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/swag.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/swag.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/swag/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/swag/icon.svg
   title:
     en_US: "SWAG"
   tagline:

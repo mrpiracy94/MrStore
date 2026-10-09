@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Networking
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/minisatip.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/minisatip.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/minisatip/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/minisatip/icon.svg
   title:
     en_US: "minisatip"
   tagline:

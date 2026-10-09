@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Productivity
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/helium.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/helium.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/helium/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/helium/icon.svg
   title:
     en_US: "Helium"
   tagline:

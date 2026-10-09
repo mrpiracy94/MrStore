@@ -47,8 +47,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Media
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cops.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cops.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/cops/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/cops/icon.svg
   title:
     en_US: "COPS"
   tagline:

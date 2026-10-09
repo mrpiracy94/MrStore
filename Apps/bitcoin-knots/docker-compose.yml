@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/bitcoin-knots.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/bitcoin-knots.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/bitcoin-knots/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/bitcoin-knots/icon.svg
   title:
     en_US: "Bitcoin Knots"
   tagline:

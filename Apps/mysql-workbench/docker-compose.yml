@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mysql-workbench.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mysql-workbench.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/mysql-workbench/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/mysql-workbench/icon.svg
   title:
     en_US: "MySQL Workbench"
   tagline:

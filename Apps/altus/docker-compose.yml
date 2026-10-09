@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Social
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/altus.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/altus.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/altus/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/altus/icon.svg
   title:
     en_US: "Altus"
   tagline:

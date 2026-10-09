@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Social
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/limnoria.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/limnoria.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/limnoria/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/limnoria/icon.svg
   title:
     en_US: "Limnoria"
   tagline:
