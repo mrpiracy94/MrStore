@@ -154,6 +154,17 @@ jobs:
       - name: Publish transparent quarantine details alongside the catalog
         run: |
           cp out/release-selection.json dist/release-status.json
+          cp out/release-versions-state.json dist/release-versions-state.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          index = json.loads(Path('dist/index.json').read_text())
+          ledger = json.loads(Path('dist/release-versions-state.json').read_text())
+          for app in index['apps']:
+              stored = ledger['apps'].get(app['id'])
+              if stored is None or stored['version'] != app['version']:
+                  raise SystemExit(f"Version ledger mismatch for {app['id']}")
+          PY
           touch dist/.nojekyll
       - name: Upload publication/quarantine diagnostics
         if: always()
@@ -165,11 +176,13 @@ jobs:
             out/build-report.json
             out/release-selection.json
             out/release-versions.json
+            out/release-versions-state.json
             out/release-compose.json
             out/release-compose.md
             dist/store.json
             dist/index.json
             dist/release-status.json
+            dist/release-versions-state.json
           if-no-files-found: warn
       - name: Publish approved dist to gh-pages
         if: success()
