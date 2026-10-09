@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Productivity
-  icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/57e939e504eda0ea764098015da93aa666ad6f31/png/chromium.png
-  thumbnail: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/57e939e504eda0ea764098015da93aa666ad6f31/png/chromium.png
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/ungoogled-chromium-logo.png
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/ungoogled-chromium-logo.png
   title:
     en_US: "Ungoogled Chromium"
   tagline:

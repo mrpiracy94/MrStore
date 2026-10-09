@@ -32,7 +32,7 @@ Os nomes, logótipos e marcas pertencem aos respetivos titulares; a inclusão no
 | `pyload-ng` | [selfh.st: pyload](https://github.com/selfhst/icons/blob/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/pyload.png) |
 | `resilio-sync` | [selfh.st: resilio-sync](https://github.com/selfhst/icons/blob/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/resilio-sync.png) |
 | `sqlitebrowser` | [Homarr Dashboard Icons: sqlitebrowser](https://github.com/homarr-labs/dashboard-icons/blob/57e939e504eda0ea764098015da93aa666ad6f31/png/sqlitebrowser.png) |
-| `ungoogled-chromium` | [Homarr Dashboard Icons: chromium](https://github.com/homarr-labs/dashboard-icons/blob/57e939e504eda0ea764098015da93aa666ad6f31/png/chromium.png) |
+| `ungoogled-chromium` | [LinuxServer.io (ícone próprio do Ungoogled Chromium)](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/ungoogled-chromium-logo.png) |
 | `vscodium` | [selfh.st: vscodium](https://github.com/selfhst/icons/blob/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/vscodium.png) |
 | `vscodium-web` | [selfh.st: vscodium](https://github.com/selfhst/icons/blob/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/vscodium.png) |
 | `zen` | [Homarr Dashboard Icons: zen-browser](https://github.com/homarr-labs/dashboard-icons/blob/57e939e504eda0ea764098015da93aa666ad6f31/png/zen-browser.png) |
