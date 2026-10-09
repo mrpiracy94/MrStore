@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/sqlitebrowser.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/sqlitebrowser.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/sqlitebrowser/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/sqlitebrowser/icon.svg
   title:
     en_US: "DB Browser for SQLite"
   tagline:

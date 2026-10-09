@@ -46,8 +46,8 @@ x-casaos:
   author: MrStore
   developer: cross-seed
   category: Networking
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cross-seed.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cross-seed.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/cross-seed/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/cross-seed/icon.svg
   title:
     en_US: "cross-seed"
   tagline:
