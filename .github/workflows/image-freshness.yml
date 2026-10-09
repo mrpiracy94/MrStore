@@ -10,6 +10,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+# A new PR revision supersedes obsolete full scans, avoiding 8 more jobs per edit.
+concurrency:
+  group: mrstore-image-freshness-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   freshness:
     name: Image build age (shard ${{ matrix.shard }})
