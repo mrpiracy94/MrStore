@@ -293,6 +293,20 @@ class StoreTests(unittest.TestCase):
         self.assertIn('PUID=1000', service['environment'])
         self.assertIn('PGID=1000', service['environment'])
 
+    def test_phpmyadmin_uses_scanned_immutable_lsio_digest(self):
+        app = next(item for item in apps() if item.folder == 'phpmyadmin')
+        service = app.source['services']['phpmyadmin']
+        self.assertEqual(service['image'],
+                         'ghcr.io/mrpiracy94/mrstore-phpmyadmin:'
+                         'lsio-composer-twig-symfony-secfix-20261010@sha256:'
+                         'e013e13d834b9ae5c0cf47f9edb5501aa99a60109813ef3280131621498b1749')
+        self.assertTrue(any(p.get('target') == 80 and str(p.get('published')) == '20042'
+                            for p in service.get('ports', [])))
+        self.assertTrue(any(v.get('source') == '/DATA/AppData/phpmyadmin/config'
+                            and v.get('target') == '/config' for v in service['volumes']))
+        for env in ('PUID=1000', 'PGID=1000', 'PMA_ARBITRARY=1'):
+            self.assertIn(env, service['environment'])
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)

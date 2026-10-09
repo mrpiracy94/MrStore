@@ -1,0 +1,62 @@
+name: Verify public immutable phpMyAdmin security release
+on:
+  pull_request:
+    paths:
+      - 'Apps/phpmyadmin/docker-compose.yml'
+      - 'tests/test_mrstore.py'
+      - '.github/workflows/verify-phpmyadmin-public.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public_digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    env:
+      IMAGE: ghcr.io/mrpiracy94/mrstore-phpmyadmin:lsio-composer-twig-symfony-secfix-20261010@sha256:e013e13d834b9ae5c0cf47f9edb5501aa99a60109813ef3280131621498b1749
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - name: Prove unauthenticated registry can fetch exact dualarch digest
+        run: |
+          docker logout ghcr.io || true
+          docker buildx imagetools inspect "$IMAGE"
+          docker buildx imagetools inspect "$IMAGE" --raw | python -c '
+          import json,sys
+          d=json.load(sys.stdin)
+          platforms={(x["platform"]["os"],x["platform"]["architecture"]) for x in d.get("manifests",[])}
+          assert ("linux","amd64") in platforms and ("linux","arm64") in platforms, platforms
+          print("PASS: publicly accessible AMD64/ARM64 image index")
+          '
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan exact publicly pullable digest on required architecture
+        run: |
+          trivy image --quiet --image-src remote --platform linux/${{ matrix.arch }} --scanners vuln --severity HIGH,CRITICAL --timeout 12m --exit-code 1 --format json --output public-phpmyadmin.json "$IMAGE"
+          python - <<'PY'
+          import json
+          report=json.load(open('public-phpmyadmin.json',encoding='utf-8'))
+          if not isinstance(report.get('Results'),list) or not report['Results']:
+              raise SystemExit('Incomplete public scan; never treat unscanned image as clean')
+          print('PASS: zero HIGH/CRITICAL in scanned published phpMyAdmin')
+          PY
+      - name: Pull release without authentication for disposable live checks
+        run: |
+          docker pull --platform linux/${{ matrix.arch }} "$IMAGE"
+          docker tag "$IMAGE" mrstore-phpmyadmin-patched:${{ matrix.arch }}
+      - name: Verify real login HTML and original persistent config layout
+        run: bash scripts/test_phpmyadmin_lsio_patches.sh ${{ matrix.arch }}
+      - name: Verify real MariaDB SQL in disposable container network
+        run: bash scripts/test_phpmyadmin_mariadb_integration.sh ${{ matrix.arch }}
+      - name: Retain public scan results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-phpmyadmin-${{ matrix.arch }}-scan
+          path: public-phpmyadmin.json
+          if-no-files-found: warn
