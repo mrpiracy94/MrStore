@@ -8,7 +8,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from catalog import apps, report
+from catalog import apps, report, App
+from release_catalog import insecure_defaults
+from compatibility import inspect_app
 
 
 def environment(service):
@@ -95,6 +97,23 @@ class SecureDefaultsTests(unittest.TestCase):
         self.assertTrue(any(v.get("source") == "/DATA/AppData/healthchecks/config"
                             and v.get("target") == "/config"
                             for v in service["volumes"]))
+
+    def test_wildcard_hosts_are_quarantined_and_flagged(self):
+        app = self.items["homepage"]
+        import copy
+        src = copy.deepcopy(app.source)
+        service = src["services"]["homepage"]
+        service["environment"] = ["HOMEPAGE_ALLOWED_HOSTS=*"]
+        invalid = App(app.folder, app.path, src, src["x-casaos"])
+        self.assertTrue(any("wildcard host" in x for x in insecure_defaults(invalid)))
+        self.assertIn("wildcard_allowed_hosts",
+                      [x["code"] for x in inspect_app(invalid)["checks"]])
+        self.assertFalse(any("wildcard host" in x for x in insecure_defaults(app)))
+
+    def test_healthchecks_fixed_site_root_passes_url_check(self):
+        report = inspect_app(self.items["healthchecks"])
+        self.assertNotIn("public_url_port_mismatch", [x["code"] for x in report["checks"]])
+        self.assertEqual(report["status"], "configuration_required")
 
     def test_sensitive_mount_count_is_reduced_without_hiding_warnings(self):
         findings = report()["findings"]
