@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.libreoffice/assets/libreoffice.webp",
-  "tagline": "LibreOffice (LinuxServer.io)",
+  "tagline": "Suite de escritório para documentos e folhas de cálculo",
   "description": "LibreOffice — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/libreoffice:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-libreoffice/",
   "title": "LibreOffice",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.libreoffice",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

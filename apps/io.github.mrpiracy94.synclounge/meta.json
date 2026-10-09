@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.synclounge/assets/synclounge.webp",
-  "tagline": "SyncLounge (LinuxServer.io)",
+  "tagline": "Sessões de visualização conjunta de conteúdos",
   "description": "SyncLounge — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/synclounge:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-synclounge/",
   "title": "SyncLounge",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.synclounge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 57085572,
-    "arm64": 57775247
+    "amd64": 0,
+    "arm64": 0
   }
 }

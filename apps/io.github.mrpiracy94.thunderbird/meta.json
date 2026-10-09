@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.thunderbird/assets/thunderbird.webp",
-  "tagline": "Thunderbird (LinuxServer.io)",
+  "tagline": "Cliente de correio eletrónico e calendário",
   "description": "Thunderbird — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/thunderbird:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-thunderbird/",
   "title": "Thunderbird",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.thunderbird",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 1068421215,
-    "arm64": 1024772924
+    "amd64": 0,
+    "arm64": 0
   }
 }

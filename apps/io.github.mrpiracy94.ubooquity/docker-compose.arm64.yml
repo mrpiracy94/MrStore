@@ -1,7 +1,7 @@
 name: ubooquity
 services:
   ubooquity:
-    image: lscr.io/linuxserver/ubooquity:latest@sha256:e51d0ff22e09ef04557ddcbd3b9ead8057300c09a7bf95dceeb3f69026e84ab8
+    image: lscr.io/linuxserver/ubooquity:latest
     container_name: ubooquity
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ services:
         target: /comics
 x-casaos:
   id: io.github.mrpiracy94.ubooquity
-  version: "1.0.0"
+  version: "1.0.1"
   main: ubooquity
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ubooquity/assets/icon.png
   title:

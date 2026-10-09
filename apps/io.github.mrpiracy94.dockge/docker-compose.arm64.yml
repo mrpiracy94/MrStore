@@ -22,7 +22,7 @@ services:
         target: /DATA/AppData/dockge/stacks
 x-casaos:
   id: io.github.mrpiracy94.dockge
-  version: "1.0.0"
+  version: "1.0.1"
   main: dockge
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dockge/assets/icon.png
   title:

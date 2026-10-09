@@ -1,7 +1,7 @@
 name: vscodium
 services:
   vscodium:
-    image: lscr.io/linuxserver/vscodium:latest@sha256:7673d27b5b594f1d013ed1c95ada1d93d0fba45db3c0ef1b3adec1655b56939c
+    image: lscr.io/linuxserver/vscodium:latest
     container_name: vscodium
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.vscodium
-  version: "1.0.0"
+  version: "1.0.1"
   main: vscodium
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.vscodium/assets/icon.svg
   title:

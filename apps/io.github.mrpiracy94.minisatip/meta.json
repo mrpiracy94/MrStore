@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.minisatip/assets/icon.svg",
-  "tagline": "minisatip (LinuxServer.io)",
+  "tagline": "Distribui televisão por satélite na rede",
   "description": "minisatip — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/minisatip:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-minisatip/",
   "title": "minisatip",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.minisatip",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "networking"
   ],

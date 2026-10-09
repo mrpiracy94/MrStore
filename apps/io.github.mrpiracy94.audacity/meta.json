@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.audacity/assets/audacity.webp",
-  "tagline": "Audacity (LinuxServer.io)",
+  "tagline": "Gravação e edição de áudio",
   "description": "Audacity — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/audacity:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-audacity/",
   "title": "Audacity",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.audacity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

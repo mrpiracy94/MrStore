@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Social",
   "thumbnail": "/apps/io.github.mrpiracy94.znc/assets/znc.webp",
-  "tagline": "ZNC (LinuxServer.io)",
+  "tagline": "Bouncer IRC para manter sessões ligadas",
   "description": "ZNC — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/znc:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-znc/",
   "title": "ZNC",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.znc",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "social"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 26412767,
-    "arm64": 27172432
+    "amd64": 0,
+    "arm64": 0
   }
 }

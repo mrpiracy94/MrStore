@@ -1,7 +1,7 @@
 name: telegram
 services:
   telegram:
-    image: lscr.io/linuxserver/telegram:latest@sha256:439d5053e35ac2eb1d7077e48b603d88e060d34a494e04fef4af96b7ca944291
+    image: lscr.io/linuxserver/telegram:latest
     container_name: telegram
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.telegram
-  version: "1.0.0"
+  version: "1.0.1"
   main: telegram
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.telegram/assets/icon.png
   title:

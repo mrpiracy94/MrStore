@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Social",
   "thumbnail": "/apps/io.github.mrpiracy94.limnoria/assets/icon.svg",
-  "tagline": "Limnoria (LinuxServer.io)",
+  "tagline": "Bot IRC extensível e personalizável",
   "description": "Limnoria — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/limnoria:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-limnoria/",
   "title": "Limnoria",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.limnoria",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "social"
   ],

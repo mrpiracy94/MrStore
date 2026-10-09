@@ -16,7 +16,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.node-red
-  version: "1.0.0"
+  version: "1.0.1"
   main: node-red
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.node-red/assets/icon.png
   title:

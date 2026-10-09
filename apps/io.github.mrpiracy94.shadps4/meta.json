@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.shadps4/assets/icon.svg",
-  "tagline": "shadPS4 (LinuxServer.io)",
+  "tagline": "Emulador experimental de PlayStation 4",
   "description": "shadPS4 — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/shadps4:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-shadps4/",
   "title": "shadPS4",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.shadps4",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.projectsend/assets/projectsend.webp",
-  "tagline": "ProjectSend (LinuxServer.io)",
+  "tagline": "Partilha privada de ficheiros com clientes",
   "description": "ProjectSend — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/projectsend:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-projectsend/",
   "title": "ProjectSend",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.projectsend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

@@ -1,7 +1,7 @@
 name: xemu
 services:
   xemu:
-    image: lscr.io/linuxserver/xemu:latest@sha256:a363a96b09dd5ab8e91f2dc2d7bf540d04f63f94c15f6e7b893e18460704cf37
+    image: lscr.io/linuxserver/xemu:latest
     container_name: xemu
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.xemu
-  version: "1.0.0"
+  version: "1.0.1"
   main: xemu
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.xemu/assets/icon.svg
   title:

@@ -1,7 +1,7 @@
 name: zen
 services:
   zen:
-    image: lscr.io/linuxserver/zen:latest@sha256:64fb7d084e234d0b6cdbfacf7d43d6d2a2dcbec43a74a523b7c82d1037db7ae1
+    image: lscr.io/linuxserver/zen:latest
     container_name: zen
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.zen
-  version: "1.0.0"
+  version: "1.0.1"
   main: zen
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.zen/assets/icon.svg
   title:

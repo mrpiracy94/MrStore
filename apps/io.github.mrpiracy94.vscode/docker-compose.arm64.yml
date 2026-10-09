@@ -1,7 +1,7 @@
 name: vscode
 services:
   vscode:
-    image: lscr.io/linuxserver/vscode:latest@sha256:00725562f42cd5b0eaa777a102c1380550a95887ddb77f3856759990c44b648d
+    image: lscr.io/linuxserver/vscode:latest
     container_name: vscode
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.vscode
-  version: "1.0.0"
+  version: "1.0.1"
   main: vscode
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.vscode/assets/icon.png
   title:

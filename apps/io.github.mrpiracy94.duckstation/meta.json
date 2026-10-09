@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.duckstation/assets/icon.svg",
-  "tagline": "DuckStation (LinuxServer.io)",
+  "tagline": "Emulador da consola PlayStation 1",
   "description": "DuckStation — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/duckstation:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-duckstation/",
   "title": "DuckStation",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.duckstation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

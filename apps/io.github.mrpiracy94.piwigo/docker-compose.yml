@@ -21,7 +21,7 @@ services:
         target: /gallery
 x-casaos:
   id: io.github.mrpiracy94.piwigo
-  version: "1.0.0"
+  version: "1.0.1"
   main: piwigo
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.piwigo/assets/icon.png
   title:

@@ -1,7 +1,7 @@
 name: vivaldi
 services:
   vivaldi:
-    image: lscr.io/linuxserver/vivaldi:latest@sha256:076912300c8c946fdfcc6224dc5d0e378a16bf1f84972fd06271b2b3bd710f9d
+    image: lscr.io/linuxserver/vivaldi:latest
     container_name: vivaldi
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.vivaldi
-  version: "1.0.0"
+  version: "1.0.1"
   main: vivaldi
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.vivaldi/assets/icon.png
   title:

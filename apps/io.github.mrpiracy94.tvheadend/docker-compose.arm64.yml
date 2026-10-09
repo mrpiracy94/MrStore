@@ -1,7 +1,7 @@
 name: tvheadend
 services:
   tvheadend:
-    image: lscr.io/linuxserver/tvheadend:latest@sha256:230bfae75ada92b3765a19dba1b746344f34f1885d01d8e7d5192ee8f629533b
+    image: lscr.io/linuxserver/tvheadend:latest
     container_name: tvheadend
     restart: unless-stopped
     environment:
@@ -24,7 +24,7 @@ services:
         target: /recordings
 x-casaos:
   id: io.github.mrpiracy94.tvheadend
-  version: "1.0.0"
+  version: "1.0.1"
   main: tvheadend
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.tvheadend/assets/icon.png
   title:

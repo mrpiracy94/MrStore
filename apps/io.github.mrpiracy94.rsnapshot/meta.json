@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.rsnapshot/assets/icon.svg",
-  "tagline": "rsnapshot (LinuxServer.io)",
+  "tagline": "Backups incrementais com rsync",
   "description": "rsnapshot — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/rsnapshot:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-rsnapshot/",
   "title": "rsnapshot",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.rsnapshot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

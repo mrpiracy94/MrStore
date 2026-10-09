@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.mysql-workbench/assets/icon.svg",
-  "tagline": "MySQL Workbench (LinuxServer.io)",
+  "tagline": "Administração e modelação de bases de dados MySQL",
   "description": "MySQL Workbench — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/mysql-workbench:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-mysql-workbench/",
   "title": "MySQL Workbench",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.mysql-workbench",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "developer"
   ],

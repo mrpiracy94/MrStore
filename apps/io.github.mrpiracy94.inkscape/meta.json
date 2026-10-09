@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.inkscape/assets/icon.svg",
-  "tagline": "Inkscape (LinuxServer.io)",
+  "tagline": "Cria e edita gráficos vetoriais",
   "description": "Inkscape — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/inkscape:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-inkscape/",
   "title": "Inkscape",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.inkscape",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.transmission/assets/transmission.webp",
-  "tagline": "Transmission (LinuxServer.io)",
+  "tagline": "Cliente BitTorrent leve",
   "description": "Transmission — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/transmission:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-transmission/",
   "title": "Transmission",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.transmission",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "networking"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 34438404,
-    "arm64": 35479634
+    "amd64": 0,
+    "arm64": 0
   }
 }

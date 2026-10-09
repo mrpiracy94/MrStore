@@ -1,7 +1,7 @@
 name: ungoogled-chromium
 services:
   ungoogled-chromium:
-    image: lscr.io/linuxserver/ungoogled-chromium:latest@sha256:314396403d328f6b999e9124bfabffb9005dd556dd74aba40e8c27f50adf736b
+    image: lscr.io/linuxserver/ungoogled-chromium:latest
     container_name: ungoogled-chromium
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.ungoogled-chromium
-  version: "1.0.0"
+  version: "1.0.1"
   main: ungoogled-chromium
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ungoogled-chromium/assets/icon.svg
   title:

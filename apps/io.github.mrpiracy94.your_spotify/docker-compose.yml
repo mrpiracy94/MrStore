@@ -20,7 +20,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.your_spotify
-  version: "1.0.0"
+  version: "1.0.1"
   main: your_spotify
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.your_spotify/assets/icon.png
   title:

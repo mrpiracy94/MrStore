@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.openshot/assets/icon.svg",
-  "tagline": "OpenShot (LinuxServer.io)",
+  "tagline": "Editor de vídeo simples",
   "description": "OpenShot — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/openshot:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-openshot/",
   "title": "OpenShot",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.openshot",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

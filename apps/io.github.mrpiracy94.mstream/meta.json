@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.mstream/assets/mstream.webp",
-  "tagline": "mStream (LinuxServer.io)",
+  "tagline": "Servidor pessoal para ouvir música",
   "description": "mStream — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/mstream:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-mstream/",
   "title": "mStream",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.mstream",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],

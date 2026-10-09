@@ -1,7 +1,7 @@
 name: webtop
 services:
   webtop:
-    image: lscr.io/linuxserver/webtop:latest@sha256:c8c4f4516abce8f38b0c435948aea5d554ae197f66c03813c843ec22659265c6
+    image: lscr.io/linuxserver/webtop:latest
     container_name: webtop
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.webtop
-  version: "1.0.0"
+  version: "1.0.1"
   main: webtop
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.webtop/assets/icon.png
   title:

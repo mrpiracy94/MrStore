@@ -25,7 +25,7 @@ services:
         target: /opt
 x-casaos:
   id: io.github.mrpiracy94.kasm
-  version: "1.0.0"
+  version: "1.0.1"
   main: kasm
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.kasm/assets/icon.png
   title:

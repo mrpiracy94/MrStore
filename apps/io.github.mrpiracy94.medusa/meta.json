@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.medusa/assets/medusa.webp",
-  "tagline": "Medusa (LinuxServer.io)",
+  "tagline": "Acompanha e gere downloads de séries",
   "description": "Medusa — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/medusa:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-medusa/",
   "title": "Medusa",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.medusa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],

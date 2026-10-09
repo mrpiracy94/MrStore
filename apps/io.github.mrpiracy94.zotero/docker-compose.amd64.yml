@@ -1,7 +1,7 @@
 name: zotero
 services:
   zotero:
-    image: lscr.io/linuxserver/zotero:latest@sha256:824547c7adcbeece3280847ad2b06c4c43196ce66b492717f98b2fa5135bc301
+    image: lscr.io/linuxserver/zotero:latest
     container_name: zotero
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.zotero
-  version: "1.0.0"
+  version: "1.0.1"
   main: zotero
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.zotero/assets/icon.png
   title:

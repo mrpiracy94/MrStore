@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.lychee/assets/lychee.webp",
-  "tagline": "Lychee (LinuxServer.io)",
+  "tagline": "Galeria web para organizar fotografias",
   "description": "Lychee — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/lychee:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-lychee/",
   "title": "Lychee",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.lychee",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],

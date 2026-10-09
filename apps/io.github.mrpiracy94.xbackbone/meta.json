@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.xbackbone/assets/xbackbone.webp",
-  "tagline": "XBackBone (LinuxServer.io)",
+  "tagline": "Partilha ficheiros e capturas de ecrã",
   "description": "XBackBone — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/xbackbone:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-xbackbone/",
   "title": "XBackBone",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.xbackbone",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 49070397,
-    "arm64": 49640578
+    "amd64": 0,
+    "arm64": 0
   }
 }

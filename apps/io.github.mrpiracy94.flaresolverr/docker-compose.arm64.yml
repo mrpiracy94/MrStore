@@ -13,7 +13,7 @@ services:
         protocol: tcp
 x-casaos:
   id: io.github.mrpiracy94.flaresolverr
-  version: "1.0.0"
+  version: "1.0.1"
   main: flaresolverr
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.flaresolverr/assets/icon.png
   title:

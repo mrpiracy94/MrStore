@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.blender/assets/blender.webp",
-  "tagline": "Blender (LinuxServer.io)",
+  "tagline": "Modelação, animação e renderização 3D",
   "description": "Blender — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/blender:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-blender/",
   "title": "Blender",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.blender",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

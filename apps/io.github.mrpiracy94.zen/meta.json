@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.zen/assets/icon.svg",
-  "tagline": "Zen Browser (LinuxServer.io)",
+  "tagline": "Navegador Zen com foco em produtividade",
   "description": "Zen Browser — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/zen:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-zen/",
   "title": "Zen Browser",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.zen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 1136598976,
-    "arm64": 1077237792
+    "amd64": 0,
+    "arm64": 0
   }
 }

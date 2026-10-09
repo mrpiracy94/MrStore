@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.swag/assets/icon.svg",
-  "tagline": "SWAG (LinuxServer.io)",
+  "tagline": "Proxy reverso Nginx com certificados SSL",
   "description": "SWAG — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/swag:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-swag/",
   "title": "SWAG",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.swag",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "networking"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 162792697,
-    "arm64": 163162424
+    "amd64": 0,
+    "arm64": 0
   }
 }

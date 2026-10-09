@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.ardour/assets/icon.svg",
-  "tagline": "Ardour (LinuxServer.io)",
+  "tagline": "Gravação, edição e mistura de áudio",
   "description": "Ardour — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ardour:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ardour/",
   "title": "Ardour",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.ardour",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

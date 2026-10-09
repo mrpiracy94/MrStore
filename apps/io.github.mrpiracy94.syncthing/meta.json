@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.syncthing/assets/syncthing.webp",
-  "tagline": "Syncthing (LinuxServer.io)",
+  "tagline": "Sincroniza pastas entre dispositivos",
   "description": "Syncthing — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/syncthing:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-syncthing/",
   "title": "Syncthing",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.syncthing",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 25565435,
-    "arm64": 25766183
+    "amd64": 0,
+    "arm64": 0
   }
 }

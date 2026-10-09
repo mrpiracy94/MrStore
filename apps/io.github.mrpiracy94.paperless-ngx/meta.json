@@ -8,12 +8,12 @@
   "developer": "Paperless-ngx",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.paperless-ngx/assets/paperless-ngx.webp",
-  "tagline": "Arquivo de documentos com OCR",
+  "tagline": "Digitaliza e organiza documentos com OCR",
   "description": "Arquivo de documentos com OCR. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. O LinuxServer.io deixou de manter paperless-ngx; esta é a imagem oficial do projeto.",
   "title": "Paperless-ngx",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.paperless-ngx",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

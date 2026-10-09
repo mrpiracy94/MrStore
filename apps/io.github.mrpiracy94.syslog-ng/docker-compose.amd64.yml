@@ -1,7 +1,7 @@
 name: syslog-ng
 services:
   syslog-ng:
-    image: lscr.io/linuxserver/syslog-ng:latest@sha256:f5351f405ce8be2c99f2f8a8f9117d857436da8ed139b486a5bf2b71a1c19790
+    image: lscr.io/linuxserver/syslog-ng:latest
     container_name: syslog-ng
     restart: unless-stopped
     environment:
@@ -24,7 +24,7 @@ services:
         target: /var/log
 x-casaos:
   id: io.github.mrpiracy94.syslog-ng
-  version: "1.0.0"
+  version: "1.0.1"
   main: syslog-ng
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.syslog-ng/assets/icon.svg
   title:

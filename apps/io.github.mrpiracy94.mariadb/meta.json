@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.mariadb/assets/mariadb.webp",
-  "tagline": "MariaDB (LinuxServer.io)",
+  "tagline": "Servidor de base de dados relacional",
   "description": "MariaDB — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/mariadb:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-mariadb/",
   "title": "MariaDB",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.mariadb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "developer"
   ],

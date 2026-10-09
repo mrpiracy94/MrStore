@@ -14,7 +14,7 @@ services:
         target: /var/opt/memos
 x-casaos:
   id: io.github.mrpiracy94.memos
-  version: "1.0.0"
+  version: "1.0.1"
   main: memos
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.memos/assets/icon.png
   title:

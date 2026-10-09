@@ -1,7 +1,7 @@
 name: thunderbird
 services:
   thunderbird:
-    image: lscr.io/linuxserver/thunderbird:latest@sha256:4b779855ae0649ee415c6cc53ce6f246d729ad140c0e25d0c9177bf2dcf982fe
+    image: lscr.io/linuxserver/thunderbird:latest
     container_name: thunderbird
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.thunderbird
-  version: "1.0.0"
+  version: "1.0.1"
   main: thunderbird
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.thunderbird/assets/icon.png
   title:

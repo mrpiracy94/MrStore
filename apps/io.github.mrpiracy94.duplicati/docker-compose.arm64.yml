@@ -24,7 +24,7 @@ services:
         target: /source
 x-casaos:
   id: io.github.mrpiracy94.duplicati
-  version: "1.0.0"
+  version: "1.0.1"
   main: duplicati
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.duplicati/assets/icon.png
   title:

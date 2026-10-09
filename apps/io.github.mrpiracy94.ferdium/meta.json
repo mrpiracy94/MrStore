@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Social",
   "thumbnail": "/apps/io.github.mrpiracy94.ferdium/assets/ferdium.webp",
-  "tagline": "Ferdium (LinuxServer.io)",
+  "tagline": "Reúne mensagens e serviços numa só aplicação",
   "description": "Ferdium — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ferdium:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ferdium/",
   "title": "Ferdium",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.ferdium",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "social"
   ],

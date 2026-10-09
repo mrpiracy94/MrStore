@@ -19,7 +19,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.whisparr
-  version: "1.0.0"
+  version: "1.0.1"
   main: whisparr
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.whisparr/assets/icon.png
   title:

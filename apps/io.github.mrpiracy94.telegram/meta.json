@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Social",
   "thumbnail": "/apps/io.github.mrpiracy94.telegram/assets/telegram.webp",
-  "tagline": "Telegram (LinuxServer.io)",
+  "tagline": "Mensagens e conversas no Telegram",
   "description": "Telegram — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/telegram:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-telegram/",
   "title": "Telegram",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.telegram",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "social"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 1643876584,
-    "arm64": 1708995317
+    "amd64": 0,
+    "arm64": 0
   }
 }

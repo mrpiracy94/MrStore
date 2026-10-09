@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.helium/assets/icon.svg",
-  "tagline": "Helium (LinuxServer.io)",
+  "tagline": "Navegador web leve para o ambiente de trabalho",
   "description": "Helium — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/helium:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-helium/",
   "title": "Helium",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.helium",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

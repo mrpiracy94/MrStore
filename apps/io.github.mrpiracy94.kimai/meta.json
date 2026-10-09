@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.kimai/assets/kimai.webp",
-  "tagline": "Kimai (LinuxServer.io)",
+  "tagline": "Registo de tempo e gestão de projetos",
   "description": "Kimai — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kimai:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kimai/",
   "title": "Kimai",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.kimai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

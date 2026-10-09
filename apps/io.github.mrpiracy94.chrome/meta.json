@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.chrome/assets/chrome.webp",
-  "tagline": "Chrome (LinuxServer.io)",
+  "tagline": "Navegador Google Chrome no servidor",
   "description": "Chrome — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/chrome:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-chrome/",
   "title": "Chrome",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.chrome",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

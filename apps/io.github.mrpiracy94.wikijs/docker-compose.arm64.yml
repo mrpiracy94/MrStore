@@ -1,7 +1,7 @@
 name: wikijs
 services:
   wikijs:
-    image: lscr.io/linuxserver/wikijs:latest@sha256:977e142dfe0aea806873f28dc0f452c251749a610be72982fee8f5bd4c673930
+    image: lscr.io/linuxserver/wikijs:latest
     container_name: wikijs
     restart: unless-stopped
     environment:
@@ -24,7 +24,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.wikijs
-  version: "1.0.0"
+  version: "1.0.1"
   main: wikijs
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.wikijs/assets/icon.png
   title:

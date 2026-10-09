@@ -1,7 +1,7 @@
 name: transmission
 services:
   transmission:
-    image: lscr.io/linuxserver/transmission:latest@sha256:90193748b07ab2d0014c7b3cbc5310dec88c599aee477c50eac6c6ab0687f9cb
+    image: lscr.io/linuxserver/transmission:latest
     container_name: transmission
     restart: unless-stopped
     environment:
@@ -30,7 +30,7 @@ services:
         target: /watch
 x-casaos:
   id: io.github.mrpiracy94.transmission
-  version: "1.0.0"
+  version: "1.0.1"
   main: transmission
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.transmission/assets/icon.png
   title:

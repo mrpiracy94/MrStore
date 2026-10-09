@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.smokeping/assets/smokeping.webp",
-  "tagline": "SmokePing (LinuxServer.io)",
+  "tagline": "Monitorização de latência e perdas de rede",
   "description": "SmokePing — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/smokeping:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-smokeping/",
   "title": "SmokePing",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.smokeping",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "networking"
   ],

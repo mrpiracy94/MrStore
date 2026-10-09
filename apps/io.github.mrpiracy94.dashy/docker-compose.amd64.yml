@@ -14,7 +14,7 @@ services:
         target: /app/user-data
 x-casaos:
   id: io.github.mrpiracy94.dashy
-  version: "1.0.0"
+  version: "1.0.1"
   main: dashy
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dashy/assets/icon.png
   title:

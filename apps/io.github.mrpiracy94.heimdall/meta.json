@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.heimdall/assets/heimdall.webp",
-  "tagline": "Heimdall (LinuxServer.io)",
+  "tagline": "Painel de acesso aos serviços do servidor",
   "description": "Heimdall — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/heimdall:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-heimdall/",
   "title": "Heimdall",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.heimdall",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],
