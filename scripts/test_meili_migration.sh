@@ -79,3 +79,15 @@ docker run -d --name "$new_name" -p 127.0.0.1:17700:7700 \
 ready
 check_document
 echo "PASS: bookmark persisted after migration and second restart of new Meilisearch."
+
+# Test that a pre-upgrade backup can actually restore the original version.
+docker stop "$new_name" >/dev/null
+docker rm "$new_name" >/dev/null
+sudo rm -rf "$db_dir"
+sudo cp -a "$backup_dir" "$db_dir"
+docker run -d --name "$old_name" -p 127.0.0.1:17700:7700 \
+  -e "MEILI_MASTER_KEY=$key" -v "$db_dir:/meili_data" \
+  getmeili/meilisearch:v1.13.3 >/dev/null
+ready
+check_document
+echo "PASS: pre-upgrade backup restored and opened by original Meilisearch."
