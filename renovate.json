@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "docker-compose"
+  ],
+  "dependencyDashboard": true,
+  "prConcurrentLimit": 5,
+  "docker-compose": {
+    "managerFilePatterns": [
+      "/(^|/)Apps/[^/]+/docker-compose\\.yml$/"
+    ]
+  },
+  "packageRules": [
+    {
+      "matchManagers": [
+        "docker-compose"
+      ],
+      "automerge": false
+    }
+  ]
+}
