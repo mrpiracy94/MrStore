@@ -1,0 +1,55 @@
+name: Verify Paperless Redis Alpine security migration
+on:
+  pull_request:
+    paths:
+      - 'Apps/paperless-ngx/docker-compose.yml'
+      - '.github/workflows/verify-paperless-redis.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan official Redis 8 Alpine on AMD64
+        run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --exit-code 1 --format json --timeout 12m --output redis-amd64.json docker.io/library/redis:8-alpine
+      - name: Scan official Redis 8 Alpine on ARM64
+        run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --exit-code 1 --format json --timeout 12m --output redis-arm64.json docker.io/library/redis:8-alpine
+      - name: Verify Redis 8 database survives Debian to Alpine switch
+        run: |
+          set -euo pipefail
+          data="$(mktemp -d)"
+          chmod 777 "$data"
+          cleanup() { docker rm -f redis-pre redis-post >/dev/null 2>&1 || true; sudo rm -rf "$data"; }
+          trap cleanup EXIT
+          docker run -d --name redis-pre -v "$data:/data" redis:8
+          for attempt in $(seq 1 40); do
+            if docker exec redis-pre redis-cli ping | grep -qx PONG; then break; fi
+            sleep 1
+          done
+          docker exec redis-pre redis-cli SET mrstore-migration "preserved" | grep -qx OK
+          docker exec redis-pre redis-cli SAVE | grep -qx OK
+          docker stop redis-pre
+          docker rm redis-pre
+          docker run -d --name redis-post -v "$data:/data" redis:8-alpine
+          for attempt in $(seq 1 40); do
+            if docker exec redis-post redis-cli ping | grep -qx PONG; then break; fi
+            sleep 1
+          done
+          [ "$(docker exec redis-post redis-cli GET mrstore-migration)" = "preserved" ]
+          echo "Redis persisted key survives switching Debian to Alpine within Redis major version 8."
+      - name: Preserve scan evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paperless-redis-security-report
+          path: |
+            redis-amd64.json
+            redis-arm64.json
+          if-no-files-found: warn

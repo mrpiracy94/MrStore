@@ -68,7 +68,7 @@ services:
           description:
             en_US: /usr/src/paperless/consume
   paperless-broker:
-    image: docker.io/library/redis:8
+    image: docker.io/library/redis:8-alpine
     container_name: paperless-broker
     restart: unless-stopped
     volumes:
@@ -85,7 +85,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.paperless-ngx
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -101,6 +101,6 @@ x-casaos:
   tagline:
     en_US: "Arquivo de documentos com OCR"
   description:
-    en_US: "Arquivo de documentos com OCR. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. O LinuxServer.io deixou de manter paperless-ngx; esta é a imagem oficial do projeto."
+    en_US: "Arquivo de documentos com OCR. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. O LinuxServer.io deixou de manter paperless-ngx; esta é a imagem oficial do projeto. O broker Redis utiliza a variante Alpine da mesma versão principal 8; mantém /DATA/AppData/paperless/redis como diretório persistente. Faz backup do Redis antes de atualizar."
   port_map: "30020"
   index: /
