@@ -16,6 +16,7 @@ from catalog import ROOT, apps, image_usage
 from cves import shard_images
 from curate_taglines import load_summaries, render_manifest
 from release_scan import image_platforms
+from image_freshness import RETIRED_UPSTREAM
 
 HEX = re.compile(r"^[a-f0-9]{64}$")
 DANGEROUS_SOURCE = {"/", "/etc", "/root", "/var/run/docker.sock", "/run/docker.sock"}
@@ -101,6 +102,12 @@ def insecure_defaults(app) -> list[str]:
             value = spec.get(setting)
             if value is True and setting == "privileged" or value == "host":
                 flags.append(f"{service}: unsafe {setting}")
+        # An officially discontinued/unavailable upstream must never be published
+        # just because a vulnerability scanner finds no known issues.
+        image_ref = spec.get("image")
+        if image_ref in RETIRED_UPSTREAM:
+            flags.append(f"{service}: discontinued upstream image {image_ref}; "
+                         f"see {RETIRED_UPSTREAM[image_ref]}")
         if spec.get("cap_add") or spec.get("devices"):
             flags.append(f"{service}: privileged devices/capabilities require manual approval")
         if any("seccomp:unconfined" in str(x) for x in (spec.get("security_opt") or [])):
