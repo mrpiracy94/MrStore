@@ -73,6 +73,20 @@ Criar backups antes de qualquer teste de upgrade. Não instalar imagens com risc
 
 O bloqueio de CVEs deve ser respeitado antes de usar estas imagens de terceiros.
 
+## BookStack — instalação assistida (não é one-click)
+
+A entrada BookStack utiliza a imagem oficial da LinuxServer.io, mas **não inclui MariaDB/MySQL**. Antes de instalar, é preciso disponibilizar uma base de dados existente, acessível pelo container, e configurar pelo ZimaOS os campos DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD e DB_DATABASE. Não assumes que uma base de dados instalada como aplicação separada fica automaticamente na mesma rede Docker.
+
+- A UI é HTTP na porta **20026**; substitui o hostname de exemplo em APP_URL pelo nome/domínio real.
+- Gera uma **APP_KEY** privada compatível com Laravel. Por exemplo, na tua máquina: `python -c 'import base64,secrets; print("base64:"+base64.b64encode(secrets.token_bytes(32)).decode())'`. Não partilhes a chave.
+- Substitui todos os placeholders CHANGE_ME. Usa um utilizador de base de dados dedicado com permissões apenas sobre a base BookStack.
+- Se APP_URL mudar numa instalação existente, verifica a ferramenta oficial BookStack para atualizar URLs guardados; fazer backup da base e de /config antes de executar migrações.
+- Após configurar, testa instalação, login, criação de uma página e reinício com dados persistentes, num ZimaOS de teste e após análise de CVEs.
+
+Esta correção melhora as definições de instalação, mas **a app continua não comprovada em runtime**. Não interpretar sucesso do parser Docker como validação da base de dados externa.
+
+Documentação upstream: https://docs.linuxserver.io/images/docker-bookstack/
+
 ## Registo de evidência (sem dados sensíveis)
 
     App: actual-budget
@@ -95,5 +109,6 @@ Mudanças de imagem, arquitetura, manifest ou ZimaOS pedem revalidação.
 - **Nextcloud:** a imagem LinuxServer.io expõe HTTPS na porta interna 443; a MrStore publica essa porta como 20019. Foi adicionada a configuração scheme: https, ainda a comprovar no NAS.
 - **Karakeep:** NEXTAUTH_URL foi alinhada com a porta 30002, mas o hostname de exemplo zimaos.local tem de ser ajustado para o hostname ou domínio real do NAS.
 - **Serviços sem UI:** port_map de zero é uma indicação headless, não um endpoint HTTP.
+- **BookStack:** depende de MariaDB/MySQL externos e APP_KEY/APP_URL específicos; encontra-se em modo de instalação assistida, não one-click.
 
 Fontes: https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/compose-and-x-casaos.md e https://docs.linuxserver.io/images/docker-nextcloud/
