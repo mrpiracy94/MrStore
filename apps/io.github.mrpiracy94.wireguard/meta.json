@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Networking",
+  "thumbnail": "/apps/io.github.mrpiracy94.wireguard/assets/wireguard.webp",
+  "tagline": "WireGuard (LinuxServer.io)",
+  "description": "WireGuard — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/wireguard:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-wireguard/",
+  "title": "WireGuard",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.wireguard",
+  "version": "1.0.0",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 40705385,
+    "arm64": 39445042
+  }
+}

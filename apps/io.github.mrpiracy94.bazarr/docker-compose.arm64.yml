@@ -1,0 +1,33 @@
+name: bazarr
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest@sha256:e2ad47d5bcc6acbb0ea617a339348ad158ecaf04e6dff694d64d8f770ed4df61
+    container_name: bazarr
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6767
+        published: "6767"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/bazarr/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /tv
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /movies
+x-casaos:
+  id: io.github.mrpiracy94.bazarr
+  version: "1.0.0"
+  main: bazarr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.bazarr/assets/icon.png
+  title:
+    en_US: "Bazarr"
+  port_map: "6767"
+  index: /

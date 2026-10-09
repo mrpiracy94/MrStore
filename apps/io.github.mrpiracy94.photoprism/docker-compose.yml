@@ -1,0 +1,29 @@
+name: photoprism
+services:
+  photoprism:
+    image: photoprism/photoprism:latest
+    container_name: photoprism
+    restart: unless-stopped
+    environment:
+      - "PHOTOPRISM_ADMIN_PASSWORD=CHANGE_ME"
+      - "PHOTOPRISM_SITE_URL=http://zimaos.local:2342/"
+    ports:
+      - target: 2342
+        published: "2342"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/photoprism/storage
+        target: /photoprism/storage
+      - type: bind
+        source: /DATA/Gallery/originals
+        target: /photoprism/originals
+x-casaos:
+  id: io.github.mrpiracy94.photoprism
+  version: "1.0.0"
+  main: photoprism
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.photoprism/assets/icon.png
+  title:
+    en_US: "PhotoPrism"
+  port_map: "2342"
+  index: /

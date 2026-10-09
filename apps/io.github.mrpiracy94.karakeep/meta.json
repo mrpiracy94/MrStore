@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "Karakeep",
+  "category": "Productivity",
+  "thumbnail": "/apps/io.github.mrpiracy94.karakeep/assets/karakeep.webp",
+  "tagline": "Guarda tudo: bookmarks, notas, imagens (com IA opcional)",
+  "description": "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. MEILI_MASTER_KEY tem de ser igual nos dois serviços. A tag da imagem meilisearch/chrome é do compose de referência; confirma se há versão mais recente.",
+  "title": "Karakeep",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.karakeep",
+  "version": "1.0.0",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 607131773,
+    "arm64": 589250423
+  }
+}

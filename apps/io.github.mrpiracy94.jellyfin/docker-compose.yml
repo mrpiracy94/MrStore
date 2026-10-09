@@ -1,0 +1,42 @@
+name: jellyfin
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8096
+        published: "8096"
+        protocol: tcp
+      - target: 8920
+        published: "8920"
+        protocol: tcp
+      - target: 7359
+        published: "7359"
+        protocol: udp
+      - target: 1900
+        published: "1901"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/jellyfin/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /data/tvshows
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /data/movies
+x-casaos:
+  id: io.github.mrpiracy94.jellyfin
+  version: "1.0.0"
+  main: jellyfin
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.jellyfin/assets/icon.png
+  title:
+    en_US: "Jellyfin"
+  port_map: "8096"
+  index: /

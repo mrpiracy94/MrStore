@@ -1,0 +1,32 @@
+name: gluetun
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest@sha256:f73e5025afde6c0542044426d4823794ca083e717e65afe5501dc34693ea7588
+    container_name: gluetun
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - "VPN_SERVICE_PROVIDER=CHANGE_ME"
+      - "VPN_TYPE=wireguard"
+      - "WIREGUARD_PRIVATE_KEY=CHANGE_ME"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8888
+        published: "30019"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/gluetun
+        target: /gluetun
+x-casaos:
+  id: io.github.mrpiracy94.gluetun
+  version: "1.0.0"
+  main: gluetun
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.gluetun/assets/icon.png
+  title:
+    en_US: "Gluetun"
+  port_map: "0"
+  index: /

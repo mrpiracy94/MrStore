@@ -1,0 +1,33 @@
+name: sonarr-4k
+services:
+  sonarr-4k:
+    image: lscr.io/linuxserver/sonarr:latest@sha256:8416db4409b57b9eb1b83afca159af11fa4b8d79cbf4a656a2d64cc3f310b1a0
+    container_name: sonarr-4k
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8989
+        published: "20067"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/sonarr-4k/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV4K
+        target: /tv
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.sonarr-4k
+  version: "1.0.0"
+  main: sonarr-4k
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.sonarr-4k/assets/icon.png
+  title:
+    en_US: "Sonarr 4K"
+  port_map: "20067"
+  index: /

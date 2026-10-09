@@ -1,0 +1,23 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.blade-of-agony/assets/icon.svg",
+  "tagline": "Blade of Agony (LinuxServer.io)",
+  "description": "Blade of Agony — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/blade-of-agony:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-blade-of-agony/",
+  "title": "Blade of Agony",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.blade-of-agony",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 1762249744
+  }
+}

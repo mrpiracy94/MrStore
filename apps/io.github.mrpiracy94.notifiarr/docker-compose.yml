@@ -1,0 +1,25 @@
+name: notifiarr
+services:
+  notifiarr:
+    image: golift/notifiarr:latest
+    container_name: notifiarr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5454
+        published: "5454"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/notifiarr
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.notifiarr
+  version: "1.0.0"
+  main: notifiarr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.notifiarr/assets/icon.png
+  title:
+    en_US: "Notifiarr"
+  port_map: "5454"
+  index: /

@@ -1,0 +1,30 @@
+name: nextcloud
+services:
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest@sha256:f77303e8d1a149a23c16e4253b710a4e47d3d5d686384f5717fe7823fbeb3984
+    container_name: nextcloud
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 443
+        published: "20019"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nextcloud/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/nextcloud/data
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.nextcloud
+  version: "1.0.0"
+  main: nextcloud
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.nextcloud/assets/icon.png
+  title:
+    en_US: "Nextcloud"
+  port_map: "20019"
+  index: /

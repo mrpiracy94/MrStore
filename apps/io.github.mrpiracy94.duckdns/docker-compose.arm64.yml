@@ -1,0 +1,25 @@
+name: duckdns
+services:
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest@sha256:2783d4dfff39e1322af8317f34e3a403b86cd9354369fa081ded831167255771
+    container_name: duckdns
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "SUBDOMAINS=sub"
+      - "TOKEN=CHANGE_ME"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/duckdns/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.duckdns
+  version: "1.0.0"
+  main: duckdns
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.duckdns/assets/icon.png
+  title:
+    en_US: "DuckDNS"
+  port_map: "0"
+  index: /

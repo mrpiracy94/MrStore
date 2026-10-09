@@ -1,0 +1,37 @@
+name: netbox
+services:
+  netbox:
+    image: lscr.io/linuxserver/netbox:latest@sha256:105bf8285a090704b13c12b77c0b45a07e9c3ad74a6bfa7c04e85de28d566140
+    container_name: netbox
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "SUPERUSER_EMAIL=admin@example.com"
+      - "SUPERUSER_PASSWORD=CHANGE_ME"
+      - "ALLOWED_HOST=*"
+      - "DB_NAME=netbox"
+      - "DB_USER=netbox"
+      - "DB_PASSWORD=CHANGE_ME"
+      - "DB_HOST=netbox_db"
+      - "DB_PORT=5432"
+      - "REDIS_HOST=netbox_redis"
+      - "REDIS_PORT=6379"
+    ports:
+      - target: 8000
+        published: "20048"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/netbox/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.netbox
+  version: "1.0.0"
+  main: netbox
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.netbox/assets/icon.png
+  title:
+    en_US: "NetBox"
+  port_map: "20048"
+  index: /

@@ -1,0 +1,40 @@
+name: rutorrent
+services:
+  rutorrent:
+    image: crazymax/rtorrent-rutorrent:latest
+    container_name: rutorrent
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8080
+        published: "20060"
+        protocol: tcp
+      - target: 8000
+        published: "20061"
+        protocol: tcp
+      - target: 9000
+        published: "20062"
+        protocol: tcp
+      - target: 50000
+        published: "50000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/rutorrent/data
+        target: /data
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+      - type: bind
+        source: /DATA/AppData/rutorrent/passwd
+        target: /passwd
+x-casaos:
+  id: io.github.mrpiracy94.rutorrent
+  version: "1.0.0"
+  main: rutorrent
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.rutorrent/assets/icon.png
+  title:
+    en_US: "ruTorrent (rTorrent)"
+  port_map: "20060"
+  index: /

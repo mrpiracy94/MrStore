@@ -1,0 +1,31 @@
+name: code-server
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest@sha256:962e701cec5a19a9808083e9ea6e51b54e42832e737dc97ec52a74f37e8a9dfb
+    container_name: code-server
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "DEFAULT_WORKSPACE=/workspace"
+    ports:
+      - target: 8443
+        published: "20045"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/code-server/config
+        target: /config
+      - type: bind
+        source: /DATA/Workspace
+        target: /workspace
+x-casaos:
+  id: io.github.mrpiracy94.code-server
+  version: "1.0.0"
+  main: code-server
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.code-server/assets/icon.png
+  title:
+    en_US: "code-server"
+  port_map: "20045"
+  index: /

@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "nicolargo",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.glances/assets/glances.webp",
+  "tagline": "Glances (seedit4.me catalog)",
+  "description": "Glances — origem: seedit4.me catalog. Imagem: nicolargo/glances:latest-full. Verifica portas/variáveis na documentação do projeto.",
+  "title": "Glances",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.glances",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 153786942,
+    "arm64": 150610580
+  }
+}

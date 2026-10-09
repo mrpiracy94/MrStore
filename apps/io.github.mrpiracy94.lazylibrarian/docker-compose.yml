@@ -1,0 +1,33 @@
+name: lazylibrarian
+services:
+  lazylibrarian:
+    image: lscr.io/linuxserver/lazylibrarian:latest
+    container_name: lazylibrarian
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5299
+        published: "5299"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lazylibrarian/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Books
+        target: /books
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.lazylibrarian
+  version: "1.0.0"
+  main: lazylibrarian
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lazylibrarian/assets/icon.png
+  title:
+    en_US: "LazyLibrarian"
+  port_map: "5299"
+  index: /

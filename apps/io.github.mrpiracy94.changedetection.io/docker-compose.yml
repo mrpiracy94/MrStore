@@ -1,0 +1,30 @@
+name: changedetection.io
+services:
+  changedetection.io:
+    image: lscr.io/linuxserver/changedetection.io:latest
+    container_name: changedetection.io
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5000
+        published: "20033"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/changedetection.io/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/changedetection.io/datastore
+        target: /datastore
+x-casaos:
+  id: io.github.mrpiracy94.changedetection.io
+  version: "1.0.0"
+  main: changedetection.io
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.changedetection.io/assets/icon.png
+  title:
+    en_US: "changedetection.io"
+  port_map: "20033"
+  index: /

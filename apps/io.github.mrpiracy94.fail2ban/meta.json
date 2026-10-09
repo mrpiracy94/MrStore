@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Networking",
+  "thumbnail": "/apps/io.github.mrpiracy94.fail2ban/assets/fail2ban.webp",
+  "tagline": "Fail2ban (LinuxServer.io)",
+  "description": "Fail2ban — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/fail2ban:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-fail2ban/",
+  "title": "Fail2ban",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.fail2ban",
+  "version": "1.0.0",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 30542799,
+    "arm64": 31632604
+  }
+}

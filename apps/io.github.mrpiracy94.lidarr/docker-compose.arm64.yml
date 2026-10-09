@@ -1,0 +1,33 @@
+name: lidarr
+services:
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest@sha256:1110d041bc7243932c45a50655fc318b7f5cae07e1ee9c683f24a5798f12fbda
+    container_name: lidarr
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8686
+        published: "8686"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lidarr/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.lidarr
+  version: "1.0.0"
+  main: lidarr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lidarr/assets/icon.png
+  title:
+    en_US: "Lidarr"
+  port_map: "8686"
+  index: /

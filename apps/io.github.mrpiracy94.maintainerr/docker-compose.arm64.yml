@@ -1,0 +1,25 @@
+name: maintainerr
+services:
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:latest@sha256:6dbbe8b1223bceb2334b61b3e39bc5642e9562edfc31accc1b271d80cf0dabf4
+    container_name: maintainerr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6246
+        published: "6246"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/maintainerr
+        target: /opt/data
+x-casaos:
+  id: io.github.mrpiracy94.maintainerr
+  version: "1.0.0"
+  main: maintainerr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.maintainerr/assets/icon.png
+  title:
+    en_US: "Maintainerr"
+  port_map: "6246"
+  index: /

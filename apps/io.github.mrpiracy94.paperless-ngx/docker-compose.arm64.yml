@@ -1,0 +1,49 @@
+name: paperless-ngx
+services:
+  paperless-ngx:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:aac93e419be76893c7da8b6a40d4814a0419d2a1462bb841ef2781fd601ce268
+    container_name: paperless-ngx
+    restart: unless-stopped
+    depends_on:
+      - paperless-broker
+    environment:
+      - "PAPERLESS_REDIS=redis://paperless-broker:6379"
+      - "PAPERLESS_SECRET_KEY=CHANGE_ME"
+      - "PAPERLESS_TIME_ZONE=Europe/Lisbon"
+      - "PAPERLESS_OCR_LANGUAGE=por+eng"
+      - "USERMAP_UID=1000"
+      - "USERMAP_GID=1000"
+    ports:
+      - target: 8000
+        published: "30020"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/paperless/data
+        target: /usr/src/paperless/data
+      - type: bind
+        source: /DATA/AppData/paperless/media
+        target: /usr/src/paperless/media
+      - type: bind
+        source: /DATA/AppData/paperless/export
+        target: /usr/src/paperless/export
+      - type: bind
+        source: /DATA/Documents/consume
+        target: /usr/src/paperless/consume
+  paperless-broker:
+    image: docker.io/library/redis:7@sha256:7e180df929e2aa87c71fd61838e7775ebab7e7e7a08e438045fbeaa123960320
+    container_name: paperless-broker
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/paperless/redis
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.paperless-ngx
+  version: "1.0.0"
+  main: paperless-ngx
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.paperless-ngx/assets/icon.png
+  title:
+    en_US: "Paperless-ngx"
+  port_map: "30020"
+  index: /

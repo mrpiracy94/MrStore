@@ -1,0 +1,25 @@
+name: searxng
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    restart: unless-stopped
+    environment:
+      - "BASE_URL=http://zimaos.local:8080/"
+    ports:
+      - target: 8080
+        published: "30014"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/searxng
+        target: /etc/searxng
+x-casaos:
+  id: io.github.mrpiracy94.searxng
+  version: "1.0.0"
+  main: searxng
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.searxng/assets/icon.png
+  title:
+    en_US: "SearXNG"
+  port_map: "30014"
+  index: /

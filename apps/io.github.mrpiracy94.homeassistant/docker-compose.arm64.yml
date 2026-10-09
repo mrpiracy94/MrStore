@@ -1,0 +1,24 @@
+name: homeassistant
+services:
+  homeassistant:
+    image: lscr.io/linuxserver/homeassistant:latest@sha256:719ec1a90b4b01f37e901e13e13f84fa354f87e286ca528d0477770368e8ada6
+    container_name: homeassistant
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    network_mode: host
+    volumes:
+      - type: bind
+        source: /DATA/AppData/homeassistant/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.homeassistant
+  version: "1.0.0"
+  main: homeassistant
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.homeassistant/assets/icon.svg
+  title:
+    en_US: "Home Assistant"
+  port_map: "8123"
+  index: /

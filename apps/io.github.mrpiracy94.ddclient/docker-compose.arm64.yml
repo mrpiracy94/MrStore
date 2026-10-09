@@ -1,0 +1,23 @@
+name: ddclient
+services:
+  ddclient:
+    image: lscr.io/linuxserver/ddclient:latest@sha256:9f72a6dd8bdef0a8aa6e52d939e3bbedc1053117fb99719864922ed1e9c2391c
+    container_name: ddclient
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ddclient/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.ddclient
+  version: "1.0.0"
+  main: ddclient
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ddclient/assets/icon.png
+  title:
+    en_US: "ddclient"
+  port_map: "0"
+  index: /

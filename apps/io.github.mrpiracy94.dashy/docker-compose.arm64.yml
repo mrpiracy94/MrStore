@@ -1,0 +1,23 @@
+name: dashy
+services:
+  dashy:
+    image: lissy93/dashy:latest@sha256:1d5cfd521b5a654f22b251fe2abca5df978926274c94440b0a26e61d2a682740
+    container_name: dashy
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "30008"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/dashy
+        target: /app/user-data
+x-casaos:
+  id: io.github.mrpiracy94.dashy
+  version: "1.0.0"
+  main: dashy
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dashy/assets/icon.png
+  title:
+    en_US: "Dashy"
+  port_map: "30008"
+  index: /

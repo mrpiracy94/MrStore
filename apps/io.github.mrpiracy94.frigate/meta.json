@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "Frigate",
+  "category": "Home",
+  "thumbnail": "/apps/io.github.mrpiracy94.frigate/assets/frigate.webp",
+  "tagline": "NVR com deteção de objetos",
+  "description": "NVR com deteção de objetos. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. Precisa de config.yml com as tuas câmaras. Aceleração por hardware exige mapear dispositivos (ver docs).",
+  "title": "Frigate",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.frigate",
+  "version": "1.0.0",
+  "categories": [
+    "home"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 2155679115,
+    "arm64": 1554962785
+  }
+}

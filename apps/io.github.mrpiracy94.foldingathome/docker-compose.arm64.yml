@@ -1,0 +1,27 @@
+name: foldingathome
+services:
+  foldingathome:
+    image: lscr.io/linuxserver/foldingathome:latest@sha256:eabef26427006254e98708c0e48f362a6570cd92d1e1d3140ff2b37a33482eeb
+    container_name: foldingathome
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 7396
+        published: "7396"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/foldingathome/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.foldingathome
+  version: "1.0.0"
+  main: foldingathome
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.foldingathome/assets/icon.png
+  title:
+    en_US: "Folding@home"
+  port_map: "7396"
+  index: /

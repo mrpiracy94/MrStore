@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Media",
+  "thumbnail": "/apps/io.github.mrpiracy94.lazylibrarian/assets/lazylibrarian.webp",
+  "tagline": "LazyLibrarian (LinuxServer.io)",
+  "description": "LazyLibrarian — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/lazylibrarian:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-lazylibrarian/",
+  "title": "LazyLibrarian",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.lazylibrarian",
+  "version": "1.0.0",
+  "categories": [
+    "media"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 185345891,
+    "arm64": 181022670
+  }
+}

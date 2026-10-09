@@ -1,0 +1,34 @@
+name: gzdoom
+services:
+  gzdoom:
+    image: lscr.io/linuxserver/gzdoom:latest@sha256:d06afbe8abee65b1226b4b8943e7806d0af311021c2a0ea861a24d6190cef37a
+    container_name: gzdoom
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=GZDoom"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21068"
+        protocol: tcp
+      - target: 3001
+        published: "21069"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/gzdoom/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.gzdoom
+  version: "1.0.0"
+  main: gzdoom
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.gzdoom/assets/icon.svg
+  title:
+    en_US: "GZDoom"
+  port_map: "21068"
+  index: /

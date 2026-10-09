@@ -1,0 +1,34 @@
+name: dosbox-staging
+services:
+  dosbox-staging:
+    image: lscr.io/linuxserver/dosbox-staging:latest
+    container_name: dosbox-staging
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=DOSBox Staging"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21044"
+        protocol: tcp
+      - target: 3001
+        published: "21045"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/dosbox-staging/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.dosbox-staging
+  version: "1.0.0"
+  main: dosbox-staging
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dosbox-staging/assets/icon.svg
+  title:
+    en_US: "DOSBox Staging"
+  port_map: "21044"
+  index: /

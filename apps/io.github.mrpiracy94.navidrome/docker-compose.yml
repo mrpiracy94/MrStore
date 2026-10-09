@@ -1,0 +1,28 @@
+name: navidrome
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 4533
+        published: "4533"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/navidrome/data
+        target: /data
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+x-casaos:
+  id: io.github.mrpiracy94.navidrome
+  version: "1.0.0"
+  main: navidrome
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.navidrome/assets/icon.png
+  title:
+    en_US: "Navidrome"
+  port_map: "4533"
+  index: /

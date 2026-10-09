@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.sealskin/assets/icon.svg",
+  "tagline": "SealSkin (LinuxServer.io)",
+  "description": "SealSkin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/sealskin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-sealskin/",
+  "title": "SealSkin",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.sealskin",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 72875357,
+    "arm64": 71649138
+  }
+}

@@ -1,0 +1,25 @@
+name: organizr
+services:
+  organizr:
+    image: organizr/organizr:latest
+    container_name: organizr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20066"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/organizr/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.organizr
+  version: "1.0.0"
+  main: organizr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.organizr/assets/icon.png
+  title:
+    en_US: "Organizr"
+  port_map: "20066"
+  index: /

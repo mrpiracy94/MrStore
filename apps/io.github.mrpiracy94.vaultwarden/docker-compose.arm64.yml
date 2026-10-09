@@ -1,0 +1,26 @@
+name: vaultwarden
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest@sha256:dfaefaea21028ea3024b708330b0aed27c4a448a49a3e174e49962f3e0789fc4
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+      - "SIGNUPS_ALLOWED=false"
+    ports:
+      - target: 80
+        published: "30003"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/vaultwarden
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.vaultwarden
+  version: "1.0.0"
+  main: vaultwarden
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.vaultwarden/assets/icon.png
+  title:
+    en_US: "Vaultwarden"
+  port_map: "30003"
+  index: /

@@ -1,0 +1,30 @@
+name: mstream
+services:
+  mstream:
+    image: lscr.io/linuxserver/mstream:latest@sha256:42bc24e7eb0184dfc2c2740cf0cb27a714c18a5934fb4ee1692f6c604fa7dba2
+    container_name: mstream
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "3000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mstream/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+x-casaos:
+  id: io.github.mrpiracy94.mstream
+  version: "1.0.0"
+  main: mstream
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mstream/assets/icon.png
+  title:
+    en_US: "mStream"
+  port_map: "3000"
+  index: /

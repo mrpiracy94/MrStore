@@ -1,0 +1,30 @@
+name: nzbhydra2
+services:
+  nzbhydra2:
+    image: lscr.io/linuxserver/nzbhydra2:latest@sha256:036bc211a3b0d5526f97a2c8e15917faf44d8812780a5f783799ee23c85642dd
+    container_name: nzbhydra2
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5076
+        published: "5076"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nzbhydra2/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.nzbhydra2
+  version: "1.0.0"
+  main: nzbhydra2
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.nzbhydra2/assets/icon.png
+  title:
+    en_US: "NZBHydra2"
+  port_map: "5076"
+  index: /

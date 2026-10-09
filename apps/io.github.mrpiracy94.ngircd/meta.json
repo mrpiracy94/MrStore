@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Social",
+  "thumbnail": "/apps/io.github.mrpiracy94.ngircd/assets/icon.svg",
+  "tagline": "ngIRCd (LinuxServer.io)",
+  "description": "ngIRCd — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ngircd:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ngircd/",
+  "title": "ngIRCd",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.ngircd",
+  "version": "1.0.0",
+  "categories": [
+    "social"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 12401013,
+    "arm64": 13422671
+  }
+}

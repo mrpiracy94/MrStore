@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.gzdoom/assets/icon.svg",
+  "tagline": "GZDoom (LinuxServer.io)",
+  "description": "GZDoom — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/gzdoom:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-gzdoom/",
+  "title": "GZDoom",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.gzdoom",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 994481479,
+    "arm64": 957198635
+  }
+}

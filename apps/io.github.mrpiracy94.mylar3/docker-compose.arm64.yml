@@ -1,0 +1,33 @@
+name: mylar3
+services:
+  mylar3:
+    image: lscr.io/linuxserver/mylar3:latest@sha256:787f5ec71092cb24bb0fed4f2f04da22f6a1047fdac42d2fd1bb6d99fc33da67
+    container_name: mylar3
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8090
+        published: "8090"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mylar3/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Comics
+        target: /comics
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.mylar3
+  version: "1.0.0"
+  main: mylar3
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mylar3/assets/icon.svg
+  title:
+    en_US: "Mylar3"
+  port_map: "8090"
+  index: /

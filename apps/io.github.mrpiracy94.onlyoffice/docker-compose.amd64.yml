@@ -1,0 +1,27 @@
+name: onlyoffice
+services:
+  onlyoffice:
+    image: lscr.io/linuxserver/onlyoffice:latest@sha256:aef2468d158f61efffbe5c1df524e4e3c685271248133193f7f5eb3ae0153c5f
+    container_name: onlyoffice
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20020"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/onlyoffice/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.onlyoffice
+  version: "1.0.0"
+  main: onlyoffice
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.onlyoffice/assets/icon.png
+  title:
+    en_US: "ONLYOFFICE"
+  port_map: "20020"
+  index: /

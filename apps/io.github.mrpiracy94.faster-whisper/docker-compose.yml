@@ -1,0 +1,29 @@
+name: faster-whisper
+services:
+  faster-whisper:
+    image: lscr.io/linuxserver/faster-whisper:latest
+    container_name: faster-whisper
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "WHISPER_MODEL=tiny-int8"
+      - "WHISPER_LANG=en"
+    ports:
+      - target: 10300
+        published: "10300"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/faster-whisper/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.faster-whisper
+  version: "1.0.0"
+  main: faster-whisper
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.faster-whisper/assets/icon.svg
+  title:
+    en_US: "Faster Whisper"
+  port_map: "10300"
+  index: /

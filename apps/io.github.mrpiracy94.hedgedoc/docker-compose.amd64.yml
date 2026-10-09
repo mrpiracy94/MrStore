@@ -1,0 +1,35 @@
+name: hedgedoc
+services:
+  hedgedoc:
+    image: lscr.io/linuxserver/hedgedoc:latest@sha256:aacca8939a307e6f76f9d84ab045148772b33ca00d6081ea78c33c2021718478
+    container_name: hedgedoc
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "DB_HOST=hedgedoc_db"
+      - "DB_PORT=3306"
+      - "DB_USER=hedgedoc"
+      - "DB_PASS=CHANGE_ME"
+      - "DB_NAME=hedgedoc"
+      - "CMD_DOMAIN=localhost"
+      - "CMD_URL_ADDPORT=false"
+      - "CMD_PROTOCOL_USESSL=false"
+    ports:
+      - target: 3000
+        published: "20029"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/hedgedoc/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.hedgedoc
+  version: "1.0.0"
+  main: hedgedoc
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.hedgedoc/assets/icon.png
+  title:
+    en_US: "HedgeDoc"
+  port_map: "20029"
+  index: /

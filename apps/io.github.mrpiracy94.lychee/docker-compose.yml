@@ -1,0 +1,30 @@
+name: lychee
+services:
+  lychee:
+    image: lscr.io/linuxserver/lychee:latest
+    container_name: lychee
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20024"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lychee/config
+        target: /config
+      - type: bind
+        source: /DATA/Gallery
+        target: /pictures
+x-casaos:
+  id: io.github.mrpiracy94.lychee
+  version: "1.0.0"
+  main: lychee
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lychee/assets/icon.png
+  title:
+    en_US: "Lychee"
+  port_map: "20024"
+  index: /

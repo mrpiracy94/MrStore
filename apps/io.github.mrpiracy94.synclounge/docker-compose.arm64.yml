@@ -1,0 +1,27 @@
+name: synclounge
+services:
+  synclounge:
+    image: lscr.io/linuxserver/synclounge:latest@sha256:b39ce5e6363c6f7d7b0512190c3f19cd9d2d91fd116957e91ea050047cb9d103
+    container_name: synclounge
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8088
+        published: "8088"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/synclounge/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.synclounge
+  version: "1.0.0"
+  main: synclounge
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.synclounge/assets/icon.png
+  title:
+    en_US: "SyncLounge"
+  port_map: "8088"
+  index: /

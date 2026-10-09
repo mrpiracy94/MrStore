@@ -1,0 +1,27 @@
+name: tautulli
+services:
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest@sha256:b8f0c6d11fc9b2f21fc4c2cbecb6781b7ec46778294af44e8fb571ce8aa61b71
+    container_name: tautulli
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8181
+        published: "8181"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/tautulli/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.tautulli
+  version: "1.0.0"
+  main: tautulli
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.tautulli/assets/icon.png
+  title:
+    en_US: "Tautulli"
+  port_map: "8181"
+  index: /

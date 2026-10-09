@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "Dashy",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.dashy/assets/dashy.webp",
+  "tagline": "Dashboard",
+  "description": "Dashboard. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "title": "Dashy",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.dashy",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 122599819,
+    "arm64": 122010911
+  }
+}

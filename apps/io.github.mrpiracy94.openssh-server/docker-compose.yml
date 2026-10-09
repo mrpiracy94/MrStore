@@ -1,0 +1,29 @@
+name: openssh-server
+services:
+  openssh-server:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: openssh-server
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "PASSWORD_ACCESS=true"
+      - "USER_NAME=admin"
+    ports:
+      - target: 2222
+        published: "2222"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/openssh-server/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.openssh-server
+  version: "1.0.0"
+  main: openssh-server
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.openssh-server/assets/icon.svg
+  title:
+    en_US: "OpenSSH Server"
+  port_map: "2222"
+  index: /

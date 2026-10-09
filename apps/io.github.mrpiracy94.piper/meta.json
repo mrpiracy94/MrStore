@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.piper/assets/icon.svg",
+  "tagline": "Piper (LinuxServer.io)",
+  "description": "Piper — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/piper:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-piper/",
+  "title": "Piper",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.piper",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 167951646,
+    "arm64": 165228199
+  }
+}

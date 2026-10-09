@@ -1,0 +1,19 @@
+name: cloudflared
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest@sha256:a5c66be962694a4828d54c59b9b673194a109807bcee7445ff5b8d281059cfe4
+    container_name: cloudflared
+    restart: unless-stopped
+    command: ["tunnel", "--no-autoupdate", "run"]
+    environment:
+      - "TUNNEL_TOKEN=CHANGE_ME"
+
+x-casaos:
+  id: io.github.mrpiracy94.cloudflared
+  version: "1.0.0"
+  main: cloudflared
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.cloudflared/assets/icon.png
+  title:
+    en_US: "Cloudflared"
+  port_map: "0"
+  index: /

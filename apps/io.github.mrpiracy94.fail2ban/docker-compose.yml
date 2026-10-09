@@ -1,0 +1,25 @@
+name: fail2ban
+services:
+  fail2ban:
+    image: lscr.io/linuxserver/fail2ban:latest
+    container_name: fail2ban
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - type: bind
+        source: /DATA/AppData/fail2ban/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.fail2ban
+  version: "1.0.0"
+  main: fail2ban
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.fail2ban/assets/icon.png
+  title:
+    en_US: "Fail2ban"
+  port_map: "0"
+  index: /

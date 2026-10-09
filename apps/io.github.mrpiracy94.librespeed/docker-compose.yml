@@ -1,0 +1,27 @@
+name: librespeed
+services:
+  librespeed:
+    image: lscr.io/linuxserver/librespeed:latest
+    container_name: librespeed
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20009"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/librespeed/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.librespeed
+  version: "1.0.0"
+  main: librespeed
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.librespeed/assets/icon.png
+  title:
+    en_US: "LibreSpeed"
+  port_map: "20009"
+  index: /

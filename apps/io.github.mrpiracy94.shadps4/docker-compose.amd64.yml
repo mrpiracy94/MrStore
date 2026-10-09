@@ -1,0 +1,34 @@
+name: shadps4
+services:
+  shadps4:
+    image: lscr.io/linuxserver/shadps4:latest@sha256:1b7261a67bb6ba22b272051e94f588feaa0bf3715b67a0c60e07aac913cc1464
+    container_name: shadps4
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=shadPS4"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21138"
+        protocol: tcp
+      - target: 3001
+        published: "21139"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/shadps4/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.shadps4
+  version: "1.0.0"
+  main: shadps4
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.shadps4/assets/icon.svg
+  title:
+    en_US: "shadPS4"
+  port_map: "21138"
+  index: /

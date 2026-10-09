@@ -1,0 +1,27 @@
+name: minisatip
+services:
+  minisatip:
+    image: lscr.io/linuxserver/minisatip:latest@sha256:afc616dec98f65cb1ef25f16bb0bc72e268cc1e58ec89b483c54e6665d26b8ac
+    container_name: minisatip
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8875
+        published: "8875"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/minisatip/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.minisatip
+  version: "1.0.0"
+  main: minisatip
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.minisatip/assets/icon.svg
+  title:
+    en_US: "minisatip"
+  port_map: "8875"
+  index: /

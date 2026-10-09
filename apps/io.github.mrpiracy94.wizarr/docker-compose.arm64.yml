@@ -1,0 +1,25 @@
+name: wizarr
+services:
+  wizarr:
+    image: ghcr.io/wizarrrr/wizarr:latest@sha256:1b5d1b638546000683bc09a9ab73fc5b1d9daf43428a703dacf7ae193c4cb7fe
+    container_name: wizarr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5690
+        published: "5690"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/wizarr
+        target: /data/database
+x-casaos:
+  id: io.github.mrpiracy94.wizarr
+  version: "1.0.0"
+  main: wizarr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.wizarr/assets/icon.png
+  title:
+    en_US: "Wizarr"
+  port_map: "5690"
+  index: /

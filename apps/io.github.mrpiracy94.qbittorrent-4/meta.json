@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Networking",
+  "thumbnail": "/apps/io.github.mrpiracy94.qbittorrent-4/assets/qbittorrent.webp",
+  "tagline": "qBittorrent 4.x (seedit4.me catalog (versão 4))",
+  "description": "qBittorrent 4.x — origem: seedit4.me catalog (versão 4). Imagem: lscr.io/linuxserver/qbittorrent:4.6.7. Verifica portas/variáveis na documentação do projeto.",
+  "title": "qBittorrent 4.x",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.qbittorrent-4",
+  "version": "1.0.0",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 85357821,
+    "arm64": 85829728
+  }
+}

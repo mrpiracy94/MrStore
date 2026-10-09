@@ -1,0 +1,30 @@
+name: gitea
+services:
+  gitea:
+    image: docker.io/gitea/gitea:latest
+    container_name: gitea
+    restart: unless-stopped
+    environment:
+      - "USER_UID=1000"
+      - "USER_GID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "30000"
+        protocol: tcp
+      - target: 22
+        published: "30001"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/gitea
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.gitea
+  version: "1.0.0"
+  main: gitea
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.gitea/assets/icon.png
+  title:
+    en_US: "Gitea"
+  port_map: "30000"
+  index: /

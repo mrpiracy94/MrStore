@@ -1,0 +1,29 @@
+name: mosquitto
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: mosquitto
+    restart: unless-stopped
+    ports:
+      - target: 1883
+        published: "1883"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mosquitto/config
+        target: /mosquitto/config
+      - type: bind
+        source: /DATA/AppData/mosquitto/data
+        target: /mosquitto/data
+      - type: bind
+        source: /DATA/AppData/mosquitto/log
+        target: /mosquitto/log
+x-casaos:
+  id: io.github.mrpiracy94.mosquitto
+  version: "1.0.0"
+  main: mosquitto
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mosquitto/assets/icon.png
+  title:
+    en_US: "Mosquitto"
+  port_map: "1883"
+  index: /

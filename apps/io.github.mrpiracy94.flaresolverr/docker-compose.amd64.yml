@@ -1,0 +1,22 @@
+name: flaresolverr
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest@sha256:4ad0ed7de64622f9823594bf7bc237149158fca881f875aafbdd8456f6467134
+    container_name: flaresolverr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+      - "LOG_LEVEL=info"
+    ports:
+      - target: 8191
+        published: "8191"
+        protocol: tcp
+x-casaos:
+  id: io.github.mrpiracy94.flaresolverr
+  version: "1.0.0"
+  main: flaresolverr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.flaresolverr/assets/icon.png
+  title:
+    en_US: "FlareSolverr"
+  port_map: "8191"
+  index: /

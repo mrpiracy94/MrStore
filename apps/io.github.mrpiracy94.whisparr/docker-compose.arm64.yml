@@ -1,0 +1,28 @@
+name: whisparr
+services:
+  whisparr:
+    image: ghcr.io/hotio/whisparr:latest@sha256:62506622cd5fc900cf7b66f0562e1f1fc47e61d15f60bf7a3f411734f9c12dde
+    container_name: whisparr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6969
+        published: "6969"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/whisparr/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.whisparr
+  version: "1.0.0"
+  main: whisparr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.whisparr/assets/icon.png
+  title:
+    en_US: "Whisparr"
+  port_map: "6969"
+  index: /

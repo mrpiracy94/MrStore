@@ -1,0 +1,36 @@
+name: resilio-sync
+services:
+  resilio-sync:
+    image: lscr.io/linuxserver/resilio-sync:latest
+    container_name: resilio-sync
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8888
+        published: "8888"
+        protocol: tcp
+      - target: 55555
+        published: "55555"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/resilio-sync/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+      - type: bind
+        source: /DATA/Sync
+        target: /sync
+x-casaos:
+  id: io.github.mrpiracy94.resilio-sync
+  version: "1.0.0"
+  main: resilio-sync
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.resilio-sync/assets/icon.svg
+  title:
+    en_US: "Resilio Sync"
+  port_map: "8888"
+  index: /

@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "SearXNG",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.searxng/assets/searxng.webp",
+  "tagline": "Metamotor de pesquisa privado",
+  "description": "Metamotor de pesquisa privado. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "title": "SearXNG",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.searxng",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 98239310,
+    "arm64": 96007821
+  }
+}

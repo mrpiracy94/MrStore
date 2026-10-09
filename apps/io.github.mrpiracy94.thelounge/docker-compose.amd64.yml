@@ -1,0 +1,27 @@
+name: thelounge
+services:
+  thelounge:
+    image: lscr.io/linuxserver/thelounge:latest@sha256:4b04a07538d1b0c68a4eb42a3e21cb28e71fb9ca351c33b8c79299dd1d2f6c16
+    container_name: thelounge
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 9000
+        published: "9000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/thelounge/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.thelounge
+  version: "1.0.0"
+  main: thelounge
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.thelounge/assets/icon.png
+  title:
+    en_US: "The Lounge"
+  port_map: "9000"
+  index: /

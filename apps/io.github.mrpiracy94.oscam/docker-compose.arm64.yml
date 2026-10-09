@@ -1,0 +1,27 @@
+name: oscam
+services:
+  oscam:
+    image: lscr.io/linuxserver/oscam:latest@sha256:bed9e53e309cc6c1fc03202c91c5beaecaf0ee9a45d14ad5a91aa81c2d9b400c
+    container_name: oscam
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8888
+        published: "20052"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/oscam/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.oscam
+  version: "1.0.0"
+  main: oscam
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.oscam/assets/icon.svg
+  title:
+    en_US: "OSCam"
+  port_map: "20052"
+  index: /

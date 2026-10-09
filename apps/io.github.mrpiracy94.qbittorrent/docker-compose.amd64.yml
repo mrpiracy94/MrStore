@@ -1,0 +1,37 @@
+name: qbittorrent
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest@sha256:b111319eb7fb541edc2b1c1df9cf82e68cfffd694caa9ed5e8a0eb78a5112533
+    container_name: qbittorrent
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "WEBUI_PORT=8080"
+    ports:
+      - target: 8080
+        published: "8080"
+        protocol: tcp
+      - target: 6881
+        published: "6881"
+        protocol: tcp
+      - target: 6881
+        published: "6881"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/qbittorrent/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.qbittorrent
+  version: "1.0.0"
+  main: qbittorrent
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.qbittorrent/assets/icon.png
+  title:
+    en_US: "qBittorrent"
+  port_map: "8080"
+  index: /

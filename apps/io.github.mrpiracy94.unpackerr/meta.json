@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "Golift",
+  "category": "Networking",
+  "thumbnail": "/apps/io.github.mrpiracy94.unpackerr/assets/unpackerr.webp",
+  "tagline": "Unpackerr (seedit4.me catalog)",
+  "description": "Unpackerr — origem: seedit4.me catalog. Imagem: golift/unpackerr:latest. Verifica portas/variáveis na documentação do projeto.",
+  "title": "Unpackerr",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.unpackerr",
+  "version": "1.0.0",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 14592673,
+    "arm64": 14537731
+  }
+}

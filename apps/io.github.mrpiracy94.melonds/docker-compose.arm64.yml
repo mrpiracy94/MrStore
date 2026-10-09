@@ -1,0 +1,34 @@
+name: melonds
+services:
+  melonds:
+    image: lscr.io/linuxserver/melonds:latest@sha256:c879f476ec9f8d5cdb1dae3049e5781f5eaa9f18b4ec18b2621b367ae5a77651
+    container_name: melonds
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=melonDS"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21098"
+        protocol: tcp
+      - target: 3001
+        published: "21099"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/melonds/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.melonds
+  version: "1.0.0"
+  main: melonds
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.melonds/assets/icon.svg
+  title:
+    en_US: "melonDS"
+  port_map: "21098"
+  index: /

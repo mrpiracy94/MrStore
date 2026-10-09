@@ -1,0 +1,28 @@
+name: jdownloader
+services:
+  jdownloader:
+    image: jlesage/jdownloader-2:latest@sha256:b5e40d7e313f43db2a02124949703c45c4e28d45db601236010f3db71ac2d39f
+    container_name: jdownloader
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5800
+        published: "5800"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/jdownloader/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /output
+x-casaos:
+  id: io.github.mrpiracy94.jdownloader
+  version: "1.0.0"
+  main: jdownloader
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.jdownloader/assets/icon.png
+  title:
+    en_US: "JDownloader 2"
+  port_map: "5800"
+  index: /

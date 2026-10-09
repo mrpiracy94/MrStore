@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Home",
+  "thumbnail": "/apps/io.github.mrpiracy94.homeassistant/assets/icon.svg",
+  "tagline": "Home Assistant (LinuxServer.io)",
+  "description": "Home Assistant — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/homeassistant:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-homeassistant/",
+  "title": "Home Assistant",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.homeassistant",
+  "version": "1.0.0",
+  "categories": [
+    "home"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 720327036,
+    "arm64": 707538596
+  }
+}

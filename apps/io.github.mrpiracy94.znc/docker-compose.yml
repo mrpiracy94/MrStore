@@ -1,0 +1,27 @@
+name: znc
+services:
+  znc:
+    image: lscr.io/linuxserver/znc:latest
+    container_name: znc
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6501
+        published: "6501"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/znc/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.znc
+  version: "1.0.0"
+  main: znc
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.znc/assets/icon.png
+  title:
+    en_US: "ZNC"
+  port_map: "6501"
+  index: /

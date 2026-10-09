@@ -1,0 +1,23 @@
+name: memos
+services:
+  memos:
+    image: neosmemo/memos:stable@sha256:75fb9be48500b56541d3499cba4264082b1258c89efabe3d473c1c3ebee02e2b
+    container_name: memos
+    restart: unless-stopped
+    ports:
+      - target: 5230
+        published: "5230"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/memos
+        target: /var/opt/memos
+x-casaos:
+  id: io.github.mrpiracy94.memos
+  version: "1.0.0"
+  main: memos
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.memos/assets/icon.png
+  title:
+    en_US: "Memos"
+  port_map: "5230"
+  index: /

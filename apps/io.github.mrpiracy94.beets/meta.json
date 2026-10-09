@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Media",
+  "thumbnail": "/apps/io.github.mrpiracy94.beets/assets/beets.webp",
+  "tagline": "Beets (LinuxServer.io)",
+  "description": "Beets — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/beets:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-beets/",
+  "title": "Beets",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.beets",
+  "version": "1.0.0",
+  "categories": [
+    "media"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 236933816,
+    "arm64": 228123030
+  }
+}

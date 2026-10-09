@@ -1,0 +1,30 @@
+name: projectsend
+services:
+  projectsend:
+    image: lscr.io/linuxserver/projectsend:latest
+    container_name: projectsend
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20021"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/projectsend/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/projectsend/data
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.projectsend
+  version: "1.0.0"
+  main: projectsend
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.projectsend/assets/icon.png
+  title:
+    en_US: "ProjectSend"
+  port_map: "20021"
+  index: /

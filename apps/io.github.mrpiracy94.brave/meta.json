@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Productivity",
+  "thumbnail": "/apps/io.github.mrpiracy94.brave/assets/brave.webp",
+  "tagline": "Brave (LinuxServer.io)",
+  "description": "Brave — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/brave:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-brave/",
+  "title": "Brave",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.brave",
+  "version": "1.0.0",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 1195783948,
+    "arm64": 1153672410
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Networking",
+  "thumbnail": "/apps/io.github.mrpiracy94.unifi-network-application/assets/icon.svg",
+  "tagline": "UniFi Network Application (LinuxServer.io)",
+  "description": "UniFi Network Application — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/unifi-network-application:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-unifi-network-application/",
+  "title": "UniFi Network Application",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.unifi-network-application",
+  "version": "1.0.0",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 312007511,
+    "arm64": 310949475
+  }
+}

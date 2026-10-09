@@ -1,0 +1,23 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.pcsx2/assets/icon.svg",
+  "tagline": "PCSX2 (LinuxServer.io)",
+  "description": "PCSX2 — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/pcsx2:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-pcsx2/",
+  "title": "PCSX2",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.pcsx2",
+  "version": "1.0.0",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 1027835493
+  }
+}

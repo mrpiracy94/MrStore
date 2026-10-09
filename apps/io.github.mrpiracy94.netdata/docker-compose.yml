@@ -1,0 +1,43 @@
+name: netdata
+services:
+  netdata:
+    image: netdata/netdata:stable
+    container_name: netdata
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    ports:
+      - target: 19999
+        published: "19999"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/netdata/config
+        target: /etc/netdata
+      - type: bind
+        source: /DATA/AppData/netdata/lib
+        target: /var/lib/netdata
+      - type: bind
+        source: /DATA/AppData/netdata/cache
+        target: /var/cache/netdata
+      - type: bind
+        source: /proc
+        target: /host/proc
+        read_only: true
+      - type: bind
+        source: /sys
+        target: /host/sys
+        read_only: true
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+x-casaos:
+  id: io.github.mrpiracy94.netdata
+  version: "1.0.0"
+  main: netdata
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.netdata/assets/icon.png
+  title:
+    en_US: "Netdata"
+  port_map: "19999"
+  index: /
