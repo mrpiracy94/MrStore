@@ -171,7 +171,7 @@ def stage(source: Path, evidence: dict, destination: Path, summaries: dict) -> d
     return result
 
 
-def verify_published(dist: Path, selected: dict) -> None:
+def verify_published(dist: Path, selected: dict, staged: Path | None = None) -> None:
     index = json.loads((dist / "index.json").read_text(encoding="utf-8"))
     published = index.get("apps", [])
     if len(published) != selected["approved_count"]:
@@ -183,9 +183,17 @@ def verify_published(dist: Path, selected: dict) -> None:
     for app_id in actual:
         compose = dist / "apps" / app_id / "docker-compose.yml"
         content = yaml.safe_load(compose.read_text(encoding="utf-8"))
-        for spec in content["services"].values():
-            if not isinstance(spec.get("image"), str) or "@sha256:" not in spec["image"]:
-                raise ValueError(f"{app_id}: published container not immutable")
+        images = {key: spec.get("image") for key, spec in content["services"].items()}
+        if any(not isinstance(image, str) or "@sha256:" not in image
+               for image in images.values()):
+            raise ValueError(f"{app_id}: published container not immutable")
+        if staged is not None:
+            folder = app_id.removeprefix("io.github.mrpiracy94.")
+            intended = yaml.safe_load((staged / "Apps" / folder /
+                                      "docker-compose.yml").read_text(encoding="utf-8"))
+            expected_images = {name: spec["image"] for name, spec in intended["services"].items()}
+            if images != expected_images:
+                raise ValueError(f"{app_id}: published images differ from approved scanned digests")
 
 
 def main() -> int:
