@@ -42,6 +42,18 @@ Configurações perigosas e segredos predefinidos também impedem a aprovação 
 - Os scans dependem de acesso a registries e bases de dados Trivy; erros são **falhas**, não resultados limpos.
 - `x-casaos.version` e `content_hash` controlam atualizações do catálogo, não upgrades automáticos dos containers.
 
+## Visibilidade de atualizações nativas no ZimaOS
+
+A atualização do catálogo e o aviso nativo para apps **instaladas** são
+operações diferentes. `scripts/zimaos_update_visibility.py` verifica, sem
+instalar nada, os riscos conhecidos do ZimaOS 1.7.1: ausência de `RepoDigests`
+(#591) e nomes de contentores diferentes do serviço principal (#592).
+A Action `Validate MrStore` publica o relatório offline; opcionalmente,
+a mesma ferramenta inspeciona uma app **já instalada**, em modo de leitura.
+Consulte [diagnóstico e instruções](docs/ZIMAOS_UPDATE_VISIBILITY.md).
+Nenhuma revisão de `x-casaos.version` obriga o sistema operativo a oferecer
+um upgrade quando existe um bug no gestor nativo.
+
 ## Compatibilidade comprovada no ZimaOS
 
 O catálogo de 254 apps publicado em formato v2 e os testes de CI **não são** equivalentes a instalações comprovadas num ZimaOS real.
