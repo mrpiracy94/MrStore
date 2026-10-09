@@ -18,13 +18,13 @@ jobs:
         with:
           version: v0.75.0
       - name: Scan official Redis 8 Alpine on AMD64
-        run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --exit-code 1 --format json --timeout 12m --output redis-amd64.json docker.io/library/redis:8-alpine
+        run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --exit-code 1 --format json --timeout 12m --output redis-amd64.json docker.io/library/redis:8-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0
       - name: Scan official Redis 8 Alpine on ARM64
-        run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --exit-code 1 --format json --timeout 12m --output redis-arm64.json docker.io/library/redis:8-alpine
+        run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --exit-code 1 --format json --timeout 12m --output redis-arm64.json docker.io/library/redis:8-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0
       - name: Record immutable multi-architecture image digest
         run: |
           set -euo pipefail
-          docker buildx imagetools inspect docker.io/library/redis:8-alpine | tee redis-digest.txt
+          docker buildx imagetools inspect docker.io/library/redis:8-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0 | tee redis-digest.txt
           digest="$(awk '/^Digest:/ {print $2; exit}' redis-digest.txt)"
           [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]]
           echo "Redis 8 Alpine image digest: $digest" >> "$GITHUB_STEP_SUMMARY"
@@ -44,7 +44,7 @@ jobs:
           docker exec redis-pre redis-cli SAVE | grep -qx OK
           docker stop redis-pre
           docker rm redis-pre
-          docker run -d --name redis-post -v "$data:/data" redis:8-alpine
+          docker run -d --name redis-post -v "$data:/data" "docker.io/library/redis:8-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0"
           for attempt in $(seq 1 40); do
             if docker exec redis-post redis-cli ping | grep -qx PONG; then break; fi
             sleep 1
