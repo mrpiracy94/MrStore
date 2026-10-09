@@ -7,7 +7,9 @@ import argparse
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 import subprocess
+import time
 from catalog import ROOT, apps, image_usage
 
 
@@ -17,38 +19,85 @@ def shard_images(images: dict | list, shard: int, shards: int) -> list[str]:
     return [image for i, image in enumerate(sorted(images)) if i % shards == shard]
 
 
+# Limit transient registry requests instead of mistaking them for safe images.
+# The remote-only source avoids false containerd socket errors in Actions.
+RETRYABLE = re.compile(
+    r'TOOMANYREQUESTS|429\\b|rate.?limit|retry.after|timeout|timed out|'
+    r'connection reset|unexpected EOF|TLS handshake|context deadline|'
+    r'temporar(?:y|ily) unavailable|connection refused|502 Bad Gateway|'
+    r'503 Service Unavailable|504 Gateway Timeout',
+    re.IGNORECASE,
+)
+MAX_ATTEMPTS = 3
+BACKOFF_SECONDS = (12, 36)
+
+
 def scan(image: str, binary: str = 'trivy') -> tuple[list[dict], str | None]:
     args = [binary, 'image', '--quiet', '--scanners', 'vuln', '--severity', 'HIGH,CRITICAL',
-            '--format', 'json', '--timeout', '6m', image]
-    try:
-        p = subprocess.run(args, capture_output=True, text=True, check=False, timeout=440)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        return [], str(exc)
-    if p.returncode:
-        return [], (p.stderr or f'Trivy exited {p.returncode}').strip()[-400:]
-    try:
-        report = json.loads(p.stdout)
-    except ValueError:
-        return [], 'Invalid Trivy JSON output'
-    if not isinstance(report, dict) or not isinstance(report.get('Results'), list):
-        return [], 'Incomplete Trivy report (missing Results)'
-    hits = []
-    seen = set()
-    for result in report['Results']:
-        if not isinstance(result, dict):
-            continue
-        for item in result.get('Vulnerabilities') or []:
-            if item.get('Severity') not in ('HIGH', 'CRITICAL'):
-                continue
-            key = (item.get('VulnerabilityID'), item.get('PkgName'), item.get('InstalledVersion'), result.get('Target'))
-            if key in seen:
-                continue
-            seen.add(key)
-            hits.append({'cve': item.get('VulnerabilityID'), 'severity': item.get('Severity'),
-                         'package': item.get('PkgName'), 'installed': item.get('InstalledVersion'),
-                         'fixed': item.get('FixedVersion'), 'target': result.get('Target'),
-                         'url': item.get('PrimaryURL')})
-    return hits, None
+            '--image-src', 'remote', '--parallel', '2',
+            '--format', 'json', '--timeout', '8m', image]
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            p = subprocess.run(args, capture_output=True, text=True, check=False, timeout=550)
+            if p.returncode:
+                error = (p.stderr or p.stdout or f'Trivy exited {p.returncode}').strip()[-900:]
+            else:
+                try:
+                    report = json.loads(p.stdout)
+                except ValueError:
+                    return [], 'Invalid Trivy JSON output'
+                if not isinstance(report, dict) or not isinstance(report.get('Results'), list):
+                    return [], 'Incomplete Trivy report (missing Results)'
+                hits = []
+                seen = set()
+                for result in report['Results']:
+                    if not isinstance(result, dict):
+                        continue
+                    for item in result.get('Vulnerabilities') or []:
+                        if item.get('Severity') not in ('HIGH', 'CRITICAL'):
+                            continue
+                        key = (item.get('VulnerabilityID'), item.get('PkgName'),
+                               item.get('InstalledVersion'), result.get('Target'))
+                        if key in seen:
+                            continue
+                        seen.add(key)
+                        hits.append({'cve': item.get('VulnerabilityID'),
+                                     'severity': item.get('Severity'),
+                                     'package': item.get('PkgName'),
+                                     'installed': item.get('InstalledVersion'),
+                                     'fixed': item.get('FixedVersion'),
+                                     'target': result.get('Target'),
+                                     'url': item.get('PrimaryURL')})
+                return hits, None
+        except subprocess.TimeoutExpired as exc:
+            error = str(exc)
+        except OSError as exc:
+            return [], str(exc)
+
+        if attempt == MAX_ATTEMPTS or not RETRYABLE.search(error):
+            return [], f'Trivy failed ({attempt}/{MAX_ATTEMPTS} attempts): {error}'
+        seconds = BACKOFF_SECONDS[attempt - 1]
+        print(f'Trivy transient error on {image} ({attempt}/{MAX_ATTEMPTS}); '
+              f'retrying after {seconds}s', flush=True)
+        time.sleep(seconds)
+
+    raise AssertionError('Unreachable retry state')
+
+
+def select_images(usage: dict[str, list[str]], images_file: Path | None) -> list[str]:
+    if images_file is None:
+        return sorted(usage)
+    requested = json.loads(images_file.read_text(encoding='utf-8'))
+    if not isinstance(requested, list) or not requested or any(
+        not isinstance(image, str) for image in requested
+    ):
+        raise ValueError('Image subset must be a non-empty JSON list of strings')
+    if len(set(requested)) != len(requested):
+        raise ValueError('Image subset contains duplicate references')
+    unknown = sorted(set(requested) - usage.keys())
+    if unknown:
+        raise ValueError(f'Subset includes images no longer in catalog: {unknown}')
+    return sorted(requested)
 
 
 def evaluate(usage: dict[str,list[str]], chosen: list[str], scanner=scan) -> dict:
@@ -109,13 +158,14 @@ def audit_exit_status(report: dict) -> int:
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument('--root', type=Path, default=ROOT)
+    p.add_argument('--images-file', type=Path, help='Optional explicit image subset for diagnosis')
     p.add_argument('--shards', type=int, default=8)
     p.add_argument('--shard', type=int, default=0)
     p.add_argument('--output', type=Path, default=ROOT/'out/cves.json')
     p.add_argument('--summary', type=Path, default=ROOT/'out/cves.md')
     opts = p.parse_args()
     usage = image_usage(apps(opts.root))
-    chosen = shard_images(usage, opts.shard, opts.shards)
+    chosen = shard_images(select_images(usage, opts.images_file), opts.shard, opts.shards)
     report = evaluate(usage, chosen)
     report['shard'] = opts.shard
     report['shards'] = opts.shards

@@ -114,6 +114,72 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(audit_exit_status({**result, 'critical': 0, 'high': 1, 'failures': 0}), 3)
         self.assertEqual(audit_exit_status({**result, 'critical': 0, 'high': 0, 'failures': 0}), 0)
 
+
+    def test_cve_registry_retries_then_returns_real_high_findings(self):
+        from cves import scan
+        finding = {'VulnerabilityID': 'CVE-2026-TEST', 'Severity': 'HIGH',
+                   'PkgName': 'example', 'InstalledVersion': '1', 'FixedVersion': '2'}
+        success = subprocess.CompletedProcess(['trivy'], 0,
+            json.dumps({'Results': [{'Target': 'target', 'Vulnerabilities': [finding]}]}), '')
+        blocked = subprocess.CompletedProcess(['trivy'], 1, '',
+                                              'TOOMANYREQUESTS: registry rate limit')
+        with patch('cves.subprocess.run', side_effect=[blocked, success]) as runner, \\
+             patch('cves.time.sleep') as delay:
+            hits, error = scan('lscr.io/linuxserver/any:latest')
+        self.assertIsNone(error)
+        self.assertEqual([hit['severity'] for hit in hits], ['HIGH'])
+        self.assertIn('--image-src', runner.call_args.args[0])
+        self.assertEqual(runner.call_args.args[0][
+            runner.call_args.args[0].index('--image-src') + 1], 'remote')
+        self.assertEqual(runner.call_count, 2)
+        delay.assert_called_once_with(12)
+
+    def test_cve_scan_permanent_failure_is_not_retried_or_clean(self):
+        from cves import scan
+        missing = subprocess.CompletedProcess(['trivy'], 1, '', 'MANIFEST_UNKNOWN')
+        with patch('cves.subprocess.run', return_value=missing) as run, \\
+             patch('cves.time.sleep') as wait:
+            findings, error = scan('example/missing:tag')
+        self.assertEqual(findings, [])
+        self.assertIn('MANIFEST_UNKNOWN', error)
+        run.assert_called_once()
+        wait.assert_not_called()
+
+    def test_cve_scan_exhausted_rate_limit_remains_unresolved(self):
+        from cves import scan
+        blocked = subprocess.CompletedProcess(['trivy'], 1, '', 'TOOMANYREQUESTS')
+        with patch('cves.subprocess.run', return_value=blocked) as run, \\
+             patch('cves.time.sleep') as wait:
+            findings, error = scan('lscr.io/linuxserver/any:latest')
+        self.assertEqual(findings, [])
+        self.assertIn('3/3 attempts', error)
+        self.assertEqual(run.call_count, 3)
+        self.assertEqual(wait.call_count, 2)
+
+    def test_targeted_cve_rescan_cannot_drop_unknown_images(self):
+        from cves import select_images
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'images.json'
+            path.write_text(json.dumps(['a:v1', 'b:v1']))
+            self.assertEqual(select_images({'a:v1': [], 'b:v1': [], 'c:v1': []}, path),
+                             ['a:v1', 'b:v1'])
+            path.write_text(json.dumps(['a:v1', 'missing:v1']))
+            with self.assertRaisesRegex(ValueError, 'no longer in catalog'):
+                select_images({'a:v1': []}, path)
+            path.write_text(json.dumps(['a:v1', 'a:v1']))
+            with self.assertRaisesRegex(ValueError, 'duplicate'):
+                select_images({'a:v1': []}, path)
+
+    def test_inconclusive_rescan_covers_all_25_previous_failures(self):
+        target = json.loads((ROOT / 'data/cve-inconclusive-20261009.json').read_text())
+        self.assertEqual(len(target), 25)
+        self.assertEqual(len(set(target)), 25)
+        self.assertTrue(set(target).issubset(image_usage(apps())))
+        workflow = (ROOT / '.github/workflows/retry-inconclusive-cves.yml').read_text()
+        self.assertIn('scripts/cves.py', workflow)
+        self.assertIn('data/cve-inconclusive-20261009.json', workflow)
+        self.assertIn('out/inconclusive-', workflow)
+
     def test_cve_scan_preserves_daily_audit_while_deduplicating_pushes(self):
         workflow = (ROOT / '.github/workflows/cve-scan.yml').read_text(encoding='utf-8')
         self.assertIn("group: mrstore-cve-${{ github.event_name }}-${{ github.ref }}", workflow)

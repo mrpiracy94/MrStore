@@ -1,0 +1,89 @@
+name: Retry 25 previously inconclusive Docker scans
+on:
+  pull_request:
+    paths:
+      - 'scripts/cves.py'
+      - 'data/cve-inconclusive-20261009.json'
+      - '.github/workflows/retry-inconclusive-cves.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/cves.py'
+      - 'data/cve-inconclusive-20261009.json'
+      - '.github/workflows/retry-inconclusive-cves.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  rescan:
+    name: Inconclusive image retry (group ${{ matrix.group }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        group: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Install Trivy v0.75.0
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+          cache: true
+      - name: Scan every previously inconclusive reference, preserving CVEs
+        id: scan
+        continue-on-error: true
+        run: >
+          python scripts/cves.py --images-file data/cve-inconclusive-20261009.json
+          --shards 4 --shard ${{ matrix.group }}
+          --output out/inconclusive-${{ matrix.group }}.json
+          --summary out/inconclusive-${{ matrix.group }}.md
+      - name: Preserve full JSON and Markdown evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-inconclusive-rescan-${{ matrix.group }}
+          path: |
+            out/inconclusive-${{ matrix.group }}.json
+            out/inconclusive-${{ matrix.group }}.md
+          if-no-files-found: error
+      - name: Verify scan completeness, not absence of CVEs
+        if: always()
+        env:
+          GROUP: ${{ matrix.group }}
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          from pathlib import Path
+          from scripts.cves import shard_images
+          group = int(os.environ['GROUP'])
+          requested = json.loads(Path('data/cve-inconclusive-20261009.json').read_text())
+          expected = shard_images(requested, group, 4)
+          path = Path(f'out/inconclusive-{group}.json')
+          if not path.exists():
+              raise SystemExit('Scan report missing: this group remains inconclusive')
+          report = json.loads(path.read_text())
+          actual = report.get('results', [])
+          completed = [x['image'] for x in actual if x.get('status') == 'ok']
+          failed = [x['image'] for x in actual if x.get('status') != 'ok']
+          if sorted(x['image'] for x in actual) != sorted(expected):
+              raise SystemExit('Scan coverage incomplete or wrong image set')
+          note = (f"### Previously inconclusive images — group {group}\n\n"
+                  f"- Requested: {len(expected)}\n"
+                  f"- Successfully analysed (may contain CVEs): {len(completed)}\n"
+                  f"- Scanner failures (still inconclusive): {len(failed)}\n"
+                  f"- CRITICAL: {report['critical']}\n"
+                  f"- HIGH: {report['high']}\n\n"
+                  "This diagnostic is NOT the zero-CVE release gate.\n")
+          print(note)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as out:
+              out.write(note)
+          if failed:
+              print('Still inconclusive:', ', '.join(failed), file=sys.stderr)
+              raise SystemExit(2)
+          PY

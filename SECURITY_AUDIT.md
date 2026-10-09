@@ -41,3 +41,11 @@ A publicação do catálogo fica bloqueada por oito verificações independentes
 **Consequência imediata:** os relatórios atuais identificam muitas vulnerabilidades em imagens de terceiros; por isso, os próximos releases serão bloqueados até que todas as imagens sejam corrigidas e reanalisadas. Isto **não revoga** uma versão anteriormente publicada, **não remove** aplicações já instaladas nem corrige automaticamente os containers dos utilizadores. Essa decisão requer política de despublicação/quarentena e testes de migração específicos.
 
 A exigência é operacional e limitada às bases de dados e capacidades do Trivy usadas no scan. Tags flutuantes podem mudar entre a análise e o consumo da imagem; versões em digest imutável são preferíveis para evitar mudanças inesperadas.
+
+## Reanálise das 25 imagens com resultado inconclusivo (2026-10-09)
+
+Os oito relatórios de referência identificaram **25 imagens `lscr.io`** com erros de scanner: vários por `TOOMANYREQUESTS` do registry e outros pelo fallback automático para o socket `containerd` sem permissão no GitHub Actions. Não são 25 imagens comprovadamente limpas nem 25 CVEs resolvidas.
+
+O scanner obriga agora `--image-src remote`, não utiliza Docker/containerd/podman, limita paralelismo interno, repete apenas erros temporários de rede/rate limit com espera progressiva e continua a falhar perante erros permanentes ou resultados JSON incompletos. Ambos os workflows de auditoria reduzem a concorrência de quatro para dois grupos. Nenhuma severidade foi ignorada e a política de lançamento de **0 HIGH / 0 CRITICAL / 0 scans incompletos** permanece inalterada.
+
+A lista auditável das **25 referências exatas** está em `data/cve-inconclusive-20261009.json`. O workflow `retry-inconclusive-cves.yml` verifica essas referências em quatro lotes, conserva cada resultado e reporta separadamente erros de scanner e CVEs efetivamente encontradas. Uma imagem passa de «inconclusiva» para «com CVEs» ou «sem alertas» **apenas** se o Trivy regressar um JSON válido e completo. A validação de cobertura é independente do número de vulnerabilidades; **nunca autoriza publicar** um catálogo com HIGH/CRITICAL.
