@@ -21,6 +21,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -55,6 +57,12 @@ jobs:
           name: mrstore-compose-v2-preflight
           path: out/compose-preflight.*
           if-no-files-found: warn
+      - name: Reject newly introduced dangerous Docker privileges
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
+          python scripts/privilege_policy.py --base "$BASE_SHA"
       - name: Summary
         if: always()
         run: test ! -f out/audit.md || cat out/audit.md >> "$GITHUB_STEP_SUMMARY"

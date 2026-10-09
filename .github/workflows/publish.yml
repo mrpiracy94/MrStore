@@ -18,14 +18,59 @@ on:
       - 'supported-languages.json'
       - 'requirements.txt'
       - '.github/workflows/publish.yml'
+  pull_request:
+    paths:
+      - 'Apps/**'
+      - 'scripts/catalog.py'
+      - 'scripts/cves.py'
+      - 'scripts/release_scan.py'
+      - 'scripts/release_catalog.py'
+      - 'scripts/curate_taglines.py'
+      - 'scripts/validate.py'
+      - 'scripts/verify_dist.py'
+      - 'scripts/privilege_policy.py'
+      - 'scripts/compose_preflight.py'
+      - 'tests/**'
+      - 'data/taglines-pt.json'
+      - 'store-config.json'
+      - 'category-list.json'
+      - 'recommend-list.json'
+      - 'supported-languages.json'
+      - 'requirements.txt'
+      - '.github/workflows/publish.yml'
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 concurrency:
-  group: mrstore-publish
-  cancel-in-progress: false
+  group: mrstore-publish-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Validate original catalog and regression tests before expensive image audit
+        run: |
+          python scripts/validate.py
+          python scripts/curate_taglines.py --check
+          python -m unittest discover -s tests -v
+      - name: Reject new dangerous Docker privileges
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
+          python scripts/privilege_policy.py --base "$BASE_SHA"
   security_audit:
+    needs: preflight
     name: Scan release images and platforms (shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 240
@@ -70,7 +115,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -148,6 +193,25 @@ jobs:
             dist/index.json
             dist/release-status.json
           if-no-files-found: warn
+      - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-v2-approved-dist
+          path: dist/
+          include-hidden-files: true
+          if-no-files-found: error
+  publish:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Retrieve validated approved ZimaOS catalog
+        uses: actions/download-artifact@v4
+        with:
+          name: mrstore-v2-approved-dist
+          path: dist/
       - name: Publish approved dist to gh-pages
         if: success()
         uses: peaceiris/actions-gh-pages@v4
