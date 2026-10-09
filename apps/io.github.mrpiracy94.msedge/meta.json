@@ -6,13 +6,13 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Productivity",
-  "thumbnail": "/apps/io.github.mrpiracy94.msedge/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.msedge/assets/microsoft-edge.webp",
   "tagline": "Navegador Microsoft Edge no servidor",
   "description": "Microsoft Edge — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/msedge:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-msedge/",
   "title": "Microsoft Edge",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.msedge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "productivity"
   ],

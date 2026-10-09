@@ -21,7 +21,7 @@ services:
         target: /attach
 x-casaos:
   id: io.github.mrpiracy94.apprise-api
-  version: "1.0.1"
+  version: "1.0.2"
   main: apprise-api
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.apprise-api/assets/icon.svg
   title:

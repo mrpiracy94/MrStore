@@ -7,13 +7,13 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Developer",
-  "thumbnail": "/apps/io.github.mrpiracy94.sqlitebrowser/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.sqlitebrowser/assets/sqlitebrowser.webp",
   "tagline": "Editor visual de bases de dados SQLite",
   "description": "DB Browser for SQLite — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/sqlitebrowser:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-sqlitebrowser/",
   "title": "DB Browser for SQLite",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.sqlitebrowser",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "developer"
   ],
