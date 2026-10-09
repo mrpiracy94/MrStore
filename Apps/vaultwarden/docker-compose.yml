@@ -1,7 +1,7 @@
 name: vaultwarden
 services:
   vaultwarden:
-    image: vaultwarden/server:latest
+    image: vaultwarden/server:1.37.3-alpine
     container_name: vaultwarden
     restart: unless-stopped
     environment:
@@ -34,7 +34,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.vaultwarden
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -50,6 +50,6 @@ x-casaos:
   tagline:
     en_US: "Servidor compatível com Bitwarden"
   description:
-    en_US: "Servidor compatível com Bitwarden. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+    en_US: "Servidor compatível com Bitwarden. Variante Alpine oficial fixada na versão 1.37.3 para reduzir CVEs sem mudar a versão do Vaultwarden. Os dados continuam em /DATA/AppData/vaultwarden. Antes de atualizar: parar o contentor, fazer backup completo do diretório e testar login, cofres, anexos e sincronização após a atualização. Não expor sem HTTPS."
   port_map: "30003"
   index: /
