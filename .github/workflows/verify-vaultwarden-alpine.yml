@@ -29,7 +29,18 @@ jobs:
           import os, re
           from pathlib import Path
           source = Path('Apps/vaultwarden/docker-compose.yml').read_text(encoding='utf-8')
-          matches = re.findall(r'(?m)^\s+image:\s+(vaultwarden/server:([0-9]+\.[0-9]+\.[0-9]+)-alpine)\s*        run: |
+          matches = re.findall(r'(?m)^\s+image:\s+(vaultwarden/server:([0-9]+\.[0-9]+\.[0-9]+)-alpine)\s*$', source)
+          if len(matches) != 1:
+              raise SystemExit('Expected one pinned official Alpine image')
+          image, version = matches[0]
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
+              print('alpine=' + image, file=out)
+              print('standard=vaultwarden/server:' + version, file=out)
+              print('version=' + version, file=out)
+          print('Scanning:', image)
+          PY
+      - name: Scan standard and Alpine images on selected architecture
+        run: |
           trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output original.json ${{ steps.release.outputs.standard }}
           trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output alpine.json ${{ steps.release.outputs.alpine }}
       - name: Require zero HIGH/CRITICAL findings on the replacement
@@ -54,63 +65,6 @@ jobs:
                      '| Variant | CRITICAL | HIGH |\n|---|---:|---:|\n'
                      f"| Debian {version} | {old['CRITICAL']} | {old['HIGH']} |\n"
                      f"| Alpine {version} | {new['CRITICAL']} | {new['HIGH']} |\n")
-          print(summary)
-          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as dest:
-              dest.write(summary)
-          if new['CRITICAL'] or new['HIGH']:
-              raise SystemExit('::error::Proposed Alpine image still reports HIGH/CRITICAL vulnerabilities')
-          PY
-      - name: Upload raw vulnerability reports even if scan fails
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: vaultwarden-${{ matrix.arch }}-cve-evidence
-          path: |
-            original.json
-            alpine.json
-          if-no-files-found: warn
-  smoke:
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@v4
-      - name: Verify durable DB and HTTP compatibility using disposable data
-        run: bash scripts/test_vaultwarden_alpine.sh
-, source)
-          if len(matches) != 1:
-              raise SystemExit('Expected one pinned Vaultwarden Alpine image')
-          image, version = matches[0]
-          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as out:
-              print('alpine=' + image, file=out)
-              print('standard=vaultwarden/server:' + version, file=out)
-              print('version=' + version, file=out)
-          print('Scanning:', image)
-          PY
-      - name: Scan standard and Alpine images on selected architecture
-        run: |
-          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output original.json vaultwarden/server:1.37.3
-          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output alpine.json vaultwarden/server:1.37.3-alpine
-      - name: Require zero HIGH/CRITICAL findings on the replacement
-        run: |
-          python - <<'PY'
-          import json, os
-          from collections import Counter
-          def counts(path):
-              with open(path, encoding='utf-8') as stream:
-                  report = json.load(stream)
-              if not isinstance(report.get('Results'), list) or not report['Results']:
-                  raise SystemExit(f'Incomplete vulnerability report: {path}')
-              return Counter(v.get('Severity')
-                             for result in report['Results']
-                             for v in result.get('Vulnerabilities') or []
-                             if v.get('Severity') in ('HIGH', 'CRITICAL'))
-          old = counts('original.json')
-          new = counts('alpine.json')
-          arch = '${{ matrix.arch }}'
-          summary = (f'## Vaultwarden {arch} CVE check\n\n'
-                     '| Variant | CRITICAL | HIGH |\n|---|---:|---:|\n'
-                     f"| Debian 1.37.3 | {old['CRITICAL']} | {old['HIGH']} |\n"
-                     f"| Alpine 1.37.3 | {new['CRITICAL']} | {new['HIGH']} |\n")
           print(summary)
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as dest:
               dest.write(summary)
