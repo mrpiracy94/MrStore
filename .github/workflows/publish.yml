@@ -101,6 +101,10 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"], "a") as file:
               file.write(f"approved={selected['approved_count']}\n")
           PY
+      - name: Validate staged Compose manifests with official Docker Compose parser
+        run: >-
+          python scripts/compose_preflight.py --root release-source
+          --json out/release-compose.json --md out/release-compose.md
       - name: Build official ZimaOS v2 catalog
         uses: IceWhaleTech/build-appstore-action@v1
         with:
@@ -138,6 +142,8 @@ jobs:
             out/audit.json
             out/build-report.json
             out/release-selection.json
+            out/release-compose.json
+            out/release-compose.md
             dist/store.json
             dist/index.json
             dist/release-status.json
