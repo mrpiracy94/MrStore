@@ -1,7 +1,7 @@
 name: qbittorrent-4
 services:
   qbittorrent-4:
-    image: lscr.io/linuxserver/qbittorrent:4.6.7
+    image: lscr.io/linuxserver/qbittorrent:20.04.1
     container_name: qbittorrent-4
     restart: unless-stopped
     environment:
