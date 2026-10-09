@@ -20,8 +20,6 @@ from cves import shard_images
 RETIRED_UPSTREAM = {
     "lscr.io/linuxserver/steamos:latest":
         "https://info.linuxserver.io/issues/2025-12-13-steamosdep/",
-    "lscr.io/linuxserver/cops:latest":
-        "https://info.linuxserver.io/issues/2023-05-15-cops/",
 }
 RETRY_MARKERS = ("429", "too many requests", "toomanyrequests", "timeout",
                  "timed out", "connection reset", "502", "503", "504")
