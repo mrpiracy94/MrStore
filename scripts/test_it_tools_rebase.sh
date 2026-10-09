@@ -18,7 +18,12 @@ cleanup() {
 }
 trap cleanup EXIT
 mkdir -p "$work/upstream/html" "$work/patched/html"
-old_id="$(docker create --platform "linux/$arch" "$old")"
+# Pull the architecture-specific manifest, not the common multiarch index.
+# Docker's classic image store otherwise tries to overwrite a previously pulled
+# platform digest when we verify AMD64 and then ARM64 in the same job.
+child_digest="$(docker buildx imagetools inspect "$old" --raw | jq -er --arg arch "$arch" '[.manifests[] | select(.platform.os == "linux" and .platform.architecture == $arch) | .digest][0]')"
+[[ "$child_digest" =~ ^sha256:[a-f0-9]{64}$ ]]
+old_id="$(docker create --platform "linux/$arch" "corentinth/it-tools@$child_digest")"
 new_id="$(docker create --platform "linux/$arch" "$new")"
 docker cp "$old_id:/usr/share/nginx/html/." "$work/upstream/html/"
 docker cp "$new_id:/usr/share/nginx/html/." "$work/patched/html/"
