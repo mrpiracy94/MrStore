@@ -60,7 +60,9 @@ jobs:
           python - <<'PY'
           import json, os, sys
           from pathlib import Path
-          from scripts.cves import shard_images
+          import sys as sysmod
+          sysmod.path.insert(0, 'scripts')
+          from cves import shard_images
           group = int(os.environ['GROUP'])
           requested = json.loads(Path('data/cve-inconclusive-20261009.json').read_text())
           expected = shard_images(requested, group, 4)
