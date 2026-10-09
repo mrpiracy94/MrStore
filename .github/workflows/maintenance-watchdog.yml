@@ -1,0 +1,53 @@
+name: MrStore automated maintenance watchdog
+on:
+  # Does not require commits or open PRs: audits continue while the repo is idle.
+  schedule:
+    - cron: '47 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+  issues: write
+
+concurrency:
+  group: mrstore-maintenance-watchdog
+  cancel-in-progress: false
+
+jobs:
+  watchdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install existing MrStore validation dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Review manifests, regression tests, scheduled scans and stale PRs
+        id: review
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/maintenance_watchdog.py --sync
+      - name: Preserve full diagnostics even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-maintenance-watchdog
+          path: |
+            out/maintenance-watchdog.json
+            out/maintenance-watchdog.md
+            out/audit.*
+            out/compose-preflight.*
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Expose unresolved operational failures
+        if: steps.review.outcome != 'success'
+        run: |
+          echo "::error::Maintenance findings or monitor error remain. Review the watchdog issue and artifact."
+          exit 1
