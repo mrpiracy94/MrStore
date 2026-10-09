@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Social",
-  "thumbnail": "/apps/io.github.mrpiracy94.pidgin/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.pidgin/assets/pidgin-logo.webp",
   "tagline": "Cliente de mensagens instantâneas",
   "description": "Pidgin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/pidgin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-pidgin/",
   "title": "Pidgin",

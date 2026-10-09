@@ -14,9 +14,9 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.doplarr_rs
-  version: "1.0.1"
+  version: "1.0.2"
   main: doplarr_rs
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.doplarr_rs/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.doplarr_rs/assets/icon.png
   title:
     en_US: "Doplarr RS"
   port_map: "0"

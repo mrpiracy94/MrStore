@@ -9,11 +9,11 @@
   "category": "Home",
   "thumbnail": "/apps/io.github.mrpiracy94.frigate/assets/frigate.webp",
   "tagline": "Videovigilância com deteção inteligente",
-  "description": "NVR com deteção de objetos. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. Precisa de config.yml com as tuas câmaras. Aceleração por hardware exige mapear dispositivos (ver docs).",
+  "description": "NVR com deteção de objetos. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. Precisa de config.yml com as tuas câmaras. Por segurança, o container não é privilegiado por omissão. Aceleração por hardware exige mapear explicitamente os dispositivos necessários (ver docs).",
   "title": "Frigate",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.frigate",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "home"
   ],

@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.steamos
   version: "1.0.1"
   main: steamos
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.steamos/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.steamos/assets/icon.png
   title:
     en_US: "SteamOS"
   port_map: "21150"

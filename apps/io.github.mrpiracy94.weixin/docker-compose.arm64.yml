@@ -1,7 +1,7 @@
 name: weixin
 services:
   weixin:
-    image: lscr.io/linuxserver/weixin:latest
+    image: lscr.io/linuxserver/weixin:latest@sha256:43b6b74e3627dc9f08412c39266ae5567081da88116a12b77d8af21d0aafd263
     container_name: weixin
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.weixin
   version: "1.0.1"
   main: weixin
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.weixin/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.weixin/assets/icon.png
   title:
     en_US: "Weixin"
   port_map: "21168"

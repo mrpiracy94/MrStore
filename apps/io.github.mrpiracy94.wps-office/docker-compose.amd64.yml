@@ -1,7 +1,7 @@
 name: wps-office
 services:
   wps-office:
-    image: lscr.io/linuxserver/wps-office:latest
+    image: lscr.io/linuxserver/wps-office:latest@sha256:1cf607ef4faec69c1bbd603d8b9034896b1b7ba8794e597576dfe438ec142949
     container_name: wps-office
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.wps-office
   version: "1.0.1"
   main: wps-office
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.wps-office/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.wps-office/assets/icon.png
   title:
     en_US: "WPS Office"
   port_map: "21172"

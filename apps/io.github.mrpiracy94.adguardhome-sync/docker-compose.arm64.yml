@@ -18,9 +18,9 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.adguardhome-sync
-  version: "1.0.1"
+  version: "1.0.2"
   main: adguardhome-sync
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.adguardhome-sync/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.adguardhome-sync/assets/icon.png
   title:
     en_US: "AdGuardHome Sync"
   port_map: "20016"

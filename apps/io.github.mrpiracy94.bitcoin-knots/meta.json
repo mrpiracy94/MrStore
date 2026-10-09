@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Developer",
-  "thumbnail": "/apps/io.github.mrpiracy94.bitcoin-knots/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.bitcoin-knots/assets/bitcoin-knots-logo.webp",
   "tagline": "Nó Bitcoin com ferramentas de validação",
   "description": "Bitcoin Knots — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/bitcoin-knots:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-bitcoin-knots/",
   "title": "Bitcoin Knots",

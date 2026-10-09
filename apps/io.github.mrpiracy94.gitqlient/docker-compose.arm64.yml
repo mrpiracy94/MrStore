@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.gitqlient
   version: "1.0.1"
   main: gitqlient
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.gitqlient/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.gitqlient/assets/icon.png
   title:
     en_US: "GitQlient"
   port_map: "21066"

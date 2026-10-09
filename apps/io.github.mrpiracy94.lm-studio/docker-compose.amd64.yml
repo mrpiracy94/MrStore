@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.lm-studio
   version: "1.0.1"
   main: lm-studio
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lm-studio/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lm-studio/assets/icon.png
   title:
     en_US: "LM Studio"
   port_map: "21010"

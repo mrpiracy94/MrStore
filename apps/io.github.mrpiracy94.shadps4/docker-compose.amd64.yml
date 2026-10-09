@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.shadps4
   version: "1.0.1"
   main: shadps4
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.shadps4/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.shadps4/assets/icon.png
   title:
     en_US: "shadPS4"
   port_map: "21138"

@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Networking",
-  "thumbnail": "/apps/io.github.mrpiracy94.openssh-server/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.openssh-server/assets/openssh-server-icon.webp",
   "tagline": "Acesso remoto seguro por SSH",
   "description": "OpenSSH Server — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/openssh-server:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-openssh-server/",
   "title": "OpenSSH Server",

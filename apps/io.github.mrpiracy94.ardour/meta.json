@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Productivity",
-  "thumbnail": "/apps/io.github.mrpiracy94.ardour/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.ardour/assets/ardour-logo.webp",
   "tagline": "Gravação, edição e mistura de áudio",
   "description": "Ardour — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ardour:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ardour/",
   "title": "Ardour",

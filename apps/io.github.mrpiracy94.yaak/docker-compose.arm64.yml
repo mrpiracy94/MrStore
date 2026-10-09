@@ -1,7 +1,7 @@
 name: yaak
 services:
   yaak:
-    image: lscr.io/linuxserver/yaak:latest
+    image: lscr.io/linuxserver/yaak:latest@sha256:9cc4c245e5fd21739159f5d4816379f0b04ed62c15c728b3c86617fc713801d2
     container_name: yaak
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.yaak
   version: "1.0.1"
   main: yaak
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.yaak/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.yaak/assets/icon.png
   title:
     en_US: "Yaak"
   port_map: "21176"

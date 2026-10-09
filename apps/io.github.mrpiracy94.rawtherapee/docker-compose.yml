@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.rawtherapee
   version: "1.0.1"
   main: rawtherapee
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.rawtherapee/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.rawtherapee/assets/icon.png
   title:
     en_US: "RawTherapee"
   port_map: "21124"

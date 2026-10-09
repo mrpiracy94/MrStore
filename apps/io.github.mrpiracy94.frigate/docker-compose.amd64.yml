@@ -4,7 +4,6 @@ services:
     image: ghcr.io/blakeblackshear/frigate:stable@sha256:b1f339cf08ae9148b0fac4295cf59f8e158455f6e72d29af32b773a3d8129851
     container_name: frigate
     restart: unless-stopped
-    privileged: true
     shm_size: "512mb"
     environment:
       - "TZ=Europe/Lisbon"
@@ -29,7 +28,7 @@ services:
         read_only: true
 x-casaos:
   id: io.github.mrpiracy94.frigate
-  version: "1.0.1"
+  version: "1.0.2"
   main: frigate
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.frigate/assets/icon.png
   title:

@@ -1,7 +1,7 @@
 name: vlc
 services:
   vlc:
-    image: lscr.io/linuxserver/vlc:latest
+    image: lscr.io/linuxserver/vlc:latest@sha256:058162d12d582effdec15996be0e3fec8055954fbbbc6f755e3143ac7b688808
     container_name: vlc
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.vlc
   version: "1.0.1"
   main: vlc
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.vlc/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.vlc/assets/icon.png
   title:
     en_US: "VLC"
   port_map: "21160"

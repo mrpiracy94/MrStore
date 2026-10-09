@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.helium
   version: "1.0.1"
   main: helium
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.helium/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.helium/assets/icon.png
   title:
     en_US: "Helium"
   port_map: "21072"

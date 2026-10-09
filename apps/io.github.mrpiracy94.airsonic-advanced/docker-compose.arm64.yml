@@ -24,9 +24,9 @@ services:
         target: /playlists
 x-casaos:
   id: io.github.mrpiracy94.airsonic-advanced
-  version: "1.0.1"
+  version: "1.0.2"
   main: airsonic-advanced
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.airsonic-advanced/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.airsonic-advanced/assets/icon.png
   title:
     en_US: "Airsonic Advanced"
   port_map: "4040"

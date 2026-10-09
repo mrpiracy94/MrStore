@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Networking",
-  "thumbnail": "/apps/io.github.mrpiracy94.syslog-ng/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.syslog-ng/assets/syslog-ng-logo.webp",
   "tagline": "Recolhe e centraliza logs de sistemas",
   "description": "syslog-ng — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/syslog-ng:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-syslog-ng/",
   "title": "syslog-ng",
@@ -19,7 +19,7 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0,
-    "arm64": 0
+    "amd64": 32900378,
+    "arm64": 33827256
   }
 }

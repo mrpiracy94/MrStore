@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Social",
-  "thumbnail": "/apps/io.github.mrpiracy94.webcord/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.webcord/assets/webcord-icon.webp",
   "tagline": "Cliente de Discord para ambiente de trabalho",
   "description": "WebCord — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/webcord:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-webcord/",
   "title": "WebCord",
@@ -19,7 +19,7 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0,
-    "arm64": 0
+    "amd64": 1298683671,
+    "arm64": 1259983371
   }
 }

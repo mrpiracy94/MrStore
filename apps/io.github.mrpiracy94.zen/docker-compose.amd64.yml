@@ -1,7 +1,7 @@
 name: zen
 services:
   zen:
-    image: lscr.io/linuxserver/zen:latest
+    image: lscr.io/linuxserver/zen:latest@sha256:6af291db90c67d1b6ddd4167abb3eae9c9e4c5d3a74ae9dee1cc51e470710d0b
     container_name: zen
     restart: unless-stopped
     environment:
@@ -25,9 +25,9 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.zen
-  version: "1.0.1"
+  version: "1.0.2"
   main: zen
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.zen/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.zen/assets/icon.png
   title:
     en_US: "Zen Browser"
   port_map: "21178"

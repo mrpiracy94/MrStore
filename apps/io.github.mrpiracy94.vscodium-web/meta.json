@@ -7,19 +7,19 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Developer",
-  "thumbnail": "/apps/io.github.mrpiracy94.vscodium-web/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.vscodium-web/assets/vscodium.webp",
   "tagline": "Editor VSCodium acessível na web",
   "description": "VSCodium Web — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/vscodium-web:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-vscodium-web/",
   "title": "VSCodium Web",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.vscodium-web",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "developer"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0,
-    "arm64": 0
+    "amd64": 212188176,
+    "arm64": 210228726
   }
 }

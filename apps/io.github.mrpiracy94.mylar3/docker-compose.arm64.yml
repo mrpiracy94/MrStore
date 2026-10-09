@@ -24,9 +24,9 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.mylar3
-  version: "1.0.1"
+  version: "1.0.2"
   main: mylar3
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mylar3/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mylar3/assets/icon.png
   title:
     en_US: "Mylar3"
   port_map: "8090"

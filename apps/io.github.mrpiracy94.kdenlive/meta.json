@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Productivity",
-  "thumbnail": "/apps/io.github.mrpiracy94.kdenlive/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.kdenlive/assets/kdenlive-logo.webp",
   "tagline": "Editor de vídeo não linear",
   "description": "Kdenlive — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kdenlive:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kdenlive/",
   "title": "Kdenlive",

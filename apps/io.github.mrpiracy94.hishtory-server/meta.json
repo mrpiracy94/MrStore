@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Developer",
-  "thumbnail": "/apps/io.github.mrpiracy94.hishtory-server/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.hishtory-server/assets/hishtory-server-icon.webp",
   "tagline": "Sincroniza histórico de comandos do terminal",
   "description": "hishtory-server — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/hishtory-server:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-hishtory-server/",
   "title": "hishtory-server",

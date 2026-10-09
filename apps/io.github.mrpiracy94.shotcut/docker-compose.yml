@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.shotcut
   version: "1.0.1"
   main: shotcut
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.shotcut/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.shotcut/assets/icon.png
   title:
     en_US: "Shotcut"
   port_map: "21140"

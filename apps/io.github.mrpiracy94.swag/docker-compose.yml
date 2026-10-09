@@ -25,7 +25,7 @@ x-casaos:
   id: io.github.mrpiracy94.swag
   version: "1.0.1"
   main: swag
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.swag/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.swag/assets/icon.gif
   title:
     en_US: "SWAG"
   port_map: "20007"

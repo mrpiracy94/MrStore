@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.retroarch
   version: "1.0.1"
   main: retroarch
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.retroarch/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.retroarch/assets/icon.png
   title:
     en_US: "RetroArch"
   port_map: "21130"

@@ -6,7 +6,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Others",
-  "thumbnail": "/apps/io.github.mrpiracy94.dosbox-staging/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.dosbox-staging/assets/icon_512.webp",
   "tagline": "Emula programas e jogos clássicos de DOS",
   "description": "DOSBox Staging — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/dosbox-staging:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-dosbox-staging/",
   "title": "DOSBox Staging",

@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Networking",
-  "thumbnail": "/apps/io.github.mrpiracy94.unifi-network-application/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.unifi-network-application/assets/unifi-network-application-icon.webp",
   "tagline": "Administra redes e dispositivos UniFi",
   "description": "UniFi Network Application — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/unifi-network-application:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-unifi-network-application/",
   "title": "UniFi Network Application",
@@ -19,7 +19,7 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0,
-    "arm64": 0
+    "amd64": 312007511,
+    "arm64": 310949475
   }
 }

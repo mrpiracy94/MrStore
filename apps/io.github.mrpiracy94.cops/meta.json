@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Media",
-  "thumbnail": "/apps/io.github.mrpiracy94.cops/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.cops/assets/cops-icon.webp",
   "tagline": "Catálogo web para livros digitais",
   "description": "COPS — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/cops:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-cops/",
   "title": "COPS",

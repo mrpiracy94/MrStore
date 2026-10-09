@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.openshot
   version: "1.0.1"
   main: openshot
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.openshot/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.openshot/assets/icon.png
   title:
     en_US: "OpenShot"
   port_map: "21108"

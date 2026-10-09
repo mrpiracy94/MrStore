@@ -25,9 +25,9 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.lollypop
-  version: "1.0.1"
+  version: "1.0.2"
   main: lollypop
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lollypop/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lollypop/assets/icon.png
   title:
     en_US: "Lollypop"
   port_map: "21092"

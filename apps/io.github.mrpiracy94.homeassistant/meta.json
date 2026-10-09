@@ -7,13 +7,13 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Home",
-  "thumbnail": "/apps/io.github.mrpiracy94.homeassistant/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.homeassistant/assets/home-assistant.webp",
   "tagline": "Automação e controlo da casa inteligente",
   "description": "Home Assistant — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/homeassistant:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-homeassistant/",
   "title": "Home Assistant",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.homeassistant",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "home"
   ],

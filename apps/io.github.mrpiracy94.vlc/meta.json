@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Media",
-  "thumbnail": "/apps/io.github.mrpiracy94.vlc/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.vlc/assets/vlc-logo.webp",
   "tagline": "Reproduz ficheiros de áudio e vídeo",
   "description": "VLC — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/vlc:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-vlc/",
   "title": "VLC",
@@ -19,7 +19,7 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0,
-    "arm64": 0
+    "amd64": 1348564297,
+    "arm64": 1405834370
   }
 }

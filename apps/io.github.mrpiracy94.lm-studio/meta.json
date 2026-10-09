@@ -6,7 +6,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Others",
-  "thumbnail": "/apps/io.github.mrpiracy94.lm-studio/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.lm-studio/assets/lmstudio-logo.webp",
   "tagline": "Executa e experimenta modelos de IA locais",
   "description": "LM Studio — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/lm-studio:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-lm-studio/",
   "title": "LM Studio",

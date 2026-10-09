@@ -1,7 +1,7 @@
 name: winegui
 services:
   winegui:
-    image: lscr.io/linuxserver/winegui:latest
+    image: lscr.io/linuxserver/winegui:latest@sha256:c194e95b6cc114494c8d1601e20520bf7d107dd6093bb9d7f74a6f8a37bb62f2
     container_name: winegui
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.winegui
   version: "1.0.1"
   main: winegui
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.winegui/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.winegui/assets/icon.png
   title:
     en_US: "WineGUI"
   port_map: "21186"

@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.webstation
   version: "1.0.1"
   main: webstation
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.webstation/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.webstation/assets/icon.png
   title:
     en_US: "Webstation"
   port_map: "21008"

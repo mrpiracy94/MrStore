@@ -1,7 +1,7 @@
 name: webcord
 services:
   webcord:
-    image: lscr.io/linuxserver/webcord:latest
+    image: lscr.io/linuxserver/webcord:latest@sha256:97a7c2b18d9aadd78067596a4f98072a624a820117fea8da741f6cba65318a00
     container_name: webcord
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.webcord
   version: "1.0.1"
   main: webcord
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.webcord/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.webcord/assets/icon.png
   title:
     en_US: "WebCord"
   port_map: "21164"

@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Productivity",
-  "thumbnail": "/apps/io.github.mrpiracy94.rawtherapee/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.rawtherapee/assets/rawtherapee-logo.webp",
   "tagline": "Revelação e edição de fotografias RAW",
   "description": "RawTherapee — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/rawtherapee:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-rawtherapee/",
   "title": "RawTherapee",

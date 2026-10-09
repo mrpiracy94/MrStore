@@ -1,7 +1,7 @@
 name: vivaldi
 services:
   vivaldi:
-    image: lscr.io/linuxserver/vivaldi:latest
+    image: lscr.io/linuxserver/vivaldi:latest@sha256:076912300c8c946fdfcc6224dc5d0e378a16bf1f84972fd06271b2b3bd710f9d
     container_name: vivaldi
     restart: unless-stopped
     environment:

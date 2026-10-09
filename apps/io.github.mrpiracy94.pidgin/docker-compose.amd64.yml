@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.pidgin
   version: "1.0.1"
   main: pidgin
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.pidgin/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.pidgin/assets/icon.png
   title:
     en_US: "Pidgin"
   port_map: "21116"

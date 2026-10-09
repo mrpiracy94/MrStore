@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Developer",
-  "thumbnail": "/apps/io.github.mrpiracy94.github-desktop/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.github-desktop/assets/github-desktop-icon.webp",
   "tagline": "Cliente gráfico para repositórios Git",
   "description": "GitHub Desktop — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/github-desktop:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-github-desktop/",
   "title": "GitHub Desktop",

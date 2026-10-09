@@ -1,7 +1,7 @@
 name: ungoogled-chromium
 services:
   ungoogled-chromium:
-    image: lscr.io/linuxserver/ungoogled-chromium:latest
+    image: lscr.io/linuxserver/ungoogled-chromium:latest@sha256:7055390b8970e153abdb199de885334a70d3bb26c1658ba1fc0572a6965a7cfa
     container_name: ungoogled-chromium
     restart: unless-stopped
     environment:
@@ -25,9 +25,9 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.ungoogled-chromium
-  version: "1.0.1"
+  version: "1.0.2"
   main: ungoogled-chromium
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ungoogled-chromium/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ungoogled-chromium/assets/icon.png
   title:
     en_US: "Ungoogled Chromium"
   port_map: "21156"

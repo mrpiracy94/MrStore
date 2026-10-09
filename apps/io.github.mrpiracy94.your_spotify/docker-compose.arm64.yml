@@ -1,7 +1,7 @@
 name: your_spotify
 services:
   your_spotify:
-    image: lscr.io/linuxserver/your_spotify:latest
+    image: lscr.io/linuxserver/your_spotify:latest@sha256:d31fa8e076b1f914c4184642c74acad3d043f9fb66f0c61c97d8c8a34cc9940a
     container_name: your_spotify
     restart: unless-stopped
     environment:

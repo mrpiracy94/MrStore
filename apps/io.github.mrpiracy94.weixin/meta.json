@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Social",
-  "thumbnail": "/apps/io.github.mrpiracy94.weixin/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.weixin/assets/weixin-logo.webp",
   "tagline": "Mensagens e conversas no Weixin",
   "description": "Weixin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/weixin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-weixin/",
   "title": "Weixin",
@@ -19,7 +19,7 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0,
-    "arm64": 0
+    "amd64": 1533161638,
+    "arm64": 1486594468
   }
 }

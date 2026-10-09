@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.gzdoom
   version: "1.0.1"
   main: gzdoom
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.gzdoom/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.gzdoom/assets/icon.png
   title:
     en_US: "GZDoom"
   port_map: "21068"

@@ -32,7 +32,7 @@ x-casaos:
   id: io.github.mrpiracy94.unifi-network-application
   version: "1.0.1"
   main: unifi-network-application
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.unifi-network-application/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.unifi-network-application/assets/icon.png
   title:
     en_US: "UniFi Network Application"
   port_map: "8443"

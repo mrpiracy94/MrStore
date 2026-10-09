@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Developer",
-  "thumbnail": "/apps/io.github.mrpiracy94.yaak/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.yaak/assets/yaak-logo.webp",
   "tagline": "Cliente de API para testar pedidos HTTP",
   "description": "Yaak — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/yaak:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-yaak/",
   "title": "Yaak",
@@ -19,7 +19,7 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0,
-    "arm64": 0
+    "amd64": 1112772684,
+    "arm64": 1077535045
   }
 }

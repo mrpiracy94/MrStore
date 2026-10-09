@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.calligra
   version: "1.0.1"
   main: calligra
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.calligra/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.calligra/assets/icon.png
   title:
     en_US: "Calligra"
   port_map: "21030"

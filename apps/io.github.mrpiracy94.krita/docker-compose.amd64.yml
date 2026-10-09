@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.krita
   version: "1.0.1"
   main: krita
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.krita/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.krita/assets/icon.png
   title:
     en_US: "Krita"
   port_map: "21086"

@@ -20,7 +20,7 @@ x-casaos:
   id: io.github.mrpiracy94.luanti
   version: "1.0.1"
   main: luanti
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.luanti/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.luanti/assets/icon.png
   title:
     en_US: "Luanti"
   port_map: "0"

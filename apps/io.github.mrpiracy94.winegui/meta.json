@@ -6,7 +6,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Others",
-  "thumbnail": "/apps/io.github.mrpiracy94.winegui/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.winegui/assets/winegui-logo.webp",
   "tagline": "Executa aplicações Windows através de Wine",
   "description": "WineGUI — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/winegui:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-winegui/",
   "title": "WineGUI",
@@ -18,6 +18,6 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0
+    "amd64": 1726158991
   }
 }

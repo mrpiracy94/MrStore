@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Social",
-  "thumbnail": "/apps/io.github.mrpiracy94.altus/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.altus/assets/altus-logo.webp",
   "tagline": "Cliente de WhatsApp com várias contas",
   "description": "Altus — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/altus:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-altus/",
   "title": "Altus",

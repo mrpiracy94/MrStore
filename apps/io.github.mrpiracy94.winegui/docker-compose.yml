@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.winegui
   version: "1.0.1"
   main: winegui
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.winegui/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.winegui/assets/icon.png
   title:
     en_US: "WineGUI"
   port_map: "21186"

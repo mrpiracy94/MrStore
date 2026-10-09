@@ -26,7 +26,7 @@ x-casaos:
   id: io.github.mrpiracy94.syslog-ng
   version: "1.0.1"
   main: syslog-ng
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.syslog-ng/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.syslog-ng/assets/icon.png
   title:
     en_US: "syslog-ng"
   port_map: "0"

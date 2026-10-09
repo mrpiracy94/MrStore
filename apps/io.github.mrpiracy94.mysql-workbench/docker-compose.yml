@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.mysql-workbench
   version: "1.0.1"
   main: mysql-workbench
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mysql-workbench/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mysql-workbench/assets/icon.png
   title:
     en_US: "MySQL Workbench"
   port_map: "21104"

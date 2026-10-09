@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Social",
-  "thumbnail": "/apps/io.github.mrpiracy94.limnoria/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.limnoria/assets/limnoria-icon.webp",
   "tagline": "Bot IRC extensível e personalizável",
   "description": "Limnoria — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/limnoria:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-limnoria/",
   "title": "Limnoria",

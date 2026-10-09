@@ -27,7 +27,7 @@ x-casaos:
   id: io.github.mrpiracy94.spotube
   version: "1.0.1"
   main: spotube
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.spotube/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.spotube/assets/icon.png
   title:
     en_US: "Spotube"
   port_map: "21144"

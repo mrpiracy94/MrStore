@@ -20,7 +20,7 @@ x-casaos:
   id: io.github.mrpiracy94.pelorus
   version: "1.0.1"
   main: pelorus
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.pelorus/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.pelorus/assets/icon.png
   title:
     en_US: "Pelorus"
   port_map: "20057"

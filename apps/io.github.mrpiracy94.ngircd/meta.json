@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Social",
-  "thumbnail": "/apps/io.github.mrpiracy94.ngircd/assets/icon.svg",
+  "thumbnail": "/apps/io.github.mrpiracy94.ngircd/assets/ngircd-icon.webp",
   "tagline": "Servidor de conversação IRC",
   "description": "ngIRCd — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ngircd:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ngircd/",
   "title": "ngIRCd",
