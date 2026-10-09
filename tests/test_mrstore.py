@@ -102,6 +102,16 @@ class StoreTests(unittest.TestCase):
         self.assertIn("group: mrstore-cve-${{ github.event_name }}-${{ github.ref }}", workflow)
         self.assertIn("cancel-in-progress: ${{ github.event_name == 'push' }}", workflow)
 
+    def test_legacy_qbittorrent_uses_verified_security_image(self):
+        qbit = next(item for item in apps() if item.folder == 'qbittorrent-4')
+        image = qbit.source['services']['qbittorrent-4']['image']
+        self.assertTrue(image.startswith(
+            'ghcr.io/mrpiracy94/mrstore-qbittorrent:'
+            '5.2.4-libtorrentv1-secfix-20261009@sha256:'), image)
+        digest = image.split('@sha256:', 1)[1]
+        self.assertEqual(len(digest), 64)
+        self.assertTrue(all(char in '0123456789abcdef' for char in digest))
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)
