@@ -87,7 +87,7 @@ def summarize(report: dict, shard: int, shards: int) -> str:
                 available = (f" → `{finding['fixed']}`" if finding.get('fixed')
                              else " (sem versão corrigida anunciada)")
                 lines.append(f"  - `{finding['cve']}` / `{finding['package']}`: "
-                             f"`{finding['installed']}`{available}")
+                             f"`{finding.get('installed') or 'desconhecida'}`{available}")
             if len(critical) > 4:
                 lines.append(f"  - Mais {len(critical)-4} ocorrências CRITICAL no artifact JSON.")
     lines.extend(['', 'Versões corrigidas referem-se a pacotes, não garantem '
