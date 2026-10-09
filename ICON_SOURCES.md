@@ -102,3 +102,21 @@ Os ativos abaixo foram confirmados no repositório de imagens da [LinuxServer.io
 | `yaak` | [LinuxServer.io: yaak-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/yaak-logo.png) |
 
 Estas imagens são referenciadas pelos campos visuais `x-casaos.icon` e `x-casaos.thumbnail`; os ficheiros SVG de recurso com letras foram removidos para não prevalecerem no builder.
+
+## Terceira ronda: nove aplicações resolvidas no mesmo PR
+
+Foram selecionados cinco recursos do projeto original ou da imagem indicada pelo mantenedor upstream, todos fixados a commits:
+
+| Aplicação | Origem confirmada |
+| --- | --- |
+| `blade-of-agony` | [LinuxServer.io — boa-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/boa-logo.png), também referenciado no README da imagem Docker |
+| `dosbox-staging` | [DOSBox Staging — icon_512.png](https://github.com/dosbox-staging/dosbox-staging/blob/05e2004729f9b31d33deaa442f4933844ef87d02/extras/icons/png/icon_512.png) |
+| `luanti` | [Luanti — ícone Android oficial](https://github.com/luanti-org/luanti/blob/9a1b92d0d4d2c47fced18e6077722c6301eb04f5/fastlane/metadata/android/en-US/images/icon.png) |
+| `sealskin` | [SealSkin — docs/app/icon.png](https://github.com/selkies-project/sealskin/blob/d054d878d00ad22893c1c9a07b2c1c2638e626b9/docs/app/icon.png) |
+| `swag` | [LinuxServer.io — swag.gif](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/swag.gif), definido como `project_logo` do Docker SWAG |
+
+Quatro aplicações **sem logótipo específico confirmado** receberam um novo pictograma vetorial ilustrativo no respetivo `Apps/<app>/icon.svg`, em vez de letras genéricas: `budge` (envelope orçamental), `faster-whisper` (microfone rápido), `modmanager` (módulos encaixáveis) e `socket-proxy` (conector protegido). Estão identificados no SVG como **ilustrações próprias da MrStore, não logótipos oficiais**. Isto evita atribuir indevidamente um logo a produtos distintos (por exemplo, o ícone React do frontend de BudgE ou o logótipo genérico Docker usado nalguns README).
+
+Os recursos originais mantêm as condições de licença e atribuição dos respetivos projetos. Os quatro pictogramas ilustrativos são originais deste catálogo.
+
+**Auditoria de 254 apps: 89 SVGs provisórios de letras substituídos; zero SVGs de letras por tratar.** Quatro aplicações mantêm SVGs personalizados com elementos gráficos.

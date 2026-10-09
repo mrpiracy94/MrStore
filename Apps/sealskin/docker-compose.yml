@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/sealskin/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/sealskin/icon.svg
+  icon: https://raw.githubusercontent.com/selkies-project/sealskin/d054d878d00ad22893c1c9a07b2c1c2638e626b9/docs/app/icon.png
+  thumbnail: https://raw.githubusercontent.com/selkies-project/sealskin/d054d878d00ad22893c1c9a07b2c1c2638e626b9/docs/app/icon.png
   title:
     en_US: "SealSkin"
   tagline:

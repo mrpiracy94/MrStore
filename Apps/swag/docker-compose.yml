@@ -49,8 +49,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Networking
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/swag/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/swag/icon.svg
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/swag.gif
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/swag.gif
   title:
     en_US: "SWAG"
   tagline:
