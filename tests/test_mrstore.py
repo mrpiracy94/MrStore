@@ -66,11 +66,13 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(jobs['build']['needs'], 'security_audit')
         script = next(step['run'] for step in scan['steps']
                       if isinstance(step, dict) and 'run' in step
-                      and 'scripts/cves.py' in step['run'])
+                      and 'scripts/release_security.py' in step['run'])
         self.assertIn('--shards 8', script)
         self.assertIn('--shard', script)
         self.assertTrue(any(step.get('if') == 'always()' for step in scan['steps']))
         self.assertIn('if: success()', path.read_text(encoding='utf-8'))
+        self.assertIn('scripts/quarantine.py', path.read_text(encoding='utf-8'))
+        self.assertIn('scripts/privilege_policy.py', path.read_text(encoding='utf-8'))
 
     def test_all_shards_are_disjoint_and_complete(self):
         keys=list(image_usage(apps()))

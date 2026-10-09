@@ -8,10 +8,12 @@ import argparse
 import json
 from pathlib import Path
 import shutil
+import yaml
 
 from catalog import ROOT, apps, image_usage
 from cves import shard_images
 from release_security import declared_platforms
+from privilege_policy import risky_settings
 
 SEVERITIES = {"HIGH", "CRITICAL"}
 
@@ -23,6 +25,7 @@ def decide(root, reports):
     if set(expected) != set(usage):
         raise ValueError("Mismatch between manifest images and architecture inventory")
     image_checks = {}
+    pinned_images = {}
     n_shards = 8
     if len(reports) != n_shards:
         raise ValueError(f"Expected {n_shards} independent scan reports; got {len(reports)}")
@@ -60,7 +63,14 @@ def decide(root, reports):
                     raise ValueError(f"Malformed CVE findings: {image}")
             if image in image_checks:
                 raise ValueError(f"Duplicate image check: {image}")
+            pinned = row.get("pinned")
+            if pinned is not None and (not isinstance(pinned, str) or
+                                      "@sha256:" not in pinned):
+                raise ValueError(f"Image digest is not immutable: {image}")
+            if pinned is None and not all(c["status"] == "error" for c in checks):
+                raise ValueError(f"Unpinned image was approved: {image}")
             image_checks[image] = checks
+            pinned_images[image] = pinned
     if set(image_checks) != set(usage):
         raise ValueError("Incomplete image coverage; cannot publish")
 
@@ -75,6 +85,8 @@ def decide(root, reports):
                           for sev in SEVERITIES}
                 problems.append(f"{check['arch']}: {counts['CRITICAL']} CRITICAL, "
                                 f"{counts['HIGH']} HIGH")
+        if not pinned_images[image]:
+            problems.append("missing immutable digest")
         if problems:
             rejected[image] = problems
 
@@ -82,6 +94,11 @@ def decide(root, reports):
     for app in items:
         app_images = sorted({service["image"] for service in app.source["services"].values()})
         reasons = {image: rejected[image] for image in app_images if image in rejected}
+        unsafe = risky_settings(app.source)
+        if unsafe:
+            reasons["unsafe Compose permissions"] = [
+                f"{service}: {flag}={value}" for service, flag, value in sorted(unsafe)
+            ]
         if reasons:
             quarantined[app.folder] = reasons
         else:
@@ -92,6 +109,8 @@ def decide(root, reports):
         "approved_apps": sorted(clean),
         "quarantined_apps": quarantined,
         "blocked_images": len(rejected),
+        "pinned_images": {image: pinned_images[image] for image in sorted(usage)
+                          if image not in rejected},
     }
 
 
@@ -116,7 +135,8 @@ def main():
         f"- Quarantined applications: {len(decision['quarantined_apps'])}",
         f"- Images with HIGH/CRITICAL or incomplete checks: {decision['blocked_images']}",
         "",
-        "Both declared architectures must pass. CVEs and errors are never ignored.",
+        "Both declared architectures must pass. CVEs, scan errors, and unsafe Compose privileges are quarantined.",
+        "Approved images are pinned to the exact scanned manifest digests in the published catalog.",
         "Installed ZimaOS apps are not modified. Full per-image findings are in scan artifacts.",
         "",
     ]
@@ -130,6 +150,13 @@ def main():
     if not decision["approved_apps"]:
         raise ValueError("No approved applications: refusing to overwrite the live catalog")
     if args.apply:
+        for folder in decision["approved_apps"]:
+            path = args.root / "Apps" / folder / "docker-compose.yml"
+            manifest = yaml.safe_load(path.read_text(encoding="utf-8"))
+            for spec in manifest["services"].values():
+                spec["image"] = decision["pinned_images"][spec["image"]]
+            path.write_text(yaml.safe_dump(manifest, sort_keys=False,
+                                           allow_unicode=True), encoding="utf-8")
         for folder in decision["quarantined_apps"]:
             target = args.root / "Apps" / folder
             if not target.is_dir() or target.is_symlink():

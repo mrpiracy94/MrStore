@@ -9,6 +9,7 @@ from pathlib import Path
 
 from catalog import ROOT, apps, image_usage
 from cves import scan, shard_images
+from updates import digest
 
 
 ARCHES = ("amd64", "arm64")
@@ -29,22 +30,27 @@ def declared_platforms(items):
     return {image: sorted(arches) for image, arches in result.items()}
 
 
-def audit(usage, platforms, chosen, scanner=scan):
+def audit(usage, platforms, chosen, scanner=scan, resolver=digest):
     results = []
     for image in chosen:
+        resolved, lookup_error = resolver(image)
+        pinned = image if "@sha256:" in image else (f"{image}@{resolved}" if resolved else None)
         checks = []
         for arch in platforms[image]:
-            try:
-                findings, error = scanner(image, platform=f"linux/{arch}")
-            except Exception as exc:
-                findings, error = [], str(exc)
+            if lookup_error or not pinned:
+                findings, error = [], f"Digest lookup failed: {lookup_error or 'empty digest'}"
+            else:
+                try:
+                    findings, error = scanner(pinned, platform=f"linux/{arch}")
+                except Exception as exc:
+                    findings, error = [], str(exc)
             checks.append({
                 "arch": arch,
                 "status": "error" if error else "ok",
                 "error": error,
                 "findings": findings,
             })
-        results.append({"image": image, "apps": usage[image], "checks": checks})
+        results.append({"image": image, "pinned": pinned, "apps": usage[image], "checks": checks})
     return results
 
 

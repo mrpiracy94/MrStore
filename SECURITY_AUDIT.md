@@ -34,13 +34,18 @@ Os issues por grupo devem permanecer abertos até os fornecedores publicarem ver
 
 Provas: [publicação da imagem](https://github.com/mrpiracy94/MrStore/actions/runs/37997771065), [comparação e verificação do digest remoto](https://github.com/mrpiracy94/MrStore/actions/runs/37998362405).
 
-## Política obrigatória de lançamento: 0 HIGH / 0 CRITICAL
+## Política de lançamento com quarentena por aplicação (2026-10-10)
 
-A publicação do catálogo fica bloqueada por oito verificações independentes de Trivy, que analisam as **258 referências de imagens** em conjunto. Cada job é obrigatório e falha se tiver uma ocorrência HIGH, CRITICAL ou erro de consulta; o builder/publicador exige `needs: security_audit` e só pode publicar se **todos** tiverem resultado válido e sem vulnerabilidades detetadas. Todos os relatórios ficam guardados mesmo quando a execução falha.
+A versão anterior exigia 0 HIGH/CRITICAL em **todas** as imagens, bloqueando a publicação da loja inteira. A nova política preserva a análise integral e os relatórios dos oito grupos, mas permite construir exclusivamente o subconjunto aprovado.
 
-**Consequência imediata:** os relatórios atuais identificam muitas vulnerabilidades em imagens de terceiros; por isso, os próximos releases serão bloqueados até que todas as imagens sejam corrigidas e reanalisadas. Isto **não revoga** uma versão anteriormente publicada, **não remove** aplicações já instaladas nem corrige automaticamente os containers dos utilizadores. Essa decisão requer política de despublicação/quarentena e testes de migração específicos.
+- O scan de lançamento obtém primeiro o digest SHA256 de cada imagem e verifica **todas as arquiteturas** indicadas no metadata (AMD64 e/ou ARM64) com Trivy e a referência imutável. As imagens sem digest, sem plataforma ou com falha de análise **não são aprovadas**.
+- A agregação valida a cobertura de todas as imagens, plataformas e oito grupos; ficheiros em falta, relatórios malformados ou incoerentes bloqueiam a publicação.
+- Se alguma imagem de um serviço tiver HIGH/CRITICAL, falhas de análise ou uma definição Compose exigir privilégios perigosos, toda a aplicação é colocada em quarentena, não incluída no catálogo gerado. Todas as contagens e motivos ficam preservados.
+- Os manifestos aprovados são fixados temporariamente aos digests validados na cópia de trabalho do GitHub Actions. **Os manifestos em `main` e instalações ZimaOS existentes não são modificados**.
+- O builder apenas publica se existir pelo menos uma aplicação aprovada e se o `index.json` contiver exatamente o número de aplicações aprovadas. Sem candidatas ou com relatórios ausentes, mantém-se a publicação anterior; esta não é automaticamente revogada.
+- Um novo gate de PR compara a configuração com a branch base e **impede a introdução de novas permissões Docker perigosas** sem apagar silenciosamente configurações antigas que exigem validação de compatibilidade.
 
-A exigência é operacional e limitada às bases de dados e capacidades do Trivy usadas no scan. Tags flutuantes podem mudar entre a análise e o consumo da imagem; versões em digest imutável são preferíveis para evitar mudanças inesperadas.
+Esta quarentena reduz a exposição do novo catálogo, mas não prova ausência de vulnerabilidades, não avalia exploração real e não protege instalações anteriores. Deve ser acompanhada pela análise manual dos motivos da quarentena e pela remediação individual das aplicações.
 
 ## Reanálise das 25 imagens com resultado inconclusivo (2026-10-09)
 

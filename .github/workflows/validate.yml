@@ -21,6 +21,8 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -31,6 +33,36 @@ jobs:
         run: python scripts/curate_taglines.py --check
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
+      - name: Inventory ZimaOS launcher compatibility (offline, not runtime proof)
+        run: python scripts/compatibility.py
+      - name: Compatibility summary
+        if: always()
+        run: test ! -f out/compatibility.md || cat out/compatibility.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload compatibility findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zimaos-compatibility-static
+          path: out/compatibility.*
+          if-no-files-found: warn
+      - name: Parse every Compose file with official Docker Compose V2 (no containers)
+        run: python scripts/compose_preflight.py
+      - name: Compose parser summary
+        if: always()
+        run: test ! -f out/compose-preflight.md || cat out/compose-preflight.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload Compose parser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-compose-v2-preflight
+          path: out/compose-preflight.*
+          if-no-files-found: warn
+      - name: Block newly introduced dangerous Docker privileges
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
+          python scripts/privilege_policy.py --base "$BASE_SHA"
       - name: Summary
         if: always()
         run: test ! -f out/audit.md || cat out/audit.md >> "$GITHUB_STEP_SUMMARY"

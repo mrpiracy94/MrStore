@@ -7,23 +7,32 @@ Loja comunitária não oficial, reconstruída em 09-10-2026 a partir das **254 d
 
 ## Como adicionar ao ZimaOS
 
-1. Abra `Actions → Build and publish MrStore v2` e confirme que o build publicou todas as 254 apps sem erros.
+1. Abra `Actions → Build and publish MrStore v2` e confirme que o build publicou apenas as apps aprovadas pela auditoria multiarch. O total pode ser inferior às 254 apps de origem.
 2. Em `Settings → Pages`, selecione `Deploy from a branch`, a branch **gh-pages** e a pasta **/(root)**; não selecione `main`.
 3. Aguarde a publicação, confirme que [`store.json`](https://mrpiracy94.github.io/MrStore/store.json) e [`index.json`](https://mrpiracy94.github.io/MrStore/index.json) devolvem JSON válido e então adicione `https://mrpiracy94.github.io/MrStore` ao ZimaOS como loja externa (cliente compatível com protocolo v2).
 
-O builder oficial do ZimaOS é responsável por gerar os JSON e `content_hash` corretos. A verificação adicional `scripts/verify_dist.py` impede a publicação de catálogos incompletos. A primeira importação para ZimaOS ainda tem de ser validada num dispositivo real.
+O builder oficial do ZimaOS é responsável por gerar os JSON e `content_hash` corretos. A verificação adicional `scripts/verify_dist.py` exige exatamente o número de aplicações aprovadas na quarentena e impede catálogos incompletos. A primeira importação para ZimaOS ainda tem de ser validada num dispositivo real.
 
 ## Funcionalidades
 
 | Componente | Funcionamento | Automação |
 | --- | --- | --- |
 | Validação | Inspeciona todos os Compose, IDs, metadados, ícones locais, portas e flags de segurança | Push, PR e manual |
-| Publicação | Compila catálogo v2 pelo builder oficial, verifica 254 entradas e publica `dist/` | Push e manual |
-| CVE | Trivy verifica vulnerabilidades **HIGH/CRITICAL**, mostrando pacotes afetados e versões corrigidas (quando existem) | Diário, 1/8 das 258 imagens por dia; report JSON/Markdown; issue caso existam CVEs CRITICAL |
+| Publicação | Analisa AMD64/ARM64 declarados, fixa imagens aprovadas por digest e exclui apps com CVEs HIGH/CRITICAL, erros ou privilégios perigosos; verifica a contagem segura e publica `dist/` | Push e manual |
+| CVE | Trivy verifica vulnerabilidades **HIGH/CRITICAL**; na publicação verifica todas as arquiteturas declaradas e todas as imagens | Diário, 258 imagens em 8 grupos; publicação bloqueada sem relatórios completos |
 | Atualizações por digest | Compara a referência da imagem Docker com o digest anterior; gera relatório e issue por alterações efetivas | Diário, sem instalar atualizações |
 | Novas tags/versionamento | Renovate propõe pull requests de alterações nas imagens com tags suportadas | Depois de autorizar a GitHub App Renovate |
 
 **Limitações:** a alteração do digest de `latest`/`release` não é, por si só, uma nova versão upstream e não informa qual a versão instalada no ZimaOS. Para atualizar apps instaladas será necessária uma integração específica com a API da instalação. Os manifestos usam uma versão de revisão inicial `1.0.0` da loja, **não** a versão atual oficial de cada imagem. Não existem atualizações de containers automáticas.
+
+## Quarentena automática e proteção dos manifests
+
+- A publicação examina **todas as 258 referências de imagens** em AMD64 e/ou ARM64 conforme indicado em cada aplicação. Cada arquitetura é analisada separadamente; um erro de registry é inconclusivo, não é uma aprovação.
+- Os relatórios são agregados e conferidos (8 grupos, cobertura integral, sem imagens/arquiteturas omissas). Uma app só é publicada se **todos os seus serviços** estiverem sem CVEs HIGH/CRITICAL conhecidas, sem falhas de análise e sem opções perigosas de Docker Compose (`privileged`, `seccomp:unconfined`, capacidades adicionais, Docker socket, host networking, etc.).
+- As imagens aprovadas são fixadas no **digest SHA256 efetivamente analisado** antes de gerar o catálogo. O pin é feito apenas na cópia de trabalho do GitHub Actions, não altera os manifests versionados nem containers instalados.
+- O relatório `out/quarantine.json` e os 8 relatórios Trivy são preservados em artefactos. Se não existir nenhuma app aprovada ou faltar um relatório, **não se publica um novo catálogo**. Uma versão anteriormente publicada não é retirada automaticamente.
+- Em cada PR, `scripts/privilege_policy.py` impede que sejam introduzidas **novas** configurações Docker arriscadas; opções legadas não são removidas sem teste de compatibilidade.
+- A validação numa instalação ZimaOS real e a revisão das migrações continuam necessárias. Sem mudanças silenciosas nas instalações dos utilizadores.
 
 ## Segurança
 
@@ -34,6 +43,16 @@ O builder oficial do ZimaOS é responsável por gerar os JSON e `content_hash` c
 - Os logs do builder oficial mostraram **37 apps com imagem sem ARM64**: declaramos apenas AMD64 nessas apps. A compatibilidade de outras arquiteturas deve ser reconfirmada a cada nova imagem/tag.
 - Os scans dependem de acesso a registries e bases de dados Trivy; erros são **falhas**, não resultados limpos.
 - `x-casaos.version` e `content_hash` controlam atualizações do catálogo, não upgrades automáticos dos containers.
+
+## Compatibilidade comprovada no ZimaOS
+
+O catálogo de 254 apps publicado em formato v2 e os testes de CI **não são** equivalentes a instalações comprovadas num ZimaOS real.
+
+- Inventário estático por app: `python scripts/compatibility.py` (artefacto GitHub Actions `zimaos-compatibility-static`).
+- Smoke test opt-in de uma app já instalada num NAS: `python scripts/zimaos_runtime_probe.py --app actual-budget --host IP_DO_NAS`. O comando usa apenas Docker inspect e HTTP, sem modificar containers; não valida logins nem dados persistentes.
+- Critérios C0–C4, testes funcionais, registo de evidência e limitações: [docs/ZIMAOS_COMPATIBILITY.md](docs/ZIMAOS_COMPATIBILITY.md).
+
+**Nenhuma app é declarada validada em ambiente real apenas pelo inventário/CI.**
 
 ## Estrutura do projeto
 
