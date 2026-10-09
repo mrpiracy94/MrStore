@@ -13,6 +13,13 @@ Loja comunitária não oficial, reconstruída em 09-10-2026 a partir das **254 d
 
 O builder oficial do ZimaOS é responsável por gerar os JSON e `content_hash` corretos. A verificação adicional `scripts/verify_dist.py` impede a publicação de catálogos incompletos. A primeira importação para ZimaOS ainda tem de ser validada num dispositivo real.
 
+## Publicação com quarentena por aplicação
+
+A publicação não precisa esperar que **todas as imagens** do catálogo estejam livres de CVEs. Em cada execução, a MrStore analisa as 258 referências de imagens em todas as arquiteturas declaradas, fixa o digest que foi realmente analisado e só publica as apps cujos **todos os serviços** passaram sem HIGH/CRITICAL ou erros de scanner. As apps inseguras ou inconclusivas **não entram no índice publicado** e ficam documentadas; os 254 manifests permanecem no repositório.
+
+Configurações perigosas e segredos predefinidos também impedem a aprovação individual. Nenhuma CVE é considerada resolvida só por retirar uma app do catálogo. Consultar [política de segurança do release](docs/SAFE_RELEASE_POLICY.md) e os relatórios públicos `release-status.json` quando existir um release válido.
+
+**Importante:** a lista de apps na loja publicada pode ser inferior às 254 definições originais. A publicação só ocorre após scans completos em oito grupos; se nenhum resultado for elegível, não publica uma lista vazia enganadora. Isto não instala nem atualiza containers automaticamente.
 ## Funcionalidades
 
 | Componente | Funcionamento | Automação |
