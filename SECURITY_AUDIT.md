@@ -4,8 +4,10 @@ O projeto foi reconstruído com os mesmos 254 manifestos Docker Compose. A valid
 
 - **254 aplicações**, **260 serviços** e **258 imagens** distintas.
 - **0 erros estruturais** nas regras de validação definidas pela MrStore.
-- **400 avisos**: 250 referências de imagens com tags mutáveis, 93 ocorrências de seccomp sem confinamento, 21 placeholders de configuração `CHANGE_ME`, 19 apps sem interface web, 7 montagens sensíveis, 5 casos com capacidades adicionais, 1 app `privileged`, 2 redes host e 2 grupos de colisões de portas.
+- **398 avisos**: 250 referências de imagens com tags mutáveis, 93 ocorrências de seccomp sem confinamento, 21 placeholders de configuração `CHANGE_ME`, 19 apps sem interface web, 7 montagens sensíveis, 5 casos com capacidades adicionais, 1 app `privileged`, 2 redes host e 0 colisões efetivas de portas.
 - **37 aplicações** AMD64-only de acordo com as falhas de plataforma registadas nos dois primeiros builds oficiais. Não se deve anunciar suporte ARM64 sem verificação do registry.
+
+As duas colisões antes indicadas eram falsos positivos de protocolos distintos (TCP e UDP). O validador passou a comparar porta e protocolo.
 
 A auditoria offline **não é uma auditoria CVE**. A pesquisa de vulnerabilidades HIGH/CRITICAL é efetuada com o Trivy no GitHub Actions, nos oito grupos (258 imagens) em cada ciclo diário, até quatro grupos em paralelo. As execuções manuais permitem analisar apenas um grupo; ocorrências CRITICAL e erros de scanner fazem falhar a auditoria, depois de preservar os relatórios. Falhas de acesso à registry ou ao scanner contam como falhas e devem ser investigadas. Os relatórios detalhados estão nos artifacts de GitHub Actions, após a execução dos respetivos workflows.
 
