@@ -1,7 +1,7 @@
 name: recyclarr
 services:
   recyclarr:
-    image: ghcr.io/recyclarr/recyclarr:latest
+    image: ghcr.io/recyclarr/recyclarr:8
     container_name: recyclarr
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.recyclarr
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
