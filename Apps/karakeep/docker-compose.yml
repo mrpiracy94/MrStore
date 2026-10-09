@@ -60,7 +60,7 @@ services:
       ports: []
       volumes: []
   karakeep-meilisearch:
-    image: getmeili/meilisearch:v1.13.3
+    image: getmeili/meilisearch:v1.54.3
     container_name: karakeep-meilisearch
     restart: unless-stopped
     environment:
