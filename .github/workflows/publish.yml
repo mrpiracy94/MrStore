@@ -8,6 +8,7 @@ on:
       - 'scripts/cves.py'
       - 'scripts/release_scan.py'
       - 'scripts/release_catalog.py'
+      - 'scripts/release_versions.py'
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
@@ -101,6 +102,25 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"], "a") as file:
               file.write(f"approved={selected['approved_count']}\n")
           PY
+      - name: Read last published app versions from gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: previous-published
+          persist-credentials: false
+      - name: Advance only approved app package revisions
+        run: |
+          python scripts/release_versions.py --stage release-source --previous previous-published --output out/release-versions.json
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          r = json.loads(Path('out/release-versions.json').read_text())
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as f:
+              f.write(f"### ZimaOS package revisions\n\n"
+                      f"Approved image changes: {r['image_updates']} | "
+                      f"Preserved versions: {r['carried_forward']} | "
+                      f"New apps: {r['new_to_store']}\n\n")
+          PY
       - name: Validate staged Compose manifests with official Docker Compose parser
         run: >-
           python scripts/compose_preflight.py --root release-source
@@ -142,6 +162,7 @@ jobs:
             out/audit.json
             out/build-report.json
             out/release-selection.json
+            out/release-versions.json
             out/release-compose.json
             out/release-compose.md
             dist/store.json
