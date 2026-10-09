@@ -96,6 +96,19 @@ def inspect_app(app: App) -> dict:
                 if not headless and configured_port != port:
                     add("setup", "public_url_port_mismatch",
                         f"{service_name}: {key} port {configured_port} differs from UI port {port}.")
+    if app.folder == "bookstack":
+        required = {"APP_URL", "APP_KEY", "DB_HOST", "DB_PORT",
+                    "DB_USERNAME", "DB_PASSWORD", "DB_DATABASE"}
+        missing = sorted(required - set(_environment(main)))
+        if missing:
+            add("review", "bookstack_required_environment",
+                "BookStack is missing mandatory upstream settings: " + ", ".join(missing))
+        if not any(name != meta.get("main") and
+                   any(word in name.lower() for word in ("db", "maria", "mysql"))
+                   for name in services):
+            add("setup", "external_database_required",
+                "No database service is defined; configure a reachable external MariaDB/MySQL.")
+
     if headless:
         status = "headless_not_runtime_tested"
     elif any(x["level"] == "review" for x in checks):
