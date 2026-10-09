@@ -36,8 +36,8 @@ docker exec "$container" redis-cli SAVE | grep -q OK
 sudo test -s "$data_dir/dump.rdb"
 docker rm -f "$container" >/dev/null
 
-start_broker redis:8.10.1-alpine
+start_broker redis:8.10.2-alpine
 restored="$(docker exec "$container" redis-cli GET mrstore:compat)"
 test "$restored" = "paperless-rdb-preserved"
 docker exec "$container" redis-cli SET mrstore:second "ok" | grep -q OK
-echo "PASS: Redis 8 RDB data remains usable after switching to pinned Alpine 8.10.1."
+echo "PASS: Redis 8 RDB data remains usable after switching to pinned Alpine 8.10.2."

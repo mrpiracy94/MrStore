@@ -25,7 +25,7 @@ jobs:
       - name: Compare Redis 8 standard and Alpine on selected platform
         run: |
           trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output old.json redis:8
-          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output alpine.json redis:8.10.1-alpine
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output alpine.json redis:8.10.2-alpine
       - name: Require zero HIGH and CRITICAL in replacement
         run: |
           python - <<'PY'
@@ -43,13 +43,20 @@ jobs:
           summary = ('## Redis ${{ matrix.arch }} CVE comparison\n\n'
                      '| Image | CRITICAL | HIGH |\n|---|---:|---:|\n'
                      f"| Redis 8 default | {old['CRITICAL']} | {old['HIGH']} |\n"
-                     f"| Redis 8.10.1 Alpine | {new['CRITICAL']} | {new['HIGH']} |\n")
+                     f"| Redis 8.10.2 Alpine | {new['CRITICAL']} | {new['HIGH']} |\n")
           print(summary)
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as fp:
               fp.write(summary)
           if new['CRITICAL'] or new['HIGH']:
               raise SystemExit('::error::Pinned Redis Alpine still reports HIGH/CRITICAL CVEs')
           PY
+      - name: Verify registry multiarch immutable digest
+        run: |
+          set -euo pipefail
+          docker buildx imagetools inspect redis:8.10.2-alpine | tee redis-manifest.txt
+          digest="$(awk '/^Digest:/ {print $2; exit}' redis-manifest.txt)"
+          [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]]
+          echo "Pinned release candidate digest: $digest" >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve CVE reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -58,6 +65,7 @@ jobs:
           path: |
             old.json
             alpine.json
+            redis-manifest.txt
           if-no-files-found: warn
   rdb:
     runs-on: ubuntu-latest
