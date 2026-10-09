@@ -161,6 +161,17 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(app.source['services']['paperless-ngx']['image'],
                          'ghcr.io/paperless-ngx/paperless-ngx:latest')
 
+    def test_glances_minimal_preserves_web_and_docker_settings(self):
+        glances = next(item for item in apps() if item.folder == 'glances')
+        service = glances.source['services']['glances']
+        self.assertEqual(service['image'], 'nicolargo/glances:latest')
+        self.assertIn('GLANCES_OPT=-w', service['environment'])
+        self.assertTrue(any(p.get('target') == 61208 and str(p.get('published')) == '61208'
+                            for p in service['ports']))
+        self.assertTrue(any(v.get('source') == '/var/run/docker.sock' and
+                            v.get('target') == '/var/run/docker.sock'
+                            for v in service['volumes']))
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)
