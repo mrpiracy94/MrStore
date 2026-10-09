@@ -84,6 +84,13 @@ class ImageBuildFreshnessTests(unittest.TestCase):
         self.assertEqual(entry["status"], "error")
         self.assertIn("2025-12-13-steamosdep", entry["upstream_deprecation"])
 
+    def test_cops_upstream_abandonment_documented(self):
+        bad = subprocess.CompletedProcess(["crane"], 1, "", "unknown manifest")
+        entry = examine("lscr.io/linuxserver/cops:latest",
+                        ["cops/cops"], NOW, runner=Mock(return_value=bad))
+        self.assertEqual(entry["status"], "error")
+        self.assertIn("2023-05-15-cops", entry["upstream_deprecation"])
+
     def test_shard_coverage_and_summary(self):
         def inspect(ref, usage, now):
             return {"image": ref, "apps": usage, "status": "build_under_180",
