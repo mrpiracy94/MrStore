@@ -51,6 +51,7 @@ def catalog_item(app) -> dict:
     return {
         "app": app.folder, "app_id": app.app_id, "main_service": main,
         "main_container": container if isinstance(container, str) else None,
+        "compose_project": app.source.get("name") or app.folder,
         "main_image": image if isinstance(image, str) else None,
         "findings": findings,
     }
@@ -98,6 +99,15 @@ def docker_repo_digests(image: str, runner=subprocess.run) -> tuple[list[str] | 
     if not isinstance(parsed, list) or any(not isinstance(x, str) for x in parsed):
         return None, "invalid_docker_digests_json"
     return parsed, None
+
+
+def installed_container_image(container: str, runner=subprocess.run) -> tuple[str | None, str | None]:
+    # Only retrieve the configured image reference, never Config.Env or secret labels.
+    value, error = command(
+        ["docker", "container", "inspect", container, "--format", "{{.Config.Image}}"],
+        runner=runner,
+    )
+    return (value, None) if value and not error else (None, error or "missing_installed_image")
 
 
 def registry_digest(image: str, runner=subprocess.run) -> tuple[str | None, str | None]:
@@ -167,7 +177,7 @@ def runtime_check(item: dict, *, check_registry: bool = False,
     if names_error:
         outcome.update(installed="unknown", docker_error=names_error)
         return outcome
-    expected = item["main_container"] or f"{item['app']}-{item['main_service']}-1"
+    expected = item["main_container"] or f"{item['compose_project']}-{item['main_service']}-1"
     actual = expected if expected in names else None
     outcome["installed"] = "found" if actual else "not_found_by_expected_name"
     outcome["expected_docker_name"] = expected
@@ -176,15 +186,19 @@ def runtime_check(item: dict, *, check_registry: bool = False,
         # Do not equate "not found by our expected name" with "not installed".
         outcome["update_evidence"] = "unknown_container_not_identified"
     else:
-        image = item["main_image"]
-        if not image:
-            outcome["update_evidence"] = "unknown_missing_image"
+        local_ref, container_error = installed_container_image(actual, runner)
+        if container_error:
+            outcome["container_inspect_error"] = container_error
+            outcome["update_evidence"] = "unknown_installed_image_unavailable"
         else:
-            local, error = docker_repo_digests(image, runner)
+            outcome["installed_image"] = local_ref
+            local, error = docker_repo_digests(local_ref, runner)
             outcome["repodigests_present"] = bool(local) if local is not None else None
             if error:
                 outcome["docker_image_error"] = error
-            remote, remote_error = registry_digest(image, runner) if check_registry else (None, None)
+            catalog_ref = item["main_image"]
+            remote, remote_error = registry_digest(catalog_ref, runner) if (
+                check_registry and catalog_ref) else (None, None)
             if remote_error:
                 outcome["registry_error"] = remote_error
             outcome["update_evidence"] = compare_digests(local, remote)
