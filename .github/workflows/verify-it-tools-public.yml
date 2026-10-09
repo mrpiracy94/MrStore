@@ -1,0 +1,55 @@
+name: Verify publicly pullable immutable IT-Tools release
+on:
+  pull_request:
+    paths:
+      - 'Apps/it-tools/docker-compose.yml'
+      - 'tests/test_mrstore.py'
+      - '.github/workflows/verify-it-tools-public.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  anonymous_registry_scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    env:
+      IMAGE: ghcr.io/mrpiracy94/mrstore-it-tools:static-nginx-alpine-secfix-20261010@sha256:36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure unauthenticated ZimaOS installations can fetch this digest
+        run: |
+          docker logout ghcr.io || true
+          docker buildx imagetools inspect "$IMAGE"
+          docker buildx imagetools inspect "$IMAGE" --raw | python -c '
+          import json,sys
+          images=json.load(sys.stdin)
+          plats={(x["platform"]["os"], x["platform"]["architecture"]) for x in images.get("manifests", [])}
+          assert ("linux","amd64") in plats and ("linux","arm64") in plats, plats
+          print("PASS: public multiarch manifest has amd64 and arm64")
+          '
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Audit exact public digest without registry credentials
+        run: |
+          trivy image --quiet --image-src remote --platform linux/${{ matrix.arch }} --scanners vuln --severity HIGH,CRITICAL --timeout 12m --exit-code 1 --format json --output public-it-tools.json "$IMAGE"
+          python - <<'PY'
+          import json
+          with open('public-it-tools.json', encoding='utf-8') as f:
+              report=json.load(f)
+          if not isinstance(report.get('Results'), list) or not report['Results']:
+              raise SystemExit('Incomplete public Trivy results')
+          print('PASS: zero HIGH/CRITICAL CVEs reported for the published digest')
+          PY
+      - name: Retain independent scan evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-it-tools-${{ matrix.arch }}
+          path: public-it-tools.json
+          if-no-files-found: warn
