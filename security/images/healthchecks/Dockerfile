@@ -8,4 +8,7 @@ RUN test -x /lsiopy/bin/python \
       'msgpack==1.2.1' \
       'setuptools==80.9.0' \
       'urllib3==2.8.0' \
- && /lsiopy/bin/python -m pip check
+ && /lsiopy/bin/python -m pip check \
+ && /lsiopy/bin/python -m pip uninstall --yes pip setuptools wheel
+# Removed from runtime: pip, setuptools and wheel, including vendored code.
+# No Trivy ignores, skip-files, SBOM edits or CVE filtering.
