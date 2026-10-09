@@ -81,6 +81,24 @@ class ReleaseVersionTests(unittest.TestCase):
         self.assertEqual(report["new_to_store"], 1)
         self.assertEqual(yaml.safe_load(self.staged_file.read_text())["x-casaos"]["version"], "1.0.0")
 
+    def test_reappearing_quarantined_app_keeps_its_last_version(self):
+        old_digest = "example/demo:latest@sha256:" + "a" * 64
+        new_digest = "example/demo:latest@sha256:" + "b" * 64
+        self.staged_file.write_text(yaml.safe_dump(sample("1.0.0", new_digest)))
+        # App was quarantined from the previous index but remains in the version ledger.
+        (self.previous / "index.json").write_text('{"apps": []}')
+        (self.previous / "release-versions-state.json").write_text(json.dumps({
+            "schema": 1,
+            "apps": {"io.github.mrpiracy94.demo": {
+                "version": "1.0.7", "images": {"demo": old_digest},
+                "update_at": "2026-09-15", "release_note": "Older safe release."
+            }},
+        }))
+        report = promote(self.stage, self.previous, today=date(2026, 10, 10))
+        self.assertEqual(report["image_updates"], 1)
+        self.assertEqual(report["state"]["apps"]["io.github.mrpiracy94.demo"]["version"], "1.0.8")
+        self.assertEqual(yaml.safe_load(self.staged_file.read_text())["x-casaos"]["version"], "1.0.8")
+
     def test_missing_previous_publish_fails_closed(self):
         self.staged_file.write_text(yaml.safe_dump(sample("1.0.0", "example/demo:1")))
         with self.assertRaisesRegex(ValueError, "Previous published index"):
