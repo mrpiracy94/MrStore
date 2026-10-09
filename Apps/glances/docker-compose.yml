@@ -1,7 +1,7 @@
 name: glances
 services:
   glances:
-    image: nicolargo/glances:latest-full
+    image: nicolargo/glances:latest
     container_name: glances
     restart: unless-stopped
     environment:
@@ -31,7 +31,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.glances
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
