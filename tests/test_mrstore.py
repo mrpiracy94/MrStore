@@ -140,7 +140,12 @@ class StoreTests(unittest.TestCase):
     def test_vaultwarden_alpine_keeps_catalog_ports_and_data(self):
         app = next(item for item in apps() if item.folder == 'vaultwarden')
         service = app.source['services']['vaultwarden']
-        self.assertEqual(service['image'], 'vaultwarden/server:1.37.3-alpine')
+        import re
+        match = re.fullmatch(r'vaultwarden/server:(\d+)\.(\d+)\.(\d+)-alpine',
+                             service['image'])
+        self.assertIsNotNone(match, service['image'])
+        self.assertGreaterEqual(tuple(map(int, match.groups())), (1, 37, 4),
+                                'Do not revert upstream Vaultwarden security fixes')
         self.assertTrue(any(v.get('source') == '/DATA/AppData/vaultwarden' and
                             v.get('target') == '/data' for v in service['volumes']))
         self.assertTrue(any(p.get('target') == 80 and str(p.get('published')) == '30003'
