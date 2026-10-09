@@ -8,11 +8,12 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
-      - "APP_URL=http://zimaos.local:6875"
-      - "DB_HOST=bookstack_db"
+      - "APP_URL=http://zimaos.local:20026"
+      - "APP_KEY=CHANGE_ME"
+      - "DB_HOST=CHANGE_ME_DB_HOST"
       - "DB_PORT=3306"
-      - "DB_USER=bookstack"
-      - "DB_PASS=CHANGE_ME"
+      - "DB_USERNAME=bookstack"
+      - "DB_PASSWORD=CHANGE_ME"
       - "DB_DATABASE=bookstackapp"
     ports:
       - target: 80
@@ -24,6 +25,27 @@ services:
         target: /config
     x-casaos:
       envs:
+        - container: APP_URL
+          description:
+            en_US: External browser URL, replace host/domain before installing
+        - container: APP_KEY
+          description:
+            en_US: Generate and set a private Laravel APP_KEY before installing
+        - container: DB_HOST
+          description:
+            en_US: Mandatory address of an EXISTING reachable MariaDB/MySQL server
+        - container: DB_PORT
+          description:
+            en_US: Existing database TCP port
+        - container: DB_USERNAME
+          description:
+            en_US: Existing database user
+        - container: DB_PASSWORD
+          description:
+            en_US: Set your existing database password; never use CHANGE_ME
+        - container: DB_DATABASE
+          description:
+            en_US: Existing database name
         - container: TZ
           description:
             en_US: Timezone
@@ -38,7 +60,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.bookstack
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -54,6 +76,6 @@ x-casaos:
   tagline:
     en_US: "BookStack (LinuxServer.io)"
   description:
-    en_US: "BookStack — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/bookstack:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-bookstack/"
+    en_US: "BookStack — exige configuração manual ANTES da instalação: servidor MariaDB/MySQL EXTERNO já criado e acessível, DB_HOST, DB_USERNAME, DB_PASSWORD e DB_DATABASE válidos, APP_KEY gerada e APP_URL ajustada ao nome/domínio real do NAS (porta 20026). Esta entrada NÃO inclui base de dados e NÃO é instalação de um clique. Nunca uses CHANGE_ME em produção. Docs: https://docs.linuxserver.io/images/docker-bookstack/"
   port_map: "20026"
   index: /

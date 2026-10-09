@@ -12,7 +12,7 @@ services:
       - "BROWSER_WEB_URL=http://karakeep-chrome:9222"
       - "NEXTAUTH_SECRET=CHANGE_ME"
       - "MEILI_MASTER_KEY=CHANGE_ME"
-      - "NEXTAUTH_URL=http://zimaos.local:3000"
+      - "NEXTAUTH_URL=http://zimaos.local:30002"
       - "DATA_DIR=/data"
     ports:
       - target: 3000
@@ -89,7 +89,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.karakeep
-  version: "1.0.2"
+  version: "1.0.3"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -105,6 +105,6 @@ x-casaos:
   tagline:
     en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional)"
   description:
-    en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. MEILI_MASTER_KEY tem de ser igual nos dois serviços. O Chrome utiliza a imagem oficial do Karakeep com a porta interna 9222 e configuração de proxy própria. Meilisearch v1.54.3 utiliza --upgrade-db para migrar índices antigos; faz backup de /DATA/AppData/karakeep/meili e dos dados Karakeep ANTES de atualizar. Para rollback, restaura ambos os diretórios e as imagens antigas."
+    en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. NEXTAUTH_URL usa porta 30002 por omissão; ajustar o hostname/domínio e HTTPS de acordo com o NAS antes de instalar. MEILI_MASTER_KEY tem de ser igual nos dois serviços. O Chrome utiliza a imagem oficial do Karakeep com a porta interna 9222 e configuração de proxy própria. Meilisearch v1.54.3 utiliza --upgrade-db para migrar índices antigos; faz backup de /DATA/AppData/karakeep/meili e dos dados Karakeep ANTES de atualizar. Para rollback, restaura ambos os diretórios e as imagens antigas."
   port_map: "30002"
   index: /

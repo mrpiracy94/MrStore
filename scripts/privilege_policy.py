@@ -33,15 +33,17 @@ def risky_settings(doc):
         for flag in ("network_mode", "pid", "ipc", "uts"):
             if spec.get(flag) == "host":
                 findings.add((prefix, flag, "host"))
-        if str(spec.get("user", "")).lower() in ("root", "0", "0:0", "root:root"):
+        if str(spec.get("user", "")).lower().split(":", 1)[0] in ("root", "0"):
             findings.add((prefix, "user", "root"))
         capabilities = spec.get("cap_add") or []
         for cap in (capabilities if isinstance(capabilities, list) else [capabilities]):
             findings.add((prefix, "cap_add", str(cap)))
-        for opt in spec.get("security_opt") or []:
+        options = spec.get("security_opt") or []
+        for opt in (options if isinstance(options, list) else [options]):
             opt = str(opt).lower()
-            if ("seccomp:unconfined" in opt or "apparmor:unconfined" in opt or
-                    opt == "no-new-privileges:false"):
+            if ("seccomp:unconfined" in opt or "seccomp=unconfined" in opt or
+                    "apparmor:unconfined" in opt or "apparmor=unconfined" in opt or
+                    opt in ("no-new-privileges:false", "no-new-privileges=false")):
                 findings.add((prefix, "security_opt", opt))
         for mount in spec.get("volumes") or []:
             if isinstance(mount, dict):

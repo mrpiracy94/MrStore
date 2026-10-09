@@ -6,6 +6,7 @@ the affected image, and every result remains in GitHub Actions artifacts.
 """
 import argparse
 import json
+import re
 from pathlib import Path
 import shutil
 import yaml
@@ -65,7 +66,7 @@ def decide(root, reports):
                 raise ValueError(f"Duplicate image check: {image}")
             pinned = row.get("pinned")
             if pinned is not None and (not isinstance(pinned, str) or
-                                      "@sha256:" not in pinned):
+                                      not re.fullmatch(r".+@sha256:[0-9a-f]{64}", pinned)):
                 raise ValueError(f"Image digest is not immutable: {image}")
             if pinned is None and not all(c["status"] == "error" for c in checks):
                 raise ValueError(f"Unpinned image was approved: {image}")

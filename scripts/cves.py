@@ -39,7 +39,7 @@ def scan(image: str, binary: str = 'trivy', platform: str | None = None) -> tupl
     if platform:
         if platform not in ('linux/amd64', 'linux/arm64'):
             raise ValueError(f'Invalid platform: {platform}')
-        args.extend(['--platform', platform])
+        args[-1:-1] = ['--platform', platform]
     for attempt in range(1, MAX_ATTEMPTS + 1):
         try:
             p = subprocess.run(args, capture_output=True, text=True, check=False, timeout=550)
