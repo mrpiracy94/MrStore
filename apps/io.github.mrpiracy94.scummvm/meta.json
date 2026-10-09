@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.scummvm/assets/icon.svg",
-  "tagline": "ScummVM (LinuxServer.io)",
+  "tagline": "Executa aventuras gráficas clássicas",
   "description": "ScummVM — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/scummvm:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-scummvm/",
   "title": "ScummVM",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.scummvm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

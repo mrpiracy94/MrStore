@@ -27,7 +27,7 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.deluge
-  version: "1.0.0"
+  version: "1.0.1"
   main: deluge
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.deluge/assets/icon.png
   title:

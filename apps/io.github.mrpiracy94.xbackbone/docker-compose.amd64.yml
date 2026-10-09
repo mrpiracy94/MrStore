@@ -18,7 +18,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.xbackbone
-  version: "1.0.0"
+  version: "1.0.1"
   main: xbackbone
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.xbackbone/assets/icon.png
   title:

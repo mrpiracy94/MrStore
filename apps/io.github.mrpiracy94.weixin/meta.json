@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Social",
   "thumbnail": "/apps/io.github.mrpiracy94.weixin/assets/icon.svg",
-  "tagline": "Weixin (LinuxServer.io)",
+  "tagline": "Mensagens e conversas no Weixin",
   "description": "Weixin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/weixin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-weixin/",
   "title": "Weixin",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.weixin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "social"
   ],

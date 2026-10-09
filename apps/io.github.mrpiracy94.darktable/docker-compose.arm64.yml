@@ -1,7 +1,7 @@
 name: darktable
 services:
   darktable:
-    image: lscr.io/linuxserver/darktable:latest@sha256:0f1447dc90b709e71d15cadb11facd0ef9ec7ca6591c16ede0519097ca5beed9
+    image: lscr.io/linuxserver/darktable:latest@sha256:8626336f48d274cc41ea0b3ed780d328e74ec28011419036b6308528d06a48c6
     container_name: darktable
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.darktable
-  version: "1.0.0"
+  version: "1.0.1"
   main: darktable
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.darktable/assets/icon.svg
   title:

@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.sonarr-4k/assets/sonarr.webp",
-  "tagline": "Sonarr 4K (seedit4.me catalog (instância extra))",
+  "tagline": "Gestão automática de séries em qualidade 4K",
   "description": "Sonarr 4K — origem: seedit4.me catalog (instância extra). Imagem: lscr.io/linuxserver/sonarr:latest. Verifica portas/variáveis na documentação do projeto.",
   "title": "Sonarr 4K",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.sonarr-4k",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],

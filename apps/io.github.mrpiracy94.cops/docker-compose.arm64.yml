@@ -21,7 +21,7 @@ services:
         target: /books
 x-casaos:
   id: io.github.mrpiracy94.cops
-  version: "1.0.0"
+  version: "1.0.1"
   main: cops
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.cops/assets/icon.svg
   title:

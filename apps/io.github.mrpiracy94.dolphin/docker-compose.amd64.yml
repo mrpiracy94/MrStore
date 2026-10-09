@@ -1,7 +1,7 @@
 name: dolphin
 services:
   dolphin:
-    image: lscr.io/linuxserver/dolphin:latest@sha256:7f72b0587ab99dc0d7a112f31aa4241edba40506aec49b7bf22a636f1a39a624
+    image: lscr.io/linuxserver/dolphin:latest@sha256:0ed309984b532e2b0a97f9860f861fe037b4ca88d22f6297c24542fbce77ddc4
     container_name: dolphin
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.dolphin
-  version: "1.0.0"
+  version: "1.0.1"
   main: dolphin
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dolphin/assets/icon.png
   title:

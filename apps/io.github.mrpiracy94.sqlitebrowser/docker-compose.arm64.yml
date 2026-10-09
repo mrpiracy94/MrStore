@@ -25,9 +25,9 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.sqlitebrowser
-  version: "1.0.0"
+  version: "1.0.1"
   main: sqlitebrowser
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.sqlitebrowser/assets/icon.png
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.sqlitebrowser/assets/icon.svg
   title:
     en_US: "DB Browser for SQLite"
   port_map: "21146"

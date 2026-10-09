@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.foldingathome/assets/foldingathome.webp",
-  "tagline": "Folding@home (LinuxServer.io)",
+  "tagline": "Contribui para investigação científica distribuída",
   "description": "Folding@home — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/foldingathome:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-foldingathome/",
   "title": "Folding@home",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.foldingathome",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

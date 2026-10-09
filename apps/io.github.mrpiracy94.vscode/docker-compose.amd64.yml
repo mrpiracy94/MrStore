@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.vscode
-  version: "1.0.0"
+  version: "1.0.1"
   main: vscode
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.vscode/assets/icon.png
   title:

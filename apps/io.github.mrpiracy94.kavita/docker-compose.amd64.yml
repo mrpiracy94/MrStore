@@ -21,7 +21,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.kavita
-  version: "1.0.0"
+  version: "1.0.1"
   main: kavita
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.kavita/assets/icon.png
   title:

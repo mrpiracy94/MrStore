@@ -8,12 +8,12 @@
   "developer": "Ollama",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.ollama/assets/ollama.webp",
-  "tagline": "Modelos de IA locais (CPU por omissão)",
+  "tagline": "Executa modelos de inteligência artificial locais",
   "description": "Modelos de IA locais (CPU por omissão). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
   "title": "Ollama",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.ollama",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

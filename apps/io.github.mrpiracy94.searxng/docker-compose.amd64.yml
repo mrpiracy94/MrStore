@@ -1,7 +1,7 @@
 name: searxng
 services:
   searxng:
-    image: searxng/searxng:latest@sha256:2a8660b510454a7f9f052e614b69c18b102a4c5c751f87076cc67cf5e14c6c44
+    image: searxng/searxng:latest@sha256:f3e639582391a481a7a9965d8a3611319cc8561f03929277cca0a8b4cd610830
     container_name: searxng
     restart: unless-stopped
     environment:
@@ -16,7 +16,7 @@ services:
         target: /etc/searxng
 x-casaos:
   id: io.github.mrpiracy94.searxng
-  version: "1.0.0"
+  version: "1.0.1"
   main: searxng
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.searxng/assets/icon.png
   title:

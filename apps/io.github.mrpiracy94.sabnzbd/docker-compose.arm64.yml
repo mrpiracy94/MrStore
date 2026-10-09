@@ -21,7 +21,7 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.sabnzbd
-  version: "1.0.0"
+  version: "1.0.1"
   main: sabnzbd
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.sabnzbd/assets/icon.png
   title:

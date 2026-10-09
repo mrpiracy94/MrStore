@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.socket-proxy/assets/icon.svg",
-  "tagline": "Socket Proxy (LinuxServer.io)",
+  "tagline": "Acesso controlado à API do Docker",
   "description": "Socket Proxy — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/socket-proxy:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-socket-proxy/",
   "title": "Socket Proxy",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.socket-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

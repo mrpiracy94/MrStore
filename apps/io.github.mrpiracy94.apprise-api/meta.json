@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.apprise-api/assets/icon.svg",
-  "tagline": "Apprise API (LinuxServer.io)",
+  "tagline": "Envia notificações para múltiplos serviços",
   "description": "Apprise API — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/apprise-api:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-apprise-api/",
   "title": "Apprise API",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.apprise-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.lollypop/assets/icon.svg",
-  "tagline": "Lollypop (LinuxServer.io)",
+  "tagline": "Leitor e biblioteca de música",
   "description": "Lollypop — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/lollypop:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-lollypop/",
   "title": "Lollypop",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.lollypop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],

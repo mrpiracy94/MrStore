@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.krita/assets/icon.svg",
-  "tagline": "Krita (LinuxServer.io)",
+  "tagline": "Pintura digital e ilustração",
   "description": "Krita — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/krita:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-krita/",
   "title": "Krita",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.krita",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

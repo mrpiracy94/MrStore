@@ -1,7 +1,7 @@
 name: oscam
 services:
   oscam:
-    image: lscr.io/linuxserver/oscam:latest@sha256:95913df4a2250129d7c74ecf8853a65ebf2634c9ac40bc9a4c759fb36885c9ab
+    image: lscr.io/linuxserver/oscam:latest@sha256:5922d0aafa131b5322ab4d462a3b2137c9feede731dda5e661cbd36e5d59732f
     container_name: oscam
     restart: unless-stopped
     environment:
@@ -18,7 +18,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.oscam
-  version: "1.0.0"
+  version: "1.0.1"
   main: oscam
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.oscam/assets/icon.svg
   title:

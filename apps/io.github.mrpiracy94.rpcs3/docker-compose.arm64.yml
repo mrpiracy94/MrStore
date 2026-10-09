@@ -1,7 +1,7 @@
 name: rpcs3
 services:
   rpcs3:
-    image: lscr.io/linuxserver/rpcs3:latest@sha256:3718e20b63c5de7393ceb918c4d667e749ae67b8ea1e8e327341935ae0dd029d
+    image: lscr.io/linuxserver/rpcs3:latest@sha256:3708e99810e2b0019d42b665ee1e665fe25fd8d9cfc2e4b4c41d7e73af362f21
     container_name: rpcs3
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.rpcs3
-  version: "1.0.0"
+  version: "1.0.1"
   main: rpcs3
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.rpcs3/assets/icon.svg
   title:

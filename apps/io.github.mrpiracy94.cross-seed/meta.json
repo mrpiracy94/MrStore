@@ -7,13 +7,13 @@
   "author": "MrStore",
   "developer": "cross-seed",
   "category": "Networking",
-  "thumbnail": "/apps/io.github.mrpiracy94.cross-seed/assets/cross-seed.webp",
-  "tagline": "Cross-seeding automático",
+  "thumbnail": "/apps/io.github.mrpiracy94.cross-seed/assets/icon.svg",
+  "tagline": "Procura correspondências para cross-seeding",
   "description": "Cross-seeding automático. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
   "title": "cross-seed",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.cross-seed",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "networking"
   ],

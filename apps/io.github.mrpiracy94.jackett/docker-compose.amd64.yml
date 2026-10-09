@@ -1,7 +1,7 @@
 name: jackett
 services:
   jackett:
-    image: lscr.io/linuxserver/jackett:latest@sha256:45dea2aa181fa704c94f70f0e88b51f4e98d066aa1ccae14ed96d0a0c8e3d5c8
+    image: lscr.io/linuxserver/jackett:latest@sha256:e36871cae32419981a3734ca262cc8a1ff9bf5b70745c98a9ccd8458ba8853a6
     container_name: jackett
     restart: unless-stopped
     environment:
@@ -21,7 +21,7 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.jackett
-  version: "1.0.0"
+  version: "1.0.1"
   main: jackett
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.jackett/assets/icon.png
   title:

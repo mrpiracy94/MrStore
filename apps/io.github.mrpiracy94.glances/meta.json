@@ -8,12 +8,12 @@
   "developer": "nicolargo",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.glances/assets/glances.webp",
-  "tagline": "Glances (seedit4.me catalog)",
+  "tagline": "Monitoriza CPU, memória, discos e rede",
   "description": "Glances — origem: seedit4.me catalog. Imagem: nicolargo/glances:latest-full. Verifica portas/variáveis na documentação do projeto.",
   "title": "Glances",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.glances",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

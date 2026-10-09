@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.prowlarr/assets/prowlarr.webp",
-  "tagline": "Prowlarr (LinuxServer.io)",
+  "tagline": "Gere indexadores para aplicações multimédia",
   "description": "Prowlarr — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/prowlarr:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-prowlarr/",
   "title": "Prowlarr",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.prowlarr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "networking"
   ],

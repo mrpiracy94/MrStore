@@ -1,7 +1,7 @@
 name: mylar3
 services:
   mylar3:
-    image: lscr.io/linuxserver/mylar3:latest@sha256:787f5ec71092cb24bb0fed4f2f04da22f6a1047fdac42d2fd1bb6d99fc33da67
+    image: lscr.io/linuxserver/mylar3:latest@sha256:1250f963727892bef930cbf5069f95333af9ebb0478c047654307bebd3b660d9
     container_name: mylar3
     restart: unless-stopped
     environment:
@@ -24,7 +24,7 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.mylar3
-  version: "1.0.0"
+  version: "1.0.1"
   main: mylar3
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mylar3/assets/icon.svg
   title:

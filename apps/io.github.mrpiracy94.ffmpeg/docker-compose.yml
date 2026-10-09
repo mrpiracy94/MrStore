@@ -17,7 +17,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.ffmpeg
-  version: "1.0.0"
+  version: "1.0.1"
   main: ffmpeg
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ffmpeg/assets/icon.svg
   title:

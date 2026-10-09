@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.phpmyadmin/assets/phpmyadmin.webp",
-  "tagline": "phpMyAdmin (LinuxServer.io)",
+  "tagline": "Administra bases de dados MySQL no navegador",
   "description": "phpMyAdmin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/phpmyadmin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-phpmyadmin/",
   "title": "phpMyAdmin",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.phpmyadmin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "developer"
   ],

@@ -1,7 +1,7 @@
 name: dosbox-staging
 services:
   dosbox-staging:
-    image: lscr.io/linuxserver/dosbox-staging:latest@sha256:17a03d7826b9175ddec1b5779da5cd7249d1675646b3c45c2b7bf791ac45d89a
+    image: lscr.io/linuxserver/dosbox-staging:latest@sha256:b3b0703411fd8b34f5689fdb53392b371dc769210253144654fddb1a4b5564c7
     container_name: dosbox-staging
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.dosbox-staging
-  version: "1.0.0"
+  version: "1.0.1"
   main: dosbox-staging
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dosbox-staging/assets/icon.svg
   title:

@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.piwigo/assets/piwigo.webp",
-  "tagline": "Piwigo (LinuxServer.io)",
+  "tagline": "Galeria e arquivo de fotografias",
   "description": "Piwigo — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/piwigo:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-piwigo/",
   "title": "Piwigo",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.piwigo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],

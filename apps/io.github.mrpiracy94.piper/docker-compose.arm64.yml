@@ -19,7 +19,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.piper
-  version: "1.0.0"
+  version: "1.0.1"
   main: piper
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.piper/assets/icon.svg
   title:

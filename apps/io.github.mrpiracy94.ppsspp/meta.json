@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.ppsspp/assets/icon.svg",
-  "tagline": "PPSSPP (LinuxServer.io)",
+  "tagline": "Emulador de jogos PlayStation Portable",
   "description": "PPSSPP — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ppsspp:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ppsspp/",
   "title": "PPSSPP",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.ppsspp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

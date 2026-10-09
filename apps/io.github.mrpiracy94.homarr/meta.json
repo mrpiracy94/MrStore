@@ -8,18 +8,18 @@
   "developer": "Homarr",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.homarr/assets/homarr.webp",
-  "tagline": "Dashboard para a casa/homelab",
+  "tagline": "Painel de controlo para serviços do homelab",
   "description": "Dashboard para a casa/homelab. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
   "title": "Homarr",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.homarr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 142746578,
-    "arm64": 144775690
+    "amd64": 145102232,
+    "arm64": 147132950
   }
 }

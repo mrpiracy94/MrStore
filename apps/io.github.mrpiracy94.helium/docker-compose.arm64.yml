@@ -1,7 +1,7 @@
 name: helium
 services:
   helium:
-    image: lscr.io/linuxserver/helium:latest@sha256:b6f8ddd7e07b655d4c79697f7cacc9255e62f3a44b3cc59b4016ecf5ed59ab30
+    image: lscr.io/linuxserver/helium:latest@sha256:da57b025303d8f230b876651b3d08c40ee9e690f0dc01b6d74383f458d239e2e
     container_name: helium
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.helium
-  version: "1.0.0"
+  version: "1.0.1"
   main: helium
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.helium/assets/icon.svg
   title:

@@ -20,7 +20,7 @@ services:
         target: /app/config
 x-casaos:
   id: io.github.mrpiracy94.seerr
-  version: "1.0.0"
+  version: "1.0.1"
   main: seerr
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.seerr/assets/icon.png
   title:

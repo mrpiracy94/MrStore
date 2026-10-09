@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.bookstack/assets/bookstack.webp",
-  "tagline": "BookStack (LinuxServer.io)",
+  "tagline": "Documentação e wiki para equipas",
   "description": "BookStack — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/bookstack:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-bookstack/",
   "title": "BookStack",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.bookstack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

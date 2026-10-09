@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.vscodium/assets/icon.svg",
-  "tagline": "VSCodium (LinuxServer.io)",
+  "tagline": "Editor de código VSCodium",
   "description": "VSCodium — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/vscodium:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-vscodium/",
   "title": "VSCodium",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.vscodium",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "developer"
   ],

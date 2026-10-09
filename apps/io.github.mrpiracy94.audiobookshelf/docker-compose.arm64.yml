@@ -25,7 +25,7 @@ services:
         target: /podcasts
 x-casaos:
   id: io.github.mrpiracy94.audiobookshelf
-  version: "1.0.0"
+  version: "1.0.1"
   main: audiobookshelf
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.audiobookshelf/assets/icon.png
   title:

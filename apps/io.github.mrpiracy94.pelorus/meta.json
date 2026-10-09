@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.pelorus/assets/icon.svg",
-  "tagline": "Pelorus (LinuxServer.io)",
+  "tagline": "Agente de IA para controlar o ambiente de trabalho",
   "description": "Pelorus — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/pelorus:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-pelorus/",
   "title": "Pelorus",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.pelorus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

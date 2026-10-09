@@ -21,7 +21,7 @@ services:
         target: /pictures
 x-casaos:
   id: io.github.mrpiracy94.lychee
-  version: "1.0.0"
+  version: "1.0.1"
   main: lychee
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lychee/assets/icon.png
   title:

@@ -1,7 +1,7 @@
 name: fail2ban
 services:
   fail2ban:
-    image: lscr.io/linuxserver/fail2ban:latest@sha256:260e1edaff7b0404e36b81527f38a3e1f352529915df9f0b8206eb9894f66ce7
+    image: lscr.io/linuxserver/fail2ban:latest@sha256:fb729984a23cb76c7fb7c6d65f713d3a85bba02be2f44948eaa1c230b198d5f3
     container_name: fail2ban
     restart: unless-stopped
     environment:
@@ -16,7 +16,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.fail2ban
-  version: "1.0.0"
+  version: "1.0.1"
   main: fail2ban
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.fail2ban/assets/icon.png
   title:

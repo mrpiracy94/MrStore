@@ -1,7 +1,7 @@
 name: uptime-kuma
 services:
   uptime-kuma:
-    image: louislam/uptime-kuma:2@sha256:91b9ed75424d8c638124e5a04f3012c34b0fbe06e928191e576bdbc362a2b3ad
+    image: louislam/uptime-kuma:2@sha256:c3a55d32e08e5890c58b63ef74849f65345b74dac0cab34427483da7a1d12037
     container_name: uptime-kuma
     restart: unless-stopped
     environment:
@@ -16,7 +16,7 @@ services:
         target: /app/data
 x-casaos:
   id: io.github.mrpiracy94.uptime-kuma
-  version: "1.0.0"
+  version: "1.0.1"
   main: uptime-kuma
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.uptime-kuma/assets/icon.png
   title:

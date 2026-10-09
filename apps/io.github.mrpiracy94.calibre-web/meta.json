@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.calibre-web/assets/calibre-web.webp",
-  "tagline": "Calibre-Web (LinuxServer.io)",
+  "tagline": "Biblioteca web para livros digitais",
   "description": "Calibre-Web — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/calibre-web:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-calibre-web/",
   "title": "Calibre-Web",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.calibre-web",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],

@@ -15,7 +15,7 @@ services:
         target: /var/run/docker.sock
 x-casaos:
   id: io.github.mrpiracy94.socket-proxy
-  version: "1.0.0"
+  version: "1.0.1"
   main: socket-proxy
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.socket-proxy/assets/icon.svg
   title:

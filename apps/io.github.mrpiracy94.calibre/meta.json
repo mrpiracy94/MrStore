@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.calibre/assets/calibre.webp",
-  "tagline": "Calibre (LinuxServer.io)",
+  "tagline": "Organiza, converte e lê livros digitais",
   "description": "Calibre — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/calibre:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-calibre/",
   "title": "Calibre",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.calibre",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 1297098319,
-    "arm64": 1254664531
+    "amd64": 1303043071,
+    "arm64": 1260229208
   }
 }

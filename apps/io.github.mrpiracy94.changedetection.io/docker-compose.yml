@@ -21,7 +21,7 @@ services:
         target: /datastore
 x-casaos:
   id: io.github.mrpiracy94.changedetection.io
-  version: "1.0.0"
+  version: "1.0.1"
   main: changedetection.io
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.changedetection.io/assets/icon.png
   title:

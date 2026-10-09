@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.speedtest-tracker/assets/speedtest-tracker.webp",
-  "tagline": "Speedtest Tracker (LinuxServer.io)",
+  "tagline": "Regista e compara velocidades da Internet",
   "description": "Speedtest Tracker — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/speedtest-tracker:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-speedtest-tracker/",
   "title": "Speedtest Tracker",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.speedtest-tracker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "networking"
   ],

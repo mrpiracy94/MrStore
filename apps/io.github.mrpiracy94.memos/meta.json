@@ -8,12 +8,12 @@
   "developer": "Memos",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.memos/assets/memos.webp",
-  "tagline": "Notas rápidas",
+  "tagline": "Notas rápidas e organização pessoal",
   "description": "Notas rápidas. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
   "title": "Memos",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.memos",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

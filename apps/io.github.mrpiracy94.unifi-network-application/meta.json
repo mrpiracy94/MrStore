@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.unifi-network-application/assets/icon.svg",
-  "tagline": "UniFi Network Application (LinuxServer.io)",
+  "tagline": "Administra redes e dispositivos UniFi",
   "description": "UniFi Network Application — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/unifi-network-application:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-unifi-network-application/",
   "title": "UniFi Network Application",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.unifi-network-application",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "networking"
   ],

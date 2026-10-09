@@ -1,7 +1,7 @@
 name: gzdoom
 services:
   gzdoom:
-    image: lscr.io/linuxserver/gzdoom:latest@sha256:a31e2a7b48e8c6d409c5068e6319947544b4313651826f9536bc5fa4ce63f2a5
+    image: lscr.io/linuxserver/gzdoom:latest@sha256:72edc9fdf6c9f57f1ee50cde13afa4baa8bf9c42a905a310add4e2d581ba0df9
     container_name: gzdoom
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.gzdoom
-  version: "1.0.0"
+  version: "1.0.1"
   main: gzdoom
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.gzdoom/assets/icon.svg
   title:

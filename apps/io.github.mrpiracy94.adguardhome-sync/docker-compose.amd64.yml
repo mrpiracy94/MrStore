@@ -1,7 +1,7 @@
 name: adguardhome-sync
 services:
   adguardhome-sync:
-    image: lscr.io/linuxserver/adguardhome-sync:latest@sha256:846b9964e92e446ff22f74d9b514876ceb3c67b18bee5da371d1152b1df1d19b
+    image: lscr.io/linuxserver/adguardhome-sync:latest@sha256:9a53a745f61d4b6a971834633cde82fdd34356fae06e1b23f77281546642ae56
     container_name: adguardhome-sync
     restart: unless-stopped
     environment:
@@ -18,7 +18,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.adguardhome-sync
-  version: "1.0.0"
+  version: "1.0.1"
   main: adguardhome-sync
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.adguardhome-sync/assets/icon.svg
   title:

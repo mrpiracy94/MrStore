@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.kavita/assets/kavita.webp",
-  "tagline": "Kavita (LinuxServer.io)",
+  "tagline": "Leitor e biblioteca de livros, manga e BD",
   "description": "Kavita — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kavita:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kavita/",
   "title": "Kavita",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.kavita",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "media"
   ],

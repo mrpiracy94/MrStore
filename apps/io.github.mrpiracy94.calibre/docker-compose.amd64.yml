@@ -1,7 +1,7 @@
 name: calibre
 services:
   calibre:
-    image: lscr.io/linuxserver/calibre:latest@sha256:19932ced0c5862687db9d245c0d31f386ac28f7a0e611a18af9352cbce8183e3
+    image: lscr.io/linuxserver/calibre:latest@sha256:8bff661d2509d8c2dc006c40064ccd440da769af2f667350e7b9c13499468b7f
     container_name: calibre
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.calibre
-  version: "1.0.0"
+  version: "1.0.1"
   main: calibre
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.calibre/assets/icon.png
   title:

@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.freecad/assets/freecad.webp",
-  "tagline": "FreeCAD (LinuxServer.io)",
+  "tagline": "Desenho e modelação CAD paramétrica",
   "description": "FreeCAD — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/freecad:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-freecad/",
   "title": "FreeCAD",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.freecad",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

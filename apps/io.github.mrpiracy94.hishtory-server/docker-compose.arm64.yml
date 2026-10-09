@@ -1,7 +1,7 @@
 name: hishtory-server
 services:
   hishtory-server:
-    image: lscr.io/linuxserver/hishtory-server:latest@sha256:e93b75ead20d629f2967a8f94f9e409a2a37e78b9254554b32b1447c3173405b
+    image: lscr.io/linuxserver/hishtory-server:latest@sha256:067703ba6f4fd7df52d6b4829c471425de17647290a801a2f942d3812c0600f8
     container_name: hishtory-server
     restart: unless-stopped
     environment:
@@ -18,7 +18,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.hishtory-server
-  version: "1.0.0"
+  version: "1.0.1"
   main: hishtory-server
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.hishtory-server/assets/icon.svg
   title:

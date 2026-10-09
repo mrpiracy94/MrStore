@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.flycast/assets/icon.svg",
-  "tagline": "Flycast (LinuxServer.io)",
+  "tagline": "Emulador de consolas Sega Dreamcast",
   "description": "Flycast — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/flycast:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-flycast/",
   "title": "Flycast",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.flycast",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "others"
   ],

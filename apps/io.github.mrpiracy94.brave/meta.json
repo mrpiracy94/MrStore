@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.brave/assets/brave.webp",
-  "tagline": "Brave (LinuxServer.io)",
+  "tagline": "Navegador web com proteção de privacidade",
   "description": "Brave — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/brave:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-brave/",
   "title": "Brave",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.brave",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

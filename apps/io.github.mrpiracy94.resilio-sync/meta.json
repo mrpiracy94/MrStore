@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.resilio-sync/assets/icon.svg",
-  "tagline": "Resilio Sync (LinuxServer.io)",
+  "tagline": "Sincronização de ficheiros entre dispositivos",
   "description": "Resilio Sync — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/resilio-sync:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-resilio-sync/",
   "title": "Resilio Sync",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.resilio-sync",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],
