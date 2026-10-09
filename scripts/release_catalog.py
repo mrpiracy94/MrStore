@@ -109,8 +109,15 @@ def insecure_defaults(app) -> list[str]:
             source = v.get("source", "") if isinstance(v, dict) else str(v).split(":", 1)[0]
             if source in DANGEROUS_SOURCE:
                 flags.append(f"{service}: sensitive host volume {source}")
-        if "CHANGE_ME" in json.dumps(spec.get("environment") or []):
+        env = spec.get("environment") or []
+        if "CHANGE_ME" in json.dumps(env):
             flags.append(f"{service}: default credentials not configured")
+        pairs = (env.items() if isinstance(env, dict) else
+                 (value.split("=", 1) for value in env
+                  if isinstance(value, str) and "=" in value))
+        for key, value in pairs:
+            if str(key) in {"HOMEPAGE_ALLOWED_HOSTS", "ALLOWED_HOSTS", "ALLOWED_HOST"} and str(value).strip() == "*":
+                flags.append(f"{service}: wildcard host header validation disabled")
     return sorted(set(flags))
 
 
