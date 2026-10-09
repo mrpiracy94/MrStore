@@ -1,14 +1,16 @@
 """Offline regression suite: no registry access and no Docker execution."""
 import json
 import sys
+import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from catalog import apps, image_usage, report, local_asset_missing
-from updates import monitor, summarize
+from updates import monitor, summarize, digest
 from cves import shard_images, evaluate, summarize as cve_summary, audit_exit_status
 from verify_dist import verify
 
@@ -63,6 +65,17 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(state['images']['error'],b)
         self.assertNotIn('update', [x['image'] for x in changes['first_seen']])
         self.assertIn('digest',summarize(changes).lower())
+
+    def test_transient_registry_timeout_is_retried(self):
+        valid = 'sha256:' + 'a' * 64
+        replies = [subprocess.TimeoutExpired('crane digest', 90),
+                   subprocess.CompletedProcess('crane digest', 0, valid, '')]
+        with patch('updates.subprocess.run', side_effect=replies) as runner, \
+             patch('updates.time.sleep') as pause:
+            result, error = digest('example/image:latest')
+        self.assertEqual((result, error), (valid, None))
+        self.assertEqual(runner.call_count, 2)
+        pause.assert_called_once()
 
     def test_cve_error_is_not_clean(self):
         def mock_scan(image):
