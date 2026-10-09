@@ -1,0 +1,71 @@
+name: Verify Vaultwarden Alpine security and compatibility
+on:
+  pull_request:
+    paths:
+      - 'Apps/vaultwarden/docker-compose.yml'
+      - '.github/workflows/verify-vaultwarden-alpine.yml'
+      - 'scripts/test_vaultwarden_alpine.sh'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan standard and Alpine images on selected architecture
+        run: |
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output original.json vaultwarden/server:1.37.3
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output alpine.json vaultwarden/server:1.37.3-alpine
+      - name: Require zero HIGH/CRITICAL findings on the replacement
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def counts(path):
+              with open(path, encoding='utf-8') as stream:
+                  report = json.load(stream)
+              if not isinstance(report.get('Results'), list) or not report['Results']:
+                  raise SystemExit(f'Incomplete vulnerability report: {path}')
+              return Counter(v.get('Severity')
+                             for result in report['Results']
+                             for v in result.get('Vulnerabilities') or []
+                             if v.get('Severity') in ('HIGH', 'CRITICAL'))
+          old = counts('original.json')
+          new = counts('alpine.json')
+          arch = '${{ matrix.arch }}'
+          summary = (f'## Vaultwarden {arch} CVE check\n\n'
+                     '| Variant | CRITICAL | HIGH |\n|---|---:|---:|\n'
+                     f"| Debian 1.37.3 | {old['CRITICAL']} | {old['HIGH']} |\n"
+                     f"| Alpine 1.37.3 | {new['CRITICAL']} | {new['HIGH']} |\n")
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as dest:
+              dest.write(summary)
+          if new['CRITICAL'] or new['HIGH']:
+              raise SystemExit('::error::Proposed Alpine image still reports HIGH/CRITICAL vulnerabilities')
+          PY
+      - name: Upload raw vulnerability reports even if scan fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vaultwarden-${{ matrix.arch }}-cve-evidence
+          path: |
+            original.json
+            alpine.json
+          if-no-files-found: warn
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify durable DB and HTTP compatibility using disposable data
+        run: bash scripts/test_vaultwarden_alpine.sh
