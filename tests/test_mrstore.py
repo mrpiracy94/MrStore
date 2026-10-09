@@ -123,7 +123,7 @@ class StoreTests(unittest.TestCase):
             json.dumps({'Results': [{'Target': 'target', 'Vulnerabilities': [finding]}]}), '')
         blocked = subprocess.CompletedProcess(['trivy'], 1, '',
                                               'TOOMANYREQUESTS: registry rate limit')
-        with patch('cves.subprocess.run', side_effect=[blocked, success]) as runner, \\
+        with patch('cves.subprocess.run', side_effect=[blocked, success]) as runner, \
              patch('cves.time.sleep') as delay:
             hits, error = scan('lscr.io/linuxserver/any:latest')
         self.assertIsNone(error)
@@ -137,7 +137,7 @@ class StoreTests(unittest.TestCase):
     def test_cve_scan_permanent_failure_is_not_retried_or_clean(self):
         from cves import scan
         missing = subprocess.CompletedProcess(['trivy'], 1, '', 'MANIFEST_UNKNOWN')
-        with patch('cves.subprocess.run', return_value=missing) as run, \\
+        with patch('cves.subprocess.run', return_value=missing) as run, \
              patch('cves.time.sleep') as wait:
             findings, error = scan('example/missing:tag')
         self.assertEqual(findings, [])
@@ -148,7 +148,7 @@ class StoreTests(unittest.TestCase):
     def test_cve_scan_exhausted_rate_limit_remains_unresolved(self):
         from cves import scan
         blocked = subprocess.CompletedProcess(['trivy'], 1, '', 'TOOMANYREQUESTS')
-        with patch('cves.subprocess.run', return_value=blocked) as run, \\
+        with patch('cves.subprocess.run', return_value=blocked) as run, \
              patch('cves.time.sleep') as wait:
             findings, error = scan('lscr.io/linuxserver/any:latest')
         self.assertEqual(findings, [])
