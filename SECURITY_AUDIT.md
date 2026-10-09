@@ -1,37 +1,14 @@
-# MrStore — Auditoria preliminar de segurança
+# MrStore — auditoria estática (2026-10-09)
 
-**Data:** 09/10/2026  
-**Âmbito:** análise offline dos manifestos Docker Compose fornecidos, não de containers em execução.  
-**Método:** parsing YAML e regras estáticas em `scripts/audit_store.py`; **não foram consultados feeds de CVE nesta fase**.
+O projeto foi reconstruído com os mesmos 254 manifestos Docker Compose. A validação local sem executar containers encontrou:
 
-| Indicador | Resultado |
-|---|---:|
-| Aplicações / serviços | 254 / 260 |
-| Imagens distintas | 258 |
-| Erros de esquema após migração v2 | **0** |
-| Avisos estáticos (ocorrências, não apps distintas) | **406** |
-| Referências a tags não imutáveis | 250 serviços |
-| `seccomp:unconfined` | 93 serviços |
-| `privileged: true` | 2 apps |
-| Montagem do socket Docker | 7 apps |
-| Capacidades adicionadas (`cap_add`) | 5 apps |
-| Redes host | 2 apps |
-| Segredos por preencher (`CHANGE_ME`) | 26 ocorrências |
-| Apps sem UI web mapeada | 19 apps |
-| Colisões de portas entre apps | 2 portas |
+- **254 aplicações**, **260 serviços** e **258 imagens** distintas.
+- **0 erros estruturais** nas regras de validação definidas pela MrStore.
+- **401 avisos**: 250 referências de imagens com tags mutáveis, 93 ocorrências de seccomp sem confinamento, 21 placeholders de configuração `CHANGE_ME`, 19 apps sem interface web, 7 montagens sensíveis, 5 casos com capacidades adicionais, 2 apps `privileged`, 2 redes host e 2 grupos de colisões de portas.
+- **37 aplicações** AMD64-only de acordo com as falhas de plataforma registadas nos dois primeiros builds oficiais. Não se deve anunciar suporte ARM64 sem verificação do registry.
 
-## Prioridades de revisão
+A auditoria offline **não é uma auditoria CVE**. A pesquisa de vulnerabilidades HIGH/CRITICAL é efetuada com o Trivy no GitHub Actions, em grupos de 1/8 do catálogo por dia. Falhas de acesso à registry ou ao scanner contam como falhas e devem ser investigadas. Os relatórios detalhados estão nos artifacts de GitHub Actions, após a execução dos respetivos workflows.
 
-1. **Acesso administrativo ao host:** `frigate` e `kasm` incluem `privileged: true`. Confirmar necessidade, isolar rede e dados e reduzir privilégios quando o projeto o permitir.
-2. **Acesso ao Docker daemon:** `dockge`, `dozzle`, `glances`, `homarr`, `homepage`, `netdata` e `socket-proxy` montam `/var/run/docker.sock`. Qualquer processo com acesso suficientemente permissivo ao socket pode controlar o host Docker. Confirmar se montagens são só de leitura, usar proxies com permissões mínimas e evitar exposição pública sem autenticação.
-3. **Isolamento de processos:** 93 serviços utilizam `seccomp:unconfined`. Este sinal é frequente em apps desktop remotas mas diminui as restrições impostas ao container; rever caso a caso.
-4. **Segredos:** 26 valores de ambiente usam `CHANGE_ME`. Não instalar sem definir segredos únicos e fortes; nunca colocá-los no repositório público.
-5. **Portas conflituosas:** host `21027` usado por `brave` e `syncthing`, host `30000` por `gitea` e `luanti`. Se instalados simultaneamente, alterar as portas publicadas.
-6. **Atualizações silenciosas:** tags mutáveis, sobretudo `latest`, podem passar a apontar para outra imagem. Digest monitor deteta alterações na origem; não garante que a versão instalada no ZimaOS tenha sido atualizada.
-7. **19 apps sem UI web:** foram preenchidos os metadados obrigatórios `port_map: "0"` e `index: /`, mas não foi criada UI inexistente. A publicação v2 e o comportamento do cliente precisam de verificação num ZimaOS real.
+A publicação v2 usa o builder oficial de ZimaOS e um verificador que exige exatamente 254 apps em `index.json`, cada uma com metadata e Compose. É necessária validação posterior numa instalação ZimaOS real.
 
-## Alcance dos resultados CVE
-
-Trivy, executado pelo workflow `cve-scan.yml`, usa uma base de vulnerabilidades e analisa imagens Docker por lotes. O scanner poderá identificar CVEs HIGH/CRITICAL em pacotes presentes nas imagens, mas **não existe uma contagem de CVE verificada nesta análise inicial**. A visão completa do catálogo depende do ciclo de 8 dias, da disponibilidade das imagens e de scans sem erros. Resultados ficam nos artifacts da execução correspondente; falhas aparecem explicitamente.
-
-**Importante:** os avisos são *pistas de revisão*, não 406 vulnerabilidades. O scanner não avalia configuração em produção, a exposição real da rede, credenciais ou uma instalação ZimaOS específica. Fazer backup dos dados antes de atualizar ou instalar.
+Nenhuma aplicação é instalada no GitHub Actions. As atualizações de imagens são apenas notificadas e as propostas do Renovate precisam de aprovação humana; segredos `CHANGE_ME` têm de ser personalizados antes da instalação.
