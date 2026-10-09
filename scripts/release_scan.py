@@ -9,29 +9,37 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import time
 from catalog import ROOT, apps, image_usage
-from cves import scan, shard_images
+from cves import scan, shard_images, RETRYABLE, BACKOFF_SECONDS, MAX_ATTEMPTS
 
 DIGEST = re.compile(r"^sha256:[a-f0-9]{64}$")
 
 
-def resolve_digest(image: str) -> tuple[str | None, str | None]:
-    """Use the canonical multi-architecture index digest when one exists."""
-    try:
-        proc = subprocess.run(["crane", "digest", image], capture_output=True,
-                              text=True, timeout=90, check=False)
-    except (OSError, subprocess.TimeoutExpired) as exc:
-        return None, "digest lookup failed: " + str(exc)
-    digest = proc.stdout.strip()
-    if proc.returncode != 0 or not DIGEST.fullmatch(digest):
-        return None, "digest lookup failed: " + (proc.stderr.strip()[:250] or "invalid result")
-    # An already-pinned image must never be silently remapped.
-    if "@sha256:" in image:
-        supplied = "sha256:" + image.rsplit("@sha256:", 1)[-1]
-        if supplied != digest:
-            return None, "registry digest does not match pinned manifest"
-        return image, None
-    return image + "@" + digest, None
+def resolve_digest(image: str, runner=subprocess.run, sleeper=time.sleep) -> tuple[str | None, str | None]:
+    """Resolve a multiarch index digest; transient errors retry, never count as clean."""
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        try:
+            proc = runner(["crane", "digest", image], capture_output=True,
+                          text=True, timeout=90, check=False)
+            digest = proc.stdout.strip()
+            if proc.returncode == 0 and DIGEST.fullmatch(digest):
+                # Never silently remap a pre-pinned image to another digest.
+                if "@sha256:" in image:
+                    supplied = "sha256:" + image.rsplit("@sha256:", 1)[-1]
+                    if supplied != digest:
+                        return None, "registry digest does not match pinned manifest"
+                    return image, None
+                return image + "@" + digest, None
+            error = (proc.stderr or proc.stdout or "invalid registry digest").strip()[-400:]
+        except (OSError, subprocess.TimeoutExpired) as exc:
+            error = str(exc)
+        if attempt == MAX_ATTEMPTS or not RETRYABLE.search(error):
+            return None, f"digest lookup failed ({attempt}/{MAX_ATTEMPTS}): {error}"
+        seconds = BACKOFF_SECONDS[attempt - 1]
+        print(f"Transient crane registry error on {image}; retry in {seconds}s", flush=True)
+        sleeper(seconds)
+    raise AssertionError("Unreachable digest retry state")
 
 
 def image_platforms(items) -> dict[str, list[str]]:
