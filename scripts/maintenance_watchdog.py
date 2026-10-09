@@ -220,7 +220,7 @@ def sync_issue(repo: str, problems: list[dict], body: str) -> str:
             created = api(f"/repos/{escaped_repo}/issues", "POST",
                           {"title": TITLE, "body": body})
             return f"Created issue #{created['number']}"
-        if old.get("state") != "open" or fingerprint(problems) not in old.get("body", ""):
+        if old.get("state") != "open" or fingerprint(problems) not in (old.get("body") or ""):
             api(f"/repos/{escaped_repo}/issues/{old['number']}", "PATCH",
                 {"state": "open", "body": body})
             return f"Refreshed issue #{old['number']}"
