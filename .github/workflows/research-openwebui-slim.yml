@@ -1,0 +1,68 @@
+name: Research Open WebUI slim CVEs and feature tradeoffs
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/research-openwebui-slim.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install pinned Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan Open WebUI standard and slim independently
+        run: |
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --image-src remote --platform linux/${{ matrix.arch }} --format json --timeout 15m --output full.json ghcr.io/open-webui/open-webui:main
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --image-src remote --platform linux/${{ matrix.arch }} --format json --timeout 15m --output slim.json ghcr.io/open-webui/open-webui:main-slim
+      - name: Compare findings and record missing embedded features
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def counts(file):
+              with open(file, encoding='utf-8') as f:
+                  report = json.load(f)
+              if not isinstance(report.get('Results'), list) or not report['Results']:
+                  raise SystemExit('Incomplete Trivy report: ' + file)
+              return Counter(
+                  v.get('Severity') for res in report['Results']
+                  for v in res.get('Vulnerabilities') or []
+                  if v.get('Severity') in ('HIGH', 'CRITICAL')
+              )
+          full, slim = counts('full.json'), counts('slim.json')
+          summary = (
+              '## Open WebUI ${{ matrix.arch }}\n\n'
+              '| Variant | CRITICAL | HIGH |\n|---|---:|---:|\n'
+              f"| main | {full['CRITICAL']} | {full['HIGH']} |\n"
+              f"| main-slim | {slim['CRITICAL']} | {slim['HIGH']} |\n\n"
+              '**Research only — NOT release approved.** Slim excludes bundled '
+              'embeddings, speech recognition and local document processing. '
+              'A lower CVE count does not make an existing Open WebUI deployment '
+              'feature-compatible. Existing user data stays untouched.\n'
+          )
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as dest:
+              dest.write(summary)
+          if slim['CRITICAL'] or slim['HIGH']:
+              print('Slim still has HIGH/CRITICAL findings and is not suitable for the strict release gate.')
+          PY
+      - name: Preserve complete vulnerability evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-webui-${{ matrix.arch }}-variant-research
+          path: |
+            full.json
+            slim.json
+          if-no-files-found: warn
