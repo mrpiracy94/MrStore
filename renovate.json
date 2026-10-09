@@ -19,6 +19,22 @@
         "docker-compose"
       ],
       "automerge": false
+    },
+    {
+      "description": "Rever migrações e backups de bases de dados antes de criar PRs",
+      "matchPackageNames": [
+        "ghcr.io/immich-app/postgres",
+        "docker.io/library/redis",
+        "getmeili/meilisearch",
+        "docker.io/valkey/valkey",
+        "mariadb",
+        "postgres"
+      ],
+      "dependencyDashboardApproval": true,
+      "automerge": false
     }
-  ]
+  ],
+  "major": {
+    "dependencyDashboardApproval": true
+  }
 }
