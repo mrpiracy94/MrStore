@@ -4,7 +4,12 @@ on:
     branches: [main]
     paths:
       - 'Apps/**'
-      - 'scripts/**'
+      # Only catalog/build code should trigger eight security scans + publication.
+      # Monitoring scripts continue to run under Validate MrStore.
+      - 'scripts/catalog.py'
+      - 'scripts/curate_taglines.py'
+      - 'scripts/validate.py'
+      - 'scripts/verify_dist.py'
       - 'data/taglines-pt.json'
       - 'store-config.json'
       - 'supported-languages.json'
