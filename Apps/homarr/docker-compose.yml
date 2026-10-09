@@ -5,7 +5,7 @@ services:
     container_name: homarr
     restart: unless-stopped
     environment:
-      - "SECRET_ENCRYPTION_KEY=CHANGE_ME_64_HEX"
+      - "SECRET_ENCRYPTION_KEY=${HOMARR_SECRET_ENCRYPTION_KEY:?Set HOMARR_SECRET_ENCRYPTION_KEY before deployment}"
     ports:
       - target: 7575
         published: "7575"
@@ -14,9 +14,6 @@ services:
       - type: bind
         source: /DATA/AppData/homarr
         target: /appdata
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
     x-casaos:
       envs:
         - container: SECRET_ENCRYPTION_KEY
@@ -30,9 +27,6 @@ services:
         - container: /appdata
           description:
             en_US: /appdata
-        - container: /var/run/docker.sock
-          description:
-            en_US: /var/run/docker.sock
 
 x-casaos:
   id: io.github.mrpiracy94.homarr

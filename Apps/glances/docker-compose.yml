@@ -12,9 +12,6 @@ services:
         published: "61208"
         protocol: tcp
     volumes:
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
     x-casaos:
       envs:
         - container: TZ
@@ -25,9 +22,6 @@ services:
           description:
             en_US: Port 61208/tcp
       volumes:
-        - container: /var/run/docker.sock
-          description:
-            en_US: /var/run/docker.sock
 
 x-casaos:
   id: io.github.mrpiracy94.glances

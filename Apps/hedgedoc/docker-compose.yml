@@ -11,7 +11,7 @@ services:
       - "DB_HOST=hedgedoc_db"
       - "DB_PORT=3306"
       - "DB_USER=hedgedoc"
-      - "DB_PASS=CHANGE_ME"
+      - "DB_PASS=${HEDGEDOC_DB_PASSWORD:?Set HEDGEDOC_DB_PASSWORD before deployment}"
       - "DB_NAME=hedgedoc"
       - "CMD_DOMAIN=localhost"
       - "CMD_URL_ADDPORT=false"
@@ -26,6 +26,9 @@ services:
         target: /config
     x-casaos:
       envs:
+        - container: DB_PASS
+          description:
+            en_US: Required secret; configure a unique value before deployment
         - container: TZ
           description:
             en_US: Timezone

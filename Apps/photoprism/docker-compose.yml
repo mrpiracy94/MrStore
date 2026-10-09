@@ -5,7 +5,7 @@ services:
     container_name: photoprism
     restart: unless-stopped
     environment:
-      - "PHOTOPRISM_ADMIN_PASSWORD=CHANGE_ME"
+      - "PHOTOPRISM_ADMIN_PASSWORD=${PHOTOPRISM_ADMIN_PASSWORD:?Set PHOTOPRISM_ADMIN_PASSWORD before deployment}"
       - "PHOTOPRISM_SITE_URL=http://zimaos.local:2342/"
     ports:
       - target: 2342

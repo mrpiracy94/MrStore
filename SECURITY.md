@@ -14,3 +14,7 @@ Please report possible security flaws in the MrStore automation privately to the
 ## Verify before deployment
 
 Open GitHub Actions to review the latest build, validation, CVE scan and Docker update reports. Verify downloaded images for the correct architecture and review the upstream repository's release notes.
+
+## Mandatory secrets and Docker socket exceptions
+
+Read [docs/SECURE_DEPLOYMENT.md](docs/SECURE_DEPLOYMENT.md) before deploying apps requiring credentials or host Docker access. `read_only` does **not** make a mounted Docker socket read-only at the API level. The Kasm image requires `privileged` upstream; do not install it on a shared or untrusted host.

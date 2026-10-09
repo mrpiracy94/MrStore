@@ -29,7 +29,7 @@ O builder oficial do ZimaOS é responsável por gerar os JSON e `content_hash` c
 
 - Nunca instalamos containers para validar os Compose. A revisão estática não elimina perigos reais.
 - Alguns projetos exigem `privileged`, `seccomp:unconfined` ou acesso ao Docker Socket; veja os relatórios antes de instalar.
-- Substitua todos os segredos `CHANGE_ME` no momento de instalação.
+- As credenciais obrigatórias usam `${VAR:?mensagem}` no Compose: faltas bloqueiam a configuração via Docker Compose, sem segredos pré-definidos. **Não publicar/instalar estas apps sem verificar o suporte do ZimaOS a esta configuração.** Consulte [instalação segura](docs/SECURE_DEPLOYMENT.md).
 - Ícones externos inválidos foram trocados por placeholders próprios para 87 apps; thumbnails podem continuar externos.
 - Os logs do builder oficial mostraram **37 apps com imagem sem ARM64**: declaramos apenas AMD64 nessas apps. A compatibilidade de outras arquiteturas deve ser reconfirmada a cada nova imagem/tag.
 - Os scans dependem de acesso a registries e bases de dados Trivy; erros são **falhas**, não resultados limpos.

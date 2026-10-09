@@ -7,6 +7,7 @@ from __future__ import annotations
 import argparse
 from collections import Counter
 import json
+import re
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -81,8 +82,9 @@ def inspect_app(app: App) -> dict:
         if not isinstance(service, dict):
             continue
         env = _environment(service)
-        if any("CHANGE_ME" in value for value in env.values()):
-            add("setup", "placeholder_secret",
+        if any("CHANGE_ME" in value or re.search(r"\$\{[A-Z][A-Z0-9_]*:\?", value)
+               for value in env.values()):
+            add("setup", "required_configuration",
                 f"{service_name} requires configuration before first start.")
         for key in ("NEXTAUTH_URL", "AUTH_URL", "PUBLIC_URL", "APP_URL"):
             value = env.get(key, "")

@@ -17,10 +17,6 @@ services:
       - type: bind
         source: /DATA/AppData/homepage
         target: /app/config
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-        read_only: true
     x-casaos:
       envs:
         - container: HOMEPAGE_ALLOWED_HOSTS
@@ -43,9 +39,6 @@ services:
         - container: /app/config
           description:
             en_US: /app/config
-        - container: /var/run/docker.sock
-          description:
-            en_US: /var/run/docker.sock
 
 x-casaos:
   id: io.github.mrpiracy94.homepage

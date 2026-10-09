@@ -8,6 +8,8 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
+    # Upstream Kasm uses Docker-in-Docker and requires privileged mode.
+    # WARNING: root-equivalent host risk; do not deploy on a shared NAS.
     privileged: true
     ports:
       - target: 3000

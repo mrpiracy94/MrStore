@@ -8,7 +8,7 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
-      - "MYSQL_ROOT_PASSWORD=CHANGE_ME"
+      - "MYSQL_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD:?Set MARIADB_ROOT_PASSWORD before deployment}"
     ports:
       - target: 3306
         published: "3306"
@@ -19,6 +19,9 @@ services:
         target: /config
     x-casaos:
       envs:
+        - container: MYSQL_ROOT_PASSWORD
+          description:
+            en_US: Required secret; configure a unique value before deployment
         - container: TZ
           description:
             en_US: Timezone

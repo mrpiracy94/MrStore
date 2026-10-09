@@ -9,13 +9,16 @@ services:
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
       - "SUBDOMAINS=sub"
-      - "TOKEN=CHANGE_ME"
+      - "TOKEN=${DUCKDNS_TOKEN:?Set DUCKDNS_TOKEN before deployment}"
     volumes:
       - type: bind
         source: /DATA/AppData/duckdns/config
         target: /config
     x-casaos:
       envs:
+        - container: TOKEN
+          description:
+            en_US: Required secret; configure a unique value before deployment
         - container: TZ
           description:
             en_US: Timezone

@@ -10,7 +10,7 @@ services:
       - "TZ=Europe/Lisbon"
       - "SITE_ROOT=http://zimaos.local:8000"
       - "SUPERUSER_EMAIL=admin@example.com"
-      - "SUPERUSER_PASSWORD=CHANGE_ME"
+      - "SUPERUSER_PASSWORD=${HEALTHCHECKS_SUPERUSER_PASSWORD:?Set HEALTHCHECKS_SUPERUSER_PASSWORD before deployment}"
     ports:
       - target: 8000
         published: "20037"
@@ -21,6 +21,9 @@ services:
         target: /config
     x-casaos:
       envs:
+        - container: SUPERUSER_PASSWORD
+          description:
+            en_US: Required secret; configure a unique value before deployment
         - container: TZ
           description:
             en_US: Timezone

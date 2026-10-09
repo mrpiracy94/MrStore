@@ -44,10 +44,10 @@ class CompatibilityTests(unittest.TestCase):
         self.assertIn("external_database_required", [x["code"] for x in item["checks"]])
         environment = app.source["services"]["bookstack"]["environment"]
         self.assertIn("APP_URL=http://zimaos.local:20026", environment)
-        self.assertIn("APP_KEY=CHANGE_ME", environment)
-        self.assertIn("DB_HOST=CHANGE_ME_DB_HOST", environment)
+        self.assertIn("APP_KEY=${BOOKSTACK_APP_KEY:?Set BOOKSTACK_APP_KEY before deployment}", environment)
+        self.assertIn("DB_HOST=${BOOKSTACK_DB_HOST:?Set BOOKSTACK_DB_HOST before deployment}", environment)
         self.assertIn("DB_USERNAME=bookstack", environment)
-        self.assertIn("DB_PASSWORD=CHANGE_ME", environment)
+        self.assertIn("DB_PASSWORD=${BOOKSTACK_DB_PASSWORD:?Set BOOKSTACK_DB_PASSWORD before deployment}", environment)
         self.assertFalse(any(x.startswith("DB_PASS=") or x.startswith("DB_USER=")
                              for x in environment))
         editable = {x["container"] for x in

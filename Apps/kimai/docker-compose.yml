@@ -9,7 +9,7 @@ services:
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
       - "ADMINMAIL=admin@example.com"
-      - "ADMINPASS=CHANGE_ME"
+      - "ADMINPASS=${KIMAI_ADMIN_PASSWORD:?Set KIMAI_ADMIN_PASSWORD before deployment}"
       - "DATABASE_URL=sqlite:///var/data/kimai.sqlite"
     ports:
       - target: 8001
@@ -21,6 +21,9 @@ services:
         target: /config
     x-casaos:
       envs:
+        - container: ADMINPASS
+          description:
+            en_US: Required secret; configure a unique value before deployment
         - container: TZ
           description:
             en_US: Timezone

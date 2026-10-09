@@ -9,11 +9,11 @@ services:
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
       - "APP_URL=http://zimaos.local:20026"
-      - "APP_KEY=CHANGE_ME"
-      - "DB_HOST=CHANGE_ME_DB_HOST"
+      - "APP_KEY=${BOOKSTACK_APP_KEY:?Set BOOKSTACK_APP_KEY before deployment}"
+      - "DB_HOST=${BOOKSTACK_DB_HOST:?Set BOOKSTACK_DB_HOST before deployment}"
       - "DB_PORT=3306"
       - "DB_USERNAME=bookstack"
-      - "DB_PASSWORD=CHANGE_ME"
+      - "DB_PASSWORD=${BOOKSTACK_DB_PASSWORD:?Set BOOKSTACK_DB_PASSWORD before deployment}"
       - "DB_DATABASE=bookstackapp"
     ports:
       - target: 80

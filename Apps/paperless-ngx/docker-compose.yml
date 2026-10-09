@@ -8,7 +8,7 @@ services:
       - paperless-broker
     environment:
       - "PAPERLESS_REDIS=redis://paperless-broker:6379"
-      - "PAPERLESS_SECRET_KEY=CHANGE_ME"
+      - "PAPERLESS_SECRET_KEY=${PAPERLESS_SECRET_KEY:?Set PAPERLESS_SECRET_KEY before deployment}"
       - "PAPERLESS_TIME_ZONE=Europe/Lisbon"
       - "PAPERLESS_OCR_LANGUAGE=por+eng"
       - "USERMAP_UID=1000"

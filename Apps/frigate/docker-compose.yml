@@ -7,7 +7,7 @@ services:
     shm_size: "512mb"
     environment:
       - "TZ=Europe/Lisbon"
-      - "FRIGATE_RTSP_PASSWORD=CHANGE_ME"
+      - "FRIGATE_RTSP_PASSWORD=${FRIGATE_RTSP_PASSWORD:?Set FRIGATE_RTSP_PASSWORD before deployment}"
     ports:
       - target: 8971
         published: "8971"

@@ -10,7 +10,7 @@ services:
       - "TZ=Europe/Lisbon"
       - "BASE_URL=http://zimaos.local:1337"
       - "DATABASE_URL=postgresql://postgres@planka_db/planka"
-      - "SECRET_KEY=CHANGE_ME"
+      - "SECRET_KEY=${PLANKA_SECRET_KEY:?Set PLANKA_SECRET_KEY before deployment}"
     ports:
       - target: 1337
         published: "1337"
@@ -21,6 +21,9 @@ services:
         target: /config
     x-casaos:
       envs:
+        - container: SECRET_KEY
+          description:
+            en_US: Required secret; configure a unique value before deployment
         - container: TZ
           description:
             en_US: Timezone

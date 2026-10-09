@@ -9,9 +9,9 @@ services:
     devices:
       - /dev/net/tun:/dev/net/tun
     environment:
-      - "VPN_SERVICE_PROVIDER=CHANGE_ME"
+      - "VPN_SERVICE_PROVIDER=${GLUETUN_VPN_SERVICE_PROVIDER:?Set GLUETUN_VPN_SERVICE_PROVIDER before deployment}"
       - "VPN_TYPE=wireguard"
-      - "WIREGUARD_PRIVATE_KEY=CHANGE_ME"
+      - "WIREGUARD_PRIVATE_KEY=${GLUETUN_WIREGUARD_PRIVATE_KEY:?Set GLUETUN_WIREGUARD_PRIVATE_KEY before deployment}"
       - "TZ=Europe/Lisbon"
     ports:
       - target: 8888

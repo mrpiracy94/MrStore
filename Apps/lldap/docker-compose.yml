@@ -5,10 +5,10 @@ services:
     container_name: lldap
     restart: unless-stopped
     environment:
-      - "LLDAP_JWT_SECRET=CHANGE_ME"
-      - "LLDAP_KEY_SEED=CHANGE_ME"
+      - "LLDAP_JWT_SECRET=${LLDAP_JWT_SECRET:?Set LLDAP_JWT_SECRET before deployment}"
+      - "LLDAP_KEY_SEED=${LLDAP_KEY_SEED:?Set LLDAP_KEY_SEED before deployment}"
       - "LLDAP_LDAP_BASE_DN=dc=example,dc=com"
-      - "LLDAP_LDAP_USER_PASS=CHANGE_ME"
+      - "LLDAP_LDAP_USER_PASS=${LLDAP_LDAP_USER_PASS:?Set LLDAP_LDAP_USER_PASS before deployment}"
       - "TZ=Europe/Lisbon"
     ports:
       - target: 17170

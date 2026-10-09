@@ -10,8 +10,8 @@ services:
     environment:
       - "MEILI_ADDR=http://karakeep-meilisearch:7700"
       - "BROWSER_WEB_URL=http://karakeep-chrome:9222"
-      - "NEXTAUTH_SECRET=CHANGE_ME"
-      - "MEILI_MASTER_KEY=CHANGE_ME"
+      - "NEXTAUTH_SECRET=${KARAKEEP_NEXTAUTH_SECRET:?Set KARAKEEP_NEXTAUTH_SECRET before deployment}"
+      - "MEILI_MASTER_KEY=${KARAKEEP_MEILI_MASTER_KEY:?Set KARAKEEP_MEILI_MASTER_KEY before deployment}"
       - "NEXTAUTH_URL=http://zimaos.local:30002"
       - "DATA_DIR=/data"
     ports:
@@ -68,7 +68,7 @@ services:
     restart: unless-stopped
     environment:
       - "MEILI_NO_ANALYTICS=true"
-      - "MEILI_MASTER_KEY=CHANGE_ME"
+      - "MEILI_MASTER_KEY=${KARAKEEP_MEILI_MASTER_KEY:?Set KARAKEEP_MEILI_MASTER_KEY before deployment}"
     volumes:
       - type: bind
         source: /DATA/AppData/karakeep/meili
