@@ -11,10 +11,6 @@ services:
       - target: 61208
         published: "61208"
         protocol: tcp
-    volumes:
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
     x-casaos:
       envs:
         - container: TZ
@@ -24,14 +20,11 @@ services:
         - container: "61208"
           description:
             en_US: Port 61208/tcp
-      volumes:
-        - container: /var/run/docker.sock
-          description:
-            en_US: /var/run/docker.sock
+      volumes: []
 
 x-casaos:
   id: io.github.mrpiracy94.glances
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -47,6 +40,6 @@ x-casaos:
   tagline:
     en_US: "Glances (seedit4.me catalog)"
   description:
-    en_US: "Glances — origem: seedit4.me catalog. Imagem: nicolargo/glances:latest-full. Verifica portas/variáveis na documentação do projeto."
+    en_US: "Glances — monitorização via web na porta 61208 sem acesso ao Docker socket por omissão. As métricas Docker/containers não estarão disponíveis nesta instalação; para as ativar é necessária revisão explícita das permissões do host. Mantidos imagem oficial e parâmetros de UI; requer análise CVE da imagem."
   port_map: "61208"
   index: /
