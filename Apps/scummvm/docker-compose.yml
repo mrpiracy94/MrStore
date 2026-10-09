@@ -50,8 +50,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/scummvm/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/scummvm/icon.svg
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/scummvm-logo.png
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/scummvm-logo.png
   title:
     en_US: "ScummVM"
   tagline:

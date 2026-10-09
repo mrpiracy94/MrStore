@@ -38,3 +38,67 @@ Os nomes, logótipos e marcas pertencem aos respetivos titulares; a inclusão no
 | `zen` | [Homarr Dashboard Icons: zen-browser](https://github.com/homarr-labs/dashboard-icons/blob/57e939e504eda0ea764098015da93aa666ad6f31/png/zen-browser.png) |
 
 Para outros ícones, consultar o campo `x-casaos.icon` do manifesto correspondente em `Apps/`. Não escolher ícones de produtos diferentes apenas por terem nomes parecidos.
+
+## Segunda ronda: 55 ícones dos modelos oficiais LinuxServer.io
+
+Os ativos abaixo foram confirmados no repositório de imagens da [LinuxServer.io](https://github.com/linuxserver/docker-templates/tree/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img), fixados a um commit. O repositório publica uma [licença GPL-3.0](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/LICENSE) e um ficheiro [CREDITS](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/CREDITS) com as fontes de algumas imagens. Os direitos de marcas e obras originais permanecem com os autores; manter atribuições e termos de redistribuição pertinentes.
+
+| Aplicação | Fonte |
+| --- | --- |
+| `altus` | [LinuxServer.io: altus-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/altus-logo.png) |
+| `ardour` | [LinuxServer.io: ardour-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/ardour-logo.png) |
+| `azahar` | [LinuxServer.io: azahar-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/azahar-logo.png) |
+| `bitcoin-knots` | [LinuxServer.io: bitcoin-knots-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/bitcoin-knots-logo.png) |
+| `calligra` | [LinuxServer.io: calligra-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/calligra-logo.png) |
+| `cops` | [LinuxServer.io: cops-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/cops-icon.png) |
+| `darktable` | [LinuxServer.io: darktable-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/darktable-logo.png) |
+| `dogwalk` | [LinuxServer.io: dogwalk-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/dogwalk-logo.png) |
+| `duckstation` | [LinuxServer.io: duckstation-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/duckstation-logo.png) |
+| `eden` | [LinuxServer.io: eden-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/eden-logo.png) |
+| `ffmpeg` | [LinuxServer.io: ffmpeg.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/ffmpeg.png) |
+| `flycast` | [LinuxServer.io: flycast-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/flycast-logo.png) |
+| `github-desktop` | [LinuxServer.io: github-desktop-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/github-desktop-icon.png) |
+| `gitqlient` | [LinuxServer.io: gitqlient-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/gitqlient-icon.png) |
+| `gzdoom` | [LinuxServer.io: gzdoom-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/gzdoom-logo.png) |
+| `habridge` | [LinuxServer.io: habridge-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/habridge-icon.png) |
+| `helium` | [LinuxServer.io: helium-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/helium-logo.png) |
+| `hishtory-server` | [LinuxServer.io: hishtory-server-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/hishtory-server-icon.png) |
+| `kdenlive` | [LinuxServer.io: kdenlive-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/kdenlive-logo.png) |
+| `kicad` | [LinuxServer.io: kicad-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/kicad-logo.png) |
+| `krita` | [LinuxServer.io: krita-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/krita-logo.png) |
+| `limnoria` | [LinuxServer.io: limnoria-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/limnoria-icon.png) |
+| `lm-studio` | [LinuxServer.io: lmstudio-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/lmstudio-logo.png) |
+| `mame` | [LinuxServer.io: mame-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/mame-logo.png) |
+| `melonds` | [LinuxServer.io: melonds-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/melonds-logo.png) |
+| `minisatip` | [LinuxServer.io: minisatip-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/minisatip-icon.png) |
+| `mysql-workbench` | [LinuxServer.io: mysql-workbench-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/mysql-workbench-icon.png) |
+| `ngircd` | [LinuxServer.io: ngircd-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/ngircd-icon.png) |
+| `openshot` | [LinuxServer.io: openshot-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/openshot-logo.png) |
+| `openssh-server` | [LinuxServer.io: openssh-server-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/openssh-server-icon.png) |
+| `pcsx2` | [LinuxServer.io: pcsx2-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/pcsx2-logo.png) |
+| `pelorus` | [LinuxServer.io: pelorus-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/pelorus-logo.png) |
+| `pidgin` | [LinuxServer.io: pidgin-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/pidgin-logo.png) |
+| `ppsspp` | [LinuxServer.io: ppsspp-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/ppsspp-logo.png) |
+| `pycharm` | [LinuxServer.io: pycharm-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/pycharm-logo.png) |
+| `rawtherapee` | [LinuxServer.io: rawtherapee-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/rawtherapee-logo.png) |
+| `retroarch` | [LinuxServer.io: retroarch-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/retroarch-logo.png) |
+| `rpcs3` | [LinuxServer.io: rpcs3-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/rpcs3-logo.png) |
+| `rsnapshot` | [LinuxServer.io: rsnapshot-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/rsnapshot-icon.png) |
+| `scummvm` | [LinuxServer.io: scummvm-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/scummvm-logo.png) |
+| `shadps4` | [LinuxServer.io: shadps4-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/shadps4-logo.png) |
+| `shotcut` | [LinuxServer.io: shotcut-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/shotcut-logo.png) |
+| `spotube` | [LinuxServer.io: spotube-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/spotube-logo.png) |
+| `steamos` | [LinuxServer.io: steamos-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/steamos-logo.png) |
+| `syslog-ng` | [LinuxServer.io: syslog-ng-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/syslog-ng-logo.png) |
+| `unifi-network-application` | [LinuxServer.io: unifi-network-application-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/unifi-network-application-icon.png) |
+| `vlc` | [LinuxServer.io: vlc-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/vlc-logo.png) |
+| `webcord` | [LinuxServer.io: webcord-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/webcord-icon.png) |
+| `webgrabplus` | [LinuxServer.io: webgrabplus-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/webgrabplus-logo.png) |
+| `webstation` | [LinuxServer.io: webstation-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/webstation-logo.png) |
+| `weixin` | [LinuxServer.io: weixin-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/weixin-logo.png) |
+| `winegui` | [LinuxServer.io: winegui-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/winegui-logo.png) |
+| `wps-office` | [LinuxServer.io: wps-office-icon.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/wps-office-icon.png) |
+| `xemu` | [LinuxServer.io: xemu-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/xemu-logo.png) |
+| `yaak` | [LinuxServer.io: yaak-logo.png](https://github.com/linuxserver/docker-templates/blob/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/yaak-logo.png) |
+
+Estas imagens são referenciadas pelos campos visuais `x-casaos.icon` e `x-casaos.thumbnail`; os ficheiros SVG de recurso com letras foram removidos para não prevalecerem no builder.

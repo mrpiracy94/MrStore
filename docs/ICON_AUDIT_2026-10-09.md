@@ -1,90 +1,41 @@
-# Auditoria de ícones do MrStore — 2026-10-09
+# Auditoria dos ícones da MrStore — 2026-10-09
 
-## Origem da auditoria
+## Inventário verificado
 
-Inventário de `gh-pages/index.json` com 254 aplicações. O catálogo publicado tinha:
+Foi analisado o `gh-pages/index.json` publicado, com **254 aplicações**.
 
-- **165** ícones não provisórios na listagem;
-- **89** ícones apontados para `/assets/icon.svg` gerados a partir dos `Apps/*/icon.svg` provisórios;
-- **25** das 89 aplicações com fonte externa real e fixada a uma revisão, já documentada em [ICON_SOURCES.md](../ICON_SOURCES.md) e confirmada pela miniatura WebP no catálogo;
-- **64** aplicações ainda sem fonte real verificada nesta ronda.
+- 165 entradas tinham ícones diferentes dos SVG de recurso com letras;
+- 89 entradas apontavam para os `Apps/*/icon.svg` provisórios;
+- 25 entradas já possuíam URLs de logótipos reais no manifesto, mas o builder dava preferência aos SVG locais;
+- 55 entradas adicionais têm imagens correspondentes confirmadas no [repositório oficial de modelos LinuxServer.io](https://github.com/linuxserver/docker-templates), com revisão fixada;
+- restam **9** aplicações sem fonte de logótipo suficientemente confirmada nesta auditoria.
 
-## Correção incluída
+**Resultado pretendido após compilação e publicação: 245 ícones não provisórios, 9 SVG provisórios**. O resultado final no ZimaOS ainda precisa de ser confirmado depois do build e de eventual atualização de cache.
 
-Remover os 25 ficheiros `Apps/<app>/icon.svg` provisórios que se sobrepunham aos logótipos reais de `x-casaos.icon`. Os manifestos já apontam para os mesmos logótipos em `icon` e `thumbnail`; o builder ZimaOS poderá assim publicar o ativo correto em ambos os campos.
+## Alterações preparadas neste PR
 
-Nenhuma definição Docker é alterada: serviços, imagens, volumes, portas, redes e variáveis mantêm-se iguais.
+1. Remover 25 SVGs provisórios que sobrepunham URLs reais já existentes, mantendo os manifestos originais.
+2. Em 55 manifestos, atualizar **apenas** `x-casaos.icon` e `x-casaos.thumbnail` para imagens correspondentes da LinuxServer.io, com URL fixada a commit; remover os respetivos SVGs provisórios.
+3. Acrescentar um teste offline que reprova o caso de um SVG de recurso genérico prevalecer sobre um URL de ícone real.
+4. Preservar o restante Compose: serviços, imagens, portas, volumes, redes, recursos, variáveis e segurança não são alterados.
 
-## Ainda por verificar (64)
+## Pendentes — 9
 
-- `altus`
-- `ardour`
-- `azahar`
-- `bitcoin-knots`
 - `blade-of-agony`
 - `budge`
-- `calligra`
-- `cops`
-- `darktable`
-- `dogwalk`
 - `dosbox-staging`
-- `duckstation`
-- `eden`
 - `faster-whisper`
-- `ffmpeg`
-- `flycast`
-- `github-desktop`
-- `gitqlient`
-- `gzdoom`
-- `habridge`
-- `helium`
-- `hishtory-server`
-- `kdenlive`
-- `kicad`
-- `krita`
-- `limnoria`
-- `lm-studio`
 - `luanti`
-- `mame`
-- `melonds`
-- `minisatip`
 - `modmanager`
-- `mysql-workbench`
-- `ngircd`
-- `openshot`
-- `openssh-server`
-- `pcsx2`
-- `pelorus`
-- `pidgin`
-- `ppsspp`
-- `pycharm`
-- `rawtherapee`
-- `retroarch`
-- `rpcs3`
-- `rsnapshot`
-- `scummvm`
 - `sealskin`
-- `shadps4`
-- `shotcut`
 - `socket-proxy`
-- `spotube`
-- `steamos`
 - `swag`
-- `syslog-ng`
-- `unifi-network-application`
-- `vlc`
-- `webcord`
-- `webgrabplus`
-- `webstation`
-- `weixin`
-- `winegui`
-- `wps-office`
-- `xemu`
-- `yaak`
 
-## Validação após publicação
+Não substituir estes por logótipos de produtos apenas parecidos sem confirmar a origem.
 
-1. Compilar com `IceWhaleTech/build-appstore-action@v1` e verificar `dist/index.json` (254 entradas).
-2. Verificar que os 25 ícones deste lote deixam de apontar para `/assets/icon.svg` provisório.
-3. Confirmar em ZimaOS após atualização da loja; renovar a cache local se a interface continuar a apresentar o SVG antigo.
-4. Não substituir os 64 ícones pendentes por imagens de aplicações parecidas sem confirmar a identidade e os direitos de utilização.
+## Verificação após publicação
+
+1. Executar `python scripts/validate.py` e `python -m unittest discover -s tests -v`.
+2. Compilar os 254 manifestos com `IceWhaleTech/build-appstore-action@v1` e validar `dist/index.json`.
+3. Confirmar que nenhuma das 80 entradas corrigidas emite o SVG genérico de letras como ícone principal e que as 9 restantes ainda podem usar recurso provisório.
+4. Depois do merge e da atualização de `gh-pages`, atualizar a loja ZimaOS e verificar a cache dos ícones.
