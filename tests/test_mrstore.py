@@ -129,6 +129,14 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(len(digest), 64)
         self.assertTrue(all(char in '0123456789abcdef' for char in digest))
 
+    def test_monitor_changes_do_not_trigger_expensive_publication(self):
+        publish = (ROOT / '.github/workflows/publish.yml').read_text(encoding='utf-8')
+        validate = (ROOT / '.github/workflows/validate.yml').read_text(encoding='utf-8')
+        self.assertNotIn("- 'scripts/**'", publish)
+        for script in ('catalog.py', 'curate_taglines.py', 'validate.py', 'verify_dist.py'):
+            self.assertIn(f"- 'scripts/{script}'", publish)
+        self.assertIn("- 'scripts/**'", validate)
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)
