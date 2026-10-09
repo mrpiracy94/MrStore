@@ -5,6 +5,10 @@ on:
     paths:
       - 'security/images/qbittorrent/Dockerfile'
       - '.github/workflows/publish-patched-qbittorrent.yml'
+  pull_request:
+    paths:
+      - 'security/images/qbittorrent/Dockerfile'
+      - '.github/workflows/publish-patched-qbittorrent.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -34,20 +38,22 @@ jobs:
       - name: Block if AMD64 has HIGH or CRITICAL CVEs
         run: trivy image --image-src docker --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format json --timeout 12m --output scan-amd64.json mrstore-qbittorrent:amd64
       - name: Smoke test AMD64 executable
-        run: docker run --rm --platform linux/amd64 --entrypoint /usr/bin/qbittorrent-nox mrstore-qbittorrent:amd64 --version
+        run: docker run --rm --platform linux/amd64 --entrypoint /app/qbittorrent-nox mrstore-qbittorrent:amd64 --version
       - name: Build ARM64 security image
         run: docker buildx build --pull --platform linux/arm64 --load -t mrstore-qbittorrent:arm64 -f security/images/qbittorrent/Dockerfile .
       - name: Block if ARM64 has HIGH or CRITICAL CVEs
         run: trivy image --image-src docker --platform linux/arm64 --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format json --timeout 12m --output scan-arm64.json mrstore-qbittorrent:arm64
       - name: Smoke test ARM64 executable
-        run: docker run --rm --platform linux/arm64 --entrypoint /usr/bin/qbittorrent-nox mrstore-qbittorrent:arm64 --version
+        run: docker run --rm --platform linux/arm64 --entrypoint /app/qbittorrent-nox mrstore-qbittorrent:arm64 --version
       - name: Authenticate to GitHub Container Registry
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Publish only successfully scanned per-architecture images
+        if: github.event_name != 'pull_request'
         run: |
           set -eu
           docker tag mrstore-qbittorrent:amd64 "$IMAGE:$VERSION-amd64"
