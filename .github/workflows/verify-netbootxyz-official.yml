@@ -32,6 +32,15 @@ jobs:
         run: trivy image --image-src docker --quiet --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format json --timeout 12m --output netboot-arm64.json mrstore-netbootxyz:arm64
       - name: Smoke-test patched ARM64 Node app
         run: docker run --rm --platform linux/arm64 --entrypoint /bin/sh mrstore-netbootxyz:arm64 -c 'node --version && test -f /app/package.json && test -d /app/node_modules'
+      - name: Verify released image can be pulled without GHCR login
+        run: |
+          set -euo pipefail
+          docker logout ghcr.io || true
+          docker pull --platform linux/amd64 "ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527"
+      - name: Independently re-scan published immutable AMD64 manifest
+        run: trivy image --image-src remote --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --exit-code 1 --format json --timeout 12m --output netboot-release-amd64.json "ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527"
+      - name: Independently re-scan published immutable ARM64 manifest
+        run: trivy image --image-src remote --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --exit-code 1 --format json --timeout 12m --output netboot-release-arm64.json "ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527"
       - name: Preserve proof, even on failure
         if: always()
         uses: actions/upload-artifact@v4
@@ -40,4 +49,6 @@ jobs:
           path: |
             netboot-amd64.json
             netboot-arm64.json
+            netboot-release-amd64.json
+            netboot-release-arm64.json
           if-no-files-found: warn
