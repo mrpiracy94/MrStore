@@ -1,0 +1,69 @@
+name: Publish security-patched qBittorrent
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'security/images/qbittorrent/Dockerfile'
+      - '.github/workflows/publish-patched-qbittorrent.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: patched-qbittorrent-release
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-qbittorrent
+      VERSION: 5.2.4-libtorrentv1-secfix-20261009
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable ARM64 emulation
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Build AMD64 security image
+        run: docker buildx build --pull --platform linux/amd64 --load -t mrstore-qbittorrent:amd64 -f security/images/qbittorrent/Dockerfile .
+      - name: Block if AMD64 has HIGH or CRITICAL CVEs
+        run: trivy image --image-src docker --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format json --timeout 12m --output scan-amd64.json mrstore-qbittorrent:amd64
+      - name: Smoke test AMD64 executable
+        run: docker run --rm --platform linux/amd64 --entrypoint /usr/bin/qbittorrent-nox mrstore-qbittorrent:amd64 --version
+      - name: Build ARM64 security image
+        run: docker buildx build --pull --platform linux/arm64 --load -t mrstore-qbittorrent:arm64 -f security/images/qbittorrent/Dockerfile .
+      - name: Block if ARM64 has HIGH or CRITICAL CVEs
+        run: trivy image --image-src docker --platform linux/arm64 --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format json --timeout 12m --output scan-arm64.json mrstore-qbittorrent:arm64
+      - name: Smoke test ARM64 executable
+        run: docker run --rm --platform linux/arm64 --entrypoint /usr/bin/qbittorrent-nox mrstore-qbittorrent:arm64 --version
+      - name: Authenticate to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish only successfully scanned per-architecture images
+        run: |
+          set -eu
+          docker tag mrstore-qbittorrent:amd64 "$IMAGE:$VERSION-amd64"
+          docker tag mrstore-qbittorrent:arm64 "$IMAGE:$VERSION-arm64"
+          docker push "$IMAGE:$VERSION-amd64"
+          docker push "$IMAGE:$VERSION-arm64"
+          docker buildx imagetools create \
+            -t "$IMAGE:$VERSION" \
+            "$IMAGE:$VERSION-amd64" "$IMAGE:$VERSION-arm64"
+          docker buildx imagetools inspect "$IMAGE:$VERSION"
+      - name: Save vulnerability evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: patched-qbittorrent-security-evidence
+          path: |
+            scan-amd64.json
+            scan-arm64.json
+          if-no-files-found: warn
