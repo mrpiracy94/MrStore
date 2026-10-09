@@ -27,10 +27,13 @@ for i in $(seq 1 100); do
     http://127.0.0.1:28037/ 2>/dev/null || :)"
   if [[ "$code" == 200 ]] && grep -Eiq '(healthchecks|Log [Ii]n|[Ss]ign [Ii]n)' "$work/page.html"; then
     test -f "$work/config/existing-sentinel"
-    docker exec "$name" /lsiopy/bin/python -c "import jwt, msgpack, setuptools, urllib3; \
+    docker exec "$name" /lsiopy/bin/python -c "import jwt, msgpack, urllib3, importlib.util; \
 assert jwt.__version__ == '2.14.0'; \
 assert msgpack.version[0] >= 1; \
-assert urllib3.__version__ == '2.8.0'"
+assert urllib3.__version__ == '2.8.0'; \
+assert importlib.util.find_spec('pip') is None; \
+assert importlib.util.find_spec('setuptools') is None; \
+assert importlib.util.find_spec('wheel') is None"
     echo "PASS: $arch Healthchecks login HTML and existing /config with patched modules."
     exit 0
   fi
