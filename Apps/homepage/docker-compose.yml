@@ -5,7 +5,7 @@ services:
     container_name: homepage
     restart: unless-stopped
     environment:
-      - "HOMEPAGE_ALLOWED_HOSTS=*"
+      - "HOMEPAGE_ALLOWED_HOSTS=zimaos.local:30007"
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
@@ -17,10 +17,6 @@ services:
       - type: bind
         source: /DATA/AppData/homepage
         target: /app/config
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-        read_only: true
     x-casaos:
       envs:
         - container: HOMEPAGE_ALLOWED_HOSTS
@@ -43,13 +39,10 @@ services:
         - container: /app/config
           description:
             en_US: /app/config
-        - container: /var/run/docker.sock
-          description:
-            en_US: /var/run/docker.sock
 
 x-casaos:
   id: io.github.mrpiracy94.homepage
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -65,6 +58,6 @@ x-casaos:
   tagline:
     en_US: "Dashboard configurável"
   description:
-    en_US: "Dashboard configurável. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+    en_US: "Dashboard configurável. Proteção do cabeçalho Host ativada para zimaos.local:30007; se usas IP, outro hostname ou proxy, edita HOMEPAGE_ALLOWED_HOSTS na instalação. O Docker socket foi removido para reduzir privilégios: widgets/integracões Docker ficam desativados por omissão. Mantêm-se a porta 30007 e os dados em /DATA/AppData/homepage."
   port_map: "30007"
   index: /
