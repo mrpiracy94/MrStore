@@ -84,7 +84,11 @@ def inspect_app(app: App) -> dict:
         if any("CHANGE_ME" in value for value in env.values()):
             add("setup", "placeholder_secret",
                 f"{service_name} requires configuration before first start.")
-        for key in ("NEXTAUTH_URL", "AUTH_URL", "PUBLIC_URL", "APP_URL"):
+        for key in ("HOMEPAGE_ALLOWED_HOSTS", "ALLOWED_HOSTS", "ALLOWED_HOST"):
+            if env.get(key, "").strip() == "*":
+                add("review", "wildcard_allowed_hosts",
+                    f"{service_name}: {key}=* disables host validation; configure actual NAS hosts.")
+        for key in ("NEXTAUTH_URL", "AUTH_URL", "PUBLIC_URL", "APP_URL", "SITE_ROOT"):
             value = env.get(key, "")
             parsed = urlsplit(value) if value.startswith(("http://", "https://")) else None
             if parsed and parsed.hostname == "zimaos.local":
