@@ -29,6 +29,18 @@ class HardenedManifestTests(unittest.TestCase):
         self.assertEqual(len(services), 21)
         self.assertEqual(report()['rules'].get('change_me', 0), 0)
 
+    def test_installation_warnings_survive_builder_as_top_level_tips(self):
+        from check_required_secrets import required_by_app
+        required = required_by_app()
+        self.assertEqual(len(required), 19)
+        for name, vars in required.items():
+            warning = self.apps[name].metadata.get('tips', {}).get('before_install', {})
+            for locale in ('en_US', 'pt_PT'):
+                self.assertIn(locale, warning, f'{name} missing {locale}')
+                for variable in vars:
+                    self.assertIn(variable, warning[locale], name)
+            self.assertNotIn('tips', self.apps[name].source['services'].get(name, {}))
+
     def test_optional_docker_socket_access_removed(self):
         for app_name in ('homarr', 'homepage', 'glances', 'netdata'):
             app = self.apps[app_name]

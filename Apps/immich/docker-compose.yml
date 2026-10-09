@@ -119,6 +119,10 @@ services:
             en_US: /var/lib/postgresql/data
 
 x-casaos:
+  tips:
+    before_install:
+      en_US: "SECURITY: Configure required Compose variables IMMICH_DB_PASSWORD before installing. The ZimaOS v2 catalog builder strips service-level x-casaos.envs, so automatic password entry is NOT confirmed. Do not install until your ZimaOS installer securely injects these values. No default credentials are provided. See docs/SECURE_DEPLOYMENT.md in MrStore."
+      pt_PT: "SEGURANÇA: Configura as variáveis Compose obrigatórias IMMICH_DB_PASSWORD antes da instalação. O builder ZimaOS v2 remove os campos x-casaos.envs dos serviços; não está confirmado que a interface peça credenciais. Não instales até o ZimaOS conseguir transmitir os valores com segurança. Não existem passwords predefinidas. Consulta docs/SECURE_DEPLOYMENT.md na MrStore."
   id: io.github.mrpiracy94.immich
   version: "1.0.0"
   update_at: "2026-10-09"

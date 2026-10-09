@@ -45,6 +45,15 @@ jobs:
           if-no-files-found: warn
       - name: Parse every Compose file with official Docker Compose V2 (no containers)
         run: python scripts/compose_preflight.py
+      - name: Fail-closed secret configuration checks (fake data only; no containers)
+        run: python scripts/check_required_secrets.py
+      - name: Upload secret interpolation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-required-secrets-config
+          path: out/required-secrets.json
+          if-no-files-found: warn
       - name: Compose parser summary
         if: always()
         run: test ! -f out/compose-preflight.md || cat out/compose-preflight.md >> "$GITHUB_STEP_SUMMARY"

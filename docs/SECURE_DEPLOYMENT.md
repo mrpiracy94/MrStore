@@ -42,9 +42,35 @@ docker compose --env-file Apps/immich/.env -f Apps/immich/docker-compose.yml con
 
 O comando `config --quiet` só valida a configuração; não inicia containers. Para outras apps, criar o ficheiro `.env` respetivo e introduzir as variáveis da tabela. **Nunca confirmar/guardar `.env` no GitHub.**
 
-### Limitação específica do ZimaOS / CasaOS
+### Limitação confirmada do builder ZimaOS v2
 
-É necessário confirmar se o importador do ZimaOS fornece os valores pedidos **antes da expansão Compose** e se o builder da loja os preserva sem os substituir no GitHub Actions. A presença dos campos editáveis `x-casaos.envs` não prova que exista um formulário de instalação obrigatório. Se a versão instalada do ZimaOS não suportar esse fluxo, **não instalar/publicar a app através desse manifesto**: preparar um método próprio de instalação segura primeiro. A validação CI `docker compose config --no-interpolate` verifica apenas sintaxe, não esta interação.
+O código oficial do builder `IceWhaleTech/build-appstore-action` executa
+`split_compose` e **elimina `services.*.x-casaos`**, incluindo
+`x-casaos.envs`. Logo, os campos editáveis do manifesto de origem **não
+garantem um formulário de credenciais na loja v2**. A secção
+`x-casaos.tips.before_install` de topo, entretanto adicionada às 19 apps
+afetadas, sobrevive à compilação como metadados `meta.json` (inclui
+`en_US` e `pt_PT`) e avisa o utilizador. Este aviso **não é uma barreira
+técnica à instalação**, nem prova que uma determinada versão da interface
+ZimaOS o apresente.
+
+As expressões `\${VAR:?mensagem}` continuam no Compose, obrigando a
+disponibilizar a variável ao motor **antes** da interpolação. O teste de
+CI `scripts/check_required_secrets.py` executa o Docker Compose com
+credenciais sintéticas: confirma que cada aplicação aceita valores não vazios
+e falha quando qualquer variável requerida estiver ausente ou vazia.
+Nunca faz `up`, `pull`, `build` nem executa containers. Isto **não
+testa o instalador ZimaOS**.
+
+A publicação destas alterações permanece bloqueada até se observar
+num ZimaOS real que os segredos são pedidos/configurados e chegam ao
+Docker Compose **antes** da expansão. Uma opção é configurar as
+variáveis manualmente num fluxo aprovado do ZimaOS; não pressupor
+que os campos do serviço estejam disponíveis na loja v2.
+
+Referências: [builder oficial](https://github.com/IceWhaleTech/build-appstore-action/blob/main/scripts/build_appstore.py),
+[formato v2 e tips](https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/compose-and-x-casaos.md),
+[interpolação Docker Compose](https://docs.docker.com/compose/how-tos/environment-variables/variable-interpolation).
 
 ## Acesso ao Docker socket
 
