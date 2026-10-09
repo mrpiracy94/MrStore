@@ -17,6 +17,16 @@ class ExternalDependenciesTests(unittest.TestCase):
     def setUpClass(cls):
         cls.entries = {x.folder: x for x in apps()}
 
+    def test_sensitive_apps_have_backup_migration_tests_and_rollback_plans(self):
+        for app in ("hedgedoc", "netbox"):
+            with self.subTest(app=app):
+                path = ROOT / "docs" / "upgrades" / (app + ".md")
+                self.assertTrue(path.is_file(), f"Missing {path}")
+                plan = path.read_text(encoding="utf-8").lower()
+                for term in ("backup", "migra", "test", "rollback"):
+                    self.assertIn(term, plan)
+                self.assertIn("/data/appdata/" + app, plan)
+
     def test_hedgedoc_requires_real_database_and_hostname(self):
         item = self.entries["hedgedoc"]
         service = item.source["services"]["hedgedoc"]
