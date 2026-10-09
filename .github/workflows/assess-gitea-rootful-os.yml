@@ -1,0 +1,69 @@
+name: Assess Gitea rootful Alpine patch (no catalog changes)
+on:
+  pull_request:
+    paths:
+      - 'security/images/gitea/Dockerfile'
+      - 'scripts/test_gitea_rootful_os_patch.sh'
+      - '.github/workflows/assess-gitea-rootful-os.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan unchanged upstream rootful image
+        run: |
+          mkdir -p out
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output out/upstream.json docker.io/gitea/gitea:latest
+      - name: Build minimal rootful OS-only patch
+        run: |
+          docker buildx build --pull --platform linux/${{ matrix.arch }} --load -f security/images/gitea/Dockerfile -t mrstore-gitea-os-patch:${{ matrix.arch }} .
+      - name: Scan updated rootful image on the exact architecture
+        run: |
+          trivy image --quiet --image-src docker --platform linux/${{ matrix.arch }} --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output out/patched.json mrstore-gitea-os-patch:${{ matrix.arch }}
+      - name: Audit severities, require zero CRITICAL and HIGH
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def read(path):
+              with open(path, encoding='utf-8') as f:
+                  report = json.load(f)
+              if not isinstance(report.get('Results'), list) or not report['Results']:
+                  raise SystemExit('Invalid / incomplete scan: '+path)
+              return Counter(x.get('Severity')
+                             for group in report['Results']
+                             for x in group.get('Vulnerabilities') or []
+                             if x.get('Severity') in ('HIGH','CRITICAL'))
+          old, new = read('out/upstream.json'), read('out/patched.json')
+          summary = ('## Gitea rootful ${{ matrix.arch }} targeted OS patch\n\n'
+                     '| Image | CRITICAL | HIGH |\n|---|---:|---:|\n'
+                     f"| Official rootful | {old['CRITICAL']} | {old['HIGH']} |\n"
+                     f"| Rootful with apk upgrade | {new['CRITICAL']} | {new['HIGH']} |\n")
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as f:
+              f.write(summary)
+          if new['CRITICAL'] or new['HIGH']:
+              raise SystemExit('Proposed OS patch does not eliminate reported HIGH/CRITICAL CVEs; never deploy')
+          PY
+      - name: Verify original rootful volume layout and live web service
+        run: bash scripts/test_gitea_rootful_os_patch.sh ${{ matrix.arch }}
+      - name: Preserve raw evidence even if scan fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitea-rootful-${{ matrix.arch }}-cve
+          path: out/*.json
+          if-no-files-found: warn
