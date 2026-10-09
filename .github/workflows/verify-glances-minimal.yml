@@ -1,0 +1,68 @@
+name: Verify Glances minimal security and web compatibility
+on:
+  pull_request:
+    paths:
+      - 'Apps/glances/docker-compose.yml'
+      - '.github/workflows/verify-glances-minimal.yml'
+      - 'scripts/test_glances_minimal.sh'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan the two official Glances variants
+        run: |
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output glances-full.json nicolargo/glances:latest-full
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output glances-minimal.json nicolargo/glances:latest
+      - name: Require zero HIGH/CRITICAL in minimal variant
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def counts(path):
+              with open(path, encoding='utf-8') as source:
+                  report = json.load(source)
+              if not isinstance(report.get('Results'), list) or not report['Results']:
+                  raise SystemExit('Incomplete Trivy scan: ' + path)
+              return Counter(x.get('Severity') for entry in report['Results']
+                             for x in entry.get('Vulnerabilities') or []
+                             if x.get('Severity') in ('HIGH', 'CRITICAL'))
+          old, new = counts('glances-full.json'), counts('glances-minimal.json')
+          result = ('## Glances ${{ matrix.arch }}\n\n'
+                    '| Variant | CRITICAL | HIGH |\n|---|---:|---:|\n'
+                    f"| full | {old['CRITICAL']} | {old['HIGH']} |\n"
+                    f"| minimal | {new['CRITICAL']} | {new['HIGH']} |\n")
+          print(result)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as dest:
+              dest.write(result)
+          if new['CRITICAL'] or new['HIGH']:
+              raise SystemExit('Minimal image has outstanding HIGH/CRITICAL CVEs; do not release')
+          PY
+      - name: Preserve scanner evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: glances-${{ matrix.arch }}-security
+          path: |
+            glances-full.json
+            glances-minimal.json
+          if-no-files-found: warn
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test official minimal Glances web and Docker socket
+        run: bash scripts/test_glances_minimal.sh
