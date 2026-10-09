@@ -8,16 +8,20 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
-      - "SUPERUSER_EMAIL=admin@example.com"
+      - "SUPERUSER_EMAIL=CHANGE_ME_EMAIL"
       - "SUPERUSER_PASSWORD=CHANGE_ME"
-      - "ALLOWED_HOST=*"
+      - "ALLOWED_HOST=zimaos.local"
       - "DB_NAME=netbox"
       - "DB_USER=netbox"
       - "DB_PASSWORD=CHANGE_ME"
-      - "DB_HOST=netbox_db"
+      - "DB_HOST=CHANGE_ME_DB_HOST"
       - "DB_PORT=5432"
-      - "REDIS_HOST=netbox_redis"
+      - "REDIS_HOST=CHANGE_ME_REDIS_HOST"
       - "REDIS_PORT=6379"
+      - "REDIS_USERNAME="
+      - "REDIS_PASSWORD="
+      - "REDIS_DB_TASK=0"
+      - "REDIS_DB_CACHE=1"
     ports:
       - target: 8000
         published: "20048"
@@ -28,6 +32,48 @@ services:
         target: /config
     x-casaos:
       envs:
+        - container: SUPERUSER_EMAIL
+          description:
+            en_US: Configure SUPERUSER_EMAIL for your actual PostgreSQL and Redis services
+        - container: SUPERUSER_PASSWORD
+          description:
+            en_US: Configure SUPERUSER_PASSWORD for your actual PostgreSQL and Redis services
+        - container: ALLOWED_HOST
+          description:
+            en_US: Configure ALLOWED_HOST for your actual PostgreSQL and Redis services
+        - container: DB_NAME
+          description:
+            en_US: Configure DB_NAME for your actual PostgreSQL and Redis services
+        - container: DB_USER
+          description:
+            en_US: Configure DB_USER for your actual PostgreSQL and Redis services
+        - container: DB_PASSWORD
+          description:
+            en_US: Configure DB_PASSWORD for your actual PostgreSQL and Redis services
+        - container: DB_HOST
+          description:
+            en_US: Configure DB_HOST for your actual PostgreSQL and Redis services
+        - container: DB_PORT
+          description:
+            en_US: Configure DB_PORT for your actual PostgreSQL and Redis services
+        - container: REDIS_HOST
+          description:
+            en_US: Configure REDIS_HOST for your actual PostgreSQL and Redis services
+        - container: REDIS_PORT
+          description:
+            en_US: Configure REDIS_PORT for your actual PostgreSQL and Redis services
+        - container: REDIS_USERNAME
+          description:
+            en_US: Configure REDIS_USERNAME for your actual PostgreSQL and Redis services
+        - container: REDIS_PASSWORD
+          description:
+            en_US: Configure REDIS_PASSWORD for your actual PostgreSQL and Redis services
+        - container: REDIS_DB_TASK
+          description:
+            en_US: Configure REDIS_DB_TASK for your actual PostgreSQL and Redis services
+        - container: REDIS_DB_CACHE
+          description:
+            en_US: Configure REDIS_DB_CACHE for your actual PostgreSQL and Redis services
         - container: TZ
           description:
             en_US: Timezone
@@ -42,7 +88,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.netbox
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -58,6 +104,6 @@ x-casaos:
   tagline:
     en_US: "NetBox (LinuxServer.io)"
   description:
-    en_US: "NetBox — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/netbox:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-netbox/"
+    en_US: "NetBox requer PostgreSQL e Redis EXTERNOS, não incluídos. Personalizar DB_HOST, REDIS_HOST, os dados de acesso, o email e password de administrador e ALLOWED_HOST com o hostname real, nunca *. Mantidas porta 20048 e pasta /config. Docs: https://docs.linuxserver.io/images/docker-netbox/"
   port_map: "20048"
   index: /

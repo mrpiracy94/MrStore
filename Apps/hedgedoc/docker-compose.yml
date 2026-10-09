@@ -8,12 +8,12 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
-      - "DB_HOST=hedgedoc_db"
+      - "DB_HOST=CHANGE_ME_DB_HOST"
       - "DB_PORT=3306"
       - "DB_USER=hedgedoc"
       - "DB_PASS=CHANGE_ME"
       - "DB_NAME=hedgedoc"
-      - "CMD_DOMAIN=localhost"
+      - "CMD_DOMAIN=CHANGE_ME_DOMAIN"
       - "CMD_URL_ADDPORT=false"
       - "CMD_PROTOCOL_USESSL=false"
     ports:
@@ -26,6 +26,30 @@ services:
         target: /config
     x-casaos:
       envs:
+        - container: DB_HOST
+          description:
+            en_US: Set DB_HOST for your actual NAS and external database
+        - container: DB_PORT
+          description:
+            en_US: Set DB_PORT for your actual NAS and external database
+        - container: DB_USER
+          description:
+            en_US: Set DB_USER for your actual NAS and external database
+        - container: DB_PASS
+          description:
+            en_US: Set DB_PASS for your actual NAS and external database
+        - container: DB_NAME
+          description:
+            en_US: Set DB_NAME for your actual NAS and external database
+        - container: CMD_DOMAIN
+          description:
+            en_US: Set CMD_DOMAIN for your actual NAS and external database
+        - container: CMD_URL_ADDPORT
+          description:
+            en_US: Set CMD_URL_ADDPORT for your actual NAS and external database
+        - container: CMD_PROTOCOL_USESSL
+          description:
+            en_US: Set CMD_PROTOCOL_USESSL for your actual NAS and external database
         - container: TZ
           description:
             en_US: Timezone
@@ -40,7 +64,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.hedgedoc
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -56,6 +80,6 @@ x-casaos:
   tagline:
     en_US: "HedgeDoc (LinuxServer.io)"
   description:
-    en_US: "HedgeDoc — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/hedgedoc:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-hedgedoc/"
+    en_US: "HedgeDoc requer MariaDB/MySQL externos, DB_HOST/DB_PASS e um CMD_DOMAIN reais. A base de dados não é incluída nesta entrada. Configura os callbacks externos e SSL para o teu domínio ou proxy. Mantidas porta 20029 e persistência de /config. Docs: https://docs.linuxserver.io/images/docker-hedgedoc/"
   port_map: "20029"
   index: /
