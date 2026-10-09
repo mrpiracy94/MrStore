@@ -89,7 +89,7 @@ class UpdateVisibilityTests(unittest.TestCase):
         def runner(command, **kwargs):
             calls.append(command)
             if command[:3] == ["docker", "ps", "-a"]:
-                value = "test-app\\n"
+                value = "test-app\n"
             elif command[:3] == ["docker", "container", "inspect"]:
                 value = "example/installed:old"
             elif command[:3] == ["docker", "image", "inspect"]:
