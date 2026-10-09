@@ -27,6 +27,11 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(audit['summary']['services'], 260)
         self.assertEqual(audit['summary']['images'], 258)
 
+    def test_tcp_and_udp_do_not_collide(self):
+        audit = report()
+        self.assertNotIn('port_collision', audit['rules'],
+                         'TCP and UDP on the same numeric port are distinct bindings')
+
     def test_corrected_architecture(self):
         for item in apps():
             if item.folder in ONLY_AMD64:
