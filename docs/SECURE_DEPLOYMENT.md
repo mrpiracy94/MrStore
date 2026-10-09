@@ -62,7 +62,7 @@ e falha quando qualquer variável requerida estiver ausente ou vazia.
 Nunca faz `up`, `pull`, `build` nem executa containers. Isto **não
 testa o instalador ZimaOS**.
 
-A publicação destas alterações permanece bloqueada até se observar
+O workflow de publicação verifica também, **depois do builder oficial**, que os ficheiros v2 preservam as expressões obrigatórias e incluem os avisos pré-instalação em `meta.json`, através de `scripts/verify_installer_payload.py`. Isto verifica o catálogo gerado, não o instalador real.\n\nA publicação destas alterações permanece bloqueada até se observar
 num ZimaOS real que os segredos são pedidos/configurados e chegam ao
 Docker Compose **antes** da expansão. Uma opção é configurar as
 variáveis manualmente num fluxo aprovado do ZimaOS; não pressupor

@@ -87,6 +87,8 @@ jobs:
           cache-file: .cache/build_appstore/image-size-cache.json
           digest-cache-file: .cache/build_appstore/image-digest-cache.json
           report-json: out/build-report.json
+      - name: Require secure secret guards in generated ZimaOS v2 manifests
+        run: python scripts/verify_installer_payload.py
       - name: Validate generated store endpoints
         run: python scripts/verify_dist.py --expected 254
       - name: Verify 254 published ZimaOS subtitles without external dependencies
