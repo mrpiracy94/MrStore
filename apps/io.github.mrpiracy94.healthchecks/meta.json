@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.healthchecks/assets/healthchecks.webp",
-  "tagline": "Deteta falhas em tarefas e backups programados",
+  "tagline": "Healthchecks (LinuxServer.io)",
   "description": "Healthchecks — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/healthchecks:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-healthchecks/",
   "title": "Healthchecks",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.healthchecks",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "others"
   ],

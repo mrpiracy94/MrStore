@@ -7,13 +7,13 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Media",
-  "thumbnail": "/apps/io.github.mrpiracy94.doplarr_rs/assets/doplarr.webp",
-  "tagline": "Pede filmes e séries por Discord",
+  "thumbnail": "/apps/io.github.mrpiracy94.doplarr_rs/assets/icon.svg",
+  "tagline": "Doplarr RS (LinuxServer.io)",
   "description": "Doplarr RS — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/doplarr_rs:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-doplarr_rs/",
   "title": "Doplarr RS",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.doplarr_rs",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

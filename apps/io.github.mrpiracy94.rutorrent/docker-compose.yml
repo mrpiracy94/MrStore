@@ -31,7 +31,7 @@ services:
         target: /passwd
 x-casaos:
   id: io.github.mrpiracy94.rutorrent
-  version: "1.0.1"
+  version: "1.0.0"
   main: rutorrent
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.rutorrent/assets/icon.png
   title:

@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.raneto/assets/raneto.webp",
-  "tagline": "Wiki e documentação em Markdown",
+  "tagline": "Raneto (LinuxServer.io)",
   "description": "Raneto — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/raneto:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-raneto/",
   "title": "Raneto",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.raneto",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

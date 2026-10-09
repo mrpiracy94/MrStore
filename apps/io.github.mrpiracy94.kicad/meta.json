@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.kicad/assets/icon.svg",
-  "tagline": "Desenho de circuitos e placas eletrónicas",
+  "tagline": "KiCad (LinuxServer.io)",
   "description": "KiCad — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kicad:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kicad/",
   "title": "KiCad",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.kicad",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

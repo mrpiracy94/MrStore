@@ -6,13 +6,13 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Productivity",
-  "thumbnail": "/apps/io.github.mrpiracy94.bambustudio/assets/bambu-lab.webp",
-  "tagline": "Prepara modelos para impressão 3D",
+  "thumbnail": "/apps/io.github.mrpiracy94.bambustudio/assets/icon.svg",
+  "tagline": "Bambu Studio (LinuxServer.io)",
   "description": "Bambu Studio — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/bambustudio:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-bambustudio/",
   "title": "Bambu Studio",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.bambustudio",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

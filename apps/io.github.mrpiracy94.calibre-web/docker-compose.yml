@@ -21,7 +21,7 @@ services:
         target: /books
 x-casaos:
   id: io.github.mrpiracy94.calibre-web
-  version: "1.0.1"
+  version: "1.0.0"
   main: calibre-web
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.calibre-web/assets/icon.png
   title:

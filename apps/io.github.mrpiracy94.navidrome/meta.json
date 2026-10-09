@@ -8,12 +8,12 @@
   "developer": "Deluan",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.navidrome/assets/navidrome.webp",
-  "tagline": "Servidor de música compatível com Subsonic",
+  "tagline": "Navidrome (seedit4.me catalog)",
   "description": "Navidrome — origem: seedit4.me catalog. Imagem: deluan/navidrome:latest. Verifica portas/variáveis na documentação do projeto.",
   "title": "Navidrome",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.navidrome",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

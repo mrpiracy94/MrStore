@@ -23,7 +23,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.lldap
-  version: "1.0.1"
+  version: "1.0.0"
   main: lldap
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lldap/assets/icon.png
   title:

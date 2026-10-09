@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.duckdns/assets/duckdns.webp",
-  "tagline": "Atualiza o IP associado a um domínio DuckDNS",
+  "tagline": "DuckDNS (LinuxServer.io)",
   "description": "DuckDNS — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/duckdns:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-duckdns/",
   "title": "DuckDNS",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.duckdns",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

@@ -41,7 +41,7 @@ services:
         target: /meili_data
 x-casaos:
   id: io.github.mrpiracy94.karakeep
-  version: "1.0.2"
+  version: "1.0.1"
   main: karakeep
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.karakeep/assets/icon.png
   title:

@@ -23,7 +23,7 @@ services:
         read_only: true
 x-casaos:
   id: io.github.mrpiracy94.homepage
-  version: "1.0.1"
+  version: "1.0.0"
   main: homepage
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.homepage/assets/icon.png
   title:

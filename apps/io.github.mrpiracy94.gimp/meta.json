@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.gimp/assets/gimp.webp",
-  "tagline": "Editor avançado de imagens e fotografias",
+  "tagline": "GIMP (LinuxServer.io)",
   "description": "GIMP — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/gimp:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-gimp/",
   "title": "GIMP",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.gimp",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

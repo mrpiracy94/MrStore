@@ -7,13 +7,13 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Media",
-  "thumbnail": "/apps/io.github.mrpiracy94.airsonic-advanced/assets/airsonic.webp",
-  "tagline": "Servidor de música pessoal para ouvir em qualquer lugar",
+  "thumbnail": "/apps/io.github.mrpiracy94.airsonic-advanced/assets/icon.svg",
+  "tagline": "Airsonic Advanced (LinuxServer.io)",
   "description": "Airsonic Advanced — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/airsonic-advanced:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-airsonic-advanced/",
   "title": "Airsonic Advanced",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.airsonic-advanced",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

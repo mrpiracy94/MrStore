@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.webgrabplus/assets/icon.svg",
-  "tagline": "Recolhe guias de programação televisiva",
+  "tagline": "WebGrab+Plus (LinuxServer.io)",
   "description": "WebGrab+Plus — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/webgrabplus:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-webgrabplus/",
   "title": "WebGrab+Plus",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.webgrabplus",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

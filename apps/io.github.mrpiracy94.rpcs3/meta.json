@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.rpcs3/assets/icon.svg",
-  "tagline": "Emulador de jogos PlayStation 3",
+  "tagline": "RPCS3 (LinuxServer.io)",
   "description": "RPCS3 — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/rpcs3:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-rpcs3/",
   "title": "RPCS3",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.rpcs3",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "others"
   ],

@@ -21,7 +21,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.smokeping
-  version: "1.0.1"
+  version: "1.0.0"
   main: smokeping
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.smokeping/assets/icon.png
   title:

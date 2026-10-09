@@ -1,7 +1,7 @@
 name: minisatip
 services:
   minisatip:
-    image: lscr.io/linuxserver/minisatip:latest@sha256:7dbc513c7c46a9fb031eb4fb82527073829b186c99860aeb0f46d542833cb98f
+    image: lscr.io/linuxserver/minisatip:latest@sha256:e4aa5d3b399b5e4eeaf69ee41159821b1cdf1096f9e3b2691a1c9dbcddd48cc6
     container_name: minisatip
     restart: unless-stopped
     environment:
@@ -18,7 +18,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.minisatip
-  version: "1.0.1"
+  version: "1.0.0"
   main: minisatip
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.minisatip/assets/icon.svg
   title:

@@ -34,7 +34,7 @@ services:
         read_only: true
 x-casaos:
   id: io.github.mrpiracy94.netdata
-  version: "1.0.1"
+  version: "1.0.0"
   main: netdata
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.netdata/assets/icon.png
   title:

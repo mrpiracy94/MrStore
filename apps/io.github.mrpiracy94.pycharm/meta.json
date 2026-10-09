@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.pycharm/assets/icon.svg",
-  "tagline": "Ambiente de desenvolvimento Python",
+  "tagline": "PyCharm (LinuxServer.io)",
   "description": "PyCharm — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/pycharm:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-pycharm/",
   "title": "PyCharm",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.pycharm",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "developer"
   ],

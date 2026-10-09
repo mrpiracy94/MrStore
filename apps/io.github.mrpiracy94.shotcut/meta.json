@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.shotcut/assets/icon.svg",
-  "tagline": "Editor de vídeo gratuito",
+  "tagline": "Shotcut (LinuxServer.io)",
   "description": "Shotcut — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/shotcut:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-shotcut/",
   "title": "Shotcut",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.shotcut",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

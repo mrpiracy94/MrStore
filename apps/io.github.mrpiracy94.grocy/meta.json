@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.grocy/assets/grocy.webp",
-  "tagline": "Gere compras, produtos e tarefas domésticas",
+  "tagline": "Grocy (LinuxServer.io)",
   "description": "Grocy — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/grocy:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-grocy/",
   "title": "Grocy",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.grocy",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

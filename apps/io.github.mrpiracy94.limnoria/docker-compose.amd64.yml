@@ -18,7 +18,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.limnoria
-  version: "1.0.1"
+  version: "1.0.0"
   main: limnoria
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.limnoria/assets/icon.svg
   title:

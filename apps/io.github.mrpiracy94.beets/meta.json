@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.beets/assets/beets.webp",
-  "tagline": "Organiza e identifica ficheiros de música",
+  "tagline": "Beets (LinuxServer.io)",
   "description": "Beets — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/beets:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-beets/",
   "title": "Beets",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.beets",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

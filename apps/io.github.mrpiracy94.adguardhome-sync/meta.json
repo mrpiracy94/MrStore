@@ -7,13 +7,13 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Networking",
-  "thumbnail": "/apps/io.github.mrpiracy94.adguardhome-sync/assets/adguardhome-sync.webp",
-  "tagline": "Sincroniza configurações entre servidores AdGuard Home",
+  "thumbnail": "/apps/io.github.mrpiracy94.adguardhome-sync/assets/icon.svg",
+  "tagline": "AdGuardHome Sync (LinuxServer.io)",
   "description": "AdGuardHome Sync — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/adguardhome-sync:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-adguardhome-sync/",
   "title": "AdGuardHome Sync",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.adguardhome-sync",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

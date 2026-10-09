@@ -20,7 +20,7 @@ services:
         target: /photoprism/originals
 x-casaos:
   id: io.github.mrpiracy94.photoprism
-  version: "1.0.1"
+  version: "1.0.0"
   main: photoprism
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.photoprism/assets/icon.png
   title:

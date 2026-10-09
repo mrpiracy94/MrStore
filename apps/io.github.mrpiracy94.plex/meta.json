@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.plex/assets/plex.webp",
-  "tagline": "Servidor multimédia para filmes, séries e música",
+  "tagline": "Plex (LinuxServer.io)",
   "description": "Plex — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/plex:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-plex/",
   "title": "Plex",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.plex",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

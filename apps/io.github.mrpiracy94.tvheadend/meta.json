@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.tvheadend/assets/tvheadend.webp",
-  "tagline": "Servidor de televisão e gravações digitais",
+  "tagline": "Tvheadend (LinuxServer.io)",
   "description": "Tvheadend — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/tvheadend:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-tvheadend/",
   "title": "Tvheadend",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.tvheadend",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

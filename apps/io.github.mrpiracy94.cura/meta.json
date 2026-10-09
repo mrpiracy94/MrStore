@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.cura/assets/cura.webp",
-  "tagline": "Prepara ficheiros para impressão 3D",
+  "tagline": "Cura (LinuxServer.io)",
   "description": "Cura — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/cura:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-cura/",
   "title": "Cura",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.cura",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

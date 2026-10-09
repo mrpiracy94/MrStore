@@ -1,7 +1,7 @@
 name: lollypop
 services:
   lollypop:
-    image: lscr.io/linuxserver/lollypop:latest@sha256:12253c7c24a1ce476d7e08ba9b1e4197602522c4be8f5256052c680c697cd714
+    image: lscr.io/linuxserver/lollypop:latest@sha256:79d5e1d737ea00e08bd21dae7886e67e1d332dea7d6090f5fadaff5985615acc
     container_name: lollypop
     restart: unless-stopped
     environment:
@@ -25,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.lollypop
-  version: "1.0.2"
+  version: "1.0.0"
   main: lollypop
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lollypop/assets/icon.svg
   title:

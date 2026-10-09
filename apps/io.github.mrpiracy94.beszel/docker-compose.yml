@@ -14,7 +14,7 @@ services:
         target: /beszel_data
 x-casaos:
   id: io.github.mrpiracy94.beszel
-  version: "1.0.1"
+  version: "1.0.0"
   main: beszel
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.beszel/assets/icon.png
   title:

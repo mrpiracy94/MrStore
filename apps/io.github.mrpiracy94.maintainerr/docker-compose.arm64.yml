@@ -16,7 +16,7 @@ services:
         target: /opt/data
 x-casaos:
   id: io.github.mrpiracy94.maintainerr
-  version: "1.0.1"
+  version: "1.0.0"
   main: maintainerr
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.maintainerr/assets/icon.png
   title:

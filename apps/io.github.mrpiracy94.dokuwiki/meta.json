@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.dokuwiki/assets/dokuwiki.webp",
-  "tagline": "Wiki leve sem base de dados",
+  "tagline": "DokuWiki (LinuxServer.io)",
   "description": "DokuWiki — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/dokuwiki:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-dokuwiki/",
   "title": "DokuWiki",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.dokuwiki",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 53925435,
-    "arm64": 53949696
+    "amd64": 53931408,
+    "arm64": 53955451
   }
 }

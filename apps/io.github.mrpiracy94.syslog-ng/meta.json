@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.syslog-ng/assets/icon.svg",
-  "tagline": "Recolhe e centraliza logs de sistemas",
+  "tagline": "syslog-ng (LinuxServer.io)",
   "description": "syslog-ng — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/syslog-ng:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-syslog-ng/",
   "title": "syslog-ng",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.syslog-ng",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

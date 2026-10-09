@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.bitcoin-knots/assets/icon.svg",
-  "tagline": "Nó Bitcoin com ferramentas de validação",
+  "tagline": "Bitcoin Knots (LinuxServer.io)",
   "description": "Bitcoin Knots — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/bitcoin-knots:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-bitcoin-knots/",
   "title": "Bitcoin Knots",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.bitcoin-knots",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "developer"
   ],

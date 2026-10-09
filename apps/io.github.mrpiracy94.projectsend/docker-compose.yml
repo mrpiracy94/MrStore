@@ -21,7 +21,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.projectsend
-  version: "1.0.1"
+  version: "1.0.0"
   main: projectsend
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.projectsend/assets/icon.png
   title:

@@ -1,7 +1,7 @@
 name: recyclarr
 services:
   recyclarr:
-    image: ghcr.io/recyclarr/recyclarr:8
+    image: ghcr.io/recyclarr/recyclarr:latest
     container_name: recyclarr
     restart: unless-stopped
     environment:
@@ -13,7 +13,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.recyclarr
-  version: "1.0.2"
+  version: "1.0.0"
   main: recyclarr
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.recyclarr/assets/icon.png
   title:

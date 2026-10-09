@@ -55,7 +55,7 @@ services:
         target: /music
 x-casaos:
   id: io.github.mrpiracy94.plex
-  version: "1.0.1"
+  version: "1.0.0"
   main: plex
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.plex/assets/icon.png
   title:

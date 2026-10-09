@@ -8,12 +8,12 @@
   "developer": "Node-RED",
   "category": "Home",
   "thumbnail": "/apps/io.github.mrpiracy94.node-red/assets/node-red.webp",
-  "tagline": "Automatização visual com fluxos de tarefas",
+  "tagline": "Automação por fluxos",
   "description": "Automação por fluxos. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
   "title": "Node-RED",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.node-red",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "home"
   ],

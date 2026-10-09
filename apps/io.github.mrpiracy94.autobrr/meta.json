@@ -8,12 +8,12 @@
   "developer": "autobrr",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.autobrr/assets/autobrr.webp",
-  "tagline": "Automatiza downloads através de anúncios de trackers",
+  "tagline": "Autobrr (seedit4.me catalog)",
   "description": "Autobrr — origem: seedit4.me catalog. Imagem: ghcr.io/autobrr/autobrr:latest. Verifica portas/variáveis na documentação do projeto.",
   "title": "Autobrr",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.autobrr",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.wireguard/assets/wireguard.webp",
-  "tagline": "VPN segura e de alto desempenho",
+  "tagline": "WireGuard (LinuxServer.io)",
   "description": "WireGuard — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/wireguard:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-wireguard/",
   "title": "WireGuard",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.wireguard",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

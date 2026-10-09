@@ -21,7 +21,7 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.nzbhydra2
-  version: "1.0.1"
+  version: "1.0.0"
   main: nzbhydra2
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.nzbhydra2/assets/icon.png
   title:

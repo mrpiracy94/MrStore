@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.wireshark/assets/wireshark.webp",
-  "tagline": "Analisa e inspeciona tráfego de rede",
+  "tagline": "Wireshark (LinuxServer.io)",
   "description": "Wireshark — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/wireshark:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-wireshark/",
   "title": "Wireshark",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.wireshark",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

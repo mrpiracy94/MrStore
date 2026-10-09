@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Social",
   "thumbnail": "/apps/io.github.mrpiracy94.znc/assets/znc.webp",
-  "tagline": "Bouncer IRC para manter sessões ligadas",
+  "tagline": "ZNC (LinuxServer.io)",
   "description": "ZNC — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/znc:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-znc/",
   "title": "ZNC",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.znc",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "social"
   ],

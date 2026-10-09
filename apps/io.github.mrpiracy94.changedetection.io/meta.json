@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.changedetection.io/assets/changedetection.webp",
-  "tagline": "Monitoriza alterações em páginas web",
+  "tagline": "changedetection.io (LinuxServer.io)",
   "description": "changedetection.io — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/changedetection.io:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-changedetection.io/",
   "title": "changedetection.io",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.changedetection.io",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

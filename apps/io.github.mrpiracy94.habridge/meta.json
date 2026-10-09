@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Home",
   "thumbnail": "/apps/io.github.mrpiracy94.habridge/assets/icon.svg",
-  "tagline": "Integra dispositivos com emulação Philips Hue",
+  "tagline": "HA Bridge (LinuxServer.io)",
   "description": "HA Bridge — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/habridge:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-habridge/",
   "title": "HA Bridge",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.habridge",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "home"
   ],

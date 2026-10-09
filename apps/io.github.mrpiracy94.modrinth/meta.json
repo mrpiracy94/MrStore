@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.modrinth/assets/modrinth.webp",
-  "tagline": "Instala e gere mods e jogos Minecraft",
+  "tagline": "Modrinth App (LinuxServer.io)",
   "description": "Modrinth App — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/modrinth:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-modrinth/",
   "title": "Modrinth App",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.modrinth",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "others"
   ],

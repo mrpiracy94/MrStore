@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.steamos/assets/icon.svg",
-  "tagline": "Ambiente de jogos baseado em SteamOS",
+  "tagline": "SteamOS (LinuxServer.io)",
   "description": "SteamOS — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/steamos:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-steamos/",
   "title": "SteamOS",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.steamos",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "others"
   ],

@@ -8,12 +8,12 @@
   "developer": "Stirling PDF",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.stirling-pdf/assets/stirling-pdf.webp",
-  "tagline": "Converte e edita ficheiros PDF",
+  "tagline": "Ferramentas PDF",
   "description": "Ferramentas PDF. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
   "title": "Stirling PDF",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.stirling-pdf",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

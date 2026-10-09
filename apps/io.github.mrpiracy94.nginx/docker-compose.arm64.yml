@@ -21,7 +21,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.nginx
-  version: "1.0.1"
+  version: "1.0.0"
   main: nginx
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.nginx/assets/icon.png
   title:

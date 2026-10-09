@@ -8,12 +8,12 @@
   "developer": "jlesage",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.jdownloader/assets/jdownloader.webp",
-  "tagline": "Gestor de downloads de ficheiros e links",
+  "tagline": "JDownloader 2 (seedit4.me catalog)",
   "description": "JDownloader 2 — origem: seedit4.me catalog. Imagem: jlesage/jdownloader-2:latest. Verifica portas/variáveis na documentação do projeto.",
   "title": "JDownloader 2",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.jdownloader",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

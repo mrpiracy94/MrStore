@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.keepassxc/assets/keepassxc.webp",
-  "tagline": "Gestor de palavras-passe encriptadas",
+  "tagline": "KeePassXC (LinuxServer.io)",
   "description": "KeePassXC — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/keepassxc:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-keepassxc/",
   "title": "KeePassXC",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.keepassxc",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "others"
   ],

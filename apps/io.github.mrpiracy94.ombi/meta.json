@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.ombi/assets/ombi.webp",
-  "tagline": "Pedidos de filmes e séries para servidores multimédia",
+  "tagline": "Ombi (LinuxServer.io)",
   "description": "Ombi — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ombi:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ombi/",
   "title": "Ombi",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.ombi",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

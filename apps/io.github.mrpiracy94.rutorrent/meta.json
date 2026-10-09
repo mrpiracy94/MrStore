@@ -8,12 +8,12 @@
   "developer": "crazy-max",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.rutorrent/assets/rtorrent.webp",
-  "tagline": "Interface web para o cliente rTorrent",
+  "tagline": "ruTorrent (rTorrent) (seedit4.me catalog)",
   "description": "ruTorrent (rTorrent) — origem: seedit4.me catalog. Imagem: crazymax/rtorrent-rutorrent:latest. Verifica portas/variáveis na documentação do projeto.",
   "title": "ruTorrent (rTorrent)",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.rutorrent",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

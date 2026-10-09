@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.ddclient/assets/ddclient.webp",
-  "tagline": "Atualiza automaticamente endereços DNS dinâmicos",
+  "tagline": "ddclient (LinuxServer.io)",
   "description": "ddclient — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ddclient:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ddclient/",
   "title": "ddclient",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.ddclient",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

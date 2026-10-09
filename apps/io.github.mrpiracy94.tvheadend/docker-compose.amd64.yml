@@ -24,7 +24,7 @@ services:
         target: /recordings
 x-casaos:
   id: io.github.mrpiracy94.tvheadend
-  version: "1.0.1"
+  version: "1.0.0"
   main: tvheadend
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.tvheadend/assets/icon.png
   title:

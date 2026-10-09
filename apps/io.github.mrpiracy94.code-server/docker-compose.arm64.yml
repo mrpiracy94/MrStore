@@ -22,7 +22,7 @@ services:
         target: /workspace
 x-casaos:
   id: io.github.mrpiracy94.code-server
-  version: "1.0.1"
+  version: "1.0.0"
   main: code-server
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.code-server/assets/icon.png
   title:

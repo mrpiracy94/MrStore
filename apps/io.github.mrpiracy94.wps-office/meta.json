@@ -7,12 +7,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.wps-office/assets/icon.svg",
-  "tagline": "Suite de escritório para documentos e apresentações",
+  "tagline": "WPS Office (LinuxServer.io)",
   "description": "WPS Office — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/wps-office:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-wps-office/",
   "title": "WPS Office",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.wps-office",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.darktable/assets/icon.svg",
-  "tagline": "Revela e edita fotografias RAW",
+  "tagline": "darktable (LinuxServer.io)",
   "description": "darktable — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/darktable:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-darktable/",
   "title": "darktable",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.darktable",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

@@ -20,7 +20,7 @@ services:
         target: /mosquitto/log
 x-casaos:
   id: io.github.mrpiracy94.mosquitto
-  version: "1.0.1"
+  version: "1.0.0"
   main: mosquitto
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mosquitto/assets/icon.png
   title:

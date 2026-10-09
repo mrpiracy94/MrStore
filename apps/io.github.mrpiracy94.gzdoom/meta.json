@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.gzdoom/assets/icon.svg",
-  "tagline": "Motor para executar jogos clássicos Doom",
+  "tagline": "GZDoom (LinuxServer.io)",
   "description": "GZDoom — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/gzdoom:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-gzdoom/",
   "title": "GZDoom",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.gzdoom",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "others"
   ],

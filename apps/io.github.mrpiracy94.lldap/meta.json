@@ -8,12 +8,12 @@
   "developer": "LLDAP",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.lldap/assets/lldap.webp",
-  "tagline": "Servidor LDAP simples e leve",
+  "tagline": "Servidor LDAP leve",
   "description": "Servidor LDAP leve. Estado: verificado em out/2026 (destaque selfh.st, 25/09/2026). Confirma portas e variáveis na documentação do projeto.",
   "title": "LLDAP",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.lldap",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

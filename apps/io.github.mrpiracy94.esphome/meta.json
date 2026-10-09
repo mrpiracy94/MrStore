@@ -8,12 +8,12 @@
   "developer": "ESPHome",
   "category": "Home",
   "thumbnail": "/apps/io.github.mrpiracy94.esphome/assets/esphome.webp",
-  "tagline": "Cria firmware para dispositivos ESP inteligentes",
+  "tagline": "Firmware para dispositivos ESP",
   "description": "Firmware para dispositivos ESP. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
   "title": "ESPHome",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.esphome",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "home"
   ],

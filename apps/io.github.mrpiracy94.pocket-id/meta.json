@@ -8,12 +8,12 @@
   "developer": "Pocket ID",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.pocket-id/assets/pocket-id.webp",
-  "tagline": "Autenticação única com passkeys e OpenID Connect",
+  "tagline": "Servidor OIDC simples com passkeys",
   "description": "Servidor OIDC simples com passkeys. Estado: verificado em out/2026 (ativo, discussão de out/2026). Confirma portas e variáveis na documentação do projeto.",
   "title": "Pocket ID",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.pocket-id",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

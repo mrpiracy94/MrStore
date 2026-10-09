@@ -55,7 +55,7 @@ services:
         target: /var/lib/postgresql/data
 x-casaos:
   id: io.github.mrpiracy94.immich
-  version: "1.0.1"
+  version: "1.0.0"
   main: immich-server
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.immich/assets/icon.png
   title:

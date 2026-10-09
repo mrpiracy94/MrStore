@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.qbittorrent/assets/qbittorrent.webp",
-  "tagline": "Cliente BitTorrent com interface web",
+  "tagline": "qBittorrent (LinuxServer.io)",
   "description": "qBittorrent — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/qbittorrent:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-qbittorrent/",
   "title": "qBittorrent",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.qbittorrent",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

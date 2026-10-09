@@ -19,7 +19,7 @@ services:
         target: /configs
 x-casaos:
   id: io.github.mrpiracy94.stirling-pdf
-  version: "1.0.1"
+  version: "1.0.0"
   main: stirling-pdf
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.stirling-pdf/assets/icon.png
   title:

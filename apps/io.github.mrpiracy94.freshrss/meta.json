@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.freshrss/assets/freshrss.webp",
-  "tagline": "Leitor RSS para acompanhar notícias e sites",
+  "tagline": "FreshRSS (LinuxServer.io)",
   "description": "FreshRSS — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/freshrss:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-freshrss/",
   "title": "FreshRSS",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.freshrss",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

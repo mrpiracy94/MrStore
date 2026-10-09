@@ -8,12 +8,12 @@
   "developer": "Karakeep",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.karakeep/assets/karakeep.webp",
-  "tagline": "Guarda e pesquisa favoritos, notas e imagens",
+  "tagline": "Guarda tudo: bookmarks, notas, imagens (com IA opcional)",
   "description": "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. MEILI_MASTER_KEY tem de ser igual nos dois serviços. O Chrome utiliza a imagem oficial do Karakeep com a porta interna 9222 e configuração de proxy própria. Antes de atualizar Meilisearch, confirma a compatibilidade com o Karakeep.",
   "title": "Karakeep",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.karakeep",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "categories": [
     "productivity"
   ],

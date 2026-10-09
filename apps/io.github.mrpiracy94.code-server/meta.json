@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.code-server/assets/code-server.webp",
-  "tagline": "Editor VS Code acessível no navegador",
+  "tagline": "code-server (LinuxServer.io)",
   "description": "code-server — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/code-server:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-code-server/",
   "title": "code-server",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.code-server",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "developer"
   ],

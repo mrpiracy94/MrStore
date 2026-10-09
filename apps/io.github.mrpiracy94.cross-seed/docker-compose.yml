@@ -20,9 +20,9 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.cross-seed
-  version: "1.0.2"
+  version: "1.0.0"
   main: cross-seed
-  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.cross-seed/assets/icon.svg
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.cross-seed/assets/icon.png
   title:
     en_US: "cross-seed"
   port_map: "0"

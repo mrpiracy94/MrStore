@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.vscode/assets/vscode.webp",
-  "tagline": "Editor Visual Studio Code no navegador",
+  "tagline": "VS Code (LinuxServer.io)",
   "description": "VS Code — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/vscode:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-vscode/",
   "title": "VS Code",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.vscode",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "developer"
   ],

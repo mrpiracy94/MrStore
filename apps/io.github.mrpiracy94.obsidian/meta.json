@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.obsidian/assets/obsidian.webp",
-  "tagline": "Notas Markdown e gestão de conhecimento",
+  "tagline": "Obsidian (LinuxServer.io)",
   "description": "Obsidian — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/obsidian:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-obsidian/",
   "title": "Obsidian",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.obsidian",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

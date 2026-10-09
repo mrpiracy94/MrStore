@@ -8,18 +8,18 @@
   "developer": "Recyclarr",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.recyclarr/assets/recyclarr.webp",
-  "tagline": "Sincroniza perfis de qualidade com Sonarr e Radarr",
+  "tagline": "Sincroniza perfis TRaSH com Sonarr/Radarr (sem UI)",
   "description": "Sincroniza perfis TRaSH com Sonarr/Radarr (sem UI). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
   "title": "Recyclarr",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.recyclarr",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 57323840,
-    "arm64": 55232003
+    "amd64": 0,
+    "arm64": 0
   }
 }

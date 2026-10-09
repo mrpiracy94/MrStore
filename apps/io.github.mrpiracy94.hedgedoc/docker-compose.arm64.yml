@@ -26,7 +26,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.hedgedoc
-  version: "1.0.1"
+  version: "1.0.0"
   main: hedgedoc
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.hedgedoc/assets/icon.png
   title:

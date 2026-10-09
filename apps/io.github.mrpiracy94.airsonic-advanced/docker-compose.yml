@@ -24,7 +24,7 @@ services:
         target: /playlists
 x-casaos:
   id: io.github.mrpiracy94.airsonic-advanced
-  version: "1.0.2"
+  version: "1.0.0"
   main: airsonic-advanced
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.airsonic-advanced/assets/icon.svg
   title:

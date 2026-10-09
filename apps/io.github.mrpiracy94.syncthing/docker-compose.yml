@@ -30,7 +30,7 @@ services:
         target: /data1
 x-casaos:
   id: io.github.mrpiracy94.syncthing
-  version: "1.0.1"
+  version: "1.0.0"
   main: syncthing
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.syncthing/assets/icon.png
   title:

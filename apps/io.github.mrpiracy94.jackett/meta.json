@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.jackett/assets/jackett.webp",
-  "tagline": "Liga indexadores de torrents a outras aplicações",
+  "tagline": "Jackett (LinuxServer.io)",
   "description": "Jackett — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/jackett:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-jackett/",
   "title": "Jackett",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.jackett",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "networking"
   ],

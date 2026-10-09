@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.wikijs/assets/wikijs.webp",
-  "tagline": "Wiki moderna para documentação de equipas",
+  "tagline": "Wiki.js (LinuxServer.io)",
   "description": "Wiki.js — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/wikijs:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-wikijs/",
   "title": "Wiki.js",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.wikijs",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "productivity"
   ],

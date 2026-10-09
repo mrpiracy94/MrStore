@@ -27,7 +27,7 @@ services:
         target: /data/movies
 x-casaos:
   id: io.github.mrpiracy94.emby
-  version: "1.0.1"
+  version: "1.0.0"
   main: emby
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.emby/assets/icon.png
   title:

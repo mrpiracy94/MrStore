@@ -11,7 +11,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.it-tools
-  version: "1.0.1"
+  version: "1.0.0"
   main: it-tools
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.it-tools/assets/icon.png
   title:

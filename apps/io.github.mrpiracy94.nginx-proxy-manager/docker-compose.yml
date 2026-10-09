@@ -23,7 +23,7 @@ services:
         target: /etc/letsencrypt
 x-casaos:
   id: io.github.mrpiracy94.nginx-proxy-manager
-  version: "1.0.1"
+  version: "1.0.0"
   main: nginx-proxy-manager
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.nginx-proxy-manager/assets/icon.png
   title:

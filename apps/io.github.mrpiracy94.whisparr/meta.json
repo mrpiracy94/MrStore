@@ -8,12 +8,12 @@
   "developer": "hotio",
   "category": "Media",
   "thumbnail": "/apps/io.github.mrpiracy94.whisparr/assets/whisparr.webp",
-  "tagline": "Organiza e acompanha conteúdos multimédia",
+  "tagline": "Whisparr (seedit4.me catalog)",
   "description": "Whisparr — origem: seedit4.me catalog. Imagem: ghcr.io/hotio/whisparr:latest. Verifica portas/variáveis na documentação do projeto.",
   "title": "Whisparr",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.whisparr",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "media"
   ],

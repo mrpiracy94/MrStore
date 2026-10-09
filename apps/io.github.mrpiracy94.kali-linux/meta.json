@@ -8,12 +8,12 @@
   "developer": "LinuxServer.io",
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.kali-linux/assets/kali-linux.webp",
-  "tagline": "Ambiente Linux para testes de segurança",
+  "tagline": "Kali Linux (LinuxServer.io)",
   "description": "Kali Linux — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kali-linux:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kali-linux/",
   "title": "Kali Linux",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.kali-linux",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "categories": [
     "developer"
   ],
