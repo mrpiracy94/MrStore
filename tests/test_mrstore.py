@@ -52,6 +52,8 @@ class StoreTests(unittest.TestCase):
         usage=image_usage(apps())
         self.assertIn('ghcr.io/immich-app/immich-server:release',usage)
         self.assertEqual(len(usage),258)
+        self.assertIn('ghcr.io/actualbudget/actual:latest', usage)
+        self.assertNotIn('actualbudget/actual-server:latest', usage)
 
     def test_all_shards_are_disjoint_and_complete(self):
         keys=list(image_usage(apps()))
