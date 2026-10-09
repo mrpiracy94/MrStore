@@ -61,7 +61,9 @@ services:
       ports: []
       volumes: []
   karakeep-meilisearch:
-    image: getmeili/meilisearch:v1.13.3
+    image: getmeili/meilisearch:v1.54.3@sha256:e68913ab7d6f5b159529e472cfd362ce3c741fafd3c127961b2142abbe41b3c9
+    # Meilisearch 1.51+ requires this explicit migration flag for older databases.
+    command: ["meilisearch", "--upgrade-db"]
     container_name: karakeep-meilisearch
     restart: unless-stopped
     environment:
@@ -87,7 +89,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.karakeep
-  version: "1.0.1"
+  version: "1.0.2"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -103,6 +105,6 @@ x-casaos:
   tagline:
     en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional)"
   description:
-    en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. MEILI_MASTER_KEY tem de ser igual nos dois serviços. O Chrome utiliza a imagem oficial do Karakeep com a porta interna 9222 e configuração de proxy própria. Antes de atualizar Meilisearch, confirma a compatibilidade com o Karakeep."
+    en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. MEILI_MASTER_KEY tem de ser igual nos dois serviços. O Chrome utiliza a imagem oficial do Karakeep com a porta interna 9222 e configuração de proxy própria. Meilisearch v1.54.3 utiliza --upgrade-db para migrar índices antigos; faz backup de /DATA/AppData/karakeep/meili e dos dados Karakeep ANTES de atualizar. Para rollback, restaura ambos os diretórios e as imagens antigas."
   port_map: "30002"
   index: /
