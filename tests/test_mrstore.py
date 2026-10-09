@@ -146,6 +146,16 @@ class StoreTests(unittest.TestCase):
         self.assertTrue(any(p.get('target') == 80 and str(p.get('published')) == '30003'
                             for p in service['ports']))
 
+    def test_paperless_redis_alpine_keeps_persistent_data(self):
+        app = next(item for item in apps() if item.folder == 'paperless-ngx')
+        service = app.source['services']['paperless-broker']
+        self.assertEqual(service['image'], 'docker.io/library/redis:8.10.1-alpine')
+        self.assertTrue(any(vol.get('source') == '/DATA/AppData/paperless/redis'
+                            and vol.get('target') == '/data'
+                            for vol in service['volumes']))
+        self.assertEqual(app.source['services']['paperless-ngx']['image'],
+                         'ghcr.io/paperless-ngx/paperless-ngx:latest')
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)

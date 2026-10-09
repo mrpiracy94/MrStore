@@ -1,0 +1,68 @@
+name: Verify Paperless Redis Alpine security and RDB
+on:
+  pull_request:
+    paths:
+      - 'Apps/paperless-ngx/docker-compose.yml'
+      - '.github/workflows/verify-paperless-redis-alpine.yml'
+      - 'scripts/test_paperless_redis_alpine.sh'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Compare Redis 8 standard and Alpine on selected platform
+        run: |
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output old.json redis:8
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output alpine.json redis:8.10.1-alpine
+      - name: Require zero HIGH and CRITICAL in replacement
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def counts(path):
+              report = json.load(open(path, encoding='utf-8'))
+              if not isinstance(report.get('Results'), list) or not report['Results']:
+                  raise SystemExit('Incomplete Trivy result: ' + path)
+              return Counter(v.get('Severity')
+                             for record in report['Results']
+                             for v in record.get('Vulnerabilities') or []
+                             if v.get('Severity') in ('HIGH', 'CRITICAL'))
+          old, new = counts('old.json'), counts('alpine.json')
+          summary = ('## Redis ${{ matrix.arch }} CVE comparison\n\n'
+                     '| Image | CRITICAL | HIGH |\n|---|---:|---:|\n'
+                     f"| Redis 8 default | {old['CRITICAL']} | {old['HIGH']} |\n"
+                     f"| Redis 8.10.1 Alpine | {new['CRITICAL']} | {new['HIGH']} |\n")
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as fp:
+              fp.write(summary)
+          if new['CRITICAL'] or new['HIGH']:
+              raise SystemExit('::error::Pinned Redis Alpine still reports HIGH/CRITICAL CVEs')
+          PY
+      - name: Preserve CVE reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paperless-redis-${{ matrix.arch }}-scan
+          path: |
+            old.json
+            alpine.json
+          if-no-files-found: warn
+  rdb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify persisted RDB survives switch to Alpine
+        run: bash scripts/test_paperless_redis_alpine.sh
