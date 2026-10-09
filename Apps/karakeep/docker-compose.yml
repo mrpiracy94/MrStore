@@ -51,10 +51,11 @@ services:
           description:
             en_US: /data
   karakeep-chrome:
-    image: gcr.io/zenika-hub/alpine-chrome:124
+    image: ghcr.io/karakeep-app/karakeep-chrome:release
     container_name: karakeep-chrome
     restart: unless-stopped
-    command: ["--no-sandbox", "--disable-gpu", "--disable-dev-shm-usage", "--remote-debugging-address=0.0.0.0", "--remote-debugging-port=9222", "--hide-scrollbars"]
+    init: true
+    command: ["--disable-gpu", "--disable-dev-shm-usage", "--hide-scrollbars", "--disable-blink-features=AutomationControlled", "--window-size=1440,900"]
     x-casaos:
       envs: []
       ports: []
@@ -86,7 +87,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.karakeep
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -102,6 +103,6 @@ x-casaos:
   tagline:
     en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional)"
   description:
-    en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. MEILI_MASTER_KEY tem de ser igual nos dois serviços. A tag da imagem meilisearch/chrome é do compose de referência; confirma se há versão mais recente."
+    en_US: "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. MEILI_MASTER_KEY tem de ser igual nos dois serviços. O Chrome utiliza a imagem oficial do Karakeep com a porta interna 9222 e configuração de proxy própria. Antes de atualizar Meilisearch, confirma a compatibilidade com o Karakeep."
   port_map: "30002"
   index: /
