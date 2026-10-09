@@ -66,6 +66,7 @@ def promote(stage: Path, previous: Path, today: date | None = None) -> dict:
         if not isinstance(meta, dict) or not isinstance(meta.get("id"), str):
             raise ValueError(f"{manifest_path}: missing x-casaos.id")
         app_id = meta["id"]
+        original_meta = dict(meta)
         source_version = parse_version(meta.get("version"), app_id)
         images = service_images(compose, app_id)
         before = by_id.get(app_id)
@@ -111,7 +112,7 @@ def promote(stage: Path, previous: Path, today: date | None = None) -> dict:
                     if isinstance(old_note, str) and old_note:
                         meta["release_notes"] = {"en_US": old_note}
         meta["version"] = new_version
-        if new_version != format_version(source_version) or changed_services:
+        if meta != original_meta:
             manifest_path.write_text(
                 yaml.safe_dump(compose, sort_keys=False, allow_unicode=True),
                 encoding="utf-8")
