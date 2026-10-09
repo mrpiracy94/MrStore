@@ -1,7 +1,7 @@
 name: code-server
 services:
   code-server:
-    image: lscr.io/linuxserver/code-server:latest
+    image: ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe
     container_name: code-server
     restart: unless-stopped
     environment:
@@ -39,7 +39,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.code-server
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -55,6 +55,6 @@ x-casaos:
   tagline:
     en_US: "code-server (LinuxServer.io)"
   description:
-    en_US: "code-server — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/code-server:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-code-server/"
+    en_US: "code-server LinuxServer original com correções individuais de shell-quote 1.11.0 e basic-ftp 6.2.1, imagem GHCR de digest imutável testada em AMD64/ARM64 (Trivy 0 HIGH/CRITICAL, HTTP, volumes e FTP). Mantém /config e /workspace e porta 20045 -> 8443. Faz backup de ambos antes de atualizar e confirma integrações FTP especiais; basic-ftp v6 bloqueia hosts de transferência alternativos por defeito. Ver docs/CODE_SERVER_TARGETED_PATCH.md."
   port_map: "20045"
   index: /

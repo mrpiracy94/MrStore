@@ -278,6 +278,21 @@ class StoreTests(unittest.TestCase):
         self.assertTrue(any(v.get('source') == '/DATA/AppData/netbootxyz/assets' and
                             v.get('target') == '/assets' for v in service['volumes']))
 
+    def test_code_server_uses_public_verified_security_image(self):
+        code_server = next(a for a in apps() if a.folder == 'code-server')
+        service = code_server.source['services']['code-server']
+        self.assertEqual(service['image'],
+                         'ghcr.io/mrpiracy94/mrstore-code-server:'
+                         'lsio-node-deps-secfix-20261010@sha256:'
+                         'af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe')
+        self.assertTrue(any(p.get('target') == 8443 and str(p.get('published')) == '20045'
+                            for p in service['ports']))
+        volume_paths = {(v['source'], v['target']) for v in service['volumes']}
+        self.assertIn(('/DATA/AppData/code-server/config', '/config'), volume_paths)
+        self.assertIn(('/DATA/Workspace', '/workspace'), volume_paths)
+        self.assertIn('PUID=1000', service['environment'])
+        self.assertIn('PGID=1000', service['environment'])
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)
