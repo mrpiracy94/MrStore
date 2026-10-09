@@ -1,0 +1,66 @@
+name: Research Uptime Kuma slim CVEs (not a release approval)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/research-uptime-slim.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  comparison:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Compare same-major full and slim images
+        run: |
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output full.json louislam/uptime-kuma:2
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output slim.json louislam/uptime-kuma:2-slim
+      - name: Publish truthful vulnerability comparison
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def counts(path):
+              report = json.load(open(path, encoding='utf-8'))
+              if not isinstance(report.get('Results'), list) or not report['Results']:
+                  raise SystemExit('Invalid Trivy report: ' + path)
+              return Counter(item.get('Severity')
+                             for group in report['Results']
+                             for item in group.get('Vulnerabilities') or []
+                             if item.get('Severity') in {'HIGH','CRITICAL'})
+          full = counts('full.json')
+          slim = counts('slim.json')
+          arch = '${{ matrix.arch }}'
+          summary = (f'## Uptime Kuma security: {arch}\n\n'
+                     '| Variant | CRITICAL | HIGH |\n|---|---:|---:|\n'
+                     f"| 2 (full) | {full['CRITICAL']} | {full['HIGH']} |\n"
+                     f"| 2-slim | {slim['CRITICAL']} | {slim['HIGH']} |\n\n"
+                     '⚠️ **Do not auto-merge:** slim excludes embedded MariaDB and Chromium. '
+                     'This workflow is an audit, NOT a compatible drop-in upgrade. '
+                     'Preserve the current catalogue image until user-feature impact is verified.\n')
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as out:
+              out.write(summary)
+          if sum(slim.values()) >= sum(full.values()):
+              raise SystemExit('::error::Slim does not reduce reported HIGH/CRITICAL findings')
+          if slim['CRITICAL']:
+              raise SystemExit('::error::Slim still contains CRITICAL findings: do not release')
+          PY
+      - name: Keep raw CVE evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: uptime-kuma-${{ matrix.arch }}-variant-scan
+          path: |
+            full.json
+            slim.json
+          if-no-files-found: warn
