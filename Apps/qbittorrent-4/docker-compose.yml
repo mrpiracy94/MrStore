@@ -1,7 +1,7 @@
 name: qbittorrent-4
 services:
   qbittorrent-4:
-    image: lscr.io/linuxserver/qbittorrent:4.6.7
+    image: ghcr.io/mrpiracy94/mrstore-qbittorrent:5.2.4-libtorrentv1-secfix-20261009@sha256:6e0475093e34571c90fc0d1ede2920ca847f1b4a1ac127351931eab6e12c6c4c
     container_name: qbittorrent-4
     restart: unless-stopped
     environment:
@@ -51,7 +51,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.qbittorrent-4
-  version: "1.0.0"
+  version: "1.1.0"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -63,10 +63,10 @@ x-casaos:
   icon: https://seedit4.me/assets/img/icons/software/qbittorrent.png
   thumbnail: https://seedit4.me/assets/img/icons/software/qbittorrent.png
   title:
-    en_US: "qBittorrent 4.x"
+    en_US: "qBittorrent 5.2 (libtorrent v1)"
   tagline:
-    en_US: "qBittorrent 4.x (seedit4.me catalog (versão 4))"
+    en_US: "Cliente BitTorrent 5.2 com libtorrent v1"
   description:
-    en_US: "qBittorrent 4.x — origem: seedit4.me catalog (versão 4). Imagem: lscr.io/linuxserver/qbittorrent:4.6.7. Verifica portas/variáveis na documentação do projeto."
+    en_US: "Variante corrigida de segurança do antigo qBittorrent 4.x, agora 5.2.4 com libtorrent v1. Imagem GitHub GHCR fixada por digest após análise HIGH/CRITICAL sem achados em AMD64 e ARM64. Mantém o ID de catálogo anterior para não perder a ligação às instalações. Antes de atualizar uma instalação 4.x existente: pára o contentor, cria uma cópia de segurança completa de /DATA/AppData/qbittorrent-4/config e confirma compatibilidade, permissões e WebUI. Não é uma migração automática garantida. Fonte: https://docs.linuxserver.io/images/docker-qbittorrent/"
   port_map: "20069"
   index: /

@@ -1,0 +1,95 @@
+name: Security gate for legacy qBittorrent migration
+on:
+  pull_request:
+    paths:
+      - 'Apps/qbittorrent-4/docker-compose.yml'
+      - '.github/workflows/verify-qbittorrent-upgrade.yml'
+      - 'security/images/qbittorrent/Dockerfile'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable ARM64 emulation
+        uses: docker/setup-qemu-action@v3
+      - name: Configure Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan historical 4.6.7 image (baseline)
+        run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --format json --timeout 12m --output old.json lscr.io/linuxserver/qbittorrent:4.6.7
+      - name: Scan maintained 5.2.4 libtorrent v1 image
+        run: trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --format json --timeout 12m --output upstream.json lscr.io/linuxserver/qbittorrent:5.2.4-libtorrentv1
+      - name: Build patched AMD64 image
+        run: docker buildx build --pull --platform linux/amd64 --load -t mrstore-qbittorrent:patched-amd64 -f security/images/qbittorrent/Dockerfile .
+      - name: Scan patched AMD64 image
+        run: trivy image --quiet --image-src docker --scanners vuln --severity HIGH,CRITICAL --format json --timeout 12m --output patched-amd64.json mrstore-qbittorrent:patched-amd64
+      - name: Build patched ARM64 image
+        run: docker buildx build --pull --platform linux/arm64 --load -t mrstore-qbittorrent:patched-arm64 -f security/images/qbittorrent/Dockerfile .
+      - name: Scan patched ARM64 image
+        run: trivy image --quiet --image-src docker --platform linux/arm64 --scanners vuln --severity HIGH,CRITICAL --format json --timeout 12m --output patched-arm64.json mrstore-qbittorrent:patched-arm64
+      - name: Require zero HIGH and CRITICAL findings on both platforms
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          from collections import Counter
+          def counts(path):
+              with open(path, encoding='utf-8') as file:
+                  report = json.load(file)
+              if not isinstance(report.get('Results'), list):
+                  raise SystemExit('Invalid or incomplete Trivy report: ' + path)
+              return Counter(
+                  v.get('Severity') for result in report['Results']
+                  for v in result.get('Vulnerabilities') or []
+                  if v.get('Severity') in ('HIGH', 'CRITICAL')
+              )
+          names = {
+              '4.6.7': 'old.json',
+              '5.2.4 upstream': 'upstream.json',
+              'Patched AMD64': 'patched-amd64.json',
+              'Patched ARM64': 'patched-arm64.json',
+          }
+          values = {name: counts(path) for name, path in names.items()}
+          summary = (
+              '# qBittorrent vulnerability comparison\n\n'
+              '| Image | CRITICAL | HIGH |\n|---|---:|---:|\n'
+              + ''.join(
+                  f"| {name} | {values[name]['CRITICAL']} | {values[name]['HIGH']} |\n"
+                  for name in names
+              )
+          )
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as file:
+              file.write(summary)
+          if any(values[name]['CRITICAL'] or values[name]['HIGH']
+                 for name in ('Patched AMD64', 'Patched ARM64')):
+              print('::error::Patched image still has HIGH/CRITICAL findings. Do not publish.')
+              sys.exit(1)
+          PY
+      - name: Require public access to the exact released multiarch digest
+        env:
+          IMAGE: ghcr.io/mrpiracy94/mrstore-qbittorrent:5.2.4-libtorrentv1-secfix-20261009@sha256:6e0475093e34571c90fc0d1ede2920ca847f1b4a1ac127351931eab6e12c6c4c
+        run: |
+          docker logout ghcr.io || true
+          docker buildx imagetools inspect "$IMAGE"
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --exit-code 1 --format json --timeout 12m --output released-amd64.json "$IMAGE"
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --exit-code 1 --format json --timeout 12m --output released-arm64.json "$IMAGE"
+      - name: Archive all scan reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qbittorrent-security-comparison
+          path: |
+            old.json
+            upstream.json
+            patched-amd64.json
+            patched-arm64.json
+            released-amd64.json
+            released-arm64.json
+          if-no-files-found: warn

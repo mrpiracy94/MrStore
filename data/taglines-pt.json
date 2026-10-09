@@ -175,7 +175,7 @@
   "pycharm": "Ambiente de desenvolvimento Python",
   "pydio-cells": "Partilha e colaboração em ficheiros",
   "pyload-ng": "Gestor de downloads através do navegador",
-  "qbittorrent-4": "Cliente BitTorrent com interface web, versão 4",
+  "qbittorrent-4": "Cliente BitTorrent 5.2 com libtorrent v1",
   "qbittorrent": "Cliente BitTorrent com interface web",
   "qdirstat": "Analisa espaço ocupado no disco",
   "qui": "Interface web para gerir torrents",
