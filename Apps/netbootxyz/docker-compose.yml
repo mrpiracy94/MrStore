@@ -1,13 +1,15 @@
 name: netbootxyz
 services:
   netbootxyz:
-    image: lscr.io/linuxserver/netbootxyz:latest
+    image: ghcr.io/netbootxyz/netbootxyz:latest
     container_name: netbootxyz
     restart: unless-stopped
     environment:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
+      - "WEB_APP_PORT=3000"
+      - "NGINX_PORT=8080"
     ports:
       - target: 3000
         published: "20013"
@@ -50,22 +52,22 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.netbootxyz
-  version: "1.0.0"
+  version: "1.1.0"
   update_at: "2026-10-09"
   architectures:
     - amd64
     - arm64
   main: netbootxyz
   author: MrStore
-  developer: LinuxServer.io
+  developer: netboot.xyz
   category: Networking
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/netbootxyz.png
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/netbootxyz.png
   title:
     en_US: "netboot.xyz"
   tagline:
-    en_US: "netboot.xyz (LinuxServer.io)"
+    en_US: "Arranque de sistemas e utilitários pela rede"
   description:
-    en_US: "netboot.xyz — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/netbootxyz:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-netbootxyz/"
+    en_US: "netboot.xyz — imagem oficial e mantida pelo projeto (ghcr.io/netbootxyz/netbootxyz). A imagem antiga LinuxServer.io foi descontinuada. Os dados permanecem em /DATA/AppData/netbootxyz; a porta de configuração é 20013, TFTP 69/udp, e servidor de ficheiros 20014. NGINX_PORT=8080 conserva a porta interna existente. Documentação: https://github.com/netbootxyz/docker-netbootxyz"
   port_map: "20013"
   index: /
