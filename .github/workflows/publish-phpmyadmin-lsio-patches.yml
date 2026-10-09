@@ -1,0 +1,94 @@
+name: Publish tested LinuxServer phpMyAdmin CVE patches
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'security/images/phpmyadmin/Dockerfile'
+      - 'scripts/test_phpmyadmin_lsio_patches.sh'
+      - 'scripts/test_phpmyadmin_mariadb_integration.sh'
+      - '.github/workflows/publish-phpmyadmin-lsio-patches.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: mrstore-phpmyadmin-security-publish
+  cancel-in-progress: false
+jobs:
+  checked_publication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-phpmyadmin
+      VERSION: lsio-composer-twig-symfony-secfix-20261010
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Build AMD64 patched LinuxServer phpMyAdmin
+        run: docker buildx build --pull --platform linux/amd64 --load -f security/images/phpmyadmin/Dockerfile -t mrstore-phpmyadmin-patched:amd64 .
+      - name: Scan AMD64 patched phpMyAdmin
+        run: |
+          mkdir -p out
+          trivy image --quiet --image-src docker --platform linux/amd64 --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output out/amd64.json mrstore-phpmyadmin-patched:amd64
+      - name: Build ARM64 patched LinuxServer phpMyAdmin
+        run: docker buildx build --pull --platform linux/arm64 --load -f security/images/phpmyadmin/Dockerfile -t mrstore-phpmyadmin-patched:arm64 .
+      - name: Scan ARM64 patched phpMyAdmin
+        run: trivy image --quiet --image-src docker --platform linux/arm64 --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output out/arm64.json mrstore-phpmyadmin-patched:arm64
+      - name: Require complete zero HIGH CRITICAL scans for both architectures
+        run: |
+          python - <<'PY'
+          import json,os
+          from collections import Counter
+          lines=['## phpMyAdmin LinuxServer vulnerability remediation', '',
+                 '| Architecture | CRITICAL | HIGH |','|---|---:|---:|']
+          for arch in ('amd64','arm64'):
+              with open(f'out/{arch}.json',encoding='utf-8') as file:
+                  report=json.load(file)
+              if not isinstance(report.get('Results'),list) or not report['Results']:
+                  raise SystemExit('Incomplete vulnerability report on '+arch)
+              counts=Counter(f.get('Severity') for entry in report['Results']
+                             for f in entry.get('Vulnerabilities') or []
+                             if f.get('Severity') in ('HIGH','CRITICAL'))
+              lines.append(f"| {arch} | {counts['CRITICAL']} | {counts['HIGH']} |")
+              if counts['CRITICAL'] or counts['HIGH']:
+                  raise SystemExit('Cannot publish a HIGH/CRITICAL vulnerable image: '+arch)
+          summary='\n'.join(lines)+'\n'
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as out:
+              out.write(summary)
+          PY
+      - name: Verify AMD64 UI and original config volume
+        run: bash scripts/test_phpmyadmin_lsio_patches.sh amd64
+      - name: Verify AMD64 rendering and disposable MariaDB SQL
+        run: bash scripts/test_phpmyadmin_mariadb_integration.sh amd64
+      - name: Verify ARM64 UI and original config volume
+        run: bash scripts/test_phpmyadmin_lsio_patches.sh arm64
+      - name: Verify ARM64 rendering and disposable MariaDB SQL
+        run: bash scripts/test_phpmyadmin_mariadb_integration.sh arm64
+      - name: Preserve full CVE JSON even if there was a failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phpmyadmin-lsio-security-release-evidence
+          path: out/*.json
+          if-no-files-found: warn
+      - name: Authenticate to GHCR only after all checks
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish tested multiarch images
+        run: |
+          set -euo pipefail
+          docker tag mrstore-phpmyadmin-patched:amd64 "$IMAGE:$VERSION-amd64"
+          docker tag mrstore-phpmyadmin-patched:arm64 "$IMAGE:$VERSION-arm64"
+          docker push "$IMAGE:$VERSION-amd64"
+          docker push "$IMAGE:$VERSION-arm64"
+          docker buildx imagetools create -t "$IMAGE:$VERSION" \
+            "$IMAGE:$VERSION-amd64" "$IMAGE:$VERSION-arm64"
+          docker buildx imagetools inspect "$IMAGE:$VERSION"
