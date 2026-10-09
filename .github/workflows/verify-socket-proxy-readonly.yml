@@ -1,0 +1,41 @@
+name: Verify Socket Proxy denies Docker API mutation
+on:
+  pull_request:
+    paths:
+      - 'Apps/socket-proxy/docker-compose.yml'
+      - '.github/workflows/verify-socket-proxy-readonly.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start the actual proxy without exposing it publicly
+        run: |
+          set -euo pipefail
+          docker compose --project-name mrstore-sock-test -f Apps/socket-proxy/docker-compose.yml up -d
+          docker ps --filter name=socket-proxy
+      - name: Verify GET works and Docker POST is actually blocked
+        run: |
+          set -euo pipefail
+          proxy_ip="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' socket-proxy)"
+          [[ "$proxy_ip" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          ok=0
+          for attempt in $(seq 1 40); do
+            if curl -fsS --connect-timeout 2 "http://$proxy_ip:2375/_ping" | grep -q OK; then ok=1; break; fi
+            sleep 2
+          done
+          [ "$ok" -eq 1 ]
+          curl -fsS "http://$proxy_ip:2375/containers/json" >/dev/null
+          code="$(curl -sS -o /tmp/post-result -w '%{http_code}' -X POST \
+            -H 'Content-Type: application/json' -d '{}' \
+            "http://$proxy_ip:2375/containers/create")"
+          test "$code" = "403"
+          echo "Proxy GET allowed; POST container creation denied with 403."
+          docker inspect socket-proxy -f '{{json .HostConfig.PortBindings}}' | grep -qx '{}'
+      - name: Clean up test
+        if: always()
+        run: docker compose --project-name mrstore-sock-test -f Apps/socket-proxy/docker-compose.yml down --remove-orphans

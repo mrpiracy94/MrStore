@@ -115,6 +115,26 @@ class SecureDefaultsTests(unittest.TestCase):
         self.assertNotIn("public_url_port_mismatch", [x["code"] for x in report["checks"]])
         self.assertEqual(report["status"], "configuration_required")
 
+    def test_socket_proxy_forbids_docker_api_writes(self):
+        app = self.items["socket-proxy"]
+        service = app.source["services"]["socket-proxy"]
+        env = environment(service)
+        for name in ("POST", "EXEC", "BUILD", "AUTH", "IMAGES", "SECRETS",
+                     "SERVICES", "ALLOW_START", "ALLOW_STOP", "ALLOW_RESTARTS",
+                     "ALLOW_PAUSE", "ALLOW_UNPAUSE", "ALLOW_ARCHIVE",
+                     "ALLOW_CHANGES", "ALLOW_EXPORT", "ALLOW_TOP"):
+            self.assertEqual(env[name], "0", name)
+        self.assertEqual(env["CONTAINERS"], "1")
+        self.assertTrue(service["read_only"])
+        self.assertIn("/run", service["tmpfs"])
+        self.assertIn("no-new-privileges:true", service["security_opt"])
+        self.assertFalse(service.get("ports"), "Docker API cannot be host-exposed")
+        mounts = [v for v in service["volumes"]
+                  if v.get("source") == "/var/run/docker.sock"]
+        self.assertEqual(len(mounts), 1)
+        self.assertTrue(mounts[0]["read_only"])
+        self.assertEqual(mounts[0]["target"], "/var/run/docker.sock")
+
     def test_sensitive_mount_count_is_reduced_without_hiding_warnings(self):
         findings = report()["findings"]
         unsafe = {i["app"] for i in findings if i["code"] == "sensitive_mount"}
