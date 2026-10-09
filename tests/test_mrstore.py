@@ -173,6 +173,11 @@ class StoreTests(unittest.TestCase):
     def test_inconclusive_rescan_covers_all_25_previous_failures(self):
         target = json.loads((ROOT / 'data/cve-inconclusive-20261009.json').read_text())
         self.assertEqual(len(target), 25)
+        original = json.loads((ROOT / 'data/cve-inconclusive-original-20261009.json').read_text())
+        self.assertEqual(len(original), 25)
+        self.assertIn('lscr.io/linuxserver/netbootxyz:latest', original)
+        self.assertNotIn('lscr.io/linuxserver/netbootxyz:latest', target)
+        self.assertTrue(any(x.startswith('ghcr.io/mrpiracy94/mrstore-netbootxyz:') for x in target))
         self.assertEqual(len(set(target)), 25)
         self.assertTrue(set(target).issubset(image_usage(apps())))
         workflow = (ROOT / '.github/workflows/retry-inconclusive-cves.yml').read_text()
@@ -248,6 +253,23 @@ class StoreTests(unittest.TestCase):
         self.assertTrue(any(p.get('target') == 80 and str(p.get('published')) == '30013'
                             for p in spec.get('ports', [])))
         self.assertEqual(spec.get('volumes', []), [], 'IT-Tools has no persisted state')
+
+    def test_netbootxyz_has_maintained_image_and_unchanged_network_ports(self):
+        entry = next(item for item in apps() if item.folder == 'netbootxyz')
+        service = entry.source['services']['netbootxyz']
+        self.assertTrue(service['image'].startswith(
+            'ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527'), service['image'])
+        self.assertEqual(set(entry.metadata['architectures']), {'amd64', 'arm64'})
+        ports = {(p['target'], str(p['published']), p['protocol'])
+                 for p in service['ports']}
+        self.assertEqual(ports, {(3000, '20013', 'tcp'), (8080, '20014', 'tcp'),
+                                 (69, '69', 'udp')})
+        self.assertIn('NGINX_PORT=8080', service['environment'])
+        self.assertIn('WEB_APP_PORT=3000', service['environment'])
+        self.assertTrue(any(v.get('source') == '/DATA/AppData/netbootxyz/config' and
+                            v.get('target') == '/config' for v in service['volumes']))
+        self.assertTrue(any(v.get('source') == '/DATA/AppData/netbootxyz/assets' and
+                            v.get('target') == '/assets' for v in service['volumes']))
 
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
