@@ -46,7 +46,6 @@ x-casaos:
   update_at: "2026-10-09"
   architectures:
     - amd64
-    - arm64
   main: mysql-workbench
   author: MrStore
   developer: LinuxServer.io

@@ -1,0 +1,106 @@
+"""Scan a deterministic shard of unique images using Trivy, preserving errors.
+
+No image is deployed, CVEs do not prove exploitability, and a clean result
+only means no reported HIGH/CRITICAL vulnerabilities in scanned images.
+"""
+import argparse
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+import subprocess
+from catalog import ROOT, apps, image_usage
+
+
+def shard_images(images: dict | list, shard: int, shards: int) -> list[str]:
+    if shards < 1 or not 0 <= shard < shards:
+        raise ValueError('Invalid scan shard')
+    return [image for i, image in enumerate(sorted(images)) if i % shards == shard]
+
+
+def scan(image: str, binary: str = 'trivy') -> tuple[list[dict], str | None]:
+    args = [binary, 'image', '--quiet', '--scanners', 'vuln', '--severity', 'HIGH,CRITICAL',
+            '--format', 'json', '--timeout', '6m', image]
+    try:
+        p = subprocess.run(args, capture_output=True, text=True, check=False, timeout=440)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return [], str(exc)
+    if p.returncode:
+        return [], (p.stderr or f'Trivy exited {p.returncode}').strip()[-400:]
+    try:
+        report = json.loads(p.stdout)
+    except ValueError:
+        return [], 'Invalid Trivy JSON output'
+    if not isinstance(report, dict) or not isinstance(report.get('Results'), list):
+        return [], 'Incomplete Trivy report (missing Results)'
+    hits = []
+    seen = set()
+    for result in report['Results']:
+        if not isinstance(result, dict):
+            continue
+        for item in result.get('Vulnerabilities') or []:
+            if item.get('Severity') not in ('HIGH', 'CRITICAL'):
+                continue
+            key = (item.get('VulnerabilityID'), item.get('PkgName'), item.get('InstalledVersion'), result.get('Target'))
+            if key in seen:
+                continue
+            seen.add(key)
+            hits.append({'cve': item.get('VulnerabilityID'), 'severity': item.get('Severity'),
+                         'package': item.get('PkgName'), 'installed': item.get('InstalledVersion'),
+                         'fixed': item.get('FixedVersion'), 'target': result.get('Target'),
+                         'url': item.get('PrimaryURL')})
+    return hits, None
+
+
+def evaluate(usage: dict[str,list[str]], chosen: list[str], scanner=scan) -> dict:
+    results = []
+    for index, image in enumerate(chosen, 1):
+        print(f'[{index}/{len(chosen)}] {image}', flush=True)
+        try:
+            vulns, error = scanner(image)
+        except Exception as exc:
+            vulns, error = [], str(exc)
+        results.append({'image': image, 'apps': usage[image], 'status': 'error' if error else 'ok',
+                        'error': error, 'findings': vulns})
+    return {'scanned_at': datetime.now(timezone.utc).isoformat(), 'images_total': len(usage),
+            'images_checked': len(chosen), 'failures': sum(x['status']=='error' for x in results),
+            'critical': sum(y['severity']=='CRITICAL' for x in results for y in x['findings']),
+            'high': sum(y['severity']=='HIGH' for x in results for y in x['findings']),
+            'results': results}
+
+
+def summarize(report: dict, shard: int, shards: int) -> str:
+    lines = ['# Auditoria CVE — MrStore', '',
+             f"Shard {shard+1}/{shards} | {report['images_checked']}/{report['images_total']} imagens | {report['critical']} CRITICAL | {report['high']} HIGH | falhas: {report['failures']}", '',
+             'A presença de CVE não comprova exploração possível; ausência de alertas não garante segurança. Falhas de scanner não são contadas como imagens limpas.', '']
+    for entry in report['results']:
+        if entry['status'] == 'error':
+            lines.append(f"- ⚠️ `{entry['image']}`: {entry['error']}")
+        elif entry['findings']:
+            hi=sum(f['severity']=='HIGH' for f in entry['findings'])
+            cr=sum(f['severity']=='CRITICAL' for f in entry['findings'])
+            fixes=sum(bool(f.get('fixed')) for f in entry['findings'])
+            lines.append(f"- `{entry['image']}`: {cr} CRITICAL, {hi} HIGH; {fixes} com versão corrigida ({', '.join(entry['apps'])})")
+    return '\n'.join(lines)+'\n'
+
+
+def main() -> int:
+    p = argparse.ArgumentParser()
+    p.add_argument('--root', type=Path, default=ROOT)
+    p.add_argument('--shards', type=int, default=8)
+    p.add_argument('--shard', type=int, default=0)
+    p.add_argument('--output', type=Path, default=ROOT/'out/cves.json')
+    p.add_argument('--summary', type=Path, default=ROOT/'out/cves.md')
+    opts = p.parse_args()
+    usage = image_usage(apps(opts.root))
+    chosen = shard_images(usage, opts.shard, opts.shards)
+    report = evaluate(usage, chosen)
+    report['shard'] = opts.shard
+    report['shards'] = opts.shards
+    opts.output.parent.mkdir(parents=True, exist_ok=True)
+    opts.output.write_text(json.dumps(report, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
+    opts.summary.write_text(summarize(report, opts.shard, opts.shards), encoding='utf-8')
+    print(f"CVE: {report['critical']} CRITICAL; {report['high']} HIGH; errors {report['failures']}")
+    return 2 if report['failures'] else 0
+
+if __name__ == '__main__':
+    raise SystemExit(main())
