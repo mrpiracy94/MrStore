@@ -85,6 +85,15 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(sorted(sum(batches,[])),sorted(keys))
         self.assertEqual(len({item for batch in batches for item in batch}),len(keys))
 
+    def test_actual_budget_digest_baseline_has_no_retired_image(self):
+        latest = json.loads((ROOT / 'data/image-digests.json').read_text())
+        ref = 'actualbudget/actual-server:latest'
+        self.assertNotIn(ref, latest['images'],
+                         'Old registry timeout issue must not persist in the new baseline')
+        images = image_usage(apps())
+        self.assertNotIn(ref, images)
+        self.assertIn('ghcr.io/actualbudget/actual:latest', images)
+
     def test_registry_changes_baseline_errors(self):
         a='sha256:'+'a'*64;b='sha256:'+'b'*64;c='sha256:'+'c'*64
         answers={'update':(b,None),'error':(None,'rate limit'),'new':(c,None)}
