@@ -1,0 +1,58 @@
+name: cross-seed
+services:
+  cross-seed:
+    image: ghcr.io/cross-seed/cross-seed:latest
+    container_name: cross-seed
+    restart: unless-stopped
+    command: ["daemon"]
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 2468
+        published: "2468"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/cross-seed
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "2468"
+          description:
+            en_US: Port 2468/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.cross-seed
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: cross-seed
+  author: MrStore
+  developer: cross-seed
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cross-seed.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cross-seed.png
+  title:
+    en_US: "cross-seed"
+  tagline:
+    en_US: "Cross-seeding automático"
+  description:
+    en_US: "Cross-seeding automático. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "0"
+  index: /

@@ -1,0 +1,61 @@
+name: seerr
+services:
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    environment:
+      - "LOG_LEVEL=info"
+      - "PORT=5055"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5055
+        published: "5055"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/seerr
+        target: /app/config
+    x-casaos:
+      envs:
+        - container: LOG_LEVEL
+          description:
+            en_US: LOG_LEVEL
+        - container: PORT
+          description:
+            en_US: PORT
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "5055"
+          description:
+            en_US: Port 5055/tcp
+      volumes:
+        - container: /app/config
+          description:
+            en_US: /app/config
+
+x-casaos:
+  id: io.github.mrpiracy94.seerr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: seerr
+  author: MrStore
+  developer: seerr-team
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/seerr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/seerr.png
+  title:
+    en_US: "Seerr"
+  tagline:
+    en_US: "Pedidos de filmes/séries (substitui Overseerr e Jellyseerr)"
+  description:
+    en_US: "Pedidos de filmes/séries (substitui Overseerr e Jellyseerr). Estado: verificado em out/2026 (release v3.5.0, 28/09/2026). Confirma portas e variáveis na documentação do projeto. Corre como utilizador 1000:1000: a pasta /DATA/AppData/seerr tem de pertencer a esse utilizador."
+  port_map: "5055"
+  index: /

@@ -1,0 +1,53 @@
+name: grocy
+services:
+  grocy:
+    image: lscr.io/linuxserver/grocy:latest
+    container_name: grocy
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20034"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/grocy/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.grocy
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: grocy
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/grocy.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/grocy.png
+  title:
+    en_US: "Grocy"
+  tagline:
+    en_US: "Grocy (LinuxServer.io)"
+  description:
+    en_US: "Grocy — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/grocy:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-grocy/"
+  port_map: "20034"
+  index: /

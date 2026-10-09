@@ -1,0 +1,77 @@
+name: syncthing
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8384
+        published: "8384"
+        protocol: tcp
+      - target: 22000
+        published: "22000"
+        protocol: tcp
+      - target: 22000
+        published: "22000"
+        protocol: udp
+      - target: 21027
+        published: "21027"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/syncthing/config
+        target: /config
+      - type: bind
+        source: /DATA/Syncthing
+        target: /data1
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8384"
+          description:
+            en_US: Port 8384/tcp
+        - container: "22000"
+          description:
+            en_US: Port 22000/tcp
+        - container: "22000"
+          description:
+            en_US: Port 22000/udp
+        - container: "21027"
+          description:
+            en_US: Port 21027/udp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /data1
+          description:
+            en_US: /data1
+
+x-casaos:
+  id: io.github.mrpiracy94.syncthing
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: syncthing
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/syncthing.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/syncthing.png
+  title:
+    en_US: "Syncthing"
+  tagline:
+    en_US: "Syncthing (LinuxServer.io)"
+  description:
+    en_US: "Syncthing — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/syncthing:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-syncthing/"
+  port_map: "8384"
+  index: /

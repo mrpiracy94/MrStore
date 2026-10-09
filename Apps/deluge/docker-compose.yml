@@ -1,0 +1,71 @@
+name: deluge
+services:
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8112
+        published: "8112"
+        protocol: tcp
+      - target: 6881
+        published: "20000"
+        protocol: tcp
+      - target: 6881
+        published: "6882"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/deluge/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8112"
+          description:
+            en_US: Port 8112/tcp
+        - container: "6881"
+          description:
+            en_US: Port 6881/tcp
+        - container: "6881"
+          description:
+            en_US: Port 6881/udp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.deluge
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: deluge
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/deluge.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/deluge.png
+  title:
+    en_US: "Deluge"
+  tagline:
+    en_US: "Deluge (LinuxServer.io)"
+  description:
+    en_US: "Deluge — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/deluge:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-deluge/"
+  port_map: "8112"
+  index: /

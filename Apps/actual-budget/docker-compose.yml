@@ -1,0 +1,46 @@
+name: actual-budget
+services:
+  actual-budget:
+    image: actualbudget/actual-server:latest
+    container_name: actual-budget
+    restart: unless-stopped
+    ports:
+      - target: 5006
+        published: "5006"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/actual-budget
+        target: /data
+    x-casaos:
+      envs: []
+      ports:
+        - container: "5006"
+          description:
+            en_US: Port 5006/tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.actual-budget
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: actual-budget
+  author: MrStore
+  developer: Actual Budget
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/actual-budget.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/actual-budget.png
+  title:
+    en_US: "Actual Budget"
+  tagline:
+    en_US: "Orçamento pessoal"
+  description:
+    en_US: "Orçamento pessoal. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "5006"
+  index: /

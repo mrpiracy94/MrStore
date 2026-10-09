@@ -1,0 +1,83 @@
+name: jellyfin
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8096
+        published: "8096"
+        protocol: tcp
+      - target: 8920
+        published: "8920"
+        protocol: tcp
+      - target: 7359
+        published: "7359"
+        protocol: udp
+      - target: 1900
+        published: "1901"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/jellyfin/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /data/tvshows
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /data/movies
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8096"
+          description:
+            en_US: Port 8096/tcp
+        - container: "8920"
+          description:
+            en_US: Port 8920/tcp
+        - container: "7359"
+          description:
+            en_US: Port 7359/udp
+        - container: "1900"
+          description:
+            en_US: Port 1900/udp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /data/tvshows
+          description:
+            en_US: /data/tvshows
+        - container: /data/movies
+          description:
+            en_US: /data/movies
+
+x-casaos:
+  id: io.github.mrpiracy94.jellyfin
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: jellyfin
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png
+  title:
+    en_US: "Jellyfin"
+  tagline:
+    en_US: "Jellyfin (LinuxServer.io)"
+  description:
+    en_US: "Jellyfin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/jellyfin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-jellyfin/"
+  port_map: "8096"
+  index: /

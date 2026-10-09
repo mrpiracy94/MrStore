@@ -1,0 +1,67 @@
+name: mealie
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    container_name: mealie
+    restart: unless-stopped
+    environment:
+      - "ALLOW_SIGNUP=false"
+      - "BASE_URL=http://zimaos.local:9925"
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 9000
+        published: "30015"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mealie
+        target: /app/data
+    x-casaos:
+      envs:
+        - container: ALLOW_SIGNUP
+          description:
+            en_US: ALLOW_SIGNUP
+        - container: BASE_URL
+          description:
+            en_US: BASE_URL
+        - container: PUID
+          description:
+            en_US: PUID
+        - container: PGID
+          description:
+            en_US: PGID
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "9000"
+          description:
+            en_US: Port 9000/tcp
+      volumes:
+        - container: /app/data
+          description:
+            en_US: /app/data
+
+x-casaos:
+  id: io.github.mrpiracy94.mealie
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: mealie
+  author: MrStore
+  developer: Mealie
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mealie.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mealie.png
+  title:
+    en_US: "Mealie"
+  tagline:
+    en_US: "Gestor de receitas"
+  description:
+    en_US: "Gestor de receitas. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30015"
+  index: /

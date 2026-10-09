@@ -1,0 +1,46 @@
+name: beszel
+services:
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    ports:
+      - target: 8090
+        published: "30012"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/beszel
+        target: /beszel_data
+    x-casaos:
+      envs: []
+      ports:
+        - container: "8090"
+          description:
+            en_US: Port 8090/tcp
+      volumes:
+        - container: /beszel_data
+          description:
+            en_US: /beszel_data
+
+x-casaos:
+  id: io.github.mrpiracy94.beszel
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: beszel
+  author: MrStore
+  developer: Beszel
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/beszel.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/beszel.png
+  title:
+    en_US: "Beszel"
+  tagline:
+    en_US: "Monitorização leve de servidores"
+  description:
+    en_US: "Monitorização leve de servidores. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30012"
+  index: /

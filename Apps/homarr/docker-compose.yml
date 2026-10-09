@@ -1,0 +1,57 @@
+name: homarr
+services:
+  homarr:
+    image: ghcr.io/homarr-labs/homarr:latest
+    container_name: homarr
+    restart: unless-stopped
+    environment:
+      - "SECRET_ENCRYPTION_KEY=CHANGE_ME_64_HEX"
+    ports:
+      - target: 7575
+        published: "7575"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/homarr
+        target: /appdata
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    x-casaos:
+      envs:
+        - container: SECRET_ENCRYPTION_KEY
+          description:
+            en_US: SECRET_ENCRYPTION_KEY
+      ports:
+        - container: "7575"
+          description:
+            en_US: Port 7575/tcp
+      volumes:
+        - container: /appdata
+          description:
+            en_US: /appdata
+        - container: /var/run/docker.sock
+          description:
+            en_US: /var/run/docker.sock
+
+x-casaos:
+  id: io.github.mrpiracy94.homarr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: homarr
+  author: MrStore
+  developer: Homarr
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homarr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homarr.png
+  title:
+    en_US: "Homarr"
+  tagline:
+    en_US: "Dashboard para a casa/homelab"
+  description:
+    en_US: "Dashboard para a casa/homelab. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "7575"
+  index: /

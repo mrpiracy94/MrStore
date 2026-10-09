@@ -1,0 +1,141 @@
+name: immich
+services:
+  immich-server:
+    image: ghcr.io/immich-app/immich-server:release
+    container_name: immich-server
+    restart: unless-stopped
+    depends_on:
+      - immich-redis
+      - immich-database
+    environment:
+      - "DB_HOSTNAME=immich-database"
+      - "DB_USERNAME=postgres"
+      - "DB_PASSWORD=CHANGE_ME"
+      - "DB_DATABASE_NAME=immich"
+      - "REDIS_HOSTNAME=immich-redis"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 2283
+        published: "2283"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/Gallery/immich
+        target: /data
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+    x-casaos:
+      envs:
+        - container: DB_HOSTNAME
+          description:
+            en_US: DB_HOSTNAME
+        - container: DB_USERNAME
+          description:
+            en_US: DB_USERNAME
+        - container: DB_PASSWORD
+          description:
+            en_US: DB_PASSWORD
+        - container: DB_DATABASE_NAME
+          description:
+            en_US: DB_DATABASE_NAME
+        - container: REDIS_HOSTNAME
+          description:
+            en_US: REDIS_HOSTNAME
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "2283"
+          description:
+            en_US: Port 2283/tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: /data
+        - container: /etc/localtime
+          description:
+            en_US: /etc/localtime
+  immich-machine-learning:
+    image: ghcr.io/immich-app/immich-machine-learning:release
+    container_name: immich-machine-learning
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/immich/model-cache
+        target: /cache
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+      ports: []
+      volumes:
+        - container: /cache
+          description:
+            en_US: /cache
+  immich-redis:
+    image: docker.io/valkey/valkey:9
+    container_name: immich-redis
+    restart: unless-stopped
+    x-casaos:
+      envs: []
+      ports: []
+      volumes: []
+  immich-database:
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    container_name: immich-database
+    restart: unless-stopped
+    environment:
+      - "POSTGRES_PASSWORD=CHANGE_ME"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_DB=immich"
+      - "POSTGRES_INITDB_ARGS=--data-checksums"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/immich/postgres
+        target: /var/lib/postgresql/data
+    x-casaos:
+      envs:
+        - container: POSTGRES_PASSWORD
+          description:
+            en_US: POSTGRES_PASSWORD
+        - container: POSTGRES_USER
+          description:
+            en_US: POSTGRES_USER
+        - container: POSTGRES_DB
+          description:
+            en_US: POSTGRES_DB
+        - container: POSTGRES_INITDB_ARGS
+          description:
+            en_US: POSTGRES_INITDB_ARGS
+      ports: []
+      volumes:
+        - container: /var/lib/postgresql/data
+          description:
+            en_US: /var/lib/postgresql/data
+
+x-casaos:
+  id: io.github.mrpiracy94.immich
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: immich-server
+  author: MrStore
+  developer: Immich
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
+  title:
+    en_US: "Immich"
+  tagline:
+    en_US: "Biblioteca de fotos e vídeos (alternativa ao Google Fotos)"
+  description:
+    en_US: "Biblioteca de fotos e vídeos (alternativa ao Google Fotos). Estado: verificado em out/2026 (compose oficial atual; postgres vectorchord 0.4.3, valkey 9). Confirma portas e variáveis na documentação do projeto. Muda a password em DB_PASSWORD e POSTGRES_PASSWORD (têm de ser iguais)."
+  port_map: "2283"
+  index: /

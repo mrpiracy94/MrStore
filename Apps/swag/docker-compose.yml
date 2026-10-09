@@ -1,0 +1,61 @@
+name: swag
+services:
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "URL=example.com"
+      - "VALIDATION=http"
+    ports:
+      - target: 443
+        published: "20007"
+        protocol: tcp
+      - target: 80
+        published: "20008"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/swag/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "443"
+          description:
+            en_US: Port 443/tcp
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.swag
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: swag
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/swag.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/swag.png
+  title:
+    en_US: "SWAG"
+  tagline:
+    en_US: "SWAG (LinuxServer.io)"
+  description:
+    en_US: "SWAG — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/swag:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-swag/"
+  port_map: "20007"
+  index: /

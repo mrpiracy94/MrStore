@@ -1,0 +1,63 @@
+name: kicad
+services:
+  kicad:
+    image: lscr.io/linuxserver/kicad:latest
+    container_name: kicad
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=KiCad"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21084"
+        protocol: tcp
+      - target: 3001
+        published: "21085"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/kicad/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.kicad
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: kicad
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kicad.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kicad.png
+  title:
+    en_US: "KiCad"
+  tagline:
+    en_US: "KiCad (LinuxServer.io)"
+  description:
+    en_US: "KiCad — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kicad:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kicad/"
+  port_map: "21084"
+  index: /

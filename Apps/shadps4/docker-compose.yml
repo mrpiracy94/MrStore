@@ -1,0 +1,63 @@
+name: shadps4
+services:
+  shadps4:
+    image: lscr.io/linuxserver/shadps4:latest
+    container_name: shadps4
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=shadPS4"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21138"
+        protocol: tcp
+      - target: 3001
+        published: "21139"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/shadps4/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.shadps4
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: shadps4
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/shadps4.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/shadps4.png
+  title:
+    en_US: "shadPS4"
+  tagline:
+    en_US: "shadPS4 (LinuxServer.io)"
+  description:
+    en_US: "shadPS4 — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/shadps4:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-shadps4/"
+  port_map: "21138"
+  index: /

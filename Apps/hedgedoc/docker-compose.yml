@@ -1,0 +1,61 @@
+name: hedgedoc
+services:
+  hedgedoc:
+    image: lscr.io/linuxserver/hedgedoc:latest
+    container_name: hedgedoc
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "DB_HOST=hedgedoc_db"
+      - "DB_PORT=3306"
+      - "DB_USER=hedgedoc"
+      - "DB_PASS=CHANGE_ME"
+      - "DB_NAME=hedgedoc"
+      - "CMD_DOMAIN=localhost"
+      - "CMD_URL_ADDPORT=false"
+      - "CMD_PROTOCOL_USESSL=false"
+    ports:
+      - target: 3000
+        published: "20029"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/hedgedoc/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.hedgedoc
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: hedgedoc
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/hedgedoc.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/hedgedoc.png
+  title:
+    en_US: "HedgeDoc"
+  tagline:
+    en_US: "HedgeDoc (LinuxServer.io)"
+  description:
+    en_US: "HedgeDoc — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/hedgedoc:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-hedgedoc/"
+  port_map: "20029"
+  index: /

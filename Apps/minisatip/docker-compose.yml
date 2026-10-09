@@ -1,0 +1,53 @@
+name: minisatip
+services:
+  minisatip:
+    image: lscr.io/linuxserver/minisatip:latest
+    container_name: minisatip
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8875
+        published: "8875"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/minisatip/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8875"
+          description:
+            en_US: Port 8875/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.minisatip
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: minisatip
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/minisatip.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/minisatip.png
+  title:
+    en_US: "minisatip"
+  tagline:
+    en_US: "minisatip (LinuxServer.io)"
+  description:
+    en_US: "minisatip — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/minisatip:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-minisatip/"
+  port_map: "8875"
+  index: /

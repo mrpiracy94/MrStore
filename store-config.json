@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "store_id": "io.github.mrpiracy94.mrstore",
+  "name": {
+    "en_US": "MrStore",
+    "pt_PT": "MrStore"
+  },
+  "description": {
+    "en_US": "Community ZimaOS app catalog with vulnerability and container update monitoring.",
+    "pt_PT": "Catálogo comunitário ZimaOS com monitorização de vulnerabilidades e atualizações de imagens Docker."
+  },
+  "maintainer": "mrpiracy94",
+  "url": "https://github.com/mrpiracy94/MrStore"
+}

@@ -1,0 +1,63 @@
+name: winegui
+services:
+  winegui:
+    image: lscr.io/linuxserver/winegui:latest
+    container_name: winegui
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=WineGUI"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21186"
+        protocol: tcp
+      - target: 3001
+        published: "21187"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/winegui/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.winegui
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: winegui
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/winegui.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/winegui.png
+  title:
+    en_US: "WineGUI"
+  tagline:
+    en_US: "WineGUI (LinuxServer.io)"
+  description:
+    en_US: "WineGUI — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/winegui:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-winegui/"
+  port_map: "21186"
+  index: /

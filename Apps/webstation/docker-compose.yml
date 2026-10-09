@@ -1,0 +1,63 @@
+name: webstation
+services:
+  webstation:
+    image: lscr.io/linuxserver/webstation:latest
+    container_name: webstation
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Webstation"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21008"
+        protocol: tcp
+      - target: 3001
+        published: "21009"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/webstation/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.webstation
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: webstation
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/webstation.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/webstation.png
+  title:
+    en_US: "Webstation"
+  tagline:
+    en_US: "Webstation (LinuxServer.io)"
+  description:
+    en_US: "Webstation — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/webstation:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-webstation/"
+  port_map: "21008"
+  index: /

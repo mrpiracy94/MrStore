@@ -1,0 +1,52 @@
+name: glances
+services:
+  glances:
+    image: nicolargo/glances:latest-full
+    container_name: glances
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+      - "GLANCES_OPT=-w"
+    ports:
+      - target: 61208
+        published: "61208"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "61208"
+          description:
+            en_US: Port 61208/tcp
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: /var/run/docker.sock
+
+x-casaos:
+  id: io.github.mrpiracy94.glances
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: glances
+  author: MrStore
+  developer: nicolargo
+  category: Others
+  icon: https://seedit4.me/assets/img/icons/software/glances.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/glances.png
+  title:
+    en_US: "Glances"
+  tagline:
+    en_US: "Glances (seedit4.me catalog)"
+  description:
+    en_US: "Glances — origem: seedit4.me catalog. Imagem: nicolargo/glances:latest-full. Verifica portas/variáveis na documentação do projeto."
+  port_map: "61208"
+  index: /

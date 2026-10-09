@@ -1,0 +1,59 @@
+name: smokeping
+services:
+  smokeping:
+    image: lscr.io/linuxserver/smokeping:latest
+    container_name: smokeping
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20012"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/smokeping/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/smokeping/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.smokeping
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: smokeping
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/smokeping.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/smokeping.png
+  title:
+    en_US: "SmokePing"
+  tagline:
+    en_US: "SmokePing (LinuxServer.io)"
+  description:
+    en_US: "SmokePing — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/smokeping:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-smokeping/"
+  port_map: "20012"
+  index: /

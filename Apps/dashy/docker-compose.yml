@@ -1,0 +1,46 @@
+name: dashy
+services:
+  dashy:
+    image: lissy93/dashy:latest
+    container_name: dashy
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "30008"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/dashy
+        target: /app/user-data
+    x-casaos:
+      envs: []
+      ports:
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+      volumes:
+        - container: /app/user-data
+          description:
+            en_US: /app/user-data
+
+x-casaos:
+  id: io.github.mrpiracy94.dashy
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: dashy
+  author: MrStore
+  developer: Dashy
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dashy.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dashy.png
+  title:
+    en_US: "Dashy"
+  tagline:
+    en_US: "Dashboard"
+  description:
+    en_US: "Dashboard. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30008"
+  index: /

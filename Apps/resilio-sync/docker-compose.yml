@@ -1,0 +1,71 @@
+name: resilio-sync
+services:
+  resilio-sync:
+    image: lscr.io/linuxserver/resilio-sync:latest
+    container_name: resilio-sync
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8888
+        published: "8888"
+        protocol: tcp
+      - target: 55555
+        published: "55555"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/resilio-sync/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+      - type: bind
+        source: /DATA/Sync
+        target: /sync
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8888"
+          description:
+            en_US: Port 8888/tcp
+        - container: "55555"
+          description:
+            en_US: Port 55555/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+        - container: /sync
+          description:
+            en_US: /sync
+
+x-casaos:
+  id: io.github.mrpiracy94.resilio-sync
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: resilio-sync
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/resilio-sync.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/resilio-sync.png
+  title:
+    en_US: "Resilio Sync"
+  tagline:
+    en_US: "Resilio Sync (LinuxServer.io)"
+  description:
+    en_US: "Resilio Sync — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/resilio-sync:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-resilio-sync/"
+  port_map: "8888"
+  index: /

@@ -1,0 +1,59 @@
+name: apprise-api
+services:
+  apprise-api:
+    image: lscr.io/linuxserver/apprise-api:latest
+    container_name: apprise-api
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8000
+        published: "20038"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/apprise-api/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/apprise-api/attach
+        target: /attach
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8000"
+          description:
+            en_US: Port 8000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /attach
+          description:
+            en_US: /attach
+
+x-casaos:
+  id: io.github.mrpiracy94.apprise-api
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: apprise-api
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/apprise-api.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/apprise-api.png
+  title:
+    en_US: "Apprise API"
+  tagline:
+    en_US: "Apprise API (LinuxServer.io)"
+  description:
+    en_US: "Apprise API — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/apprise-api:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-apprise-api/"
+  port_map: "20038"
+  index: /

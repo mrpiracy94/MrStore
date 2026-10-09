@@ -1,0 +1,51 @@
+name: uptime-kuma
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    container_name: uptime-kuma
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3001
+        published: "30004"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/uptime-kuma
+        target: /app/data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /app/data
+          description:
+            en_US: /app/data
+
+x-casaos:
+  id: io.github.mrpiracy94.uptime-kuma
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: uptime-kuma
+  author: MrStore
+  developer: Uptime Kuma
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/uptime-kuma.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/uptime-kuma.png
+  title:
+    en_US: "Uptime Kuma"
+  tagline:
+    en_US: "Monitorização de serviços"
+  description:
+    en_US: "Monitorização de serviços. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30004"
+  index: /

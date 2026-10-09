@@ -1,0 +1,53 @@
+name: diskover
+services:
+  diskover:
+    image: lscr.io/linuxserver/diskover:latest
+    container_name: diskover
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20049"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/diskover/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.diskover
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: diskover
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/diskover.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/diskover.png
+  title:
+    en_US: "Diskover"
+  tagline:
+    en_US: "Diskover (LinuxServer.io)"
+  description:
+    en_US: "Diskover — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/diskover:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-diskover/"
+  port_map: "20049"
+  index: /

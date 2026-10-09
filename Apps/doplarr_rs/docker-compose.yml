@@ -1,0 +1,45 @@
+name: doplarr_rs
+services:
+  doplarr_rs:
+    image: lscr.io/linuxserver/doplarr_rs:latest
+    container_name: doplarr_rs
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/doplarr_rs/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.doplarr_rs
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: doplarr_rs
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/doplarr_rs.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/doplarr_rs.png
+  title:
+    en_US: "Doplarr RS"
+  tagline:
+    en_US: "Doplarr RS (LinuxServer.io)"
+  description:
+    en_US: "Doplarr RS — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/doplarr_rs:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-doplarr_rs/"
+  port_map: "0"
+  index: /

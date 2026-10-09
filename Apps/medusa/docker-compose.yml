@@ -1,0 +1,65 @@
+name: medusa
+services:
+  medusa:
+    image: lscr.io/linuxserver/medusa:latest
+    container_name: medusa
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8081
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/medusa/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /tv
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8081"
+          description:
+            en_US: Port 8081/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /tv
+          description:
+            en_US: /tv
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.medusa
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: medusa
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/medusa.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/medusa.png
+  title:
+    en_US: "Medusa"
+  tagline:
+    en_US: "Medusa (LinuxServer.io)"
+  description:
+    en_US: "Medusa — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/medusa:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-medusa/"
+  port_map: "8081"
+  index: /

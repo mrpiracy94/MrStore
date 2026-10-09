@@ -1,0 +1,71 @@
+name: ubooquity
+services:
+  ubooquity:
+    image: lscr.io/linuxserver/ubooquity:latest
+    container_name: ubooquity
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 2202
+        published: "2202"
+        protocol: tcp
+      - target: 2203
+        published: "2203"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ubooquity/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Books
+        target: /books
+      - type: bind
+        source: /DATA/Media/Comics
+        target: /comics
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "2202"
+          description:
+            en_US: Port 2202/tcp
+        - container: "2203"
+          description:
+            en_US: Port 2203/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /books
+          description:
+            en_US: /books
+        - container: /comics
+          description:
+            en_US: /comics
+
+x-casaos:
+  id: io.github.mrpiracy94.ubooquity
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: ubooquity
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ubooquity.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ubooquity.png
+  title:
+    en_US: "Ubooquity"
+  tagline:
+    en_US: "Ubooquity (LinuxServer.io)"
+  description:
+    en_US: "Ubooquity — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ubooquity:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ubooquity/"
+  port_map: "2202"
+  index: /

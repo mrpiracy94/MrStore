@@ -1,0 +1,53 @@
+name: synclounge
+services:
+  synclounge:
+    image: lscr.io/linuxserver/synclounge:latest
+    container_name: synclounge
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8088
+        published: "8088"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/synclounge/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8088"
+          description:
+            en_US: Port 8088/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.synclounge
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: synclounge
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/synclounge.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/synclounge.png
+  title:
+    en_US: "SyncLounge"
+  tagline:
+    en_US: "SyncLounge (LinuxServer.io)"
+  description:
+    en_US: "SyncLounge — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/synclounge:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-synclounge/"
+  port_map: "8088"
+  index: /

@@ -1,0 +1,51 @@
+name: esphome
+services:
+  esphome:
+    image: ghcr.io/esphome/esphome:latest
+    container_name: esphome
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6052
+        published: "6052"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/esphome
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "6052"
+          description:
+            en_US: Port 6052/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.esphome
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: esphome
+  author: MrStore
+  developer: ESPHome
+  category: Home
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/esphome.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/esphome.png
+  title:
+    en_US: "ESPHome"
+  tagline:
+    en_US: "Firmware para dispositivos ESP"
+  description:
+    en_US: "Firmware para dispositivos ESP. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "6052"
+  index: /

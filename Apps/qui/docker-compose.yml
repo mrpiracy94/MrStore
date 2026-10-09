@@ -1,0 +1,51 @@
+name: qui
+services:
+  qui:
+    image: ghcr.io/autobrr/qui:latest
+    container_name: qui
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 7476
+        published: "7476"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/qui/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "7476"
+          description:
+            en_US: Port 7476/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.qui
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: qui
+  author: MrStore
+  developer: autobrr
+  category: Networking
+  icon: https://seedit4.me/assets/img/icons/software/qui.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/qui.png
+  title:
+    en_US: "qui"
+  tagline:
+    en_US: "qui (seedit4.me catalog)"
+  description:
+    en_US: "qui — origem: seedit4.me catalog. Imagem: ghcr.io/autobrr/qui:latest. Verifica portas/variáveis na documentação do projeto."
+  port_map: "7476"
+  index: /

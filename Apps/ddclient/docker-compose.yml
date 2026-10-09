@@ -1,0 +1,45 @@
+name: ddclient
+services:
+  ddclient:
+    image: lscr.io/linuxserver/ddclient:latest
+    container_name: ddclient
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ddclient/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.ddclient
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: ddclient
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ddclient.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ddclient.png
+  title:
+    en_US: "ddclient"
+  tagline:
+    en_US: "ddclient (LinuxServer.io)"
+  description:
+    en_US: "ddclient — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ddclient:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ddclient/"
+  port_map: "0"
+  index: /

@@ -1,0 +1,63 @@
+name: series-troxide
+services:
+  series-troxide:
+    image: lscr.io/linuxserver/series-troxide:latest
+    container_name: series-troxide
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Series Troxide"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21136"
+        protocol: tcp
+      - target: 3001
+        published: "21137"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/series-troxide/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.series-troxide
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: series-troxide
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/series-troxide.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/series-troxide.png
+  title:
+    en_US: "Series Troxide"
+  tagline:
+    en_US: "Series Troxide (LinuxServer.io)"
+  description:
+    en_US: "Series Troxide — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/series-troxide:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-series-troxide/"
+  port_map: "21136"
+  index: /

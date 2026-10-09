@@ -1,0 +1,63 @@
+name: blade-of-agony
+services:
+  blade-of-agony:
+    image: lscr.io/linuxserver/blade-of-agony:latest
+    container_name: blade-of-agony
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Blade of Agony"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21182"
+        protocol: tcp
+      - target: 3001
+        published: "21183"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/blade-of-agony/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.blade-of-agony
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: blade-of-agony
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/blade-of-agony.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/blade-of-agony.png
+  title:
+    en_US: "Blade of Agony"
+  tagline:
+    en_US: "Blade of Agony (LinuxServer.io)"
+  description:
+    en_US: "Blade of Agony — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/blade-of-agony:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-blade-of-agony/"
+  port_map: "21182"
+  index: /

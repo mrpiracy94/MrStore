@@ -1,0 +1,53 @@
+name: pydio-cells
+services:
+  pydio-cells:
+    image: lscr.io/linuxserver/pydio-cells:latest
+    container_name: pydio-cells
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8080
+        published: "20022"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/pydio-cells/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.pydio-cells
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: pydio-cells
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pydio-cells.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pydio-cells.png
+  title:
+    en_US: "Pydio Cells"
+  tagline:
+    en_US: "Pydio Cells (LinuxServer.io)"
+  description:
+    en_US: "Pydio Cells — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/pydio-cells:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-pydio-cells/"
+  port_map: "20022"
+  index: /

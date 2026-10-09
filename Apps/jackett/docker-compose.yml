@@ -1,0 +1,59 @@
+name: jackett
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 9117
+        published: "9117"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/jackett/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "9117"
+          description:
+            en_US: Port 9117/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.jackett
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: jackett
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jackett.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jackett.png
+  title:
+    en_US: "Jackett"
+  tagline:
+    en_US: "Jackett (LinuxServer.io)"
+  description:
+    en_US: "Jackett — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/jackett:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-jackett/"
+  port_map: "9117"
+  index: /

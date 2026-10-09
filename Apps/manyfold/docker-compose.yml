@@ -1,0 +1,53 @@
+name: manyfold
+services:
+  manyfold:
+    image: lscr.io/linuxserver/manyfold:latest
+    container_name: manyfold
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3214
+        published: "3214"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/manyfold/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3214"
+          description:
+            en_US: Port 3214/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.manyfold
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: manyfold
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/manyfold.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/manyfold.png
+  title:
+    en_US: "Manyfold"
+  tagline:
+    en_US: "Manyfold (LinuxServer.io)"
+  description:
+    en_US: "Manyfold — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/manyfold:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-manyfold/"
+  port_map: "3214"
+  index: /

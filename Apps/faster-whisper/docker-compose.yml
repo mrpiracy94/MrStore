@@ -1,0 +1,55 @@
+name: faster-whisper
+services:
+  faster-whisper:
+    image: lscr.io/linuxserver/faster-whisper:latest
+    container_name: faster-whisper
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "WHISPER_MODEL=tiny-int8"
+      - "WHISPER_LANG=en"
+    ports:
+      - target: 10300
+        published: "10300"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/faster-whisper/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "10300"
+          description:
+            en_US: Port 10300/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.faster-whisper
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: faster-whisper
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/faster-whisper.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/faster-whisper.png
+  title:
+    en_US: "Faster Whisper"
+  tagline:
+    en_US: "Faster Whisper (LinuxServer.io)"
+  description:
+    en_US: "Faster Whisper — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/faster-whisper:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-faster-whisper/"
+  port_map: "10300"
+  index: /

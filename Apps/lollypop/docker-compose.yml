@@ -1,0 +1,63 @@
+name: lollypop
+services:
+  lollypop:
+    image: lscr.io/linuxserver/lollypop:latest
+    container_name: lollypop
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Lollypop"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21092"
+        protocol: tcp
+      - target: 3001
+        published: "21093"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lollypop/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.lollypop
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: lollypop
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lollypop.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lollypop.png
+  title:
+    en_US: "Lollypop"
+  tagline:
+    en_US: "Lollypop (LinuxServer.io)"
+  description:
+    en_US: "Lollypop — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/lollypop:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-lollypop/"
+  port_map: "21092"
+  index: /

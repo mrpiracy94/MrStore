@@ -1,0 +1,48 @@
+name: recyclarr
+services:
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:latest
+    container_name: recyclarr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+      - "CRON_SCHEDULE=@daily"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/recyclarr
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+        - container: CRON_SCHEDULE
+          description:
+            en_US: CRON_SCHEDULE
+      ports: []
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.recyclarr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: recyclarr
+  author: MrStore
+  developer: Recyclarr
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/recyclarr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/recyclarr.png
+  title:
+    en_US: "Recyclarr"
+  tagline:
+    en_US: "Sincroniza perfis TRaSH com Sonarr/Radarr (sem UI)"
+  description:
+    en_US: "Sincroniza perfis TRaSH com Sonarr/Radarr (sem UI). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "0"
+  index: /

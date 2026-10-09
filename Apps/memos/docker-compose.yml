@@ -1,0 +1,46 @@
+name: memos
+services:
+  memos:
+    image: neosmemo/memos:stable
+    container_name: memos
+    restart: unless-stopped
+    ports:
+      - target: 5230
+        published: "5230"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/memos
+        target: /var/opt/memos
+    x-casaos:
+      envs: []
+      ports:
+        - container: "5230"
+          description:
+            en_US: Port 5230/tcp
+      volumes:
+        - container: /var/opt/memos
+          description:
+            en_US: /var/opt/memos
+
+x-casaos:
+  id: io.github.mrpiracy94.memos
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: memos
+  author: MrStore
+  developer: Memos
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/memos.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/memos.png
+  title:
+    en_US: "Memos"
+  tagline:
+    en_US: "Notas rápidas"
+  description:
+    en_US: "Notas rápidas. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "5230"
+  index: /

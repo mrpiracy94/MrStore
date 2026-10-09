@@ -1,0 +1,38 @@
+name: cloudflared
+services:
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: ["tunnel", "--no-autoupdate", "run"]
+    environment:
+      - "TUNNEL_TOKEN=CHANGE_ME"
+    x-casaos:
+      envs:
+        - container: TUNNEL_TOKEN
+          description:
+            en_US: TUNNEL_TOKEN
+      ports: []
+      volumes: []
+
+x-casaos:
+  id: io.github.mrpiracy94.cloudflared
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: cloudflared
+  author: MrStore
+  developer: Cloudflared
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cloudflared.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cloudflared.png
+  title:
+    en_US: "Cloudflared"
+  tagline:
+    en_US: "Túnel Cloudflare (sem UI)"
+  description:
+    en_US: "Túnel Cloudflare (sem UI). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "0"
+  index: /

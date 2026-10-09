@@ -1,0 +1,74 @@
+name: unifi-network-application
+services:
+  unifi-network-application:
+    image: lscr.io/linuxserver/unifi-network-application:latest
+    container_name: unifi-network-application
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "MONGO_HOST=mongo"
+      - "MONGO_PORT=27017"
+      - "MONGO_DBNAME=unifi"
+    ports:
+      - target: 8443
+        published: "8443"
+        protocol: tcp
+      - target: 8080
+        published: "20015"
+        protocol: tcp
+      - target: 3478
+        published: "3478"
+        protocol: udp
+      - target: 10001
+        published: "10001"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/unifi-network-application/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8443"
+          description:
+            en_US: Port 8443/tcp
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+        - container: "3478"
+          description:
+            en_US: Port 3478/udp
+        - container: "10001"
+          description:
+            en_US: Port 10001/udp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.unifi-network-application
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: unifi-network-application
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/unifi-network-application.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/unifi-network-application.png
+  title:
+    en_US: "UniFi Network Application"
+  tagline:
+    en_US: "UniFi Network Application (LinuxServer.io)"
+  description:
+    en_US: "UniFi Network Application — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/unifi-network-application:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-unifi-network-application/"
+  port_map: "8443"
+  index: /

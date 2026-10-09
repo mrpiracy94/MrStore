@@ -1,0 +1,51 @@
+name: open-webui
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: unless-stopped
+    environment:
+      - "OLLAMA_BASE_URL=http://host.docker.internal:11434"
+    ports:
+      - target: 8080
+        published: "30016"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/open-webui
+        target: /app/backend/data
+    x-casaos:
+      envs:
+        - container: OLLAMA_BASE_URL
+          description:
+            en_US: OLLAMA_BASE_URL
+      ports:
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+      volumes:
+        - container: /app/backend/data
+          description:
+            en_US: /app/backend/data
+
+x-casaos:
+  id: io.github.mrpiracy94.open-webui
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: open-webui
+  author: MrStore
+  developer: Open WebUI
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/open-webui.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/open-webui.png
+  title:
+    en_US: "Open WebUI"
+  tagline:
+    en_US: "Interface web para Ollama/LLMs"
+  description:
+    en_US: "Interface web para Ollama/LLMs. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30016"
+  index: /

@@ -1,0 +1,60 @@
+name: code-server
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "DEFAULT_WORKSPACE=/workspace"
+    ports:
+      - target: 8443
+        published: "20045"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/code-server/config
+        target: /config
+      - type: bind
+        source: /DATA/Workspace
+        target: /workspace
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8443"
+          description:
+            en_US: Port 8443/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /workspace
+          description:
+            en_US: /workspace
+
+x-casaos:
+  id: io.github.mrpiracy94.code-server
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: code-server
+  author: MrStore
+  developer: LinuxServer.io
+  category: Developer
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/code-server.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/code-server.png
+  title:
+    en_US: "code-server"
+  tagline:
+    en_US: "code-server (LinuxServer.io)"
+  description:
+    en_US: "code-server — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/code-server:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-code-server/"
+  port_map: "20045"
+  index: /

@@ -1,0 +1,53 @@
+name: raneto
+services:
+  raneto:
+    image: lscr.io/linuxserver/raneto:latest
+    container_name: raneto
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "20030"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/raneto/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.raneto
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: raneto
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/raneto.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/raneto.png
+  title:
+    en_US: "Raneto"
+  tagline:
+    en_US: "Raneto (LinuxServer.io)"
+  description:
+    en_US: "Raneto — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/raneto:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-raneto/"
+  port_map: "20030"
+  index: /

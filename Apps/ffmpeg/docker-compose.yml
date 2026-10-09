@@ -1,0 +1,51 @@
+name: ffmpeg
+services:
+  ffmpeg:
+    image: lscr.io/linuxserver/ffmpeg:latest
+    container_name: ffmpeg
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ffmpeg/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.ffmpeg
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: ffmpeg
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ffmpeg.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ffmpeg.png
+  title:
+    en_US: "FFmpeg"
+  tagline:
+    en_US: "FFmpeg (LinuxServer.io)"
+  description:
+    en_US: "FFmpeg — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ffmpeg:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ffmpeg/"
+  port_map: "0"
+  index: /

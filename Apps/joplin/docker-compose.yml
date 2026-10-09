@@ -1,0 +1,56 @@
+name: joplin
+services:
+  joplin:
+    image: lscr.io/linuxserver/joplin:latest
+    container_name: joplin
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "APP_PORT=22300"
+      - "APP_BASE_URL=http://zimaos.local:22300"
+      - "DB_CLIENT=sqlite3"
+    ports:
+      - target: 22300
+        published: "22300"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/joplin/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "22300"
+          description:
+            en_US: Port 22300/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.joplin
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: joplin
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/joplin.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/joplin.png
+  title:
+    en_US: "Joplin Server"
+  tagline:
+    en_US: "Joplin Server (LinuxServer.io)"
+  description:
+    en_US: "Joplin Server — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/joplin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-joplin/"
+  port_map: "22300"
+  index: /

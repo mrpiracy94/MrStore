@@ -1,0 +1,67 @@
+name: gluetun
+services:
+  gluetun:
+    image: qmcgaw/gluetun:latest
+    container_name: gluetun
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - "VPN_SERVICE_PROVIDER=CHANGE_ME"
+      - "VPN_TYPE=wireguard"
+      - "WIREGUARD_PRIVATE_KEY=CHANGE_ME"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8888
+        published: "30019"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/gluetun
+        target: /gluetun
+    x-casaos:
+      envs:
+        - container: VPN_SERVICE_PROVIDER
+          description:
+            en_US: VPN_SERVICE_PROVIDER
+        - container: VPN_TYPE
+          description:
+            en_US: VPN_TYPE
+        - container: WIREGUARD_PRIVATE_KEY
+          description:
+            en_US: WIREGUARD_PRIVATE_KEY
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "8888"
+          description:
+            en_US: Port 8888/tcp
+      volumes:
+        - container: /gluetun
+          description:
+            en_US: /gluetun
+
+x-casaos:
+  id: io.github.mrpiracy94.gluetun
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: gluetun
+  author: MrStore
+  developer: Gluetun
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/gluetun.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/gluetun.png
+  title:
+    en_US: "Gluetun"
+  tagline:
+    en_US: "Cliente VPN para outros contentores"
+  description:
+    en_US: "Cliente VPN para outros contentores. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "0"
+  index: /

@@ -1,0 +1,57 @@
+name: rsnapshot
+services:
+  rsnapshot:
+    image: lscr.io/linuxserver/rsnapshot:latest
+    container_name: rsnapshot
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/rsnapshot/config
+        target: /config
+      - type: bind
+        source: /DATA/Backups/snapshots
+        target: /snapshots
+      - type: bind
+        source: /DATA
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /snapshots
+          description:
+            en_US: /snapshots
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.rsnapshot
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: rsnapshot
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/rsnapshot.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/rsnapshot.png
+  title:
+    en_US: "rsnapshot"
+  tagline:
+    en_US: "rsnapshot (LinuxServer.io)"
+  description:
+    en_US: "rsnapshot — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/rsnapshot:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-rsnapshot/"
+  port_map: "0"
+  index: /

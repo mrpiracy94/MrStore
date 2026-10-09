@@ -1,0 +1,59 @@
+name: piwigo
+services:
+  piwigo:
+    image: lscr.io/linuxserver/piwigo:latest
+    container_name: piwigo
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20025"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/piwigo/config
+        target: /config
+      - type: bind
+        source: /DATA/Gallery
+        target: /gallery
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /gallery
+          description:
+            en_US: /gallery
+
+x-casaos:
+  id: io.github.mrpiracy94.piwigo
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: piwigo
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/piwigo.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/piwigo.png
+  title:
+    en_US: "Piwigo"
+  tagline:
+    en_US: "Piwigo (LinuxServer.io)"
+  description:
+    en_US: "Piwigo — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/piwigo:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-piwigo/"
+  port_map: "20025"
+  index: /

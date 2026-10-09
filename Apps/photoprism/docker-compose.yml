@@ -1,0 +1,61 @@
+name: photoprism
+services:
+  photoprism:
+    image: photoprism/photoprism:latest
+    container_name: photoprism
+    restart: unless-stopped
+    environment:
+      - "PHOTOPRISM_ADMIN_PASSWORD=CHANGE_ME"
+      - "PHOTOPRISM_SITE_URL=http://zimaos.local:2342/"
+    ports:
+      - target: 2342
+        published: "2342"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/photoprism/storage
+        target: /photoprism/storage
+      - type: bind
+        source: /DATA/Gallery/originals
+        target: /photoprism/originals
+    x-casaos:
+      envs:
+        - container: PHOTOPRISM_ADMIN_PASSWORD
+          description:
+            en_US: PHOTOPRISM_ADMIN_PASSWORD
+        - container: PHOTOPRISM_SITE_URL
+          description:
+            en_US: PHOTOPRISM_SITE_URL
+      ports:
+        - container: "2342"
+          description:
+            en_US: Port 2342/tcp
+      volumes:
+        - container: /photoprism/storage
+          description:
+            en_US: /photoprism/storage
+        - container: /photoprism/originals
+          description:
+            en_US: /photoprism/originals
+
+x-casaos:
+  id: io.github.mrpiracy94.photoprism
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: photoprism
+  author: MrStore
+  developer: PhotoPrism
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/photoprism.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/photoprism.png
+  title:
+    en_US: "PhotoPrism"
+  tagline:
+    en_US: "Fotos com IA"
+  description:
+    en_US: "Fotos com IA. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "2342"
+  index: /

@@ -1,0 +1,53 @@
+name: pwndrop
+services:
+  pwndrop:
+    image: lscr.io/linuxserver/pwndrop:latest
+    container_name: pwndrop
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8080
+        published: "20059"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/pwndrop/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.pwndrop
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: pwndrop
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pwndrop.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pwndrop.png
+  title:
+    en_US: "pwndrop"
+  tagline:
+    en_US: "pwndrop (LinuxServer.io)"
+  description:
+    en_US: "pwndrop — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/pwndrop:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-pwndrop/"
+  port_map: "20059"
+  index: /

@@ -1,0 +1,57 @@
+name: jdownloader
+services:
+  jdownloader:
+    image: jlesage/jdownloader-2:latest
+    container_name: jdownloader
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5800
+        published: "5800"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/jdownloader/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /output
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "5800"
+          description:
+            en_US: Port 5800/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /output
+          description:
+            en_US: /output
+
+x-casaos:
+  id: io.github.mrpiracy94.jdownloader
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: jdownloader
+  author: MrStore
+  developer: jlesage
+  category: Networking
+  icon: https://seedit4.me/assets/img/icons/software/jdownloader.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/jdownloader.png
+  title:
+    en_US: "JDownloader 2"
+  tagline:
+    en_US: "JDownloader 2 (seedit4.me catalog)"
+  description:
+    en_US: "JDownloader 2 — origem: seedit4.me catalog. Imagem: jlesage/jdownloader-2:latest. Verifica portas/variáveis na documentação do projeto."
+  port_map: "5800"
+  index: /

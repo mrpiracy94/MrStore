@@ -1,0 +1,126 @@
+name: plex
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "VERSION=docker"
+    ports:
+      - target: 32400
+        published: "32400"
+        protocol: tcp
+      - target: 1900
+        published: "1900"
+        protocol: udp
+      - target: 3005
+        published: "3005"
+        protocol: tcp
+      - target: 5353
+        published: "5353"
+        protocol: udp
+      - target: 8324
+        published: "8324"
+        protocol: tcp
+      - target: 32410
+        published: "32410"
+        protocol: udp
+      - target: 32412
+        published: "32412"
+        protocol: udp
+      - target: 32413
+        published: "32413"
+        protocol: udp
+      - target: 32414
+        published: "32414"
+        protocol: udp
+      - target: 32469
+        published: "32469"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/plex/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /tv
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /movies
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "32400"
+          description:
+            en_US: Port 32400/tcp
+        - container: "1900"
+          description:
+            en_US: Port 1900/udp
+        - container: "3005"
+          description:
+            en_US: Port 3005/tcp
+        - container: "5353"
+          description:
+            en_US: Port 5353/udp
+        - container: "8324"
+          description:
+            en_US: Port 8324/tcp
+        - container: "32410"
+          description:
+            en_US: Port 32410/udp
+        - container: "32412"
+          description:
+            en_US: Port 32412/udp
+        - container: "32413"
+          description:
+            en_US: Port 32413/udp
+        - container: "32414"
+          description:
+            en_US: Port 32414/udp
+        - container: "32469"
+          description:
+            en_US: Port 32469/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /tv
+          description:
+            en_US: /tv
+        - container: /movies
+          description:
+            en_US: /movies
+        - container: /music
+          description:
+            en_US: /music
+
+x-casaos:
+  id: io.github.mrpiracy94.plex
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: plex
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/plex.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/plex.png
+  title:
+    en_US: "Plex"
+  tagline:
+    en_US: "Plex (LinuxServer.io)"
+  description:
+    en_US: "Plex — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/plex:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-plex/"
+  port_map: "32400"
+  index: /

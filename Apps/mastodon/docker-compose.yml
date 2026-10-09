@@ -1,0 +1,53 @@
+name: mastodon
+services:
+  mastodon:
+    image: lscr.io/linuxserver/mastodon:latest
+    container_name: mastodon
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "20050"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mastodon/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.mastodon
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: mastodon
+  author: MrStore
+  developer: LinuxServer.io
+  category: Social
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mastodon.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mastodon.png
+  title:
+    en_US: "Mastodon"
+  tagline:
+    en_US: "Mastodon (LinuxServer.io)"
+  description:
+    en_US: "Mastodon — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/mastodon:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-mastodon/"
+  port_map: "20050"
+  index: /

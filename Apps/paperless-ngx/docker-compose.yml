@@ -1,0 +1,106 @@
+name: paperless-ngx
+services:
+  paperless-ngx:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    container_name: paperless-ngx
+    restart: unless-stopped
+    depends_on:
+      - paperless-broker
+    environment:
+      - "PAPERLESS_REDIS=redis://paperless-broker:6379"
+      - "PAPERLESS_SECRET_KEY=CHANGE_ME"
+      - "PAPERLESS_TIME_ZONE=Europe/Lisbon"
+      - "PAPERLESS_OCR_LANGUAGE=por+eng"
+      - "USERMAP_UID=1000"
+      - "USERMAP_GID=1000"
+    ports:
+      - target: 8000
+        published: "30020"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/paperless/data
+        target: /usr/src/paperless/data
+      - type: bind
+        source: /DATA/AppData/paperless/media
+        target: /usr/src/paperless/media
+      - type: bind
+        source: /DATA/AppData/paperless/export
+        target: /usr/src/paperless/export
+      - type: bind
+        source: /DATA/Documents/consume
+        target: /usr/src/paperless/consume
+    x-casaos:
+      envs:
+        - container: PAPERLESS_REDIS
+          description:
+            en_US: PAPERLESS_REDIS
+        - container: PAPERLESS_SECRET_KEY
+          description:
+            en_US: PAPERLESS_SECRET_KEY
+        - container: PAPERLESS_TIME_ZONE
+          description:
+            en_US: PAPERLESS_TIME_ZONE
+        - container: PAPERLESS_OCR_LANGUAGE
+          description:
+            en_US: PAPERLESS_OCR_LANGUAGE
+        - container: USERMAP_UID
+          description:
+            en_US: USERMAP_UID
+        - container: USERMAP_GID
+          description:
+            en_US: USERMAP_GID
+      ports:
+        - container: "8000"
+          description:
+            en_US: Port 8000/tcp
+      volumes:
+        - container: /usr/src/paperless/data
+          description:
+            en_US: /usr/src/paperless/data
+        - container: /usr/src/paperless/media
+          description:
+            en_US: /usr/src/paperless/media
+        - container: /usr/src/paperless/export
+          description:
+            en_US: /usr/src/paperless/export
+        - container: /usr/src/paperless/consume
+          description:
+            en_US: /usr/src/paperless/consume
+  paperless-broker:
+    image: docker.io/library/redis:7
+    container_name: paperless-broker
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: /DATA/AppData/paperless/redis
+        target: /data
+    x-casaos:
+      envs: []
+      ports: []
+      volumes:
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.paperless-ngx
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: paperless-ngx
+  author: MrStore
+  developer: Paperless-ngx
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/paperless-ngx.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/paperless-ngx.png
+  title:
+    en_US: "Paperless-ngx"
+  tagline:
+    en_US: "Arquivo de documentos com OCR"
+  description:
+    en_US: "Arquivo de documentos com OCR. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. O LinuxServer.io deixou de manter paperless-ngx; esta é a imagem oficial do projeto."
+  port_map: "30020"
+  index: /

@@ -1,0 +1,51 @@
+name: wizarr
+services:
+  wizarr:
+    image: ghcr.io/wizarrrr/wizarr:latest
+    container_name: wizarr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5690
+        published: "5690"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/wizarr
+        target: /data/database
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "5690"
+          description:
+            en_US: Port 5690/tcp
+      volumes:
+        - container: /data/database
+          description:
+            en_US: /data/database
+
+x-casaos:
+  id: io.github.mrpiracy94.wizarr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: wizarr
+  author: MrStore
+  developer: Wizarr
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/wizarr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/wizarr.png
+  title:
+    en_US: "Wizarr"
+  tagline:
+    en_US: "Convites para Plex/Jellyfin/Emby"
+  description:
+    en_US: "Convites para Plex/Jellyfin/Emby. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "5690"
+  index: /

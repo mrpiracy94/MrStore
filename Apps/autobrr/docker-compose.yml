@@ -1,0 +1,51 @@
+name: autobrr
+services:
+  autobrr:
+    image: ghcr.io/autobrr/autobrr:latest
+    container_name: autobrr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 7474
+        published: "7474"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/autobrr/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "7474"
+          description:
+            en_US: Port 7474/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.autobrr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: autobrr
+  author: MrStore
+  developer: autobrr
+  category: Networking
+  icon: https://seedit4.me/assets/img/icons/software/autobrr.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/autobrr.png
+  title:
+    en_US: "Autobrr"
+  tagline:
+    en_US: "Autobrr (seedit4.me catalog)"
+  description:
+    en_US: "Autobrr — origem: seedit4.me catalog. Imagem: ghcr.io/autobrr/autobrr:latest. Verifica portas/variáveis na documentação do projeto."
+  port_map: "7474"
+  index: /

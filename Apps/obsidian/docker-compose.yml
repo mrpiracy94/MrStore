@@ -1,0 +1,63 @@
+name: obsidian
+services:
+  obsidian:
+    image: lscr.io/linuxserver/obsidian:latest
+    container_name: obsidian
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Obsidian"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21106"
+        protocol: tcp
+      - target: 3001
+        published: "21107"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/obsidian/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.obsidian
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: obsidian
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/obsidian.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/obsidian.png
+  title:
+    en_US: "Obsidian"
+  tagline:
+    en_US: "Obsidian (LinuxServer.io)"
+  description:
+    en_US: "Obsidian — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/obsidian:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-obsidian/"
+  port_map: "21106"
+  index: /

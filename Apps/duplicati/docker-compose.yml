@@ -1,0 +1,65 @@
+name: duplicati
+services:
+  duplicati:
+    image: lscr.io/linuxserver/duplicati:latest
+    container_name: duplicati
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8200
+        published: "8200"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/duplicati/config
+        target: /config
+      - type: bind
+        source: /DATA/Backups
+        target: /backups
+      - type: bind
+        source: /DATA
+        target: /source
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8200"
+          description:
+            en_US: Port 8200/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /backups
+          description:
+            en_US: /backups
+        - container: /source
+          description:
+            en_US: /source
+
+x-casaos:
+  id: io.github.mrpiracy94.duplicati
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: duplicati
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/duplicati.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/duplicati.png
+  title:
+    en_US: "Duplicati"
+  tagline:
+    en_US: "Duplicati (LinuxServer.io)"
+  description:
+    en_US: "Duplicati — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/duplicati:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-duplicati/"
+  port_map: "8200"
+  index: /

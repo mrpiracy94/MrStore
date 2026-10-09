@@ -1,0 +1,59 @@
+name: projectsend
+services:
+  projectsend:
+    image: lscr.io/linuxserver/projectsend:latest
+    container_name: projectsend
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20021"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/projectsend/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/projectsend/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.projectsend
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: projectsend
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/projectsend.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/projectsend.png
+  title:
+    en_US: "ProjectSend"
+  tagline:
+    en_US: "ProjectSend (LinuxServer.io)"
+  description:
+    en_US: "ProjectSend — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/projectsend:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-projectsend/"
+  port_map: "20021"
+  index: /

@@ -1,0 +1,81 @@
+name: netdata
+services:
+  netdata:
+    image: netdata/netdata:stable
+    container_name: netdata
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    ports:
+      - target: 19999
+        published: "19999"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/netdata/config
+        target: /etc/netdata
+      - type: bind
+        source: /DATA/AppData/netdata/lib
+        target: /var/lib/netdata
+      - type: bind
+        source: /DATA/AppData/netdata/cache
+        target: /var/cache/netdata
+      - type: bind
+        source: /proc
+        target: /host/proc
+        read_only: true
+      - type: bind
+        source: /sys
+        target: /host/sys
+        read_only: true
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+    x-casaos:
+      envs: []
+      ports:
+        - container: "19999"
+          description:
+            en_US: Port 19999/tcp
+      volumes:
+        - container: /etc/netdata
+          description:
+            en_US: /etc/netdata
+        - container: /var/lib/netdata
+          description:
+            en_US: /var/lib/netdata
+        - container: /var/cache/netdata
+          description:
+            en_US: /var/cache/netdata
+        - container: /host/proc
+          description:
+            en_US: /host/proc
+        - container: /host/sys
+          description:
+            en_US: /host/sys
+        - container: /var/run/docker.sock
+          description:
+            en_US: /var/run/docker.sock
+
+x-casaos:
+  id: io.github.mrpiracy94.netdata
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: netdata
+  author: MrStore
+  developer: Netdata
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/netdata.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/netdata.png
+  title:
+    en_US: "Netdata"
+  tagline:
+    en_US: "Monitorização em tempo real"
+  description:
+    en_US: "Monitorização em tempo real. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "19999"
+  index: /

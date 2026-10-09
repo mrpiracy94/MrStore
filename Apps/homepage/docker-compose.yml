@@ -1,0 +1,70 @@
+name: homepage
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: unless-stopped
+    environment:
+      - "HOMEPAGE_ALLOWED_HOSTS=*"
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "30007"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/homepage
+        target: /app/config
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+    x-casaos:
+      envs:
+        - container: HOMEPAGE_ALLOWED_HOSTS
+          description:
+            en_US: HOMEPAGE_ALLOWED_HOSTS
+        - container: PUID
+          description:
+            en_US: PUID
+        - container: PGID
+          description:
+            en_US: PGID
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+      volumes:
+        - container: /app/config
+          description:
+            en_US: /app/config
+        - container: /var/run/docker.sock
+          description:
+            en_US: /var/run/docker.sock
+
+x-casaos:
+  id: io.github.mrpiracy94.homepage
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: homepage
+  author: MrStore
+  developer: Homepage
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homepage.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homepage.png
+  title:
+    en_US: "Homepage"
+  tagline:
+    en_US: "Dashboard configurável"
+  description:
+    en_US: "Dashboard configurável. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30007"
+  index: /

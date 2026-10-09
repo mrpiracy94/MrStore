@@ -1,0 +1,53 @@
+name: luanti
+services:
+  luanti:
+    image: lscr.io/linuxserver/luanti:latest
+    container_name: luanti
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 30000
+        published: "30000"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/luanti/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "30000"
+          description:
+            en_US: Port 30000/udp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.luanti
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: luanti
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/luanti.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/luanti.png
+  title:
+    en_US: "Luanti"
+  tagline:
+    en_US: "Luanti (LinuxServer.io)"
+  description:
+    en_US: "Luanti — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/luanti:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-luanti/"
+  port_map: "0"
+  index: /

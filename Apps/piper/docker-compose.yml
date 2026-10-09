@@ -1,0 +1,54 @@
+name: piper
+services:
+  piper:
+    image: lscr.io/linuxserver/piper:latest
+    container_name: piper
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "PIPER_VOICE=en_US-lessac-medium"
+    ports:
+      - target: 10200
+        published: "10200"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/piper/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "10200"
+          description:
+            en_US: Port 10200/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.piper
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: piper
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/piper.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/piper.png
+  title:
+    en_US: "Piper"
+  tagline:
+    en_US: "Piper (LinuxServer.io)"
+  description:
+    en_US: "Piper — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/piper:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-piper/"
+  port_map: "10200"
+  index: /

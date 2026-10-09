@@ -1,0 +1,51 @@
+name: notifiarr
+services:
+  notifiarr:
+    image: golift/notifiarr:latest
+    container_name: notifiarr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5454
+        published: "5454"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/notifiarr
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "5454"
+          description:
+            en_US: Port 5454/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.notifiarr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: notifiarr
+  author: MrStore
+  developer: Notifiarr
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/notifiarr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/notifiarr.png
+  title:
+    en_US: "Notifiarr"
+  tagline:
+    en_US: "Cliente Notifiarr"
+  description:
+    en_US: "Cliente Notifiarr. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "5454"
+  index: /

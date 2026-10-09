@@ -1,0 +1,65 @@
+name: bazarr
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6767
+        published: "6767"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/bazarr/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /tv
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /movies
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "6767"
+          description:
+            en_US: Port 6767/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /tv
+          description:
+            en_US: /tv
+        - container: /movies
+          description:
+            en_US: /movies
+
+x-casaos:
+  id: io.github.mrpiracy94.bazarr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: bazarr
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/bazarr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/bazarr.png
+  title:
+    en_US: "Bazarr"
+  tagline:
+    en_US: "Bazarr (LinuxServer.io)"
+  description:
+    en_US: "Bazarr — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/bazarr:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-bazarr/"
+  port_map: "6767"
+  index: /

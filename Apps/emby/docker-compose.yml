@@ -1,0 +1,71 @@
+name: emby
+services:
+  emby:
+    image: lscr.io/linuxserver/emby:latest
+    container_name: emby
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8096
+        published: "20003"
+        protocol: tcp
+      - target: 8920
+        published: "20004"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/emby/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /data/tvshows
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /data/movies
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8096"
+          description:
+            en_US: Port 8096/tcp
+        - container: "8920"
+          description:
+            en_US: Port 8920/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /data/tvshows
+          description:
+            en_US: /data/tvshows
+        - container: /data/movies
+          description:
+            en_US: /data/movies
+
+x-casaos:
+  id: io.github.mrpiracy94.emby
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: emby
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/emby.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/emby.png
+  title:
+    en_US: "Emby"
+  tagline:
+    en_US: "Emby (LinuxServer.io)"
+  description:
+    en_US: "Emby — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/emby:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-emby/"
+  port_map: "20003"
+  index: /

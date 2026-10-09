@@ -1,0 +1,43 @@
+name: unpackerr
+services:
+  unpackerr:
+    image: golift/unpackerr:latest
+    container_name: unpackerr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      volumes:
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.unpackerr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: unpackerr
+  author: MrStore
+  developer: Golift
+  category: Networking
+  icon: https://seedit4.me/assets/img/icons/software/unpackerr.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/unpackerr.png
+  title:
+    en_US: "Unpackerr"
+  tagline:
+    en_US: "Unpackerr (seedit4.me catalog)"
+  description:
+    en_US: "Unpackerr — origem: seedit4.me catalog. Imagem: golift/unpackerr:latest. Verifica portas/variáveis na documentação do projeto."
+  port_map: "0"
+  index: /

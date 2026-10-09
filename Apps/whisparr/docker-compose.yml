@@ -1,0 +1,57 @@
+name: whisparr
+services:
+  whisparr:
+    image: ghcr.io/hotio/whisparr:latest
+    container_name: whisparr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6969
+        published: "6969"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/whisparr/config
+        target: /config
+      - type: bind
+        source: /DATA/Media
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "6969"
+          description:
+            en_US: Port 6969/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.whisparr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: whisparr
+  author: MrStore
+  developer: hotio
+  category: Media
+  icon: https://seedit4.me/assets/img/icons/software/whisparr.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/whisparr.png
+  title:
+    en_US: "Whisparr"
+  tagline:
+    en_US: "Whisparr (seedit4.me catalog)"
+  description:
+    en_US: "Whisparr — origem: seedit4.me catalog. Imagem: ghcr.io/hotio/whisparr:latest. Verifica portas/variáveis na documentação do projeto."
+  port_map: "6969"
+  index: /

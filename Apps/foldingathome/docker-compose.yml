@@ -1,0 +1,53 @@
+name: foldingathome
+services:
+  foldingathome:
+    image: lscr.io/linuxserver/foldingathome:latest
+    container_name: foldingathome
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 7396
+        published: "7396"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/foldingathome/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "7396"
+          description:
+            en_US: Port 7396/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.foldingathome
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: foldingathome
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/foldingathome.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/foldingathome.png
+  title:
+    en_US: "Folding@home"
+  tagline:
+    en_US: "Folding@home (LinuxServer.io)"
+  description:
+    en_US: "Folding@home — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/foldingathome:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-foldingathome/"
+  port_map: "7396"
+  index: /

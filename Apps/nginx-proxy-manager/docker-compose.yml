@@ -1,0 +1,64 @@
+name: nginx-proxy-manager
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - target: 81
+        published: "81"
+        protocol: tcp
+      - target: 80
+        published: "30009"
+        protocol: tcp
+      - target: 443
+        published: "30010"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nginx-proxy-manager/data
+        target: /data
+      - type: bind
+        source: /DATA/AppData/nginx-proxy-manager/letsencrypt
+        target: /etc/letsencrypt
+    x-casaos:
+      envs: []
+      ports:
+        - container: "81"
+          description:
+            en_US: Port 81/tcp
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+        - container: "443"
+          description:
+            en_US: Port 443/tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: /data
+        - container: /etc/letsencrypt
+          description:
+            en_US: /etc/letsencrypt
+
+x-casaos:
+  id: io.github.mrpiracy94.nginx-proxy-manager
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: nginx-proxy-manager
+  author: MrStore
+  developer: Nginx Proxy Manager
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nginx-proxy-manager.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nginx-proxy-manager.png
+  title:
+    en_US: "Nginx Proxy Manager"
+  tagline:
+    en_US: "Proxy reverso com interface web"
+  description:
+    en_US: "Proxy reverso com interface web. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. Porta 80/443 do ZimaOS ocupadas: as portas do host foram remapeadas automaticamente."
+  port_map: "81"
+  index: /

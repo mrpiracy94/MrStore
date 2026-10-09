@@ -1,0 +1,53 @@
+name: freshrss
+services:
+  freshrss:
+    image: lscr.io/linuxserver/freshrss:latest
+    container_name: freshrss
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20032"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/freshrss/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.freshrss
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: freshrss
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/freshrss.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/freshrss.png
+  title:
+    en_US: "FreshRSS"
+  tagline:
+    en_US: "FreshRSS (LinuxServer.io)"
+  description:
+    en_US: "FreshRSS — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/freshrss:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-freshrss/"
+  port_map: "20032"
+  index: /

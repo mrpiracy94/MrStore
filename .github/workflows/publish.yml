@@ -1,0 +1,45 @@
+name: Build and publish ZimaOS v2 store
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Apps/**'
+      - 'store-config.json'
+      - 'supported-languages.json'
+      - 'recommend-list.json'
+      - '.github/workflows/publish.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build official ZimaOS v2 static catalog
+        uses: IceWhaleTech/build-appstore-action@v1
+        with:
+          source: .
+          output: dist
+          base-url: https://mrpiracy94.github.io/MrStore
+          cache-file: .cache/build_appstore/image-size-cache.json
+          digest-cache-file: .cache/build_appstore/image-digest-cache.json
+          report-json: out/build-v2-report.json
+      - name: Disable Jekyll
+        run: touch dist/.nojekyll
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: store-v2-build
+          path: |
+            dist
+            out/build-v2-report.json
+          if-no-files-found: warn
+      - name: Deploy to gh-pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist

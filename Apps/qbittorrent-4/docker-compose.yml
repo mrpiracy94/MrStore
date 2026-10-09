@@ -1,0 +1,72 @@
+name: qbittorrent-4
+services:
+  qbittorrent-4:
+    image: lscr.io/linuxserver/qbittorrent:4.6.7
+    container_name: qbittorrent-4
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "WEBUI_PORT=8080"
+    ports:
+      - target: 8080
+        published: "20069"
+        protocol: tcp
+      - target: 6881
+        published: "20070"
+        protocol: tcp
+      - target: 6881
+        published: "6883"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/qbittorrent-4/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+        - container: "6881"
+          description:
+            en_US: Port 6881/tcp
+        - container: "6881"
+          description:
+            en_US: Port 6881/udp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.qbittorrent-4
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: qbittorrent-4
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://seedit4.me/assets/img/icons/software/qbittorrent.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/qbittorrent.png
+  title:
+    en_US: "qBittorrent 4.x"
+  tagline:
+    en_US: "qBittorrent 4.x (seedit4.me catalog (versão 4))"
+  description:
+    en_US: "qBittorrent 4.x — origem: seedit4.me catalog (versão 4). Imagem: lscr.io/linuxserver/qbittorrent:4.6.7. Verifica portas/variáveis na documentação do projeto."
+  port_map: "20069"
+  index: /

@@ -1,0 +1,59 @@
+name: nzbhydra2
+services:
+  nzbhydra2:
+    image: lscr.io/linuxserver/nzbhydra2:latest
+    container_name: nzbhydra2
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5076
+        published: "5076"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nzbhydra2/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "5076"
+          description:
+            en_US: Port 5076/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.nzbhydra2
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: nzbhydra2
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nzbhydra2.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nzbhydra2.png
+  title:
+    en_US: "NZBHydra2"
+  tagline:
+    en_US: "NZBHydra2 (LinuxServer.io)"
+  description:
+    en_US: "NZBHydra2 — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/nzbhydra2:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-nzbhydra2/"
+  port_map: "5076"
+  index: /

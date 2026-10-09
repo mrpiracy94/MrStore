@@ -1,0 +1,63 @@
+name: blender
+services:
+  blender:
+    image: lscr.io/linuxserver/blender:latest
+    container_name: blender
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Blender"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21022"
+        protocol: tcp
+      - target: 3001
+        published: "21023"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/blender/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.blender
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: blender
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/blender.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/blender.png
+  title:
+    en_US: "Blender"
+  tagline:
+    en_US: "Blender (LinuxServer.io)"
+  description:
+    en_US: "Blender — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/blender:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-blender/"
+  port_map: "21022"
+  index: /

@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "name": "qbittorrent",
+    "title": "qBittorrent"
+  },
+  {
+    "id": 2,
+    "name": "sonarr",
+    "title": "Sonarr"
+  },
+  {
+    "id": 3,
+    "name": "radarr",
+    "title": "Radarr"
+  },
+  {
+    "id": 4,
+    "name": "prowlarr",
+    "title": "Prowlarr"
+  },
+  {
+    "id": 5,
+    "name": "seerr",
+    "title": "Seerr"
+  },
+  {
+    "id": 6,
+    "name": "immich",
+    "title": "Immich"
+  },
+  {
+    "id": 7,
+    "name": "plex",
+    "title": "Plex"
+  },
+  {
+    "id": 8,
+    "name": "jellyfin",
+    "title": "Jellyfin"
+  },
+  {
+    "id": 9,
+    "name": "autobrr",
+    "title": "Autobrr"
+  },
+  {
+    "id": 10,
+    "name": "vaultwarden",
+    "title": "Vaultwarden"
+  }
+]

@@ -1,0 +1,53 @@
+name: tautulli
+services:
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8181
+        published: "8181"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/tautulli/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8181"
+          description:
+            en_US: Port 8181/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.tautulli
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: tautulli
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/tautulli.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/tautulli.png
+  title:
+    en_US: "Tautulli"
+  tagline:
+    en_US: "Tautulli (LinuxServer.io)"
+  description:
+    en_US: "Tautulli — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/tautulli:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-tautulli/"
+  port_map: "8181"
+  index: /

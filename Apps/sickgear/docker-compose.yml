@@ -1,0 +1,65 @@
+name: sickgear
+services:
+  sickgear:
+    image: lscr.io/linuxserver/sickgear:latest
+    container_name: sickgear
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8081
+        published: "20002"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/sickgear/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /tv
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8081"
+          description:
+            en_US: Port 8081/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /tv
+          description:
+            en_US: /tv
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.sickgear
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: sickgear
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/sickgear.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/sickgear.png
+  title:
+    en_US: "SickGear"
+  tagline:
+    en_US: "SickGear (LinuxServer.io)"
+  description:
+    en_US: "SickGear — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/sickgear:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-sickgear/"
+  port_map: "20002"
+  index: /

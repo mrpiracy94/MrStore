@@ -1,0 +1,65 @@
+name: radarr
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 7878
+        published: "7878"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/radarr/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Movies
+        target: /movies
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "7878"
+          description:
+            en_US: Port 7878/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /movies
+          description:
+            en_US: /movies
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.radarr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: radarr
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/radarr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/radarr.png
+  title:
+    en_US: "Radarr"
+  tagline:
+    en_US: "Radarr (LinuxServer.io)"
+  description:
+    en_US: "Radarr — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/radarr:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-radarr/"
+  port_map: "7878"
+  index: /

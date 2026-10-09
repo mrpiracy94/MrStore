@@ -1,0 +1,53 @@
+name: flexget
+services:
+  flexget:
+    image: lscr.io/linuxserver/flexget:latest
+    container_name: flexget
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5050
+        published: "5050"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/flexget/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "5050"
+          description:
+            en_US: Port 5050/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.flexget
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: flexget
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/flexget.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/flexget.png
+  title:
+    en_US: "FlexGet"
+  tagline:
+    en_US: "FlexGet (LinuxServer.io)"
+  description:
+    en_US: "FlexGet — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/flexget:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-flexget/"
+  port_map: "5050"
+  index: /

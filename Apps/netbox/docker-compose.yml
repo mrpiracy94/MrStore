@@ -1,0 +1,63 @@
+name: netbox
+services:
+  netbox:
+    image: lscr.io/linuxserver/netbox:latest
+    container_name: netbox
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "SUPERUSER_EMAIL=admin@example.com"
+      - "SUPERUSER_PASSWORD=CHANGE_ME"
+      - "ALLOWED_HOST=*"
+      - "DB_NAME=netbox"
+      - "DB_USER=netbox"
+      - "DB_PASSWORD=CHANGE_ME"
+      - "DB_HOST=netbox_db"
+      - "DB_PORT=5432"
+      - "REDIS_HOST=netbox_redis"
+      - "REDIS_PORT=6379"
+    ports:
+      - target: 8000
+        published: "20048"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/netbox/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8000"
+          description:
+            en_US: Port 8000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.netbox
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: netbox
+  author: MrStore
+  developer: LinuxServer.io
+  category: Developer
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/netbox.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/netbox.png
+  title:
+    en_US: "NetBox"
+  tagline:
+    en_US: "NetBox (LinuxServer.io)"
+  description:
+    en_US: "NetBox — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/netbox:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-netbox/"
+  port_map: "20048"
+  index: /

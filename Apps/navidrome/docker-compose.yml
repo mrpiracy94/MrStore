@@ -1,0 +1,57 @@
+name: navidrome
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 4533
+        published: "4533"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/navidrome/data
+        target: /data
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "4533"
+          description:
+            en_US: Port 4533/tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: /data
+        - container: /music
+          description:
+            en_US: /music
+
+x-casaos:
+  id: io.github.mrpiracy94.navidrome
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: navidrome
+  author: MrStore
+  developer: Deluan
+  category: Media
+  icon: https://seedit4.me/assets/img/icons/software/navidrome.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/navidrome.png
+  title:
+    en_US: "Navidrome"
+  tagline:
+    en_US: "Navidrome (seedit4.me catalog)"
+  description:
+    en_US: "Navidrome — origem: seedit4.me catalog. Imagem: deluan/navidrome:latest. Verifica portas/variáveis na documentação do projeto."
+  port_map: "4533"
+  index: /

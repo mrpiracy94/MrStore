@@ -1,0 +1,55 @@
+name: your_spotify
+services:
+  your_spotify:
+    image: lscr.io/linuxserver/your_spotify:latest
+    container_name: your_spotify
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "API_ENDPOINT=http://zimaos.local:8080"
+      - "CLIENT_ENDPOINT=http://zimaos.local:8081"
+    ports:
+      - target: 80
+        published: "20056"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/your_spotify/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.your_spotify
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: your_spotify
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/your-spotify.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/your-spotify.png
+  title:
+    en_US: "Your Spotify"
+  tagline:
+    en_US: "Your Spotify (LinuxServer.io)"
+  description:
+    en_US: "Your Spotify — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/your_spotify:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-your_spotify/"
+  port_map: "20056"
+  index: /

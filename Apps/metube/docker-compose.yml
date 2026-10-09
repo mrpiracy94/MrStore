@@ -1,0 +1,55 @@
+name: metube
+services:
+  metube:
+    image: ghcr.io/alexta69/metube:latest
+    container_name: metube
+    restart: unless-stopped
+    environment:
+      - "UID=1000"
+      - "GID=1000"
+    ports:
+      - target: 8081
+        published: "30017"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/Downloads/metube
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: UID
+          description:
+            en_US: UID
+        - container: GID
+          description:
+            en_US: GID
+      ports:
+        - container: "8081"
+          description:
+            en_US: Port 8081/tcp
+      volumes:
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.metube
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: metube
+  author: MrStore
+  developer: MeTube
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/metube.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/metube.png
+  title:
+    en_US: "MeTube"
+  tagline:
+    en_US: "Descarregar vídeos (yt-dlp) com interface web"
+  description:
+    en_US: "Descarregar vídeos (yt-dlp) com interface web. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30017"
+  index: /

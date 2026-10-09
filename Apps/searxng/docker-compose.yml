@@ -1,0 +1,51 @@
+name: searxng
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    restart: unless-stopped
+    environment:
+      - "BASE_URL=http://zimaos.local:8080/"
+    ports:
+      - target: 8080
+        published: "30014"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/searxng
+        target: /etc/searxng
+    x-casaos:
+      envs:
+        - container: BASE_URL
+          description:
+            en_US: BASE_URL
+      ports:
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+      volumes:
+        - container: /etc/searxng
+          description:
+            en_US: /etc/searxng
+
+x-casaos:
+  id: io.github.mrpiracy94.searxng
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: searxng
+  author: MrStore
+  developer: SearXNG
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/searxng.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/searxng.png
+  title:
+    en_US: "SearXNG"
+  tagline:
+    en_US: "Metamotor de pesquisa privado"
+  description:
+    en_US: "Metamotor de pesquisa privado. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30014"
+  index: /

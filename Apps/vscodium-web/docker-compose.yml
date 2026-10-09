@@ -1,0 +1,53 @@
+name: vscodium-web
+services:
+  vscodium-web:
+    image: lscr.io/linuxserver/vscodium-web:latest
+    container_name: vscodium-web
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "20047"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/vscodium-web/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.vscodium-web
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: vscodium-web
+  author: MrStore
+  developer: LinuxServer.io
+  category: Developer
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/vscodium-web.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/vscodium-web.png
+  title:
+    en_US: "VSCodium Web"
+  tagline:
+    en_US: "VSCodium Web (LinuxServer.io)"
+  description:
+    en_US: "VSCodium Web — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/vscodium-web:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-vscodium-web/"
+  port_map: "20047"
+  index: /

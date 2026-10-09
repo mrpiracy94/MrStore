@@ -1,0 +1,51 @@
+name: organizr
+services:
+  organizr:
+    image: organizr/organizr:latest
+    container_name: organizr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20066"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/organizr/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.organizr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: organizr
+  author: MrStore
+  developer: Organizr
+  category: Others
+  icon: https://seedit4.me/assets/img/icons/software/organizr.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/organizr.png
+  title:
+    en_US: "Organizr"
+  tagline:
+    en_US: "Organizr (seedit4.me catalog)"
+  description:
+    en_US: "Organizr — origem: seedit4.me catalog. Imagem: organizr/organizr:latest. Verifica portas/variáveis na documentação do projeto."
+  port_map: "20066"
+  index: /

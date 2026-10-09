@@ -1,0 +1,53 @@
+name: ombi
+services:
+  ombi:
+    image: lscr.io/linuxserver/ombi:latest
+    container_name: ombi
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3579
+        published: "3579"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ombi/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3579"
+          description:
+            en_US: Port 3579/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.ombi
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: ombi
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ombi.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ombi.png
+  title:
+    en_US: "Ombi"
+  tagline:
+    en_US: "Ombi (LinuxServer.io)"
+  description:
+    en_US: "Ombi — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ombi:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ombi/"
+  port_map: "3579"
+  index: /

@@ -1,0 +1,51 @@
+name: node-red
+services:
+  node-red:
+    image: nodered/node-red:latest
+    container_name: node-red
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 1880
+        published: "1880"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/node-red
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "1880"
+          description:
+            en_US: Port 1880/tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.node-red
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: node-red
+  author: MrStore
+  developer: Node-RED
+  category: Home
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/node-red.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/node-red.png
+  title:
+    en_US: "Node-RED"
+  tagline:
+    en_US: "Automação por fluxos"
+  description:
+    en_US: "Automação por fluxos. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "1880"
+  index: /

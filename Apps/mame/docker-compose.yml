@@ -1,0 +1,63 @@
+name: mame
+services:
+  mame:
+    image: lscr.io/linuxserver/mame:latest
+    container_name: mame
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=MAME"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21094"
+        protocol: tcp
+      - target: 3001
+        published: "21095"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mame/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.mame
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: mame
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mame.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mame.png
+  title:
+    en_US: "MAME"
+  tagline:
+    en_US: "MAME (LinuxServer.io)"
+  description:
+    en_US: "MAME — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/mame:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-mame/"
+  port_map: "21094"
+  index: /

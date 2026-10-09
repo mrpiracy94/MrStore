@@ -1,0 +1,53 @@
+name: thelounge
+services:
+  thelounge:
+    image: lscr.io/linuxserver/thelounge:latest
+    container_name: thelounge
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 9000
+        published: "9000"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/thelounge/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "9000"
+          description:
+            en_US: Port 9000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.thelounge
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: thelounge
+  author: MrStore
+  developer: LinuxServer.io
+  category: Social
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/thelounge.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/thelounge.png
+  title:
+    en_US: "The Lounge"
+  tagline:
+    en_US: "The Lounge (LinuxServer.io)"
+  description:
+    en_US: "The Lounge — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/thelounge:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-thelounge/"
+  port_map: "9000"
+  index: /

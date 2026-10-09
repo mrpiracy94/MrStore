@@ -1,0 +1,63 @@
+name: chrome
+services:
+  chrome:
+    image: lscr.io/linuxserver/chrome:latest
+    container_name: chrome
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Chrome"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21032"
+        protocol: tcp
+      - target: 3001
+        published: "21033"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/chrome/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.chrome
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: chrome
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/chrome.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/chrome.png
+  title:
+    en_US: "Chrome"
+  tagline:
+    en_US: "Chrome (LinuxServer.io)"
+  description:
+    en_US: "Chrome — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/chrome:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-chrome/"
+  port_map: "21032"
+  index: /

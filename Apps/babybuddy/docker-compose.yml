@@ -1,0 +1,53 @@
+name: babybuddy
+services:
+  babybuddy:
+    image: lscr.io/linuxserver/babybuddy:latest
+    container_name: babybuddy
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8000
+        published: "20035"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/babybuddy/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8000"
+          description:
+            en_US: Port 8000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.babybuddy
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: babybuddy
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/babybuddy.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/babybuddy.png
+  title:
+    en_US: "Baby Buddy"
+  tagline:
+    en_US: "Baby Buddy (LinuxServer.io)"
+  description:
+    en_US: "Baby Buddy — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/babybuddy:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-babybuddy/"
+  port_map: "20035"
+  index: /

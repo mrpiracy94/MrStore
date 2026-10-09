@@ -1,0 +1,56 @@
+name: kimai
+services:
+  kimai:
+    image: lscr.io/linuxserver/kimai:latest
+    container_name: kimai
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "ADMINMAIL=admin@example.com"
+      - "ADMINPASS=CHANGE_ME"
+      - "DATABASE_URL=sqlite:///var/data/kimai.sqlite"
+    ports:
+      - target: 8001
+        published: "8001"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/kimai/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8001"
+          description:
+            en_US: Port 8001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.kimai
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: kimai
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kimai.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kimai.png
+  title:
+    en_US: "Kimai"
+  tagline:
+    en_US: "Kimai (LinuxServer.io)"
+  description:
+    en_US: "Kimai — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kimai:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kimai/"
+  port_map: "8001"
+  index: /

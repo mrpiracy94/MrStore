@@ -1,0 +1,53 @@
+name: xbackbone
+services:
+  xbackbone:
+    image: lscr.io/linuxserver/xbackbone:latest
+    container_name: xbackbone
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20023"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/xbackbone/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.xbackbone
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: xbackbone
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/xbackbone.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/xbackbone.png
+  title:
+    en_US: "XBackBone"
+  tagline:
+    en_US: "XBackBone (LinuxServer.io)"
+  description:
+    en_US: "XBackBone — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/xbackbone:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-xbackbone/"
+  port_map: "20023"
+  index: /

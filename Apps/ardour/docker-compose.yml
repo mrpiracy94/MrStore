@@ -1,0 +1,63 @@
+name: ardour
+services:
+  ardour:
+    image: lscr.io/linuxserver/ardour:latest
+    container_name: ardour
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Ardour"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21014"
+        protocol: tcp
+      - target: 3001
+        published: "21015"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ardour/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.ardour
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: ardour
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ardour.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ardour.png
+  title:
+    en_US: "Ardour"
+  tagline:
+    en_US: "Ardour (LinuxServer.io)"
+  description:
+    en_US: "Ardour — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ardour:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ardour/"
+  port_map: "21014"
+  index: /

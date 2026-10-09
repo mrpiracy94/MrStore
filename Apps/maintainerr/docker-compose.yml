@@ -1,0 +1,51 @@
+name: maintainerr
+services:
+  maintainerr:
+    image: ghcr.io/maintainerr/maintainerr:latest
+    container_name: maintainerr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6246
+        published: "6246"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/maintainerr
+        target: /opt/data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "6246"
+          description:
+            en_US: Port 6246/tcp
+      volumes:
+        - container: /opt/data
+          description:
+            en_US: /opt/data
+
+x-casaos:
+  id: io.github.mrpiracy94.maintainerr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: maintainerr
+  author: MrStore
+  developer: Maintainerr
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/maintainerr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/maintainerr.png
+  title:
+    en_US: "Maintainerr"
+  tagline:
+    en_US: "Regras automáticas de limpeza para Plex/*arr"
+  description:
+    en_US: "Regras automáticas de limpeza para Plex/*arr. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "6246"
+  index: /

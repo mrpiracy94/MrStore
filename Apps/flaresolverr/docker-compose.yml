@@ -1,0 +1,44 @@
+name: flaresolverr
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+      - "LOG_LEVEL=info"
+    ports:
+      - target: 8191
+        published: "8191"
+        protocol: tcp
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8191"
+          description:
+            en_US: Port 8191/tcp
+
+x-casaos:
+  id: io.github.mrpiracy94.flaresolverr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: flaresolverr
+  author: MrStore
+  developer: FlareSolverr
+  category: Networking
+  icon: https://seedit4.me/assets/img/icons/software/flaresolverr.png
+  thumbnail: https://seedit4.me/assets/img/icons/software/flaresolverr.png
+  title:
+    en_US: "FlareSolverr"
+  tagline:
+    en_US: "FlareSolverr (seedit4.me catalog)"
+  description:
+    en_US: "FlareSolverr — origem: seedit4.me catalog. Imagem: ghcr.io/flaresolverr/flaresolverr:latest. Verifica portas/variáveis na documentação do projeto."
+  port_map: "8191"
+  index: /

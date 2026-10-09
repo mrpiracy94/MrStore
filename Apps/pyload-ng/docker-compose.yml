@@ -1,0 +1,65 @@
+name: pyload-ng
+services:
+  pyload-ng:
+    image: lscr.io/linuxserver/pyload-ng:latest
+    container_name: pyload-ng
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+      - target: 9666
+        published: "9666"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/pyload-ng/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8000"
+          description:
+            en_US: Port 8000/tcp
+        - container: "9666"
+          description:
+            en_US: Port 9666/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.pyload-ng
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: pyload-ng
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pyload-ng.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/pyload-ng.png
+  title:
+    en_US: "pyLoad-ng"
+  tagline:
+    en_US: "pyLoad-ng (LinuxServer.io)"
+  description:
+    en_US: "pyLoad-ng — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/pyload-ng:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-pyload-ng/"
+  port_map: "8000"
+  index: /

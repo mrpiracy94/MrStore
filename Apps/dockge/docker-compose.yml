@@ -1,0 +1,63 @@
+name: dockge
+services:
+  dockge:
+    image: louislam/dockge:1
+    container_name: dockge
+    restart: unless-stopped
+    environment:
+      - "DOCKGE_STACKS_DIR=/DATA/AppData/dockge/stacks"
+    ports:
+      - target: 5001
+        published: "5001"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/dockge/data
+        target: /app/data
+      - type: bind
+        source: /DATA/AppData/dockge/stacks
+        target: /DATA/AppData/dockge/stacks
+    x-casaos:
+      envs:
+        - container: DOCKGE_STACKS_DIR
+          description:
+            en_US: DOCKGE_STACKS_DIR
+      ports:
+        - container: "5001"
+          description:
+            en_US: Port 5001/tcp
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: /var/run/docker.sock
+        - container: /app/data
+          description:
+            en_US: /app/data
+        - container: /DATA/AppData/dockge/stacks
+          description:
+            en_US: /DATA/AppData/dockge/stacks
+
+x-casaos:
+  id: io.github.mrpiracy94.dockge
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: dockge
+  author: MrStore
+  developer: Dockge
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dockge.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dockge.png
+  title:
+    en_US: "Dockge"
+  tagline:
+    en_US: "Gestor de stacks Docker Compose (alternativa ao Portainer)"
+  description:
+    en_US: "Gestor de stacks Docker Compose (alternativa ao Portainer). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "5001"
+  index: /

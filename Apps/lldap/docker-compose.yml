@@ -1,0 +1,73 @@
+name: lldap
+services:
+  lldap:
+    image: lldap/lldap:stable
+    container_name: lldap
+    restart: unless-stopped
+    environment:
+      - "LLDAP_JWT_SECRET=CHANGE_ME"
+      - "LLDAP_KEY_SEED=CHANGE_ME"
+      - "LLDAP_LDAP_BASE_DN=dc=example,dc=com"
+      - "LLDAP_LDAP_USER_PASS=CHANGE_ME"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 17170
+        published: "17170"
+        protocol: tcp
+      - target: 3890
+        published: "3890"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lldap
+        target: /data
+    x-casaos:
+      envs:
+        - container: LLDAP_JWT_SECRET
+          description:
+            en_US: LLDAP_JWT_SECRET
+        - container: LLDAP_KEY_SEED
+          description:
+            en_US: LLDAP_KEY_SEED
+        - container: LLDAP_LDAP_BASE_DN
+          description:
+            en_US: LLDAP_LDAP_BASE_DN
+        - container: LLDAP_LDAP_USER_PASS
+          description:
+            en_US: LLDAP_LDAP_USER_PASS
+        - container: TZ
+          description:
+            en_US: TZ
+      ports:
+        - container: "17170"
+          description:
+            en_US: Port 17170/tcp
+        - container: "3890"
+          description:
+            en_US: Port 3890/tcp
+      volumes:
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.lldap
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: lldap
+  author: MrStore
+  developer: LLDAP
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lldap.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lldap.png
+  title:
+    en_US: "LLDAP"
+  tagline:
+    en_US: "Servidor LDAP leve"
+  description:
+    en_US: "Servidor LDAP leve. Estado: verificado em out/2026 (destaque selfh.st, 25/09/2026). Confirma portas e variáveis na documentação do projeto."
+  port_map: "17170"
+  index: /

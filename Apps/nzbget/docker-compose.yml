@@ -1,0 +1,59 @@
+name: nzbget
+services:
+  nzbget:
+    image: lscr.io/linuxserver/nzbget:latest
+    container_name: nzbget
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6789
+        published: "6789"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/nzbget/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "6789"
+          description:
+            en_US: Port 6789/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.nzbget
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: nzbget
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nzbget.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nzbget.png
+  title:
+    en_US: "NZBGet"
+  tagline:
+    en_US: "NZBGet (LinuxServer.io)"
+  description:
+    en_US: "NZBGet — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/nzbget:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-nzbget/"
+  port_map: "6789"
+  index: /

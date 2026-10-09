@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Browser",
+    "font": "compass",
+    "description": "Browser",
+    "count": 12
+  },
+  {
+    "name": "Cloud",
+    "font": "cloud",
+    "description": "Cloud",
+    "count": 8
+  },
+  {
+    "name": "Developer",
+    "font": "code",
+    "description": "Developer",
+    "count": 20
+  },
+  {
+    "name": "Downloader",
+    "font": "download",
+    "description": "Downloader",
+    "count": 19
+  },
+  {
+    "name": "Games",
+    "font": "gamepad",
+    "description": "Games",
+    "count": 22
+  },
+  {
+    "name": "Graphics",
+    "font": "image",
+    "description": "Graphics",
+    "count": 17
+  },
+  {
+    "name": "Home",
+    "font": "home",
+    "description": "Home",
+    "count": 6
+  },
+  {
+    "name": "Media",
+    "font": "play-circle",
+    "description": "Media",
+    "count": 50
+  },
+  {
+    "name": "Network",
+    "font": "globe",
+    "description": "Network",
+    "count": 23
+  },
+  {
+    "name": "Productivity",
+    "font": "file-text",
+    "description": "Productivity",
+    "count": 28
+  },
+  {
+    "name": "Social",
+    "font": "message-circle",
+    "description": "Social",
+    "count": 12
+  },
+  {
+    "name": "Utilities",
+    "font": "tool",
+    "description": "Utilities",
+    "count": 37
+  }
+]

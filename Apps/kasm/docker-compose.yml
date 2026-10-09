@@ -1,0 +1,66 @@
+name: kasm
+services:
+  kasm:
+    image: lscr.io/linuxserver/kasm:latest
+    container_name: kasm
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    privileged: true
+    ports:
+      - target: 3000
+        published: "20040"
+        protocol: tcp
+      - target: 3001
+        published: "20041"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/kasm/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/kasm/opt
+        target: /opt
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /opt
+          description:
+            en_US: /opt
+
+x-casaos:
+  id: io.github.mrpiracy94.kasm
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: kasm
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kasm.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/kasm.png
+  title:
+    en_US: "Kasm Workspaces"
+  tagline:
+    en_US: "Kasm Workspaces (LinuxServer.io)"
+  description:
+    en_US: "Kasm Workspaces — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kasm:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kasm/"
+  port_map: "20040"
+  index: /

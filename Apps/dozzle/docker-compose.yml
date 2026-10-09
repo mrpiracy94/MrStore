@@ -1,0 +1,46 @@
+name: dozzle
+services:
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "30011"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+    x-casaos:
+      envs: []
+      ports:
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: /var/run/docker.sock
+
+x-casaos:
+  id: io.github.mrpiracy94.dozzle
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: dozzle
+  author: MrStore
+  developer: Dozzle
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dozzle.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dozzle.png
+  title:
+    en_US: "Dozzle"
+  tagline:
+    en_US: "Logs Docker em tempo real"
+  description:
+    en_US: "Logs Docker em tempo real. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "30011"
+  index: /

@@ -1,0 +1,65 @@
+name: wikijs
+services:
+  wikijs:
+    image: lscr.io/linuxserver/wikijs:latest
+    container_name: wikijs
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "20027"
+        protocol: tcp
+      - target: 3001
+        published: "3001"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/wikijs/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/wikijs/data
+        target: /data
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "3000"
+          description:
+            en_US: Port 3000/tcp
+        - container: "3001"
+          description:
+            en_US: Port 3001/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /data
+          description:
+            en_US: /data
+
+x-casaos:
+  id: io.github.mrpiracy94.wikijs
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: wikijs
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/wikijs.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/wikijs.png
+  title:
+    en_US: "Wiki.js"
+  tagline:
+    en_US: "Wiki.js (LinuxServer.io)"
+  description:
+    en_US: "Wiki.js — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/wikijs:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-wikijs/"
+  port_map: "20027"
+  index: /

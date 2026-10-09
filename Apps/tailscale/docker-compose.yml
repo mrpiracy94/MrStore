@@ -1,0 +1,62 @@
+name: tailscale
+services:
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale
+    restart: unless-stopped
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    environment:
+      - "TS_AUTHKEY=CHANGE_ME"
+      - "TS_STATE_DIR=/var/lib/tailscale"
+      - "TS_USERSPACE=false"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/tailscale
+        target: /var/lib/tailscale
+      - type: bind
+        source: /dev/net/tun
+        target: /dev/net/tun
+    x-casaos:
+      envs:
+        - container: TS_AUTHKEY
+          description:
+            en_US: TS_AUTHKEY
+        - container: TS_STATE_DIR
+          description:
+            en_US: TS_STATE_DIR
+        - container: TS_USERSPACE
+          description:
+            en_US: TS_USERSPACE
+      ports: []
+      volumes:
+        - container: /var/lib/tailscale
+          description:
+            en_US: /var/lib/tailscale
+        - container: /dev/net/tun
+          description:
+            en_US: /dev/net/tun
+
+x-casaos:
+  id: io.github.mrpiracy94.tailscale
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: tailscale
+  author: MrStore
+  developer: Tailscale
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/tailscale.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/tailscale.png
+  title:
+    en_US: "Tailscale"
+  tagline:
+    en_US: "VPN mesh"
+  description:
+    en_US: "VPN mesh. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+  port_map: "0"
+  index: /

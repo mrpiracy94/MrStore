@@ -1,0 +1,53 @@
+name: ngircd
+services:
+  ngircd:
+    image: lscr.io/linuxserver/ngircd:latest
+    container_name: ngircd
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 6667
+        published: "6667"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ngircd/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "6667"
+          description:
+            en_US: Port 6667/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.ngircd
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: ngircd
+  author: MrStore
+  developer: LinuxServer.io
+  category: Social
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ngircd.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/ngircd.png
+  title:
+    en_US: "ngIRCd"
+  tagline:
+    en_US: "ngIRCd (LinuxServer.io)"
+  description:
+    en_US: "ngIRCd — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ngircd:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ngircd/"
+  port_map: "6667"
+  index: /

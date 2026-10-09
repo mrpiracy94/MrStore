@@ -1,0 +1,46 @@
+name: homeassistant
+services:
+  homeassistant:
+    image: lscr.io/linuxserver/homeassistant:latest
+    container_name: homeassistant
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    network_mode: host
+    volumes:
+      - type: bind
+        source: /DATA/AppData/homeassistant/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.homeassistant
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: homeassistant
+  author: MrStore
+  developer: LinuxServer.io
+  category: Home
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homeassistant.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/homeassistant.png
+  title:
+    en_US: "Home Assistant"
+  tagline:
+    en_US: "Home Assistant (LinuxServer.io)"
+  description:
+    en_US: "Home Assistant — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/homeassistant:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-homeassistant/"
+  port_map: "8123"
+  index: /

@@ -1,0 +1,53 @@
+name: hishtory-server
+services:
+  hishtory-server:
+    image: lscr.io/linuxserver/hishtory-server:latest
+    container_name: hishtory-server
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8080
+        published: "20051"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/hishtory-server/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8080"
+          description:
+            en_US: Port 8080/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.hishtory-server
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: hishtory-server
+  author: MrStore
+  developer: LinuxServer.io
+  category: Developer
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/hishtory-server.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/hishtory-server.png
+  title:
+    en_US: "hishtory-server"
+  tagline:
+    en_US: "hishtory-server (LinuxServer.io)"
+  description:
+    en_US: "hishtory-server — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/hishtory-server:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-hishtory-server/"
+  port_map: "20051"
+  index: /

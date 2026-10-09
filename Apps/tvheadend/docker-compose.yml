@@ -1,0 +1,65 @@
+name: tvheadend
+services:
+  tvheadend:
+    image: lscr.io/linuxserver/tvheadend:latest
+    container_name: tvheadend
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 9981
+        published: "9981"
+        protocol: tcp
+      - target: 9982
+        published: "9982"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/tvheadend/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Recordings
+        target: /recordings
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "9981"
+          description:
+            en_US: Port 9981/tcp
+        - container: "9982"
+          description:
+            en_US: Port 9982/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /recordings
+          description:
+            en_US: /recordings
+
+x-casaos:
+  id: io.github.mrpiracy94.tvheadend
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: tvheadend
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/tvheadend.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/tvheadend.png
+  title:
+    en_US: "Tvheadend"
+  tagline:
+    en_US: "Tvheadend (LinuxServer.io)"
+  description:
+    en_US: "Tvheadend — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/tvheadend:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-tvheadend/"
+  port_map: "9981"
+  index: /

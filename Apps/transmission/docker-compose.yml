@@ -1,0 +1,77 @@
+name: transmission
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 9091
+        published: "9091"
+        protocol: tcp
+      - target: 51413
+        published: "51413"
+        protocol: tcp
+      - target: 51413
+        published: "51413"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/transmission/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+      - type: bind
+        source: /DATA/Downloads/watch
+        target: /watch
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "9091"
+          description:
+            en_US: Port 9091/tcp
+        - container: "51413"
+          description:
+            en_US: Port 51413/tcp
+        - container: "51413"
+          description:
+            en_US: Port 51413/udp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /downloads
+          description:
+            en_US: /downloads
+        - container: /watch
+          description:
+            en_US: /watch
+
+x-casaos:
+  id: io.github.mrpiracy94.transmission
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: transmission
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/transmission.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/transmission.png
+  title:
+    en_US: "Transmission"
+  tagline:
+    en_US: "Transmission (LinuxServer.io)"
+  description:
+    en_US: "Transmission — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/transmission:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-transmission/"
+  port_map: "9091"
+  index: /

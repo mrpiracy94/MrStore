@@ -1,0 +1,59 @@
+name: changedetection.io
+services:
+  changedetection.io:
+    image: lscr.io/linuxserver/changedetection.io:latest
+    container_name: changedetection.io
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5000
+        published: "20033"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/changedetection.io/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/changedetection.io/datastore
+        target: /datastore
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "5000"
+          description:
+            en_US: Port 5000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /datastore
+          description:
+            en_US: /datastore
+
+x-casaos:
+  id: io.github.mrpiracy94.changedetection.io
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: changedetection.io
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/changedetection.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/changedetection.png
+  title:
+    en_US: "changedetection.io"
+  tagline:
+    en_US: "changedetection.io (LinuxServer.io)"
+  description:
+    en_US: "changedetection.io — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/changedetection.io:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-changedetection.io/"
+  port_map: "20033"
+  index: /

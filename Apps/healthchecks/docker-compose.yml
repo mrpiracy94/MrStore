@@ -1,0 +1,56 @@
+name: healthchecks
+services:
+  healthchecks:
+    image: lscr.io/linuxserver/healthchecks:latest
+    container_name: healthchecks
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "SITE_ROOT=http://zimaos.local:8000"
+      - "SUPERUSER_EMAIL=admin@example.com"
+      - "SUPERUSER_PASSWORD=CHANGE_ME"
+    ports:
+      - target: 8000
+        published: "20037"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/healthchecks/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8000"
+          description:
+            en_US: Port 8000/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.healthchecks
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: healthchecks
+  author: MrStore
+  developer: LinuxServer.io
+  category: Others
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/healthchecks.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/healthchecks.png
+  title:
+    en_US: "Healthchecks"
+  tagline:
+    en_US: "Healthchecks (LinuxServer.io)"
+  description:
+    en_US: "Healthchecks — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/healthchecks:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-healthchecks/"
+  port_map: "20037"
+  index: /

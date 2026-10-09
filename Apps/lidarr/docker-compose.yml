@@ -1,0 +1,65 @@
+name: lidarr
+services:
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8686
+        published: "8686"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lidarr/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "8686"
+          description:
+            en_US: Port 8686/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /music
+          description:
+            en_US: /music
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.lidarr
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: lidarr
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lidarr.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lidarr.png
+  title:
+    en_US: "Lidarr"
+  tagline:
+    en_US: "Lidarr (LinuxServer.io)"
+  description:
+    en_US: "Lidarr — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/lidarr:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-lidarr/"
+  port_map: "8686"
+  index: /

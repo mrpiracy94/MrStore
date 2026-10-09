@@ -1,0 +1,53 @@
+name: dokuwiki
+services:
+  dokuwiki:
+    image: lscr.io/linuxserver/dokuwiki:latest
+    container_name: dokuwiki
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20028"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/dokuwiki/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "80"
+          description:
+            en_US: Port 80/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.dokuwiki
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: dokuwiki
+  author: MrStore
+  developer: LinuxServer.io
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dokuwiki.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/dokuwiki.png
+  title:
+    en_US: "DokuWiki"
+  tagline:
+    en_US: "DokuWiki (LinuxServer.io)"
+  description:
+    en_US: "DokuWiki — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/dokuwiki:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-dokuwiki/"
+  port_map: "20028"
+  index: /

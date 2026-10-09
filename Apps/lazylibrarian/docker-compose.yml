@@ -1,0 +1,65 @@
+name: lazylibrarian
+services:
+  lazylibrarian:
+    image: lscr.io/linuxserver/lazylibrarian:latest
+    container_name: lazylibrarian
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5299
+        published: "5299"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lazylibrarian/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Books
+        target: /books
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      ports:
+        - container: "5299"
+          description:
+            en_US: Port 5299/tcp
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+        - container: /books
+          description:
+            en_US: /books
+        - container: /downloads
+          description:
+            en_US: /downloads
+
+x-casaos:
+  id: io.github.mrpiracy94.lazylibrarian
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: lazylibrarian
+  author: MrStore
+  developer: LinuxServer.io
+  category: Media
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lazylibrarian.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/lazylibrarian.png
+  title:
+    en_US: "LazyLibrarian"
+  tagline:
+    en_US: "LazyLibrarian (LinuxServer.io)"
+  description:
+    en_US: "LazyLibrarian — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/lazylibrarian:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-lazylibrarian/"
+  port_map: "5299"
+  index: /

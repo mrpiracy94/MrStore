@@ -1,0 +1,47 @@
+name: duckdns
+services:
+  duckdns:
+    image: lscr.io/linuxserver/duckdns:latest
+    container_name: duckdns
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "SUBDOMAINS=sub"
+      - "TOKEN=CHANGE_ME"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/duckdns/config
+        target: /config
+    x-casaos:
+      envs:
+        - container: TZ
+          description:
+            en_US: Timezone
+      volumes:
+        - container: /config
+          description:
+            en_US: /config
+
+x-casaos:
+  id: io.github.mrpiracy94.duckdns
+  version: "1.0.0"
+  update_at: "2026-10-09"
+  architectures:
+    - amd64
+    - arm64
+  main: duckdns
+  author: MrStore
+  developer: LinuxServer.io
+  category: Networking
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/duckdns.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/duckdns.png
+  title:
+    en_US: "DuckDNS"
+  tagline:
+    en_US: "DuckDNS (LinuxServer.io)"
+  description:
+    en_US: "DuckDNS — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/duckdns:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-duckdns/"
+  port_map: "0"
+  index: /
