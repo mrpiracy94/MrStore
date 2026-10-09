@@ -86,14 +86,17 @@ def prepare(*, check_only: bool) -> int:
     return len(updated)
 
 
-def verify_published(index_path: Path) -> int:
+def verify_published(index_path: Path, approved_apps: set[str] | None = None) -> int:
     summaries = load_summaries()
+    expected = set(summaries) if approved_apps is None else approved_apps
+    if not expected or not expected.issubset(summaries):
+        raise ValueError("Invalid approved application set")
     index = json.loads(index_path.read_text(encoding="utf-8"))
     entries = index.get("apps")
     if not isinstance(entries, list):
         raise ValueError("ZimaOS index.json is missing an apps list")
-    if len(entries) != 254:
-        raise ValueError(f"Expected 254 published apps, found {len(entries)}")
+    if len(entries) != len(expected):
+        raise ValueError(f"Expected {len(expected)} published apps, found {len(entries)}")
     seen = set()
     for item in entries:
         app_id = item["id"]
@@ -101,13 +104,13 @@ def verify_published(index_path: Path) -> int:
         if not app_id.startswith(prefix):
             raise ValueError(f"Unexpected app ID: {app_id}")
         app = app_id[len(prefix):]
-        if app not in summaries or app in seen:
+        if app not in expected or app in seen:
             raise ValueError(f"Unknown or duplicate published app {app}")
         seen.add(app)
         if item.get("tagline") != summaries[app]:
             raise ValueError(f"{app}: published subtitle differs from approved summary")
-    if seen != set(summaries):
-        raise ValueError(f"Missing published summaries: {sorted(set(summaries) - seen)}")
+    if seen != expected:
+        raise ValueError(f"Missing published summaries: {sorted(expected - seen)}")
     print(f"Verified all {len(seen)} published ZimaOS card subtitles")
     return len(seen)
 
@@ -116,9 +119,20 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="validate without changing files")
     parser.add_argument("--verify-dist", type=Path, help="check published index.json subtitles")
+    parser.add_argument("--approved-json", type=Path,
+                        help="quarantine.json with exact approved app folders")
     args = parser.parse_args()
     if args.verify_dist:
-        verify_published(args.verify_dist)
+        approved = None
+        if args.approved_json:
+            data = json.loads(args.approved_json.read_text(encoding="utf-8"))
+            allowed = data.get("approved_apps")
+            if not isinstance(allowed, list) or not allowed or any(
+                not isinstance(x, str) for x in allowed
+            ) or len(set(allowed)) != len(allowed):
+                raise ValueError("Invalid quarantine approved_apps")
+            approved = set(allowed)
+        verify_published(args.verify_dist, approved)
     else:
         prepare(check_only=args.check)
 

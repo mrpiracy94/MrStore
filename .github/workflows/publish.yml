@@ -138,7 +138,7 @@ jobs:
           EXPECTED=$(python -c 'import json; print(len(json.load(open("out/quarantine.json"))["approved_apps"]))')
           python scripts/verify_dist.py --expected "$EXPECTED"
       - name: Verify published translations
-        run: python -S scripts/curate_taglines.py --verify-dist dist/index.json
+        run: python -S scripts/curate_taglines.py --verify-dist dist/index.json --approved-json out/quarantine.json
       - name: Disable Jekyll processing
         run: touch dist/.nojekyll
       - name: Upload build diagnostics
