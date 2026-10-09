@@ -47,6 +47,6 @@ x-casaos:
   tagline:
     en_US: "Glances (seedit4.me catalog)"
   description:
-    en_US: "Glances — origem: seedit4.me catalog. Imagem: nicolargo/glances:latest-full. Verifica portas/variáveis na documentação do projeto."
+    en_US: "Glances — interface web e integração Docker. Imagem oficial minimal `nicolargo/glances:latest` (FastAPI + Docker). A imagem anterior `latest-full` inclui plugins opcionais adicionais; para plugins extra não incluídos na imagem minimal, escolhe a variante full após rever vulnerabilidades. A porta 61208 e o socket Docker permanecem configurados. Não exponhas o socket Docker a redes ou utilizadores não confiáveis."
   port_map: "61208"
   index: /
