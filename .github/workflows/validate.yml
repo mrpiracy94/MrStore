@@ -43,6 +43,18 @@ jobs:
           name: zimaos-compatibility-static
           path: out/compatibility.*
           if-no-files-found: warn
+      - name: Parse every Compose file with official Docker Compose V2 (no containers)
+        run: python scripts/compose_preflight.py
+      - name: Compose parser summary
+        if: always()
+        run: test ! -f out/compose-preflight.md || cat out/compose-preflight.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload Compose parser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-compose-v2-preflight
+          path: out/compose-preflight.*
+          if-no-files-found: warn
       - name: Summary
         if: always()
         run: test ! -f out/audit.md || cat out/audit.md >> "$GITHUB_STEP_SUMMARY"
