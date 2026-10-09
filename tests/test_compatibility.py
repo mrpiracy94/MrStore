@@ -30,10 +30,12 @@ class CompatibilityTests(unittest.TestCase):
         self.assertEqual(item["ui_port"], "20019")
         self.assertNotIn("launch_port_mismatch", [c["code"] for c in item["checks"]])
 
-    def test_karakeep_external_url_needs_configuration(self):
+    def test_karakeep_public_url_matches_declared_port(self):
         item = inspect_app(self.by_name["karakeep"])
-        self.assertIn("public_url_port_mismatch", [c["code"] for c in item["checks"]])
+        self.assertNotIn("public_url_port_mismatch", [c["code"] for c in item["checks"]])
         self.assertEqual(item["status"], "configuration_required")
+        env = self.by_name["karakeep"].source["services"]["karakeep"]["environment"]
+        self.assertIn("NEXTAUTH_URL=http://zimaos.local:30002", env)
 
     def test_cloudflared_is_headless_not_web_verified(self):
         item = inspect_app(self.by_name["cloudflared"])
