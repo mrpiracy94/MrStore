@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/bitcoin-knots/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/bitcoin-knots/icon.svg
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/bitcoin-knots-logo.png
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/bitcoin-knots-logo.png
   title:
     en_US: "Bitcoin Knots"
   tagline:

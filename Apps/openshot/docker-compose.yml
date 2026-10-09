@@ -50,8 +50,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Productivity
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/openshot/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/openshot/icon.svg
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/openshot-logo.png
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/openshot-logo.png
   title:
     en_US: "OpenShot"
   tagline:

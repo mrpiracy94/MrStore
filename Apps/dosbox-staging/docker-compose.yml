@@ -50,8 +50,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/dosbox-staging/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/dosbox-staging/icon.svg
+  icon: https://raw.githubusercontent.com/dosbox-staging/dosbox-staging/05e2004729f9b31d33deaa442f4933844ef87d02/extras/icons/png/icon_512.png
+  thumbnail: https://raw.githubusercontent.com/dosbox-staging/dosbox-staging/05e2004729f9b31d33deaa442f4933844ef87d02/extras/icons/png/icon_512.png
   title:
     en_US: "DOSBox Staging"
   tagline:

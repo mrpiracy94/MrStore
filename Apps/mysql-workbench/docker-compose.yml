@@ -50,8 +50,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Developer
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/mysql-workbench/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/mysql-workbench/icon.svg
+  icon: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/mysql-workbench-icon.png
+  thumbnail: https://raw.githubusercontent.com/linuxserver/docker-templates/c00fb6e6dc50b59217a915188be27d0ea55801c8/linuxserver.io/img/mysql-workbench-icon.png
   title:
     en_US: "MySQL Workbench"
   tagline:

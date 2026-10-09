@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Others
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/luanti/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/luanti/icon.svg
+  icon: https://raw.githubusercontent.com/luanti-org/luanti/9a1b92d0d4d2c47fced18e6077722c6301eb04f5/fastlane/metadata/android/en-US/images/icon.png
+  thumbnail: https://raw.githubusercontent.com/luanti-org/luanti/9a1b92d0d4d2c47fced18e6077722c6301eb04f5/fastlane/metadata/android/en-US/images/icon.png
   title:
     en_US: "Luanti"
   tagline:
