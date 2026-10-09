@@ -37,13 +37,18 @@ start_image() {
   curl -fsS "$base_url/" >/dev/null
 }
 
-start_image vaultwarden/server:1.37.3
+version="$(sed -nE 's/^[[:space:]]*image:[[:space:]]*vaultwarden\/server:([0-9]+\.[0-9]+\.[0-9]+)-alpine[[:space:]]*$/\1/p' Apps/vaultwarden/docker-compose.yml)"
+if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "Cannot resolve pinned Alpine Vaultwarden version" >&2
+  exit 1
+fi
+start_image "vaultwarden/server:$version"
 sudo test -s "$data_dir/db.sqlite3"
 sudo touch "$data_dir/compatibility-sentinel"
 docker rm -f "$container" >/dev/null
 
 # Reuse exactly the same persistent volume and service settings.
-start_image vaultwarden/server:1.37.3-alpine
+start_image "vaultwarden/server:$version-alpine"
 sudo test -s "$data_dir/db.sqlite3"
 sudo test -f "$data_dir/compatibility-sentinel"
-echo "PASS: same 1.37.3 version, login UI, health and persistent DB with Alpine."
+echo "PASS: same $version release, login UI, health and persistent DB with Alpine."
