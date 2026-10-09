@@ -161,6 +161,17 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(app.source['services']['paperless-ngx']['image'],
                          'ghcr.io/paperless-ngx/paperless-ngx:latest')
 
+    def test_karakeep_meilisearch_migration_is_explicit_and_persistent(self):
+        karakeep = next(item for item in apps() if item.folder == 'karakeep')
+        service = karakeep.source['services']['karakeep-meilisearch']
+        self.assertEqual(service['image'], 'getmeili/meilisearch:v1.54.3@sha256:e68913ab7d6f5b159529e472cfd362ce3c741fafd3c127961b2142abbe41b3c9')
+        self.assertEqual(service['command'], ['meilisearch', '--upgrade-db'])
+        self.assertTrue(any(
+            vol.get('source') == '/DATA/AppData/karakeep/meili' and
+            vol.get('target') == '/meili_data'
+            for vol in service['volumes']
+        ), 'Persistent Meilisearch data must survive upgrades')
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)

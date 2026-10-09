@@ -1,0 +1,74 @@
+name: Verify Karakeep Meilisearch migration
+on:
+  pull_request:
+    paths:
+      - 'Apps/karakeep/docker-compose.yml'
+      - 'scripts/test_meili_migration.sh'
+      - '.github/workflows/verify-meili-migration.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  migration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify older Meilisearch indices survive v1.54.3 migration
+        run: bash scripts/test_meili_migration.sh
+      - name: Configure Docker Buildx for multi-architecture digest inspection
+        uses: docker/setup-buildx-action@v3
+      - name: Verify the exact published multi-architecture digest
+        run: |
+          set -euo pipefail
+          docker buildx imagetools inspect getmeili/meilisearch:v1.54.3@sha256:e68913ab7d6f5b159529e472cfd362ce3c741fafd3c127961b2142abbe41b3c9 | tee meili-image-inspection.txt
+          digest="$(awk '/^Digest:/ {print $2; exit}' meili-image-inspection.txt)"
+          [[ "$digest" == "sha256:e68913ab7d6f5b159529e472cfd362ce3c741fafd3c127961b2142abbe41b3c9" ]]
+          echo "Verified Meilisearch multiarch digest: $digest" >> "$GITHUB_STEP_SUMMARY"
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan old and both new image architectures
+        run: |
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --format json --timeout 12m --output meili-old.json getmeili/meilisearch:v1.13.3
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --format json --timeout 12m --output meili-amd64.json getmeili/meilisearch:v1.54.3@sha256:e68913ab7d6f5b159529e472cfd362ce3c741fafd3c127961b2142abbe41b3c9
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --format json --timeout 12m --output meili-arm64.json getmeili/meilisearch:v1.54.3@sha256:e68913ab7d6f5b159529e472cfd362ce3c741fafd3c127961b2142abbe41b3c9
+      - name: Require zero HIGH and CRITICAL vulnerabilities before approval
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def count(path):
+              data = json.load(open(path, encoding='utf-8'))
+              if not isinstance(data.get('Results'), list):
+                  raise SystemExit('Incomplete Trivy results: ' + path)
+              return Counter(v.get('Severity')
+                             for target in data['Results']
+                             for v in target.get('Vulnerabilities') or []
+                             if v.get('Severity') in ('HIGH', 'CRITICAL'))
+          old = count('meili-old.json')
+          amd64 = count('meili-amd64.json')
+          arm64 = count('meili-arm64.json')
+          summary = ('## Meilisearch vulnerability comparison\n\n'
+                     '| Image | CRITICAL | HIGH |\n|---|---:|---:|\n'
+                     f"| v1.13.3 | {old['CRITICAL']} | {old['HIGH']} |\n"
+                     f"| v1.54.3 AMD64 | {amd64['CRITICAL']} | {amd64['HIGH']} |\n"
+                     f"| v1.54.3 ARM64 | {arm64['CRITICAL']} | {arm64['HIGH']} |\n")
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
+              out.write(summary)
+          if any(counts['HIGH'] or counts['CRITICAL'] for counts in (amd64, arm64)):
+              raise SystemExit('Candidate has HIGH/CRITICAL on at least one platform; do not merge')
+          PY
+      - name: Archive vulnerability scan reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: karakeep-meilisearch-vulnerability-evidence
+          path: |
+            meili-old.json
+            meili-amd64.json
+            meili-arm64.json
+            meili-image-inspection.txt
+          if-no-files-found: warn
