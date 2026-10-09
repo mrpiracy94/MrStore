@@ -13,9 +13,11 @@ import json
 from pathlib import Path
 import re
 import subprocess
+from urllib.error import HTTPError, URLError
+from urllib.request import build_opener, HTTPRedirectHandler
 
 from catalog import ROOT, apps
-from zimaos_runtime_probe import container_snapshot, http_probe, observed_port
+from zimaos_runtime_probe import container_snapshot, observed_port
 
 PILOT_APPS = (
     "actual-budget", "uptime-kuma", "nextcloud", "vaultwarden",
@@ -39,8 +41,25 @@ def valid_host(value: str) -> bool:
                 not value.startswith("-") and not value.endswith("-"))
 
 
+class NoRedirects(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        # Never follow an app-provided redirect to a public service.
+        return None
+
+
+def local_http_probe(url, timeout):
+    try:
+        with build_opener(NoRedirects).open(url, timeout=timeout) as response:
+            status = response.status
+    except HTTPError as exc:
+        status = exc.code
+    except (URLError, TimeoutError, OSError):
+        return False, None
+    return status in (200, 201, 202, 203, 204, 301, 302, 303, 307, 308, 401, 403), status
+
+
 def inspect_pilot_app(app, host, *, inspector=container_snapshot,
-                      prober=http_probe, timeout=8.0, skip_http=False):
+                      prober=local_http_probe, timeout=8.0, skip_http=False):
     services = app.source["services"]
     main = app.metadata["main"]
     port = str(app.metadata.get("port_map", "0"))
@@ -106,7 +125,7 @@ def inspect_pilot_app(app, host, *, inspector=container_snapshot,
 
 
 def make_report(items, host, *, inspector=container_snapshot,
-                prober=http_probe, timeout=8.0, skip_http=False):
+                prober=local_http_probe, timeout=8.0, skip_http=False):
     by_name = {app.folder: app for app in items}
     absent = sorted(set(PILOT_APPS) - set(by_name))
     if absent:
