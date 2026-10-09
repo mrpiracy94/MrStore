@@ -93,7 +93,7 @@ Mudanças de imagem, arquitetura, manifest ou ZimaOS pedem revalidação.
 ## Achados concretos desta ronda
 
 - **Nextcloud:** a imagem LinuxServer.io expõe HTTPS na porta interna 443; a MrStore publica essa porta como 20019. Foi adicionada a configuração scheme: https, ainda a comprovar no NAS.
-- **Karakeep:** NEXTAUTH_URL aponta a zimaos.local:3000 enquanto a porta publicada é 30002. Requer URL real configurada pelo operador; não fixar um hostname inventado.
+- **Karakeep:** NEXTAUTH_URL foi alinhada com a porta 30002, mas o hostname de exemplo zimaos.local tem de ser ajustado para o hostname ou domínio real do NAS.
 - **Serviços sem UI:** port_map de zero é uma indicação headless, não um endpoint HTTP.
 
 Fontes: https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/compose-and-x-casaos.md e https://docs.linuxserver.io/images/docker-nextcloud/
