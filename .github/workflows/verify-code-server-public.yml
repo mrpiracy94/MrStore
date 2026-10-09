@@ -1,0 +1,62 @@
+name: Verify public immutable Code Server security release
+on:
+  pull_request:
+    paths:
+      - 'Apps/code-server/docker-compose.yml'
+      - 'tests/test_mrstore.py'
+      - '.github/workflows/verify-code-server-public.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  anonymous_pull_and_check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    env:
+      IMAGE: ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - name: Confirm exact image is public and contains both architectures
+        run: |
+          docker logout ghcr.io || true
+          docker buildx imagetools inspect "$IMAGE"
+          docker buildx imagetools inspect "$IMAGE" --raw | python -c '
+          import json,sys
+          d=json.load(sys.stdin)
+          platforms={(x["platform"]["os"],x["platform"]["architecture"]) for x in d.get("manifests",[])}
+          assert ("linux","amd64") in platforms and ("linux","arm64") in platforms, platforms
+          print("PASS: public multiarch digest has AMD64 and ARM64")
+          '
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Verify zero HIGH CRITICAL on public exact image
+        run: |
+          trivy image --quiet --image-src remote --platform linux/${{ matrix.arch }} --scanners vuln --severity HIGH,CRITICAL --timeout 12m --exit-code 1 --format json --output public-code-server.json "$IMAGE"
+          python - <<'PY'
+          import json
+          data=json.load(open('public-code-server.json',encoding='utf-8'))
+          if not isinstance(data.get('Results'),list) or not data['Results']:
+              raise SystemExit('Incomplete public scan')
+          print('PASS: exact public image reports zero HIGH/CRITICAL')
+          PY
+      - name: Pull published digest without credentials for real smoke tests
+        run: |
+          docker pull --platform linux/${{ matrix.arch }} "$IMAGE"
+          docker tag "$IMAGE" mrstore-code-server-patched:${{ matrix.arch }}
+      - name: Verify web service and permanent volumes using disposable data
+        run: bash scripts/test_code_server_node_patches.sh ${{ matrix.arch }}
+      - name: Verify actual FTP operation using published image
+        run: bash scripts/test_code_server_ftp_patch.sh ${{ matrix.arch }}
+      - name: Preserve anonymous vulnerability report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-code-server-${{ matrix.arch }}-cves
+          path: public-code-server.json
+          if-no-files-found: warn
