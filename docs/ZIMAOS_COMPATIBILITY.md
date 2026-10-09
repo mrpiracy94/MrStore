@@ -112,3 +112,33 @@ Mudanças de imagem, arquitetura, manifest ou ZimaOS pedem revalidação.
 - **BookStack:** depende de MariaDB/MySQL externos e APP_KEY/APP_URL específicos; encontra-se em modo de instalação assistida, não one-click.
 
 Fontes: https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/compose-and-x-casaos.md e https://docs.linuxserver.io/images/docker-nextcloud/
+
+
+## Piloto #45 — recolha conjunta e anonimizada de sete aplicações
+
+Foi acrescentado `scripts/zimaos_pilot.py` para inspecionar as sete aplicações
+do issue #45 **num ambiente ZimaOS de ensaio, somente se já estiverem instaladas**.
+O script não faz pull/up/restart, não executa comandos nos contentores e não
+modifica ficheiros, configurações ou dados. Observa, por `docker inspect`,
+todos os serviços esperados por app e testa a UI por HTTP/HTTPS quando permitido.
+
+Na máquina com Docker CLI ligado ao **ZimaOS de ensaio**, na raiz do repositório:
+
+```bash
+python scripts/zimaos_pilot.py --host ENDERECO_DO_NAS
+```
+
+Cria localmente `out/zimaos-pilot.json` e `out/zimaos-pilot.md`.
+Os resultados omitem o endereço do NAS, caminhos dos volumes, ambientes e
+credenciais. `--skip-http` desativa os pedidos e impede aprovação C2 por HTTP.
+A inspeção read-only exige acesso à API Docker na máquina de ensaio.
+
+Um resultado `c2_candidate` significa apenas que a app e serviços declarados
+parecem em execução e a porta/UI responde. O script devolve sempre
+**0 certificados C2, C3 ou C4**, mesmo com sete resultados positivos, porque
+não comprova origem da instalação, digest real, versão ZimaOS, funcionalidade,
+reinício ou dados persistentes. O Markdown contém as checklists C3 em branco.
+
+Nunca executar estas aplicações apenas para produzir um resultado positivo
+enquanto existirem riscos CRITICAL/HIGH não aceites num NAS de produção.
+A ausência de máquina ZimaOS não pode ser substituída por mocks da CI.
