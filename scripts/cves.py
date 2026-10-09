@@ -98,10 +98,10 @@ def summarize(report: dict, shard: int, shards: int) -> str:
 
 
 def audit_exit_status(report: dict) -> int:
-    """Never mark a scan clean when critical findings or lookup failures remain."""
+    """Never mark a scan clean when HIGH/CRITICAL findings or lookup failures remain."""
     if report['failures']:
         return 2
-    if report['critical']:
+    if report['critical'] or report['high']:
         return 3
     return 0
 

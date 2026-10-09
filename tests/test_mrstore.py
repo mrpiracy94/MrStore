@@ -92,7 +92,8 @@ class StoreTests(unittest.TestCase):
         self.assertIn('CRITICAL',cve_summary(result,0,8))
         self.assertEqual(audit_exit_status(result), 2)
         self.assertEqual(audit_exit_status({**result, 'failures': 0}), 3)
-        self.assertEqual(audit_exit_status({**result, 'critical': 0, 'failures': 0}), 0)
+        self.assertEqual(audit_exit_status({**result, 'critical': 0, 'high': 1, 'failures': 0}), 3)
+        self.assertEqual(audit_exit_status({**result, 'critical': 0, 'high': 0, 'failures': 0}), 0)
 
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
