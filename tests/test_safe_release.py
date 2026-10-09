@@ -1,6 +1,7 @@
 """Fail-closed release policy regression suite: unsafe apps remain in the source."""
 import json
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -11,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from catalog import App
 from release_catalog import read_evidence, stage, insecure_defaults
-from release_scan import audit_shard, image_platforms
+from release_scan import audit_shard, image_platforms, resolve_digest
 
 
 def fixture(name, images, arch=None, insecure=False):
@@ -58,6 +59,43 @@ class SafeReleaseTests(unittest.TestCase):
         self.assertEqual(calls, [(pin, "amd64"), (pin, "arm64")])
         self.assertEqual(result["results"][0]["status"], "vulnerable")
         self.assertFalse(insecure_defaults(app))
+
+    def test_transient_crane_digest_retries_then_pins_exact_image(self):
+        digest = "sha256:" + "a" * 64
+        responses = [
+            subprocess.CompletedProcess([], 1, "", "TOOMANYREQUESTS: rate limit"),
+            subprocess.CompletedProcess([], 0, digest + "\n", ""),
+        ]
+        calls = []
+        pauses = []
+        def fake_runner(command, **kwargs):
+            calls.append(command)
+            return responses[len(calls) - 1]
+        pinned, error = resolve_digest("example/image:latest", runner=fake_runner,
+                                       sleeper=pauses.append)
+        self.assertIsNone(error)
+        self.assertEqual(pinned, "example/image:latest@" + digest)
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(pauses, [12])
+
+    def test_crane_permanent_failure_does_not_retry_or_approve(self):
+        calls = []
+        def failure(command, **kwargs):
+            calls.append(command)
+            return subprocess.CompletedProcess(command, 1, "", "MANIFEST_UNKNOWN")
+        pinned, error = resolve_digest("example/missing:1", runner=failure,
+                                       sleeper=lambda _: self.fail("No retry"))
+        self.assertIsNone(pinned)
+        self.assertIn("MANIFEST_UNKNOWN", error)
+        self.assertEqual(len(calls), 1)
+
+    def test_crane_pinned_image_digest_cannot_change(self):
+        supplied = "example/demo:1@sha256:" + "a" * 64
+        runner = lambda command, **kwargs: subprocess.CompletedProcess(
+            command, 0, "sha256:" + "b" * 64, "")
+        pinned, error = resolve_digest(supplied, runner=runner)
+        self.assertIsNone(pinned)
+        self.assertIn("does not match", error)
 
     def test_missing_digest_does_not_call_scanner(self):
         app, _ = fixture("demo", ["example/demo:1"])
