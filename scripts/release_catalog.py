@@ -1,0 +1,210 @@
+"""Fail-closed per-app release selection with strict 8-shard Trivy evidence.
+
+No source app is removed from git; unsafe or inconclusive apps are quarantined.
+Every published service image is rewritten to the exact image digest scanned.
+"""
+from __future__ import annotations
+import argparse
+from collections import Counter
+import json
+from pathlib import Path
+import re
+import shutil
+import yaml
+
+from catalog import ROOT, apps, image_usage
+from cves import shard_images
+from curate_taglines import load_summaries, render_manifest
+from release_scan import image_platforms
+
+HEX = re.compile(r"^[a-f0-9]{64}$")
+DANGEROUS_SOURCE = {"/", "/etc", "/root", "/var/run/docker.sock", "/run/docker.sock"}
+
+
+def read_evidence(source_apps, report_dir: Path, shards: int = 8) -> dict:
+    """Accept only exact full evidence from this image set and these shards."""
+    usage = image_usage(source_apps)
+    expected = set(usage)
+    architectures = image_platforms(source_apps)
+    discovered = {}
+    for shard in range(shards):
+        files = list(report_dir.rglob(f"release-cves-shard-{shard}.json"))
+        if len(files) != 1:
+            raise ValueError(f"Missing/duplicate security evidence for shard {shard}")
+        data = json.loads(files[0].read_text(encoding="utf-8"))
+        entries = data.get("results")
+        if (data.get("shard") != shard or data.get("shards") != shards
+                or data.get("images_total") != len(expected)
+                or not isinstance(entries, list)
+                or data.get("images_checked") != len(entries)):
+            raise ValueError(f"Inconsistent security report: shard {shard}")
+        expected_for_shard = set(shard_images(usage, shard, shards))
+        names = [entry.get("image") for entry in entries if isinstance(entry, dict)]
+        if len(names) != len(entries) or set(names) != expected_for_shard or len(set(names)) != len(names):
+            raise ValueError(f"Unexpected/missing scanned images in shard {shard}")
+        for entry in entries:
+            image = entry["image"]
+            if image in discovered:
+                raise ValueError(f"Image scanned more than once: {image}")
+            wanted_platforms = architectures[image]
+            if entry.get("platforms") != wanted_platforms:
+                raise ValueError(f"{image}: incomplete declared-platform coverage")
+            pinned = entry.get("pinned")
+            error = entry.get("error")
+            if pinned is not None:
+                if not isinstance(pinned, str) or "@sha256:" not in pinned:
+                    raise ValueError(f"{image}: invalid pinned image")
+                base, digest = pinned.rsplit("@sha256:", 1)
+                if not HEX.fullmatch(digest) or base != image.split("@sha256:", 1)[0]:
+                    raise ValueError(f"{image}: digest doesn't match source reference")
+                if "@sha256:" in image and pinned != image:
+                    raise ValueError(f"{image}: original immutable reference changed")
+            scans = entry.get("scans")
+            if not isinstance(scans, dict):
+                raise ValueError(f"{image}: missing scan records")
+            if scans and set(scans) != set(wanted_platforms):
+                raise ValueError(f"{image}: partial architecture scan")
+            safe = pinned is not None and not error and set(scans) == set(wanted_platforms)
+            for value in scans.values():
+                if not isinstance(value, dict):
+                    raise ValueError(f"{image}: malformed per-arch scan")
+                high, critical = value.get("high"), value.get("critical")
+                if type(high) is not int or type(critical) is not int or high < 0 or critical < 0:
+                    raise ValueError(f"{image}: invalid CVE counts")
+                if value.get("status") not in ("ok", "error"):
+                    raise ValueError(f"{image}: invalid scan status")
+                if value.get("status") == "error" or value.get("error") or high or critical:
+                    safe = False
+            reported = entry.get("status")
+            calculated = ("error" if error or not pinned or
+                          any(v.get("status") == "error" for v in scans.values())
+                          else "vulnerable" if any(v["high"] or v["critical"] for v in scans.values())
+                          else "clean")
+            if reported != calculated:
+                raise ValueError(f"{image}: dishonest status in scan report")
+            if reported != "clean":
+                safe = False
+            discovered[image] = {"safe": bool(safe), "pinned": pinned, "status": reported}
+    if set(discovered) != expected:
+        raise ValueError("Release coverage incomplete or inconsistent")
+    return discovered
+
+
+def insecure_defaults(app) -> list[str]:
+    """Conservative rule: unresolved dangerous defaults are never released."""
+    flags = []
+    for service, spec in (app.source.get("services") or {}).items():
+        if not isinstance(spec, dict):
+            flags.append(f"{service}: invalid service spec")
+            continue
+        for setting in ("privileged", "network_mode", "pid", "ipc", "userns"):
+            value = spec.get(setting)
+            if value is True and setting == "privileged" or value == "host":
+                flags.append(f"{service}: unsafe {setting}")
+        if spec.get("cap_add") or spec.get("devices"):
+            flags.append(f"{service}: privileged devices/capabilities require manual approval")
+        if any("seccomp:unconfined" in str(x) for x in (spec.get("security_opt") or [])):
+            flags.append(f"{service}: seccomp unconfined")
+        for v in spec.get("volumes") or []:
+            source = v.get("source", "") if isinstance(v, dict) else str(v).split(":", 1)[0]
+            if source in DANGEROUS_SOURCE:
+                flags.append(f"{service}: sensitive host volume {source}")
+        if "CHANGE_ME" in json.dumps(spec.get("environment") or []):
+            flags.append(f"{service}: default credentials not configured")
+    return sorted(set(flags))
+
+
+def stage(source: Path, evidence: dict, destination: Path, summaries: dict) -> dict:
+    if destination.exists():
+        raise ValueError("Refusing to overwrite existing staging directory")
+    source_apps = apps(source)
+    approved = {}
+    quarantine = {}
+    for app in source_apps:
+        reasons = insecure_defaults(app)
+        locked = {}
+        for service, spec in app.source["services"].items():
+            image = spec["image"]
+            item = evidence[image]
+            if not item["safe"]:
+                reasons.append(f"{service}: {image}: {item['status']}")
+            else:
+                locked[service] = item["pinned"]
+        if reasons:
+            quarantine[app.folder] = sorted(set(reasons))
+        else:
+            approved[app.folder] = (app, locked)
+    result = {
+        "source_apps": len(source_apps), "approved_count": len(approved),
+        "quarantined_count": len(quarantine),
+        "approved": sorted(approved), "quarantined": quarantine,
+        "policy": "all images scanned clean on declared platforms, pinned digest, safe static defaults",
+    }
+    if not approved:
+        return result
+    destination.mkdir(parents=True)
+    (destination / "Apps").mkdir()
+    for filename in ("store-config.json", "supported-languages.json"):
+        shutil.copyfile(source / filename, destination / filename)
+    category = json.loads((source / "category-list.json").read_text(encoding="utf-8"))
+    counts = Counter(app.metadata.get("category") for app, _ in approved.values())
+    for entry in category:
+        entry["count"] = counts.get(entry["name"], 0)
+    (destination / "category-list.json").write_text(json.dumps(category, indent=2) + "\n")
+    recommendations = json.loads((source / "recommend-list.json").read_text(encoding="utf-8"))
+    recommendations = [item for item in recommendations if item.get("name") in approved]
+    (destination / "recommend-list.json").write_text(json.dumps(recommendations, indent=2) + "\n")
+    for folder, (app, locked) in approved.items():
+        target = destination / "Apps" / folder
+        shutil.copytree(app.path.parent, target)
+        # Curate before changing images: its checker proves no service edits.
+        text = render_manifest(app.path.read_text(encoding="utf-8"), folder, summaries[folder])
+        manifest = yaml.safe_load(text)
+        for service, image in locked.items():
+            manifest["services"][service]["image"] = image
+        (target / "docker-compose.yml").write_text(
+            yaml.safe_dump(manifest, sort_keys=False, allow_unicode=True), encoding="utf-8")
+        # Verify all references are pinned and no service was omitted.
+        out = yaml.safe_load((target / "docker-compose.yml").read_text(encoding="utf-8"))
+        if {name: x["image"] for name, x in out["services"].items()} != locked:
+            raise ValueError(f"{folder}: staged compose differs from clean image set")
+    return result
+
+
+def verify_published(dist: Path, selected: dict) -> None:
+    index = json.loads((dist / "index.json").read_text(encoding="utf-8"))
+    published = index.get("apps", [])
+    if len(published) != selected["approved_count"]:
+        raise ValueError("Published count differs from approved release")
+    want = {"io.github.mrpiracy94." + folder for folder in selected["approved"]}
+    actual = {item["id"] for item in published}
+    if actual != want or len(actual) != len(published):
+        raise ValueError("Unsafe/omitted/duplicate application in published index")
+    for app_id in actual:
+        compose = dist / "apps" / app_id / "docker-compose.yml"
+        content = yaml.safe_load(compose.read_text(encoding="utf-8"))
+        for spec in content["services"].values():
+            if not isinstance(spec.get("image"), str) or "@sha256:" not in spec["image"]:
+                raise ValueError(f"{app_id}: published container not immutable")
+
+
+def main() -> int:
+    p = argparse.ArgumentParser()
+    p.add_argument("--reports", type=Path, required=True)
+    p.add_argument("--source", type=Path, default=ROOT)
+    p.add_argument("--stage", type=Path, default=ROOT / "release-source")
+    p.add_argument("--report", type=Path, default=ROOT / "out/release-selection.json")
+    opts = p.parse_args()
+    evidence = read_evidence(apps(opts.source), opts.reports)
+    result = stage(opts.source, evidence, opts.stage, load_summaries())
+    opts.report.parent.mkdir(parents=True, exist_ok=True)
+    opts.report.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print(f"Approved {result['approved_count']}/{result['source_apps']} apps. "
+          f"Quarantined {result['quarantined_count']} with recorded reasons.")
+    if not result["approved_count"]:
+        raise SystemExit("No clean app can be published: previous release NOT replaced")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
