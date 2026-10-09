@@ -1,8 +1,9 @@
-name: Verify maintained official Netbootxyz replacement
+name: Verify security-patched Netbootxyz successor
 on:
   pull_request:
     paths:
       - 'Apps/netbootxyz/docker-compose.yml'
+      - 'security/images/netbootxyz/**'
       - '.github/workflows/verify-netbootxyz-official.yml'
   workflow_dispatch:
 permissions:
@@ -10,31 +11,33 @@ permissions:
 jobs:
   security:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
-      - name: Install pinned Trivy
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: Install Trivy v0.75.0
         uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
         with:
           version: v0.75.0
-      - name: Verify official image AMD64 has zero HIGH or CRITICAL
-        run: trivy image --image-src remote --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --exit-code 1 --format json --timeout 12m --output netboot-amd64.json ghcr.io/netbootxyz/netbootxyz:latest
-      - name: Verify official image ARM64 has zero HIGH or CRITICAL
-        run: trivy image --image-src remote --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --exit-code 1 --format json --timeout 12m --output netboot-arm64.json ghcr.io/netbootxyz/netbootxyz:latest
-      - name: Check official image manifest and immutable digest
-        run: |
-          set -euo pipefail
-          docker buildx imagetools inspect ghcr.io/netbootxyz/netbootxyz:latest | tee netboot-manifest.txt
-          digest="$(awk '/^Digest:/ {print $2; exit}' netboot-manifest.txt)"
-          [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]]
-          echo "Verified upstream digest: $digest" >> "$GITHUB_STEP_SUMMARY"
-      - name: Preserve security proof
+      - name: Build patched AMD64 app image
+        run: docker buildx build --platform linux/amd64 --load -t mrstore-netbootxyz:amd64 -f security/images/netbootxyz/Dockerfile .
+      - name: Prove patched AMD64 image has zero HIGH or CRITICAL
+        run: trivy image --image-src docker --quiet --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format json --timeout 12m --output netboot-amd64.json mrstore-netbootxyz:amd64
+      - name: Smoke-test patched AMD64 Node app
+        run: docker run --rm --platform linux/amd64 --entrypoint /bin/sh mrstore-netbootxyz:amd64 -c 'node --version && test -f /app/package.json && test -d /app/node_modules'
+      - name: Build patched ARM64 app image
+        run: docker buildx build --platform linux/arm64 --load -t mrstore-netbootxyz:arm64 -f security/images/netbootxyz/Dockerfile .
+      - name: Prove patched ARM64 image has zero HIGH or CRITICAL
+        run: trivy image --image-src docker --quiet --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format json --timeout 12m --output netboot-arm64.json mrstore-netbootxyz:arm64
+      - name: Smoke-test patched ARM64 Node app
+        run: docker run --rm --platform linux/arm64 --entrypoint /bin/sh mrstore-netbootxyz:arm64 -c 'node --version && test -f /app/package.json && test -d /app/node_modules'
+      - name: Preserve proof, even on failure
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: netbootxyz-official-cve-evidence
+          name: netbootxyz-security-patched-evidence
           path: |
             netboot-amd64.json
             netboot-arm64.json
-            netboot-manifest.txt
           if-no-files-found: warn
