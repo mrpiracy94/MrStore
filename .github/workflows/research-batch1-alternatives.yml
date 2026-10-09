@@ -1,0 +1,97 @@
+name: Research batch 1 named image alternatives (not a release gate)
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/research-batch1-alternatives.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  assess:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include:
+          - app: phpmyadmin
+            current: lscr.io/linuxserver/phpmyadmin:latest
+            candidate: phpmyadmin:latest
+            risk: "Old LinuxServer /config and nginx settings do not migrate automatically to Apache"
+          - app: it-tools
+            current: corentinth/it-tools:latest
+            candidate: ghcr.io/corentinth/it-tools:latest
+            risk: "Official registry mirror; do not switch if digests or CVE counts do not improve"
+          - app: flaresolverr
+            current: ghcr.io/flaresolverr/flaresolverr:latest
+            candidate: flaresolverr/flaresolverr:latest
+            risk: "DockerHub is an official registry mirror; changing registries alone cannot fix a CVE"
+          - app: gitea
+            current: docker.io/gitea/gitea:latest
+            candidate: docker.gitea.com/gitea:latest-rootless
+            risk: "NOT DROP-IN: upstream explicitly disallows switching rootful to rootless on existing data"
+          - app: healthchecks
+            current: lscr.io/linuxserver/healthchecks:latest
+            candidate: healthchecks/healthchecks:latest
+            risk: "NOT DROP-IN: SQLite data lives at a different location, requires backup/restore"
+          - app: code-server
+            current: lscr.io/linuxserver/code-server:latest
+            candidate: codercom/code-server:latest
+            risk: "NOT DROP-IN: official image uses port 8080 and a different home/config directory"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan both concrete candidates on AMD64
+        run: |
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --timeout 12m --format json --output old.json "${{ matrix.current }}"
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --timeout 12m --format json --output candidate.json "${{ matrix.candidate }}"
+      - name: Compare findings without declaring deployment safe
+        env:
+          APP: ${{ matrix.app }}
+          CURRENT: ${{ matrix.current }}
+          CANDIDATE: ${{ matrix.candidate }}
+          MIGRATION_RISK: ${{ matrix.risk }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def counts(path):
+              with open(path, encoding='utf-8') as src:
+                  data = json.load(src)
+              if not isinstance(data.get('Results'), list) or not data['Results']:
+                  raise SystemExit('Invalid/incomplete scanner report ' + path)
+              return Counter(
+                  hit.get('Severity') for entry in data['Results']
+                  for hit in entry.get('Vulnerabilities') or []
+                  if hit.get('Severity') in ('HIGH', 'CRITICAL')
+              )
+          old, proposed = counts('old.json'), counts('candidate.json')
+          summary = (
+              f"## {os.environ['APP']} — independent CVE research (AMD64 only)\n\n"
+              "| Image | CRITICAL | HIGH |\n|---|---:|---:|\n"
+              f"| {os.environ['CURRENT']} | {old['CRITICAL']} | {old['HIGH']} |\n"
+              f"| {os.environ['CANDIDATE']} | {proposed['CRITICAL']} | {proposed['HIGH']} |\n\n"
+              f"**Migration / feature risk:** {os.environ['MIGRATION_RISK']}\n\n"
+              "**NOT RELEASE APPROVED.** Independent ARM64 verification, "
+              "preservation of user data, configuration, service ports and functionality "
+              "are required before any change to a catalogue manifest.\n"
+          )
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as f:
+              f.write(summary)
+          if proposed['CRITICAL'] or proposed['HIGH']:
+              print('Candidate still has HIGH or CRITICAL findings; do not deploy.')
+          PY
+      - name: Save original vulnerability reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: batch1-${{ matrix.app }}-research-amd64
+          path: |
+            old.json
+            candidate.json
+          if-no-files-found: warn
