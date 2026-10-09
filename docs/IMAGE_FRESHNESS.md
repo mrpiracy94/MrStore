@@ -22,6 +22,10 @@ Cada resultado é classificado como:
 
 `lscr.io/linuxserver/steamos:latest` foi descontinuada pelo LinuxServer.io e deixou de ser atualizada. A documentação oficial confirma que a tag `latest` já não é disponibilizada: https://info.linuxserver.io/issues/2025-12-13-steamosdep/ . A MrStore ainda contém uma entrada `Apps/steamos`; não converter silenciosamente essa aplicação noutra diferente.
 
+Também está confirmada pelo fornecedor a descontinuação do `lscr.io/linuxserver/cops:latest`, porque o software upstream foi abandonado: https://info.linuxserver.io/issues/2023-05-15-cops/ .
+
+O NZBGet **não** deve ser classificado como abandonado: apesar do aviso de 2023, o LinuxServer.io retomou a imagem em 2024, com novas atualizações em 2026: https://docs.linuxserver.io/images/docker-nzbget/ .
+
 ## Execução automática
 
 O GitHub Actions executa a auditoria semanalmente em **oito grupos de imagens** (com apenas dois grupos paralelos) e permite execução manual. Cada grupo conserva um artefacto JSON com as imagens, datas, razões de classificação e erros, além de um resumo legível. A falta de acesso ao registry faz falhar a verificação correspondente e não conta como aplicação atualizada.
