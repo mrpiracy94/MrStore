@@ -12,7 +12,6 @@ import json
 from pathlib import Path
 import re
 
-import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 TAGLINES = ROOT / "data/taglines-pt.json"
@@ -46,6 +45,7 @@ def render_manifest(source: str, app: str, subtitle: str) -> str:
     major, minor, patch = map(int, matches[0])
     new_version = f'  version: "{major}.{minor}.{patch + 1}"'
     changed = MANIFEST_VERSION.sub(new_version, changed, count=1)
+    import yaml  # Only needed to validate source YAML, not published index.json
     before = yaml.safe_load(source)
     after = yaml.safe_load(changed)
     if not isinstance(before, dict) or not isinstance(after, dict):
