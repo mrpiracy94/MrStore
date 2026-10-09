@@ -1,0 +1,22 @@
+name: Curated new application discovery
+on:
+  schedule:
+    - cron: '17 7 1 * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Propose missing curated applications as review-only issues
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/discover_apps.py
