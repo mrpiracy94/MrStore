@@ -97,6 +97,11 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(audit_exit_status({**result, 'critical': 0, 'high': 1, 'failures': 0}), 3)
         self.assertEqual(audit_exit_status({**result, 'critical': 0, 'high': 0, 'failures': 0}), 0)
 
+    def test_cve_scan_preserves_daily_audit_while_deduplicating_pushes(self):
+        workflow = (ROOT / '.github/workflows/cve-scan.yml').read_text(encoding='utf-8')
+        self.assertIn("group: mrstore-cve-${{ github.event_name }}-${{ github.ref }}", workflow)
+        self.assertIn("cancel-in-progress: ${{ github.event_name == 'push' }}", workflow)
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)
