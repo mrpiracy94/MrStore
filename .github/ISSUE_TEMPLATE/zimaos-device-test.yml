@@ -1,0 +1,33 @@
+name: Teste real num equipamento ZimaOS
+description: Registar instalação e atualização reais, para além da validação GitHub Actions
+title: "ZimaOS device test: "
+body:
+  - type: input
+    id: model
+    attributes:
+      label: Equipamento e versão ZimaOS
+    validations:
+      required: true
+  - type: input
+    id: release
+    attributes:
+      label: Release/catalog SHA testado
+    validations:
+      required: true
+  - type: checkboxes
+    id: steps
+    attributes:
+      label: Ensaios realizados
+      options:
+        - label: Catálogo v2 importado e listado corretamente
+        - label: Imagens e ícones válidos para a arquitetura
+        - label: Instalação e interface web de app testada
+        - label: Volumes e dados preservados após reinício
+        - label: Backup, migração e restauração testados
+        - label: Rollback executado no ambiente de ensaio
+  - type: textarea
+    id: results
+    attributes:
+      label: Logs (sem credenciais), bloqueios e conclusões
+    validations:
+      required: true

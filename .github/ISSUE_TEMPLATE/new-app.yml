@@ -1,0 +1,40 @@
+name: Propor aplicação à MrStore
+description: Sugere uma app para ZimaOS, sem publicação automática
+title: "Nova aplicação: "
+labels: []
+body:
+  - type: input
+    id: app
+    attributes:
+      label: Nome da aplicação
+      placeholder: Ex. MinhaApp
+    validations:
+      required: true
+  - type: input
+    id: upstream
+    attributes:
+      label: Repositório ou documentação oficial
+      placeholder: https://github.com/...
+    validations:
+      required: true
+  - type: input
+    id: image
+    attributes:
+      label: Imagem Docker oficial
+      placeholder: ghcr.io/organização/aplicação:versão
+    validations:
+      required: true
+  - type: textarea
+    id: persistence
+    attributes:
+      label: Volumes, portas, segredos e dados persistentes
+      description: Explica como preservar dados e configurar credenciais
+    validations:
+      required: true
+  - type: textarea
+    id: testing
+    attributes:
+      label: Compatibilidade e testes ZimaOS
+      description: Arquiteturas, passos de instalação, upgrades e rollback
+    validations:
+      required: true

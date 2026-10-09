@@ -1,0 +1,58 @@
+name: MrStore public catalog uptime
+on:
+  schedule:
+    - cron: '12 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: mrstore-catalog-uptime
+  cancel-in-progress: false
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify public ZimaOS endpoints and actual release-status.json
+        id: probe
+        continue-on-error: true
+        run: python scripts/check_public_catalog.py
+      - name: Consolidate one incident issue without hiding failed checks
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROBE_RESULT: ${{ steps.probe.outcome }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          title = "MrStore public catalog availability incident"
+          response = subprocess.run(
+              ["gh", "issue", "list", "--state", "all", "--limit", "300",
+               "--json", "title,number,state"], capture_output=True, text=True, check=True)
+          found = [x for x in json.loads(response.stdout) if x["title"] == title]
+          if len(found) > 1:
+              raise SystemExit("Multiple incident issues need review")
+          incident = found[0] if found else None
+          if os.environ["PROBE_RESULT"] != "success":
+              message = ("The published MrStore endpoints or security evidence are "
+                         "unavailable or inconsistent. Review the failed uptime workflow.")
+              if not incident:
+                  subprocess.run(["gh", "issue", "create", "--title", title,
+                                  "--body", message], check=True)
+              else:
+                  number = str(incident["number"])
+                  if incident["state"].upper() != "OPEN":
+                      subprocess.run(["gh", "issue", "reopen", number], check=True)
+                  subprocess.run(["gh", "issue", "comment", number,
+                                  "--body", message], check=True)
+          elif incident and incident["state"].upper() == "OPEN":
+              number = str(incident["number"])
+              subprocess.run(["gh", "issue", "comment", number,
+                              "--body", "Recovered: store, index and security status verified."], check=True)
+              subprocess.run(["gh", "issue", "close", number], check=True)
+          PY
+      - name: Fail closed when public release cannot be verified
+        if: steps.probe.outcome != 'success'
+        run: exit 1

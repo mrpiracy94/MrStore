@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "vikunja",
+    "image": "vikunja/vikunja",
+    "upstream": "https://vikunja.io/docs/installing/",
+    "notes": "Persistent /db and /app/vikunja/files; public URL required"
+  },
+  {
+    "slug": "linkwarden",
+    "image": "ghcr.io/linkwarden/linkwarden",
+    "upstream": "https://github.com/linkwarden/linkwarden/blob/main/docker-compose.yml",
+    "notes": "Requires database and Meilisearch; migration and backups"
+  },
+  {
+    "slug": "forgejo",
+    "image": "codeberg.org/forgejo/forgejo",
+    "upstream": "https://forgejo.org/docs/latest/admin/installation/docker/",
+    "notes": "Check persistent /data, SSH ports, architecture and safe migration"
+  }
+]
