@@ -9,7 +9,7 @@ O projeto foi reconstruído com os mesmos 254 manifestos Docker Compose. A valid
 
 As duas colisões antes indicadas eram falsos positivos de protocolos distintos (TCP e UDP). O validador passou a comparar porta e protocolo.
 
-A auditoria offline **não é uma auditoria CVE**. A pesquisa de vulnerabilidades HIGH/CRITICAL é efetuada com o Trivy no GitHub Actions, nos oito grupos (258 imagens) em cada ciclo diário, até quatro grupos em paralelo. As execuções manuais permitem analisar apenas um grupo; ocorrências CRITICAL e erros de scanner fazem falhar a auditoria, depois de preservar os relatórios. Falhas de acesso à registry ou ao scanner contam como falhas e devem ser investigadas. Os relatórios detalhados estão nos artifacts de GitHub Actions, após a execução dos respetivos workflows.
+A auditoria offline **não é uma auditoria CVE**. A pesquisa de vulnerabilidades HIGH/CRITICAL é efetuada com o Trivy no GitHub Actions, nos oito grupos (258 imagens) em cada ciclo diário, até quatro grupos em paralelo. As execuções manuais permitem analisar apenas um grupo; ocorrências HIGH/CRITICAL e erros de scanner fazem falhar a auditoria, depois de preservar os relatórios. Falhas de acesso à registry ou ao scanner contam como falhas e devem ser investigadas. Os relatórios detalhados estão nos artifacts de GitHub Actions, após a execução dos respetivos workflows.
 
 A publicação v2 usa o builder oficial de ZimaOS e um verificador que exige exatamente 254 apps em `index.json`, cada uma com metadata e Compose. É necessária validação posterior numa instalação ZimaOS real.
 
@@ -33,3 +33,11 @@ Os issues por grupo devem permanecer abertos até os fornecedores publicarem ver
 - **Isto não resolve CVEs das outras 257 imagens.** A auditoria completa deve continuar a identificar, corrigir e reanalisar cada imagem, ou manter fora da publicação as imagens sem solução validada, após decisão sobre a política da loja.
 
 Provas: [publicação da imagem](https://github.com/mrpiracy94/MrStore/actions/runs/37997771065), [comparação e verificação do digest remoto](https://github.com/mrpiracy94/MrStore/actions/runs/37998362405).
+
+## Política obrigatória de lançamento: 0 HIGH / 0 CRITICAL
+
+A publicação do catálogo fica bloqueada por oito verificações independentes de Trivy, que analisam as **258 referências de imagens** em conjunto. Cada job é obrigatório e falha se tiver uma ocorrência HIGH, CRITICAL ou erro de consulta; o builder/publicador exige `needs: security_audit` e só pode publicar se **todos** tiverem resultado válido e sem vulnerabilidades detetadas. Todos os relatórios ficam guardados mesmo quando a execução falha.
+
+**Consequência imediata:** os relatórios atuais identificam muitas vulnerabilidades em imagens de terceiros; por isso, os próximos releases serão bloqueados até que todas as imagens sejam corrigidas e reanalisadas. Isto **não revoga** uma versão anteriormente publicada, **não remove** aplicações já instaladas nem corrige automaticamente os containers dos utilizadores. Essa decisão requer política de despublicação/quarentena e testes de migração específicos.
+
+A exigência é operacional e limitada às bases de dados e capacidades do Trivy usadas no scan. Tags flutuantes podem mudar entre a análise e o consumo da imagem; versões em digest imutável são preferíveis para evitar mudanças inesperadas.

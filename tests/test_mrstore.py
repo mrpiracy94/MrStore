@@ -55,6 +55,23 @@ class StoreTests(unittest.TestCase):
         self.assertIn('ghcr.io/actualbudget/actual:latest', usage)
         self.assertNotIn('actualbudget/actual-server:latest', usage)
 
+    def test_publication_requires_zero_high_and_critical_across_all_shards(self):
+        import yaml
+        path = ROOT / '.github' / 'workflows' / 'publish.yml'
+        workflow = yaml.safe_load(path.read_text(encoding='utf-8'))
+        jobs = workflow['jobs']
+        scan = jobs['security_audit']
+        self.assertEqual(scan['strategy']['matrix']['shard'], list(range(8)))
+        self.assertFalse(scan['strategy']['fail-fast'])
+        self.assertEqual(jobs['build']['needs'], 'security_audit')
+        script = next(step['run'] for step in scan['steps']
+                      if isinstance(step, dict) and 'run' in step
+                      and 'scripts/cves.py' in step['run'])
+        self.assertIn('--shards 8', script)
+        self.assertIn('--shard', script)
+        self.assertTrue(any(step.get('if') == 'always()' for step in scan['steps']))
+        self.assertIn('if: success()', path.read_text(encoding='utf-8'))
+
     def test_all_shards_are_disjoint_and_complete(self):
         keys=list(image_usage(apps()))
         batches=[shard_images(keys,idx,8) for idx in range(8)]
