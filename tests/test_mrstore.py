@@ -172,6 +172,17 @@ class StoreTests(unittest.TestCase):
             for vol in service['volumes']
         ), 'Persistent Meilisearch data must survive upgrades')
 
+    def test_it_tools_release_is_pinned_to_scanned_multiarch_digest(self):
+        it_tools = next(item for item in apps() if item.folder == 'it-tools')
+        spec = it_tools.source['services']['it-tools']
+        self.assertEqual(spec['image'],
+                         'ghcr.io/mrpiracy94/mrstore-it-tools:'
+                         'static-nginx-alpine-secfix-20261010@sha256:'
+                         '36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073')
+        self.assertTrue(any(p.get('target') == 80 and str(p.get('published')) == '30013'
+                            for p in spec.get('ports', [])))
+        self.assertEqual(spec.get('volumes', []), [], 'IT-Tools has no persisted state')
+
     def test_frigate_defaults_are_not_privileged(self):
         frigate = next(item for item in apps() if item.folder == 'frigate')
         self.assertIsNot(frigate.source['services']['frigate'].get('privileged'), True)
