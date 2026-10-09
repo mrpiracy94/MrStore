@@ -44,7 +44,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.airsonic-advanced
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -53,8 +53,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Media
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/airsonic-advanced/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/airsonic-advanced/icon.svg
+  icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/57e939e504eda0ea764098015da93aa666ad6f31/png/airsonic.png
+  thumbnail: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/57e939e504eda0ea764098015da93aa666ad6f31/png/airsonic.png
   title:
     en_US: "Airsonic Advanced"
   tagline:

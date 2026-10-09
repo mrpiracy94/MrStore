@@ -44,7 +44,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.mylar3
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -53,8 +53,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Media
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/mylar3/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/mylar3/icon.svg
+  icon: https://raw.githubusercontent.com/selfhst/icons/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/mylar3.png
+  thumbnail: https://raw.githubusercontent.com/selfhst/icons/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/mylar3.png
   title:
     en_US: "Mylar3"
   tagline:

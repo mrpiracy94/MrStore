@@ -32,7 +32,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.adguardhome-sync
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -41,8 +41,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Networking
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/adguardhome-sync/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/adguardhome-sync/icon.svg
+  icon: https://raw.githubusercontent.com/selfhst/icons/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/adguardhome-sync.png
+  thumbnail: https://raw.githubusercontent.com/selfhst/icons/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/adguardhome-sync.png
   title:
     en_US: "AdGuardHome Sync"
   tagline:

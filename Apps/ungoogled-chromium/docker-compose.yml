@@ -42,7 +42,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.ungoogled-chromium
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Productivity
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/ungoogled-chromium/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/ungoogled-chromium/icon.svg
+  icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/57e939e504eda0ea764098015da93aa666ad6f31/png/chromium.png
+  thumbnail: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/57e939e504eda0ea764098015da93aa666ad6f31/png/chromium.png
   title:
     en_US: "Ungoogled Chromium"
   tagline:

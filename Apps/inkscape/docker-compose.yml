@@ -42,7 +42,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.inkscape
-  version: "1.0.0"
+  version: "1.0.1"
   update_at: "2026-10-09"
   architectures:
     - amd64
@@ -51,8 +51,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Productivity
-  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/inkscape/icon.svg
-  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/inkscape/icon.svg
+  icon: https://raw.githubusercontent.com/selfhst/icons/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/inkscape.png
+  thumbnail: https://raw.githubusercontent.com/selfhst/icons/2053b70b283ffed5f2cc1424d1e17d9c554a846d/png/inkscape.png
   title:
     en_US: "Inkscape"
   tagline:
