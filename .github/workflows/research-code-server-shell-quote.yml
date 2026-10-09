@@ -1,0 +1,52 @@
+name: Locate code-server vulnerable shell-quote package
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/research-code-server-shell-quote.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Capture exact detected CVEs and affected package locations
+        run: |
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/amd64 --timeout 12m --format json --output current-code-server.json lscr.io/linuxserver/code-server:latest
+          python - <<'PY'
+          import json
+          data=json.load(open('current-code-server.json',encoding='utf-8'))
+          if not isinstance(data.get('Results'),list) or not data['Results']:
+              raise SystemExit('Incomplete Trivy report')
+          for entry in data['Results']:
+              for finding in entry.get('Vulnerabilities') or []:
+                  print('CVE=',finding.get('VulnerabilityID'),
+                        'severity=',finding.get('Severity'),
+                        'pkg=',finding.get('PkgName'),
+                        'version=',finding.get('InstalledVersion'),
+                        'fixed=',finding.get('FixedVersion'),
+                        'target=',entry.get('Target'),
+                        'pkgpath=',finding.get('PkgPath'))
+          PY
+      - name: Locate shell-quote files within the current LinuxServer image
+        run: |
+          docker run --rm --platform linux/amd64 --entrypoint sh lscr.io/linuxserver/code-server:latest -c '
+            echo "--- Installed package.json candidates ---"
+            find /app /usr /opt /config -path "*/node_modules/shell-quote/package.json" -print 2>/dev/null | head -40 || true
+            echo "--- Executable locations ---"
+            command -v node || true
+            command -v npm || true
+            find /app /usr/local -name code-server -type f 2>/dev/null | head -12 || true
+          '
+      - name: Preserve complete scanner evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: code-server-shell-quote-evidence
+          path: current-code-server.json
+          if-no-files-found: warn
