@@ -55,7 +55,7 @@ class StoreTests(unittest.TestCase):
         self.assertIn('ghcr.io/actualbudget/actual:latest', usage)
         self.assertNotIn('actualbudget/actual-server:latest', usage)
 
-    def test_publication_requires_zero_high_and_critical_across_all_shards(self):
+    def test_publication_uses_full_evidence_and_per_app_quarantine(self):
         import yaml
         path = ROOT / '.github' / 'workflows' / 'publish.yml'
         workflow = yaml.safe_load(path.read_text(encoding='utf-8'))
@@ -66,10 +66,17 @@ class StoreTests(unittest.TestCase):
         self.assertEqual(jobs['build']['needs'], 'security_audit')
         script = next(step['run'] for step in scan['steps']
                       if isinstance(step, dict) and 'run' in step
-                      and 'scripts/cves.py' in step['run'])
+                      and 'scripts/release_scan.py' in step['run'])
         self.assertIn('--shards 8', script)
         self.assertIn('--shard', script)
         self.assertTrue(any(step.get('if') == 'always()' for step in scan['steps']))
+        build = jobs['build']['steps']
+        self.assertTrue(any('scripts/release_catalog.py' in str(step.get('run',''))
+                            for step in build))
+        builder = next(step for step in build if step.get('name') == 'Build official ZimaOS v2 catalog')
+        self.assertEqual(builder['with']['source'], 'release-source')
+        self.assertTrue(any('scripts/verify_dist.py' in str(step.get('run',''))
+                            for step in build))
         self.assertIn('if: success()', path.read_text(encoding='utf-8'))
 
     def test_all_shards_are_disjoint_and_complete(self):
