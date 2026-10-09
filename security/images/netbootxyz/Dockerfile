@@ -8,7 +8,9 @@ RUN set -eux; \
     apk add --no-cache --virtual .mrstore-security-npm npm; \
     cd /app; \
     npm update --omit=dev --no-audit --no-fund; \
-    npm install --omit=dev --no-audit --no-fund --save-exact systeminformation@5.31.7; \
+    npm install --omit=dev --no-audit --no-fund --save-exact systeminformation@5.31.7 js-yaml@4.3.2; \
+    npm pkg set 'overrides.path-to-regexp=0.1.13'; \
+    npm install --omit=dev --no-audit --no-fund; \
     npm cache clean --force; \
     apk del .mrstore-security-npm; \
     rm -rf /root/.npm /tmp/.npm
