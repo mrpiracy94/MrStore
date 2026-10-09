@@ -1,7 +1,7 @@
 name: actual-budget
 services:
   actual-budget:
-    image: actualbudget/actual-server:latest
+    image: ghcr.io/actualbudget/actual:latest
     container_name: actual-budget
     restart: unless-stopped
     ports:

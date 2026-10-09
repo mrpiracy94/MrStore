@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-10-09T22:09:55Z",
+  "updated_at": "2026-10-09T22:17:46Z",
   "app_count": 254,
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "apps": [
@@ -22,7 +22,7 @@
       "thumbnail": "/apps/io.github.mrpiracy94.actual-budget/assets/actual-budget.webp",
       "compose_url": "/apps/io.github.mrpiracy94.actual-budget/docker-compose.yml",
       "meta_url": "/apps/io.github.mrpiracy94.actual-budget/meta.json",
-      "content_hash": "ae1c31d6",
+      "content_hash": "c0ddfea6",
       "version": "1.0.1"
     },
     {
