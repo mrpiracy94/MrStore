@@ -59,6 +59,49 @@ jobs:
           if any(t['title']==title for t in json.loads(existing.stdout)):raise SystemExit(0)
           subprocess.run(['gh','issue','create','--title',title,'--body-file','out/updates.md'],check=True)
           PY
+      - name: Track persistent registry lookup failures
+        if: always() && steps.compare.outcome != 'skipped'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+
+          report_file = Path('out/updates.json')
+          if not report_file.exists():
+              raise SystemExit('No image update report produced.')
+          report = json.loads(report_file.read_text(encoding='utf-8'))
+          failures = report.get('failed', [])
+          title = 'MrStore registry lookup failures'
+          existing = subprocess.run(
+              ['gh', 'issue', 'list', '--state', 'all', '--limit', '200',
+               '--json', 'title,number,state'],
+              capture_output=True, text=True, check=True)
+          matches = [i for i in json.loads(existing.stdout) if i['title'] == title]
+          if len(matches) > 1:
+              raise SystemExit('Duplicate registry failure issues; manual review required.')
+          issue = matches[0] if matches else None
+          if failures:
+              if issue:
+                  number = str(issue['number'])
+                  if issue['state'].upper() != 'OPEN':
+                      subprocess.run(['gh', 'issue', 'reopen', number], check=True)
+                  subprocess.run(['gh', 'issue', 'edit', number,
+                                  '--body-file', 'out/updates.md'], check=True)
+                  print(f'Refreshed registry warning #{number}: {len(failures)} failures.')
+              else:
+                  subprocess.run(['gh', 'issue', 'create', '--title', title,
+                                  '--body-file', 'out/updates.md'], check=True)
+          elif issue and issue['state'].upper() == 'OPEN':
+              number = str(issue['number'])
+              subprocess.run(['gh', 'issue', 'comment', number,
+                              '--body', 'Nova verificação: todas as imagens consultadas '
+                              'sem falhas de registry.'], check=True)
+              subprocess.run(['gh', 'issue', 'close', number], check=True)
+          else:
+              print('All registry image lookups succeeded.')
+          PY
       - name: Save successful digest baseline (never changes apps)
         if: always() && steps.compare.outcome != 'skipped'
         run: |
