@@ -22,3 +22,14 @@ A primeira execução em 2026-10-09 analisou **33 de 258 imagens** e encontrou *
 Os maiores contributos CRITICAL do grupo foram Frigate (36), Obsidian (11), Paperless-ngx (9) e UniFi Network Application (9). Frigate deixa de executar privilegiado por omissão; isto diminui a exposição do host, **mas não corrige as CVEs da imagem**.
 
 Os issues por grupo devem permanecer abertos até os fornecedores publicarem versões corrigidas, essas versões serem testadas e um scan novo verificar a melhoria. As versões principais de qBittorrent, PostgreSQL/Immich e outros serviços com dados persistentes precisam de backup, testes de compatibilidade e migração antes de se alterar a tag. O sucesso da validação estrutural ou da publicação não deve ser confundido com ausência de vulnerabilidades.
+
+## Remediação qBittorrent verificada (2026-10-09)
+
+- A imagem antiga `lscr.io/linuxserver/qbittorrent:4.6.7` apresentava **4 CRITICAL e 135 HIGH**.
+- Uma atualização direta para `lscr.io/linuxserver/qbittorrent:5.2.4-libtorrentv1` eliminava as CRITICAL mas ainda apresentava **13 HIGH**.
+- Foi construída uma variante baseada na imagem oficial, com atualização de pacotes Alpine. O Trivy **v0.75.0** encontrou **0 CRITICAL e 0 HIGH** tanto em AMD64 como em ARM64; os binários foram testados nas duas arquiteturas.
+- Foi publicada no GHCR e o manifest `Apps/qbittorrent-4/docker-compose.yml` foi atualizado para a referência **imutável** `ghcr.io/mrpiracy94/mrstore-qbittorrent:5.2.4-libtorrentv1-secfix-20261009@sha256:6e0475093e34571c90fc0d1ede2920ca847f1b4a1ac127351931eab6e12c6c4c`. O acesso público e o novo scan ao digest remoto foram validados por GitHub Actions.
+- Esta entrada atravessa a versão principal 4.x→5.2.4. Instalações existentes **não são atualizadas automaticamente pelo GitHub**; testar compatibilidade e guardar backup de `/DATA/AppData/qbittorrent-4/config` antes de atualizar no ZimaOS.
+- **Isto não resolve CVEs das outras 257 imagens.** A auditoria completa deve continuar a identificar, corrigir e reanalisar cada imagem, ou manter fora da publicação as imagens sem solução validada, após decisão sobre a política da loja.
+
+Provas: [publicação da imagem](https://github.com/mrpiracy94/MrStore/actions/runs/37997771065), [comparação e verificação do digest remoto](https://github.com/mrpiracy94/MrStore/actions/runs/37998362405).
