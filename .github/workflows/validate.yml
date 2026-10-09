@@ -31,6 +31,18 @@ jobs:
         run: python scripts/curate_taglines.py --check
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
+      - name: Inventory ZimaOS launcher compatibility (offline, not runtime proof)
+        run: python scripts/compatibility.py
+      - name: Compatibility summary
+        if: always()
+        run: test ! -f out/compatibility.md || cat out/compatibility.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload compatibility findings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zimaos-compatibility-static
+          path: out/compatibility.*
+          if-no-files-found: warn
       - name: Summary
         if: always()
         run: test ! -f out/audit.md || cat out/audit.md >> "$GITHUB_STEP_SUMMARY"
