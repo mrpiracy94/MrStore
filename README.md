@@ -60,3 +60,9 @@ Catálogo original: mistura de definições LinuxServer.io, Seedit4Me e projetos
 - Monitorização de imagens: https://github.com/google/go-containerregistry/tree/main/cmd/crane
 
 Este repositório é uma loja **não oficial** e não representa a IceWhaleTech nem os programadores das aplicações listadas.
+
+## Renovate — novas tags/versionamentos de imagens (opcional)
+
+A configuração `renovate.json` prepara **propostas de pull request para tags versionadas** usadas nos Docker Compose (por exemplo `v1.13.3` → `v1.13.4`). A ferramenta **não executa só por existir o ficheiro**: é necessário instalar e autorizar a [GitHub App Renovate](https://github.com/apps/renovate) para o repositório MrStore ou executar Renovate num runner próprio. Os pull requests não fazem merge automaticamente.
+
+Rever cada PR, executar testes e **atualizar manualmente `x-casaos.version`** (revisão publicada na loja) antes de fazer merge. As tags flutuantes `latest`/`release` continuam a ser acompanhadas principalmente pelo monitor de digests. O Renovate pode não encontrar novas tags em imagens com convenções de versionamento não padronizadas.
