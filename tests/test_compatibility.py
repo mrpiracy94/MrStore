@@ -37,6 +37,24 @@ class CompatibilityTests(unittest.TestCase):
         env = self.by_name["karakeep"].source["services"]["karakeep"]["environment"]
         self.assertIn("NEXTAUTH_URL=http://zimaos.local:30002", env)
 
+    def test_bookstack_requires_configured_external_db_and_app_key(self):
+        app = self.by_name["bookstack"]
+        item = inspect_app(app)
+        self.assertEqual(item["status"], "configuration_required")
+        self.assertIn("external_database_required", [x["code"] for x in item["checks"]])
+        environment = app.source["services"]["bookstack"]["environment"]
+        self.assertIn("APP_URL=http://zimaos.local:20026", environment)
+        self.assertIn("APP_KEY=CHANGE_ME", environment)
+        self.assertIn("DB_HOST=CHANGE_ME_DB_HOST", environment)
+        self.assertIn("DB_USERNAME=bookstack", environment)
+        self.assertIn("DB_PASSWORD=CHANGE_ME", environment)
+        self.assertFalse(any(x.startswith("DB_PASS=") or x.startswith("DB_USER=")
+                             for x in environment))
+        editable = {x["container"] for x in
+                    app.source["services"]["bookstack"]["x-casaos"]["envs"]}
+        self.assertTrue({"APP_URL", "APP_KEY", "DB_HOST",
+                         "DB_USERNAME", "DB_PASSWORD", "DB_DATABASE"} <= editable)
+
     def test_cloudflared_is_headless_not_web_verified(self):
         item = inspect_app(self.by_name["cloudflared"])
         self.assertEqual(item["status"], "headless_not_runtime_tested")
