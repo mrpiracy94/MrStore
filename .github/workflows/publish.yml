@@ -79,7 +79,7 @@ jobs:
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
   security_audit:
-    # Run full eight-shard audits only on main/manual releases; PRs get preflight.
+    # Full 32-shard release audit on main/manual releases; PRs get fast preflight.
     if: github.event_name != 'pull_request'
     needs: preflight
     name: Scan release images and platforms (shard ${{ matrix.shard }})
@@ -87,10 +87,10 @@ jobs:
     timeout-minutes: 240
     strategy:
       fail-fast: false
-      # 8 independent runners x 4 workers per runner = 32 image scans.
-      max-parallel: 8
+      # 31 x 4 + 1 x 2 = 126 maximum image scans (runner limits permitting).
+      max-parallel: 32
       matrix:
-        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
     permissions:
       contents: read
     steps:
@@ -117,9 +117,10 @@ jobs:
       - name: Scan all catalog images by immutable digest on AMD64 and ARM64
         env:
           MRSTORE_CVE_DB_PREPARED: '1'
-        run: >-
-          python scripts/release_scan.py --shards 8 --shard ${{ matrix.shard }}
-          --workers 4 --output-dir out
+        run: |
+          workers=4
+          if [ "${{ matrix.shard }}" = '31' ]; then workers=2; fi
+          python scripts/release_scan.py --shards 32 --shard ${{ matrix.shard }} --workers "$workers" --output-dir out
       - name: Preserve complete per-image evidence, including vulnerable/inconclusive
         if: always()
         uses: actions/upload-artifact@v4
@@ -144,7 +145,7 @@ jobs:
         run: |
           python scripts/validate.py
           python -m unittest discover -s tests -v
-      - name: Fetch eight mandatory security evidence reports
+      - name: Fetch 32 mandatory security evidence reports
         uses: actions/download-artifact@v8
         with:
           pattern: mrstore-release-security-shard-*
