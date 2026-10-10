@@ -21,10 +21,10 @@ if [[ "$APP" == gitea ]]; then
   ssh_port="$(docker port "$cid" 22/tcp | sed -n 's/.*://p' | head -1)"
   [[ "$http_port" =~ ^[0-9]+$ && "$ssh_port" =~ ^[0-9]+$ ]]
   for _ in $(seq 1 120); do
-    if curl -fsSL --max-time 3 "http://127.0.0.1:$http_port/" -o /dev/null; then break; fi
+    if curl -fsS --max-time 3 "http://127.0.0.1:$http_port/" -o /dev/null; then break; fi
     sleep 2
   done
-  curl -fsSL --max-time 10 "http://127.0.0.1:$http_port/" -o /dev/null
+  curl -fsS --max-time 10 "http://127.0.0.1:$http_port/" -o /dev/null
   timeout 5 bash -c "echo >/dev/tcp/127.0.0.1/$ssh_port"
 else
   docker run --rm --entrypoint /usr/local/bin/qui "$IMAGE" --version
@@ -43,10 +43,10 @@ echo "mrstore-$APP-$ARCH" > "$work/data/.mrstore-smoke"
 docker restart "$cid" >/dev/null
 if [[ "$APP" == gitea ]]; then
   for _ in $(seq 1 120); do
-    if curl -fsSL --max-time 3 "http://127.0.0.1:$http_port/" -o /dev/null; then break; fi
+    if curl -fsS --max-time 3 "http://127.0.0.1:$http_port/" -o /dev/null; then break; fi
     sleep 2
   done
-  curl -fsSL --max-time 10 "http://127.0.0.1:$http_port/" -o /dev/null
+  curl -fsS --max-time 10 "http://127.0.0.1:$http_port/" -o /dev/null
   timeout 5 bash -c "echo >/dev/tcp/127.0.0.1/$ssh_port"
 else
   for _ in $(seq 1 75); do
