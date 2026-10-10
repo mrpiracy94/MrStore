@@ -51,9 +51,10 @@ if [[ "$APP" == gitea ]]; then
     -p 127.0.0.1::3000 -p 127.0.0.1::22 \
     -e USER_UID=1000 -e USER_GID=1000 -e TZ=Europe/Lisbon \
     -v "$work/data:/data" "$IMAGE")"
-  http_port="$(docker port "$cid" 3000/tcp | sed -n 's/.*://p' | head -1)"
-  ssh_port="$(docker port "$cid" 22/tcp | sed -n 's/.*://p' | head -1)"
+  http_port="$(docker inspect --format '{{(index (index .NetworkSettings.Ports "3000/tcp") 0).HostPort}}' "$cid")"
+  ssh_port="$(docker inspect --format '{{(index (index .NetworkSettings.Ports "22/tcp") 0).HostPort}}' "$cid")"
   [[ "$http_port" =~ ^[0-9]+$ && "$ssh_port" =~ ^[0-9]+$ ]]
+  docker port "$cid"
   wait_for_http "http://127.0.0.1:$http_port/" 120
   timeout 5 bash -c "echo >/dev/tcp/127.0.0.1/$ssh_port"
 else
@@ -61,8 +62,9 @@ else
   cid="$(docker run -d --name "mrstore-smoke-qui-$ARCH-$$" \
     -p 127.0.0.1::7476 -e TZ=Europe/Lisbon \
     -v "$work/data:/config" "$IMAGE")"
-  http_port="$(docker port "$cid" 7476/tcp | sed -n 's/.*://p' | head -1)"
+  http_port="$(docker inspect --format '{{(index (index .NetworkSettings.Ports "7476/tcp") 0).HostPort}}' "$cid")"
   [[ "$http_port" =~ ^[0-9]+$ ]]
+  docker port "$cid"
   wait_for_http "http://127.0.0.1:$http_port/health" 75
 fi
 echo "mrstore-$APP-$ARCH" > "$work/data/.mrstore-smoke"
