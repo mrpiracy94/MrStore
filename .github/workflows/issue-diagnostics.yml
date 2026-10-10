@@ -1,0 +1,98 @@
+name: MrStore issue diagnostics toolbox
+
+on:
+  workflow_dispatch:
+    inputs:
+      focus:
+        description: 'Área a investigar sem executar instalações ou scans pesados'
+        type: choice
+        required: true
+        default: all
+        options:
+          - all
+          - cve
+          - publication
+          - updates
+          - maintenance
+          - security
+          - migrations
+          - compatibility
+          - dependencies
+          - ci
+      issue_number:
+        description: 'Número do issue (opcional, vazio = todos os issues da área)'
+        type: string
+        required: false
+        default: ''
+  schedule:
+    - cron: '37 8 * * 1'
+  pull_request:
+    paths:
+      - 'scripts/actions_issue_triage.py'
+      - 'tests/test_actions_issue_triage.py'
+      - '.github/workflows/issue-diagnostics.yml'
+      - 'docs/ACTIONS_ISSUE_DIAGNOSTICS.md'
+
+permissions:
+  contents: read
+  actions: read
+  issues: read
+  pull-requests: read
+
+concurrency:
+  group: mrstore-issue-diagnostics-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  test:
+    name: Validate read-only diagnostic scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Offline regression tests — no registries or NAS involved
+        run: python -m unittest discover -s tests -p 'test_actions_issue_triage.py' -v
+      - name: Python syntax
+        run: python -m py_compile scripts/actions_issue_triage.py tests/test_actions_issue_triage.py
+
+  inspect:
+    name: Diagnose open issues and latest Actions steps
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      GITHUB_TOKEN: ${{ github.token }}
+      TRIAGE_FOCUS: ${{ inputs.focus || 'all' }}
+      TRIAGE_ISSUE: ${{ inputs.issue_number || '' }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Read GitHub metadata and generate actionable evidence
+        shell: bash
+        run: |
+          args=(--repo "$GITHUB_REPOSITORY" --focus "$TRIAGE_FOCUS" --output-dir out/issue-triage)
+          if [[ -n "$TRIAGE_ISSUE" ]]; then
+            if [[ ! "$TRIAGE_ISSUE" =~ ^[1-9][0-9]*$ ]]; then
+              echo "::error::Issue number must be a positive integer"
+              exit 2
+            fi
+            args+=(--issue "$TRIAGE_ISSUE")
+          fi
+          python scripts/actions_issue_triage.py "${args[@]}"
+      - name: Preserve diagnostics even if API is unavailable
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-issue-diagnostics
+          path: |
+            out/issue-triage/report.json
+            out/issue-triage/report.md
+          if-no-files-found: warn
+          retention-days: 30
