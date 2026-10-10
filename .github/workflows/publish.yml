@@ -138,7 +138,7 @@ jobs:
           python scripts/validate.py
           python -m unittest discover -s tests -v
       - name: Fetch eight mandatory security evidence reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: mrstore-release-security-shard-*
           path: out/release-evidence
@@ -231,7 +231,7 @@ jobs:
       contents: write
     steps:
       - name: Retrieve validated approved ZimaOS catalog
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: mrstore-v2-approved-dist
           path: dist/
