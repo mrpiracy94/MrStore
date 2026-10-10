@@ -150,8 +150,16 @@ jobs:
         run: |
           set -euo pipefail
           docker logout ghcr.io
+          # Confirm the immutable multiarch index is publicly readable.
+          public_manifest="$(docker buildx imagetools inspect "$IMAGE@$PATCHED_DIGEST")"
+          printf '%s\n' "$public_manifest"
+          printf '%s\n' "$public_manifest" | grep -q 'linux/amd64'
+          printf '%s\n' "$public_manifest" | grep -q 'linux/arm64'
+          # Docker's classic image store cannot pull two platforms under the
+          # same digest reference at once; use a distinct tag for the ARM64
+          # anonymous pull after verifying it belongs to the published index.
           docker pull --platform linux/amd64 "$IMAGE@$PATCHED_DIGEST"
-          docker pull --platform linux/arm64 "$IMAGE@$PATCHED_DIGEST"
+          docker pull --platform linux/arm64 "$IMAGE:$VERSION-arm64"
       - name: Update existing ZimaOS entry only after all gates pass
         run: |
           set -euo pipefail
