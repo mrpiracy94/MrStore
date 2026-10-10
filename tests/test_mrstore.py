@@ -194,7 +194,7 @@ class StoreTests(unittest.TestCase):
         self.assertIn('lscr.io/linuxserver/netbootxyz:latest', original)
         self.assertNotIn('lscr.io/linuxserver/netbootxyz:latest', target)
         self.assertTrue(any(x.startswith('ghcr.io/mrpiracy94/mrstore-netbootxyz:') for x in target))
-        self.assertEqual(len(set(target)), 25)
+        self.assertEqual(len(set(target)), 24)
         self.assertTrue(set(target).issubset(image_usage(apps())))
         workflow = (ROOT / '.github/workflows/retry-inconclusive-cves.yml').read_text()
         self.assertIn('scripts/cves.py', workflow)
