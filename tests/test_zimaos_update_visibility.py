@@ -171,7 +171,7 @@ class UpdateVisibilityTests(unittest.TestCase):
         def runner(command, **kwargs):
             calls.append(command)
             if command[:3] == ["docker", "ps", "-a"]:
-                value = "my-real-container" if "--filter" in command else "my-real-container\\nother-app"
+                value = "my-real-container" if "--filter" in command else "my-real-container\nother-app"
             elif command[:3] == ["docker", "container", "inspect"]:
                 value = image_id if "{{.Image}}" in command else "example/app:latest"
             elif command[:3] == ["docker", "image", "inspect"]:
@@ -199,7 +199,7 @@ class UpdateVisibilityTests(unittest.TestCase):
         def runner(command, **kwargs):
             calls.append(command)
             if command[:3] == ["docker", "ps", "-a"]:
-                value = "project-app-1\\nproject-app-2"
+                value = "project-app-1\nproject-app-2"
                 return subprocess.CompletedProcess(command, 0, value, "")
             self.fail("Ambiguous Compose containers must not be inspected")
 
