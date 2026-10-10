@@ -16,12 +16,12 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 OWN_RAW_PREFIX = "https://raw.githubusercontent.com/mrpiracy94/MrStore/main/"
-GOOD_MAGIC = (b"\\x89PNG\\r\\n\\x1a\\n", b"\\xff\\xd8\\xff", b"GIF87a", b"GIF89a",
-              b"RIFF", b"\\x00\\x00\\x01\\x00")
+GOOD_MAGIC = (b"\x89PNG\r\n\x1a\n", b"\xff\xd8\xff", b"GIF87a", b"GIF89a",
+              b"RIFF", b"\x00\x00\x01\x00")
 
 
 def is_image(data: bytes, content_type: str) -> bool:
-    value = data.lstrip(b"\\xef\\xbb\\xbf \\t\\r\\n")
+    value = data.lstrip(b"\xef\xbb\xbf \t\r\n")
     if data.startswith(b"RIFF") and data[8:12] == b"WEBP":
         return True
     if any(data.startswith(sig) for sig in GOOD_MAGIC if sig != b"RIFF"):
@@ -151,7 +151,7 @@ def main() -> int:
         lines.append(f"| {key} | {report['counts'].get(key, 0)} |")
     for entry in report["results"]:
         if entry["status"] not in ("ok", "deferred"):
-            lines.append(f"- **{entry['status']}** \\u2014 {entry['url']} "
+            lines.append(f"- **{entry['status']}** \u2014 {entry['url']} "
                          f"({', '.join(entry['references'][:5])}): {entry.get('reason', '')}")
     lines.extend(["", report["note"], ""])
     (output / "asset-audit-online.md").write_text("\n".join(lines), encoding="utf-8")
