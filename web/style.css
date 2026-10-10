@@ -30,3 +30,19 @@
 .card .card-head h3{line-height:1.2}
 .card a:focus-visible,.category-tile:focus-visible,.chip:focus-visible{outline:3px solid #a5d0ff;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Refinamento da composição a partir da referência 1536x864 */
+:root{--reference-blue:#2388ff}
+.all-apps-link{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;color:#2b91ff;border:1px solid #1681ff;border-radius:24px;padding:11px 18px;font-size:13px;font-weight:650}
+.all-apps-link:hover{background:#122f52}
+.section-head{gap:15px}
+.section-head .search{margin-left:auto}
+.showcase-brand .cube{font-size:0;width:96px;height:96px;background:url('./../assets/branding/mrstore-icon.svg') center/contain no-repeat;flex-shrink:0}
+.showcase-brand{gap:17px}
+.showcase h1{font-weight:750}
+.category-tile{box-shadow:inset 0 1px #ffffff09}
+.category-tile.active{box-shadow:inset 0 0 0 1px #2188ff,0 0 15px #0e5ec622}
+.card-preview{background:linear-gradient(160deg,#152a43,#0b1522)}
+.card{box-shadow:0 7px 22px #00000025}
+@media(min-width:1300px){.showcase-brand .cube{width:96px;height:96px}.section-head{min-height:60px}.section-head h2{font-size:23px}.category-showcase{grid-template-columns:repeat(8,minmax(0,1fr))}}
+@media(max-width:760px){.showcase-brand .cube{width:57px;height:57px}.all-apps-link{order:3}.section-head .search{margin-left:0}}
