@@ -98,7 +98,7 @@ def audit(root: Path = ROOT, workers: int = 12, timeout: float = 8.0,
     for url in refs:
         if not isinstance(url, str) or not url.startswith("https://"):
             results[url] = {"status": "unsafe", "reason": "Missing HTTPS asset URL"}
-        elif defer_unpublished and url.startswith(OWN_RAW_PREFIX):
+        elif defer_unpublished and url == OWN_RAW_PREFIX + "branding/mrstore-icon.svg":
             rel = urllib.parse.urlsplit(url).path.split("/main/", 1)[-1]
             local = root / rel
             if local.is_file():
@@ -117,7 +117,7 @@ def audit(root: Path = ROOT, workers: int = 12, timeout: float = 8.0,
             except Exception as exc:
                 results[url] = {"status": "inconclusive", "reason": str(exc)[:240]}
     entries = [{"url": url, "references": refs[url], **results[url]}
-               for url in sorted(refs)]
+               for url in sorted(refs, key=str)]
     counts = dict(Counter(entry["status"] for entry in entries))
     return {"references": sum(map(len, refs.values())), "unique_urls": len(refs),
             "counts": counts, "results": entries,
