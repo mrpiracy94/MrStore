@@ -17,6 +17,7 @@ SENSITIVE_MOUNTS = frozenset({
     "/", "/etc", "/root", "/proc", "/sys", "/dev",
     "/var/run/docker.sock", "/run/docker.sock",
     "/run/containerd/containerd.sock", "/var/lib/docker", "/var/lib/containerd",
+    "/etc/shadow", "/etc/gshadow", "/etc/sudoers", "/etc/ssh", "/etc/docker",
 })
 
 
@@ -40,6 +41,7 @@ def sensitive_host_bind(source):
     private_subtrees = (
         "/root", "/proc", "/sys", "/dev",
         "/var/lib/docker", "/var/lib/containerd",
+        "/etc/ssh", "/etc/docker",
     )
     return any(normalized.startswith(path + "/") for path in private_subtrees)
 
