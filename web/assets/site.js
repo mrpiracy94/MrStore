@@ -35,6 +35,7 @@
   let universalApps = new Map();
   let universalReady = false;
   let previewZipReady = false;
+  let portainerTemplatesReady = false;
   let selectedStoreURL = STORE_URL;
 
   function renderPlatform() {
@@ -52,12 +53,13 @@
     });
     selectedStoreURL = "";
     if (id === "zimaos") selectedStoreURL = STORE_URL;
+    else if (id === "portainer" && portainerTemplatesReady) selectedStoreURL = STORE_URL + "/universal/portainer-templates.json";
     else if ((id === "homeio" || id === "casaos") && previewZipReady) {
       selectedStoreURL = STORE_URL + "/store/casaos-homeio-preview.zip";
     }
     const intro = COMPOSE_TARGETS.has(id)
       ? (universalReady
-        ? "Seleciona uma aplicação e usa «Descarregar Compose aprovado» na respetiva ficha. Não é uma loja nativa integrada neste sistema."
+        ? (id === "portainer" && portainerTemplatesReady ? "O endereço contém apenas templates seguros de contentor único; para stacks com dependências usa o Compose aprovado na ficha da app." : "Seleciona uma aplicação e usa «Descarregar Compose aprovado» na respetiva ficha. Não é uma loja nativa integrada neste sistema.")
         : "O catálogo Compose aprovado ainda não está disponível nesta publicação.")
       : ((id === "casaos" || id === "homeio") && !previewZipReady
         ? "O ZIP experimental não está publicado nesta edição. Não uses o ZIP da branch main, que inclui apps em quarentena."
@@ -91,7 +93,8 @@
       if (verified.size !== expected.size) throw new Error("Missing apps");
       universalApps = verified;
       universalReady = true;
-    } catch (_) { universalApps = new Map(); universalReady = false; }
+      portainerTemplatesReady = Number.isInteger(catalog.portainer_template_count) && catalog.portainer_template_count > 0;
+    } catch (_) { universalApps = new Map(); universalReady = false; portainerTemplatesReady = false; }
     renderPlatform();
   }
 
