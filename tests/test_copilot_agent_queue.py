@@ -1,10 +1,16 @@
 """Offline routing and safety tests for the Copilot issue queue."""
+import contextlib
+import json
+import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from copilot_agent_queue import classify, queue, render  # noqa: E402
+from copilot_agent_queue import classify, queue, render, gh_api, main  # noqa: E402
 
 
 def issue(number, title, **extra):
@@ -64,6 +70,65 @@ class RoutingTests(unittest.TestCase):
                          "assigned": [], "note": "No token"})
         self.assertIn("atribuídos nesta execução: **0**", output)
         self.assertNotIn("✅ #", output)
+
+
+
+class ApiFailureTests(unittest.TestCase):
+    def test_github_http_error_and_token_are_sanitized(self):
+        token = "github_pat_sensitive_sample_1234"
+        result = SimpleNamespace(
+            returncode=1, stdout="",
+            stderr="gh: Resource not accessible by personal access token "
+                   "(HTTP 403) " + token)
+        with patch("copilot_agent_queue.subprocess.run", return_value=result):
+            with self.assertRaisesRegex(RuntimeError, "HTTP 403") as caught:
+                gh_api("/repos/mrpiracy94/MrStore/issues/4/assignees",
+                       token=token, payload={"assignees": ["copilot-swe-agent[bot]"]})
+        self.assertNotIn(token, str(caught.exception))
+        self.assertIn("[REDACTED]", str(caught.exception))
+
+    def test_failure_always_produces_a_report_and_nonzero_exit(self):
+        with tempfile.TemporaryDirectory() as directory, contextlib.chdir(directory):
+            with patch.dict(os.environ, {
+                "GITHUB_REPOSITORY": "mrpiracy94/MrStore",
+                "COPILOT_ASSIGN_TOKEN": "test-only-secret"}, clear=False):
+                with patch.object(sys, "argv", [
+                    "copilot_agent_queue.py", "--mode", "assign"
+                ]):
+                    with patch("copilot_agent_queue.paginated", side_effect=[
+                        [issue(4, "MrStore CVE HIGH/CRITICAL — shard 0")], []
+                    ]):
+                        with patch("copilot_agent_queue.assignment",
+                                   side_effect=RuntimeError("GitHub API HTTP 403: token lacks permission")):
+                            with self.assertRaises(SystemExit) as caught:
+                                main()
+        # Load report while the temporary directory still exists in the test below.
+                            self.assertEqual(caught.exception.code, 1)
+                            payload = json.loads(Path("out/copilot-queue.json").read_text())
+                            self.assertEqual(payload["assigned"], [])
+                            self.assertEqual(payload["error"]["issue"], 4)
+                            self.assertIn("HTTP 403", payload["error"]["detail"])
+                            self.assertIn("HTTP 403", Path("out/copilot-queue.md").read_text())
+
+    def test_partial_success_is_not_lost_when_next_assignment_fails(self):
+        with tempfile.TemporaryDirectory() as directory, contextlib.chdir(directory):
+            with patch.dict(os.environ, {
+                "GITHUB_REPOSITORY": "mrpiracy94/MrStore",
+                "COPILOT_ASSIGN_TOKEN": "test-only-secret"}, clear=False):
+                with patch.object(sys, "argv", [
+                    "copilot_agent_queue.py", "--mode", "assign"
+                ]):
+                    with patch("copilot_agent_queue.paginated", side_effect=[
+                        [issue(4, "MrStore CVE HIGH/CRITICAL — shard 0"),
+                         issue(11, "MrStore CVE HIGH/CRITICAL — shard 3")], []
+                    ]):
+                        with patch("copilot_agent_queue.assignment",
+                                   side_effect=[None, RuntimeError("HTTP 422")]):
+                            with self.assertRaises(SystemExit):
+                                main()
+                            payload = json.loads(Path("out/copilot-queue.json").read_text())
+                            self.assertEqual([x["issue"] for x in payload["assigned"]], [4])
+                            self.assertEqual(payload["error"]["issue"], 11)
 
 
 if __name__ == "__main__":
