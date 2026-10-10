@@ -2,7 +2,7 @@
 
 The ZimaOS builder can change the active Python environment. This regression
 test catches accidental imports of PyYAML from the independent JSON verifier
-before the expensive 254-app build is started.
+before the expensive 253-app build is started.
 """
 import json
 import subprocess
@@ -33,14 +33,14 @@ class PublishedSubtitleTests(unittest.TestCase):
                 cwd=ROOT,
             )
 
-    def test_all_254_cards_pass_without_pyyaml(self):
+    def test_all_active_cards_pass_without_pyyaml(self):
         entries = [
             {"id": PREFIX + app, "tagline": tagline}
             for app, tagline in self.summaries.items()
         ]
         result = self.invoke(entries)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("254", result.stdout)
+        self.assertIn("253", result.stdout)
 
     def test_wrong_subtitle_causes_publication_failure(self):
         entries = [
