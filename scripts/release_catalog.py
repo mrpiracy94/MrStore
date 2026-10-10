@@ -18,6 +18,7 @@ from curate_taglines import load_summaries, render_manifest
 from release_scan import image_platforms
 from privilege_policy import risky_settings
 from image_freshness import RETIRED_UPSTREAM
+from featured import load_featured
 
 HEX = re.compile(r"^[a-f0-9]{64}$")
 # Required Compose interpolation is resolved before ZimaOS can show service
@@ -146,13 +147,21 @@ def insecure_defaults(app) -> list[str]:
     return sorted(set(flags))
 
 
-def stage(source: Path, evidence: dict, destination: Path, summaries: dict) -> dict:
+def stage(source: Path, evidence: dict, destination: Path, summaries: dict,
+          featured: set[str] | None = None) -> dict:
     if destination.exists():
         raise ValueError("Refusing to overwrite existing staging directory")
     source_apps = apps(source)
+    known = {app.folder for app in source_apps}
+    if featured is not None and (not featured or featured - known):
+        raise ValueError("Featured selection is empty or contains missing source apps")
     approved = {}
     quarantine = {}
+    deferred = []
     for app in source_apps:
+        if featured is not None and app.folder not in featured:
+            deferred.append(app.folder)
+            continue  # Keep in Git, never publish without deliberate editorial inclusion.
         reasons = insecure_defaults(app)
         locked = {}
         for service, spec in app.source["services"].items():
@@ -168,9 +177,11 @@ def stage(source: Path, evidence: dict, destination: Path, summaries: dict) -> d
             approved[app.folder] = (app, locked)
     result = {
         "source_apps": len(source_apps), "approved_count": len(approved),
-        "quarantined_count": len(quarantine),
+        "quarantined_count": len(quarantine), "deferred_count": len(deferred),
+        "featured_count": len(featured) if featured is not None else len(source_apps),
         "approved": sorted(approved), "quarantined": quarantine,
-        "policy": "all images scanned clean on declared platforms, pinned digest, safe static defaults",
+        "deferred": sorted(deferred),
+        "policy": "editorial shortlist AND all image platforms scanned clean, digest pinned, safe static defaults",
     }
     if not approved:
         return result
@@ -231,16 +242,22 @@ def verify_published(dist: Path, selected: dict, staged: Path | None = None) -> 
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--reports", type=Path, required=True)
+    p.add_argument("--featured", type=Path, default=ROOT / "data/featured-apps.json",
+                   help="Mandatory editorial allowlist; never publish the full source inventory")
     p.add_argument("--source", type=Path, default=ROOT)
     p.add_argument("--stage", type=Path, default=ROOT / "release-source")
     p.add_argument("--report", type=Path, default=ROOT / "out/release-selection.json")
     opts = p.parse_args()
-    evidence = read_evidence(apps(opts.source), opts.reports)
-    result = stage(opts.source, evidence, opts.stage, load_summaries())
+    source_apps = apps(opts.source)
+    featured = set(load_featured(opts.featured, {app.folder for app in source_apps}))
+    evidence = read_evidence(source_apps, opts.reports)
+    result = stage(opts.source, evidence, opts.stage, load_summaries(), featured=featured)
     opts.report.parent.mkdir(parents=True, exist_ok=True)
     opts.report.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    print(f"Approved {result['approved_count']}/{result['source_apps']} apps. "
-          f"Quarantined {result['quarantined_count']} with recorded reasons.")
+    print(f"Starter catalog: {result['approved_count']}/{result['featured_count']} "
+          f"featured apps approved (out of {result['source_apps']} source apps). "
+          f"Security quarantine: {result['quarantined_count']}; "
+          f"deferred for later: {result['deferred_count']}.")
     if not result["approved_count"]:
         raise SystemExit("No clean app can be published: previous release NOT replaced")
     return 0
