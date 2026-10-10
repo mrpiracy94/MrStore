@@ -1,7 +1,7 @@
 name: jdownloader
 services:
   jdownloader:
-    image: jlesage/jdownloader-2:latest
+    image: ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:e54b92d617991eb15c2725321196cb180c9f9ee5f1b5088e5e804a45fb93046e
     container_name: jdownloader
     restart: unless-stopped
     environment:
@@ -36,8 +36,8 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.jdownloader
-  version: "1.0.0"
-  update_at: "2026-10-09"
+  version: "1.0.1"
+  update_at: "2026-10-10"
   architectures:
     - amd64
     - arm64
@@ -52,6 +52,6 @@ x-casaos:
   tagline:
     en_US: "JDownloader 2 (seedit4.me catalog)"
   description:
-    en_US: "JDownloader 2 — origem: seedit4.me catalog. Imagem: jlesage/jdownloader-2:latest. Verifica portas/variáveis na documentação do projeto."
+    en_US: "JDownloader 2 com runtime Alpine corrigido, imagem multiarch fixada por digest e verificada com Trivy 0 HIGH/CRITICAL, GUI HTTP e volumes em AMD64/ARM64."
   port_map: "5800"
   index: /
