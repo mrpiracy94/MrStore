@@ -99,11 +99,17 @@ jobs:
         run: |
           python scripts/validate.py
           python -m unittest discover -s tests -v
-      - name: Stage all 32 editorial applications without certification claims
+      - name: Stage curated editorial applications without certification claims
         id: release
         run: |
           python scripts/publish_editorial.py --featured data/featured-apps.json --stage release-source --report out/release-selection.json
-          echo "approved=112" >> "$GITHUB_OUTPUT"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          result = json.loads(Path("out/release-selection.json").read_text())
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
+              fh.write(f"approved={result['approved_count']}\n")
+          PY
       - name: Validate staged Compose manifests with official Docker Compose parser
         run: >-
           python scripts/compose_preflight.py --root release-source
@@ -138,7 +144,7 @@ jobs:
           index = json.loads(Path("dist/index.json").read_text())
           actual = {entry["id"] for entry in index["apps"]}
           expected = {"io.github.mrpiracy94." + slug for slug in report["approved"]}
-          assert len(actual) == len(index["apps"]) == 112 and actual == expected
+          assert len(actual) == len(index["apps"]) == report["approved_count"] and actual == expected
           PY
       - name: Verify PT subtitles of approved apps
         run: >-
@@ -173,7 +179,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
   publish:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     permissions:
