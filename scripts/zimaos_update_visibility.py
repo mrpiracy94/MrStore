@@ -13,6 +13,7 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import urlopen
@@ -68,6 +69,18 @@ def scan_catalog(root: Path) -> dict:
         "counts": dict(sorted(counter.items())),
         "apps": entries,
     }
+
+
+def strict_main_name_failures(report: dict) -> list[str]:
+    """Block new store manifests incompatible with ZimaOS 1.7.1 service lookup.
+
+    Floating latest tags remain a diagnostic warning: without installed NAS data
+    the repository cannot prove a local image has missing RepoDigests.
+    """
+    codes = {"invalid_main_service", "main_container_name_not_explicit",
+             "main_container_name_differs_from_service"}
+    return sorted(item["app"] for item in report["apps"]
+                  if codes.intersection(item["findings"]))
 
 
 def command(args: list[str], timeout: int = 20, runner=subprocess.run) -> tuple[str | None, str | None]:
@@ -377,6 +390,8 @@ def main() -> int:
     p.add_argument("--output", type=Path, default=ROOT / "out/zimaos-update-visibility.json")
     p.add_argument("--summary", type=Path, default=ROOT / "out/zimaos-update-visibility.md")
     p.add_argument("--runtime", action="store_true", help="Read-only Docker probe on this machine")
+    p.add_argument("--strict-main-name", action="store_true",
+                   help="Fail CI if main container cannot be located by its service name")
     p.add_argument("--app", help="Specific catalog folder (required for --runtime)")
     p.add_argument("--registry-check", action="store_true",
                    help="Read registry digest via crane without pulling any Docker image")
@@ -405,7 +420,14 @@ def main() -> int:
     args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     args.summary.write_text(markdown(report), encoding="utf-8")
     print(markdown(report))
-    # Risks are reported, not treated as a pass/fail security gate.
+    # Never claim images with ':latest' are unsafe solely because of a tag.
+    # But prevent a new regression of ZimaOS 1.7.1's known name-lookup bug.
+    if args.strict_main_name:
+        incompatible = strict_main_name_failures(report["catalog"])
+        if incompatible:
+            print("Blocking ZimaOS main-service naming regressions: " +
+                  ", ".join(incompatible), file=sys.stderr)
+            return 2
     return 0
 
 
