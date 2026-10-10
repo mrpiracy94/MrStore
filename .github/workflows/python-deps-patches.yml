@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        app: [bazarr, beets, limnoria, nzbget, sickgear, tautulli]
+        app: [beets, limnoria, nzbget, sickgear, tautulli]
         arch: [amd64, arm64]
     env:
       APP: ${{ matrix.app }}
@@ -118,7 +118,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [bazarr, beets, limnoria, nzbget, sickgear, tautulli]
+        app: [beets, limnoria, nzbget, sickgear, tautulli]
     env:
       APP: ${{ matrix.app }}
       IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-python-${{ matrix.app }}
