@@ -188,6 +188,19 @@ jobs:
           cp web/hero.svg dist/web/hero.svg
           cp assets/branding/mrstore-icon.svg dist/assets/branding/mrstore-icon.svg
           cp assets/branding/mrstore-banner.svg dist/assets/branding/mrstore-banner.svg
+      - name: Install Chromium for storefront browser verification
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Verify storefront at reference and mobile viewport sizes
+        run: python scripts/test_storefront_browser.py
+      - name: Upload storefront browser screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-web-browser-screenshots
+          path: storefront-*.png
+          if-no-files-found: warn
       - name: Publish transparent quarantine details alongside the catalog
         run: |
           cp out/release-selection.json dist/release-status.json
