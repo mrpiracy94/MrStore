@@ -29,7 +29,7 @@ class PublishSchedulingTests(unittest.TestCase):
         self.assertNotIn("if", jobs["preflight"])
         scan = jobs["security_audit"]
         self.assertEqual(scan["if"], "github.event_name != 'pull_request'")
-        self.assertEqual(scan["needs"], "preflight")
+        self.assertEqual(scan["needs"], ["preflight", "prepare_crane"])
 
     def test_release_remains_fail_closed_on_32_full_shards(self):
         jobs = self.workflow["jobs"]
