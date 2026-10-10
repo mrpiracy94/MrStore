@@ -1,0 +1,70 @@
+# One-time vendoring of the three upstream platform identity assets.
+# Official upstream revisions and git blob hashes are pinned and verified.
+name: Vendor official platform logos
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/vendor-platform-logos.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: mrstore-platform-logo-vendor
+  cancel-in-progress: false
+jobs:
+  vendor:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - name: Download and verify exact official upstream Git blobs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p web/assets
+          curl --fail --location --silent --show-error --retry 4 \
+            'https://raw.githubusercontent.com/doctor-io/homeio/13a40d496e57b8939f5efd2b54bd0ad0a702ca17/public/icon.png' \
+            -o web/assets/platform-homeio.png
+          curl --fail --location --silent --show-error --retry 4 \
+            'https://raw.githubusercontent.com/BansheeTech/HomeDockOS/3f6194cd181143557e2a5088f5c9e4350993c683/homedock-ui/static/images/logo_trans.svg' \
+            -o web/assets/platform-homedock.svg
+          curl --fail --location --silent --show-error --retry 4 \
+            'https://raw.githubusercontent.com/beclab/Olares/8c1089a7734dad19f342027cc65e1eea94d3b0e9/apps/packages/app/src/apps/studio/assets/olares-icon.svg' \
+            -o web/assets/platform-olares.svg
+          test "$(git hash-object web/assets/platform-homeio.png)" = '0eeb090e1effe3d680ae943aceca2b9d43b717e1'
+          test "$(git hash-object web/assets/platform-homedock.svg)" = '61eeaa7877371e508daa2315142baf9bd42cd183'
+          test "$(git hash-object web/assets/platform-olares.svg)" = '05a864946511bf8f3554cf474dc20e0b63024e49'
+          test "$(xxd -l 8 -p web/assets/platform-homeio.png)" = '89504e470d0a1a0a'
+          grep -q '<svg' web/assets/platform-homedock.svg
+          grep -q '<svg' web/assets/platform-olares.svg
+          for asset in web/assets/platform-homeio.png web/assets/platform-homedock.svg web/assets/platform-olares.svg; do
+            test "$(stat -c %s "$asset")" -lt 50000
+          done
+          echo 'All three official image assets pass Git blob identity validation.'
+      - name: Commit verified brand icons into MrStore source
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add web/assets/platform-homeio.png web/assets/platform-homedock.svg web/assets/platform-olares.svg
+          if git diff --cached --quiet; then
+            echo 'Official platform logos already versioned.'
+            exit 0
+          fi
+          git commit -m 'assets(web): vendor original Homeio HomeDock OS Olares logos'
+          for attempt in 1 2 3 4; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo 'Official icons committed to main.'
+              exit 0
+            fi
+            sleep "$((2 * attempt))"
+          done
+          exit 1
