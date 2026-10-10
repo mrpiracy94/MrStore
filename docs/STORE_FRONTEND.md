@@ -7,7 +7,7 @@ locais distintos:
 1. README.md — página de entrada do repositório, com banner, navegação curta,
    instalação, segurança e ligações para documentação.
 2. https://mrpiracy94.github.io/MrStore/ — montra web estática com identidade
-   laranja, pesquisa, filtros, favoritos e detalhes das aplicações.
+   azul e escura inspirada no mockup panorâmico, pesquisa, filtros, favoritos e detalhes das aplicações.
 
 ## Dados e segurança
 
@@ -50,3 +50,18 @@ não dá acesso ao index.json publicado.
 
 Não confundir a qualidade visual com segurança certificada ou prova de runtime
 num NAS ZimaOS.
+
+## Correspondência visual e limites
+
+A interface foi recriada com HTML, CSS e JavaScript funcional, seguindo o
+mockup panorâmico azul da MrStore: logótipo em cubo, paisagem noturna,
+categorias em mosaico e cartões com capturas **reais do índice publicado**.
+O banner vetorial do README é uma interpretação do conceito visual; não é
+o PNG original, que ainda não foi acrescentado ao repositório. A montra
+não usa uma imagem estática como substituto de botões nem simula instalações.
+O botão «Ver detalhes» abre dados reais; a instalação continua a ser feita
+no ZimaOS, não diretamente no navegador.
+
+O atributo HTML `hidden` tem prioridade sobre estilos flex para impedir
+que ações indisponíveis fiquem visíveis. A pré-visualização de cada app
+usa apenas URLs locais do catálogo, com fallback quando a imagem falha.
