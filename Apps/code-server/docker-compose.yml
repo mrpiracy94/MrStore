@@ -1,7 +1,7 @@
 name: code-server
 services:
   code-server:
-    image: ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe
+    image: ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:966b6ded64d12899cb7d72163a7e08a81865e09e65f8542ce0d8c1827d390a6f
     container_name: code-server
     restart: unless-stopped
     environment:
