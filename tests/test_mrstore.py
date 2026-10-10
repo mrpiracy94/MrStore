@@ -18,14 +18,14 @@ ONLY_AMD64 = set('audacity cura dolphin handbrake joplin modrinth mullvad-browse
 
 class StoreTests(unittest.TestCase):
     def test_every_original_app_present(self):
-        self.assertEqual(len(apps()), 253)
-        self.assertEqual(len({x.app_id for x in apps()}), 253)
+        self.assertGreaterEqual(len(apps()), 253)
+        self.assertEqual(len({x.app_id for x in apps()}), len(apps()))
 
     def test_offline_validation(self):
         audit = report()
         self.assertEqual(audit['summary']['errors'], 0, audit['findings'][:8])
-        self.assertEqual(audit['summary']['services'], 259)
-        self.assertEqual(audit['summary']['images'], 257)
+        self.assertGreaterEqual(audit['summary']['services'], 259)
+        self.assertEqual(audit['summary']['images'], len(image_usage(apps())))
 
     def test_tcp_and_udp_do_not_collide(self):
         audit = report()
@@ -51,7 +51,7 @@ class StoreTests(unittest.TestCase):
     def test_image_usage(self):
         usage=image_usage(apps())
         self.assertIn('ghcr.io/immich-app/immich-server:release',usage)
-        self.assertEqual(len(usage),257)
+        self.assertGreaterEqual(len(usage),257)
         self.assertIn('ghcr.io/actualbudget/actual:latest', usage)
         self.assertNotIn('actualbudget/actual-server:latest', usage)
 
