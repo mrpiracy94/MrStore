@@ -50,6 +50,20 @@ class ImmichPostgresGuardTests(unittest.TestCase):
                     immich_major_upgrade_hazards(self.original, changed, "immich")
                 )
 
+    def test_overlapping_parent_or_child_directories_are_rejected(self):
+        for candidate in (
+            "/DATA/AppData/immich",
+            "/DATA/AppData/immich/postgres/pg16",
+            "/DATA/AppData/immich/postgres/pg16/../data",
+        ):
+            with self.subTest(candidate=candidate):
+                changed = copy.deepcopy(self.original)
+                db = changed["services"]["immich-database"]
+                db["image"] = "ghcr.io/immich-app/postgres:16-vectorchord0.4.3"
+                db["volumes"][0]["source"] = candidate
+                self.assertTrue(immich_major_upgrade_hazards(
+                    self.original, changed, "immich"))
+
     def test_missing_data_mount_is_rejected(self):
         new = copy.deepcopy(self.original)
         db = new["services"]["immich-database"]
