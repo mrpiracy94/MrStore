@@ -1,0 +1,81 @@
+# Emergency withdrawal only: removes retired SteamOS from previously published
+# *legacy* catalog. No new app is approved, no CVE gate is bypassed.
+# Future full releases still require scripts/release_catalog.py evidence.
+name: Withdraw retired SteamOS from public catalog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/withdraw-retired-steamos.yml'
+      - 'scripts/withdraw_retired_public_app.py'
+      - 'tests/test_withdraw_retired_public_app.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mrstore-static-site
+  cancel-in-progress: false
+
+jobs:
+  withdraw:
+    name: Withdraw obsolete public entry without new approvals
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Prove source retirement and preserve Steam
+        run: |
+          test ! -e Apps/steamos/docker-compose.yml
+          test -s Apps/steam/docker-compose.yml
+      - name: Verify emergency withdrawal does not fabricate security evidence
+        run: |
+          python -m unittest discover -s tests -p 'test_withdraw_retired_public_app.py' -v
+          python -m py_compile scripts/withdraw_retired_public_app.py
+      - name: Remove SteamOS from legacy gh-pages catalog atomically
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          dest="$RUNNER_TEMP/mrstore-legacy-pages"
+          git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+          git worktree add --detach "$dest" origin/gh-pages
+          for attempt in 1 2 3 4; do
+            git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+            git -C "$dest" reset --hard origin/gh-pages
+            python scripts/withdraw_retired_public_app.py --site "$dest" --source "$GITHUB_WORKSPACE"
+            git -C "$dest" add -A -- index.json index.pt_PT.json metadata.tar.gz metadata.sha256 apps/io.github.mrpiracy94.steamos
+            # Changes outside this emergency removal scope are forbidden.
+            while IFS= read -r path; do
+              case "$path" in
+                index.json|index.pt_PT.json|metadata.tar.gz|metadata.sha256|apps/io.github.mrpiracy94.steamos/*) ;;
+                *) echo "::error::Unexpected changed path: $path"; exit 1 ;;
+              esac
+            done < <(git -C "$dest" diff --cached --name-only)
+            if git -C "$dest" diff --cached --quiet; then
+              echo "SteamOS is already absent from published catalog."
+              exit 0
+            fi
+            git -C "$dest" commit -m 'fix(security): withdraw retired SteamOS from legacy public catalog'
+            if git -C "$dest" push origin HEAD:gh-pages; then
+              echo '### Public legacy catalog withdrawal' >> "$GITHUB_STEP_SUMMARY"
+              echo 'SteamOS removed from 253-app index, locale, metadata archive and app directory. No security evidence fabricated.' >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            echo "Concurrent gh-pages deployment, retrying ($attempt/4)"
+            sleep "$((3 * attempt))"
+          done
+          echo "::error::Could not publish removal after four attempts"
+          exit 1
