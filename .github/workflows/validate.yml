@@ -7,6 +7,7 @@ on:
       - 'scripts/**'
       - 'data/taglines-pt.json'
       - 'data/zimaos-device-tests.json'
+      - 'data/universal-device-tests.json'
       - 'tests/**'
       - 'store-config.json'
       - 'supported-languages.json'
@@ -74,6 +75,30 @@ jobs:
           name: zimaos-device-coverage
           path: out/zimaos-coverage.*
           if-no-files-found: warn
+      - name: Inventory real-device C2 C3 C4 evidence for all 11 platforms and declared architectures
+        run: python scripts/universal_device_coverage.py
+      - name: Expose runtime evidence coverage (reported, not vendor certification)
+        if: always()
+        run: |
+          test ! -f out/universal-device-coverage.json || python - <<'PY'
+          import json
+          from pathlib import Path
+          data = json.loads(Path("out/universal-device-coverage.json").read_text())
+          with open(__import__("os").environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write("## MrStore Universal — real device coverage\n\n")
+              summary.write("| Platform | C2 | C3 | C4 |\n|---|---:|---:|---:|\n")
+              for entry in data["platforms"]:
+                  summary.write(f'| {entry["id"]} | {entry["c2_device_app_arch_pairs"]} | {entry["c3_functional_app_arch_pairs"]} | {entry["c4_upgrade_restore_app_arch_pairs"]} |\n')
+              summary.write("\nCommunity-reviewed issue/PR reports are not manufacturer certification.\n")
+          PY
+      - name: Upload multi-platform real-device coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: universal-device-coverage
+          path: out/universal-device-coverage.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Parse every Compose file with official Docker Compose V2 (no containers)
         run: python scripts/compose_preflight.py
       - name: Compose parser summary
