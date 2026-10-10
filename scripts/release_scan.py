@@ -73,6 +73,7 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
                     "error": failure,
                     "critical": sum(v.get("severity") == "CRITICAL" for v in findings),
                     "high": sum(v.get("severity") == "HIGH" for v in findings),
+                    "findings": findings,
                 }
         if error or not pinned or len(scans) != len(platforms[image]):
             status = "error"
