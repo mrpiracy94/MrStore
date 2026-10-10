@@ -85,6 +85,18 @@ class StorefrontTests(unittest.TestCase):
         self.assertIn('catalog.approved_count !== expected.size', js)
         self.assertIn('selectedStoreURL', js)
 
+    def test_native_downloads_are_security_gated(self):
+        js = (self.source / "assets/site.js").read_text(encoding="utf-8")
+        self.assertIn('fetch("./homedock/catalog.json"', js)
+        self.assertIn('fetch("./olares/catalog.json"', js)
+        self.assertIn('info.source_approved !== expected.size', js)
+        self.assertIn('item.url !== "olares/" + item.chart + ".tgz"', js)
+        self.assertIn('app.url !== "homedock/" + app.slug + ".hds"', js)
+        self.assertIn('homedockPackages.has(slug)', js)
+        self.assertIn('olaresCharts.has(slug)', js)
+        self.assertIn('portable.hidden = !downloadable;', js)
+        self.assertNotIn("innerHTML", js)
+
     def test_ui_only_consumes_local_index_and_has_no_remote_dependencies(self):
         html = (self.source / "index.html").read_text(encoding="utf-8")
         js = (self.source / "assets/site.js").read_text(encoding="utf-8")
