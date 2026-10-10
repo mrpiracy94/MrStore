@@ -78,10 +78,38 @@ jobs:
         run: |
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
+  prepare_crane:
+    # Go compilation is expensive. Build the pinned client once instead of
+    # compiling it independently on 32 short-lived GitHub runners.
+    if: github.event_name != 'pull_request'
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.26'
+          cache: false
+      - name: Compile pinned registry client once
+        run: |
+          go install github.com/google/go-containerregistry/cmd/crane@v0.21.7
+          mkdir -p tooling
+          cp "$(go env GOPATH)/bin/crane" tooling/crane
+          chmod 755 tooling/crane
+          tooling/crane version
+      - name: Make client available to every security shard
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-pinned-crane
+          path: tooling/crane
+          if-no-files-found: error
+          retention-days: 1
   security_audit:
     # Full 32-shard release audit on main/manual releases; PRs get fast preflight.
     if: github.event_name != 'pull_request'
-    needs: preflight
+    needs: [preflight, prepare_crane]
     name: Scan release images and platforms (shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 240
@@ -99,13 +127,16 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - uses: actions/setup-go@v6
+      - name: Reuse precompiled pinned crane from the preparation job
+        uses: actions/download-artifact@v8
         with:
-          go-version: '1.26'
-      - name: Install pinned crane registry client
+          name: mrstore-pinned-crane
+          path: tooling
+      - name: Install the verified preparation artifact in PATH
         run: |
-          go install github.com/google/go-containerregistry/cmd/crane@v0.21.7
-          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+          test -f tooling/crane
+          chmod 755 tooling/crane
+          echo "$PWD/tooling" >> "$GITHUB_PATH"
       - name: Install pinned Trivy scanner
         uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
         with:
