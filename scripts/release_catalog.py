@@ -17,6 +17,7 @@ from cves import shard_images
 from curate_taglines import load_summaries, render_manifest
 from release_scan import image_platforms
 from privilege_policy import risky_settings
+from image_freshness import RETIRED_UPSTREAM
 
 HEX = re.compile(r"^[a-f0-9]{64}$")
 # Required Compose interpolation is resolved before ZimaOS can show service
@@ -117,6 +118,12 @@ def insecure_defaults(app) -> list[str]:
             continue
         if spec.get("userns") == "host":
             flags.append(f"{service}: unsafe userns=host")
+        # Retain the independent upstream-retirement gate merged via PR #70.
+        # No amount of successful Trivy evidence makes a retired image viable.
+        image_ref = spec.get("image")
+        if image_ref in RETIRED_UPSTREAM:
+            flags.append(f"{service}: discontinued upstream image {image_ref}; "
+                         f"see {RETIRED_UPSTREAM[image_ref]}")
         env = spec.get("environment") or []
         # Detect unsafe placeholders across actual Compose service fields,
         # while ignoring purely descriptive x-casaos installer metadata.
