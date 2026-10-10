@@ -70,7 +70,7 @@ def portainer_template(slug: str, document: dict) -> dict | None:
         return None
     if any(not isinstance(k, str) or not isinstance(v, (str, int))
            or "$" + "{" in str(v) or "CHANGE_ME" in str(v)
-           or any(word in k.upper() for word in ("PASSWORD", "SECRET", "TOKEN", "API_KEY"))
+           or any(word in k.upper() for word in ("PASSWORD", "PASS", "SECRET", "TOKEN", "KEY", "PRIVATE", "CREDENTIAL", "AUTH"))
            for k, v in values.items()):
         return None
     ports = []
