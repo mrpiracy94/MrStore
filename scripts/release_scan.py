@@ -144,6 +144,7 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
         return {"image": image, "pinned": pinned, "status": status,
                 "error": error, "platforms": platforms[image], "scans": scans}
 
+    started = time.monotonic()
     results = [None] * len(chosen)
     if workers == 1:
         for i, image in enumerate(chosen):
@@ -157,8 +158,11 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
                 results[i] = future.result()
                 print(f"[{done_count}/{len(chosen)}] {chosen[i]}: "
                       f"{results[i]['status']}", flush=True)
+    elapsed = round(time.monotonic() - started, 2)
     return {"shard": shard, "shards": shards, "images_total": len(usage),
             "images_checked": len(results),
+            "elapsed_seconds": elapsed, "worker_limit": workers,
+            "images_per_minute": round(60 * len(results) / elapsed, 2) if elapsed > 0 else 0,
             "package_groups": shared_package_groups(results, usage),
             "results": results}
 
@@ -176,7 +180,9 @@ def main() -> int:
     dest.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     counts = {status: sum(r["status"] == status for r in report["results"])
               for status in ("clean", "vulnerable", "error")}
-    print(f"Shard {o.shard}: {counts}; report saved {dest}", flush=True)
+    print(f"Shard {o.shard}: {counts}; {report['elapsed_seconds']:.2f}s; "
+          f"{report['images_per_minute']:.2f} images/min; "
+          f"report saved {dest}", flush=True)
     # Image vulnerabilities and registry failures are visible but do not block OTHER apps.
     return 0
 
