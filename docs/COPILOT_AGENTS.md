@@ -18,6 +18,27 @@ Novo workflow: **MrStore Copilot agent queue**, diário às 08:13 UTC, agendamen
 
 O workflow usa a API REST oficial para `copilot-swe-agent[bot]` com `agent_assignment.custom_agent`. A API está em preview e pode evoluir; qualquer erro na confirmação da atribuição faz o job falhar. A etiqueta `agent:delegated` impede recolocar a mesma issue na fila depois de uma execução concluída. Removê-la é uma decisão humana.
 
+
+## Diagnóstico de falha de atribuição (modo `assign`)
+
+Se `Audit and optionally delegate queued work` falhar, consultar o **Job summary**
+ou descarregar `mrstore-copilot-agent-queue`, com `copilot-queue.json` e
+`copilot-queue.md`. A resposta HTTP da API é resumida sem apresentar tokens.
+O job continua vermelho quando uma atribuição não é confirmada, mesmo havendo
+relatório; não basta encontrar o ficheiro para declarar sucesso.
+
+- **HTTP 401**: confirmar validade/expiração do PAT e a conta associada.
+- **HTTP 403**: verificar permissões do PAT e políticas de acesso ao repositório.
+- **HTTP 404/422**: confirmar se o Copilot cloud agent pode ser atribuído neste
+  repositório, se o agente personalizado existe na `main` e se o pedido REST
+  é aceite. Estes códigos, por si só, não provam a causa.
+- Se o GitHub confirmar a atribuição mas falhar a atualização da etiqueta,
+  rever o issue e a linha temporal antes de repetir; nunca duplicar trabalho.
+
+A primeira prova deve ser uma execução manual para **uma issue elegível**, e
+não um lote de vários issues. Nunca publicar o token nem respostas de API que
+contenham credenciais.
+
 ## Limites e provas
 
 - Uma PR gerada por IA é **proposta de código**, não prova de CVE corrigida, plataforma instalada, testes C3 ou publicação.
