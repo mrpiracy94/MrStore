@@ -32,6 +32,8 @@ def sensitive_host_bind(source):
     normalized = "/" + posixpath.normpath(source).lstrip("/")
     if normalized == "/":
         return True
+    if normalized.endswith(("/docker.sock", "/containerd.sock")):
+        return True
     if any(normalized == path or path.startswith(normalized.rstrip("/") + "/")
            for path in SENSITIVE_MOUNTS):
         return True
