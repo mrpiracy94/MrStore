@@ -1,6 +1,8 @@
 # MrStore — updates automaticos de dependencias
 # Renovate gere os 254 Apps/*/docker-compose.yml; nao os duplicar no Dependabot.
-# Todas as atualizacoes sao propostas em PRs. Nao existe auto-merge.
+# Apenas PRs de SEGURANCA do Dependabot; sem PRs de versao de rotina.
+# open-pull-requests-limit: 0 afeta version updates, nao security updates.
+# Nao existe auto-merge. A integracao exige validacao de CVEs/compatibilidade.
 
 version: 2
 updates:
@@ -12,7 +14,7 @@ updates:
       day: "monday"
       time: "07:00"
       timezone: "Europe/Lisbon"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 0
     groups:
       actions-minor-patch:
         patterns:
@@ -29,7 +31,7 @@ updates:
       day: "tuesday"
       time: "07:00"
       timezone: "Europe/Lisbon"
-    open-pull-requests-limit: 2
+    open-pull-requests-limit: 0
     groups:
       python-minor-patch:
         patterns:
@@ -54,4 +56,4 @@ updates:
       day: "wednesday"
       time: "07:00"
       timezone: "Europe/Lisbon"
-    open-pull-requests-limit: 3
+    open-pull-requests-limit: 0
