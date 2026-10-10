@@ -37,7 +37,7 @@ def read_plan(path: Path, known: set[str] | None = None) -> tuple[str, ...]:
         raise ValueError("Plan description is required")
     apps = policy["apps"]
     if (not isinstance(apps, list) or len(apps) != TARGET or len(set(apps)) != TARGET
-            or any(not isinstance(x, str) or not re.fullmatch(r"[a-z0-9][a-z0-9._-]*", x)
+            or any(not isinstance(x, str) or not re.fullmatch(r"[a-z0-9]+(?:[.-][a-z0-9]+)*", x)
                    for x in apps)):
         raise ValueError("Rollout must list exactly 233 unique valid app slugs")
     if set(apps[:len(INITIAL)]) != set(INITIAL):
