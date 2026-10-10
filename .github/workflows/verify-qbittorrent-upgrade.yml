@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 70
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Enable ARM64 emulation
         uses: docker/setup-qemu-action@v4
       - name: Configure Docker Buildx

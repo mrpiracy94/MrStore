@@ -24,7 +24,7 @@ jobs:
       IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-qbittorrent
       VERSION: 5.2.4-libtorrentv1-secfix-20261009
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Enable ARM64 emulation
         uses: docker/setup-qemu-action@v4
       - name: Set up Buildx

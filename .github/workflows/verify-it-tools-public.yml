@@ -19,7 +19,7 @@ jobs:
     env:
       IMAGE: ghcr.io/mrpiracy94/mrstore-it-tools:static-nginx-alpine-secfix-20261010@sha256:36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Ensure unauthenticated ZimaOS installations can fetch this digest
         run: |
           docker logout ghcr.io || true
