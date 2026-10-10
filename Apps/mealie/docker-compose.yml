@@ -59,9 +59,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/mealie.png
   title:
     en_US: "Mealie"
+    pt_PT: "Mealie"
   tagline:
     en_US: "Gestor de receitas"
   description:
     en_US: "Gestor de receitas. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+    pt_PT: "Organiza receitas, listas de compras e planeamento de refeições num servidor pessoal. Configura os dados persistentes e confirma a porta publicada."
   port_map: "30015"
   index: /
