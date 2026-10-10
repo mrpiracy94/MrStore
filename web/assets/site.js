@@ -241,7 +241,10 @@
     });
   }
   function verifyRelease(release, appList) {
-    if (!release || release.certification !== "verified" || !Array.isArray(release.approved) ||
+    // Never classify editorial-only entries as security-scanned or device-certified.
+    if (!release || release.certification !== "security_scanned" ||
+        release.policy !== "editorial shortlist AND all image platforms scanned clean, digest pinned, safe static defaults" ||
+        !Array.isArray(release.approved) ||
         !Number.isInteger(release.approved_count) ||
         release.approved_count !== release.approved.length ||
         release.approved_count !== appList.length) return false;
