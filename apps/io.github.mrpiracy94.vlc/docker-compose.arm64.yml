@@ -1,7 +1,7 @@
 name: vlc
 services:
   vlc:
-    image: lscr.io/linuxserver/vlc:latest
+    image: lscr.io/linuxserver/vlc:latest@sha256:8989a917db5b77c1d8e96abd5ea6aac9b9568fe696e3e05f1baeb409bad8a51a
     container_name: vlc
     restart: unless-stopped
     environment:

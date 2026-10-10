@@ -1,7 +1,7 @@
 name: vscodium
 services:
   vscodium:
-    image: lscr.io/linuxserver/vscodium:latest
+    image: lscr.io/linuxserver/vscodium:latest@sha256:91e7a7a997fb89eeaa2c9054e8247e3eb1d63dff06b7f53a9d0bd0724a324e47
     container_name: vscodium
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: kimai
 services:
   kimai:
-    image: lscr.io/linuxserver/kimai:latest
+    image: lscr.io/linuxserver/kimai:latest@sha256:955e5ae639d4cd78cea57d02f187a433d607728456a5fd6b715f0949cf9343c0
     container_name: kimai
     restart: unless-stopped
     environment:

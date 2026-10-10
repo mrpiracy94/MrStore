@@ -1,7 +1,7 @@
 name: lidarr
 services:
   lidarr:
-    image: lscr.io/linuxserver/lidarr:latest
+    image: lscr.io/linuxserver/lidarr:latest@sha256:1110d041bc7243932c45a50655fc318b7f5cae07e1ee9c683f24a5798f12fbda
     container_name: lidarr
     restart: unless-stopped
     environment:

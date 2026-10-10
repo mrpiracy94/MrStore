@@ -1,7 +1,7 @@
 name: kicad
 services:
   kicad:
-    image: lscr.io/linuxserver/kicad:latest
+    image: lscr.io/linuxserver/kicad:latest@sha256:e760491edf82841b3076339c99d5277e24d569a43b694bde20331e56b7298657
     container_name: kicad
     restart: unless-stopped
     environment:

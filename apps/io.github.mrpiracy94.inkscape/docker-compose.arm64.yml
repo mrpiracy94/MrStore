@@ -1,7 +1,7 @@
 name: inkscape
 services:
   inkscape:
-    image: lscr.io/linuxserver/inkscape:latest
+    image: lscr.io/linuxserver/inkscape:latest@sha256:8bd0d6ebedfb4b21b7d49ad106fa6111e1a04e0124aa7cdd8fd322d3821bd867
     container_name: inkscape
     restart: unless-stopped
     environment:

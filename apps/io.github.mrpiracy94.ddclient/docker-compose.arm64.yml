@@ -1,7 +1,7 @@
 name: ddclient
 services:
   ddclient:
-    image: lscr.io/linuxserver/ddclient:latest
+    image: lscr.io/linuxserver/ddclient:latest@sha256:9f72a6dd8bdef0a8aa6e52d939e3bbedc1053117fb99719864922ed1e9c2391c
     container_name: ddclient
     restart: unless-stopped
     environment:

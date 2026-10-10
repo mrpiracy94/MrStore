@@ -1,7 +1,7 @@
 name: boinc
 services:
   boinc:
-    image: lscr.io/linuxserver/boinc:latest
+    image: lscr.io/linuxserver/boinc:latest@sha256:b9f84e1b6e38dea8a68c3a9cffcda6ca73dae0f1cd1e21977cc5ee7879d4724d
     container_name: boinc
     restart: unless-stopped
     environment:

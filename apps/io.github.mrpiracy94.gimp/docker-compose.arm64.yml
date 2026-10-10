@@ -1,7 +1,7 @@
 name: gimp
 services:
   gimp:
-    image: lscr.io/linuxserver/gimp:latest
+    image: lscr.io/linuxserver/gimp:latest@sha256:0006fe9db865d3d47dddad07e324716e565294e3359407fe12e62a0fd0f2a820
     container_name: gimp
     restart: unless-stopped
     environment:

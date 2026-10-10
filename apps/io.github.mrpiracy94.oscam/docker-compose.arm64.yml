@@ -1,7 +1,7 @@
 name: oscam
 services:
   oscam:
-    image: lscr.io/linuxserver/oscam:latest
+    image: lscr.io/linuxserver/oscam:latest@sha256:f90c80a0e3b25db1a55826115923219f9032fa09afb213b2ea570c6579115fc0
     container_name: oscam
     restart: unless-stopped
     environment:

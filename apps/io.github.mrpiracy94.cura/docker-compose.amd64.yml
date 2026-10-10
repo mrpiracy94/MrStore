@@ -1,7 +1,7 @@
 name: cura
 services:
   cura:
-    image: lscr.io/linuxserver/cura:latest
+    image: lscr.io/linuxserver/cura:latest@sha256:a1b289f0b2572591de7e7fd1ce8600e238e807b3d881eb672b4fde9c8327ef3d
     container_name: cura
     restart: unless-stopped
     environment:

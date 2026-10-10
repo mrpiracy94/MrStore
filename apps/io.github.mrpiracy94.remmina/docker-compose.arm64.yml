@@ -1,7 +1,7 @@
 name: remmina
 services:
   remmina:
-    image: lscr.io/linuxserver/remmina:latest
+    image: lscr.io/linuxserver/remmina:latest@sha256:fb1c3b15534c32555611c9c3b927ec25f674c0af25e541796c3dd9d31d513d9e
     container_name: remmina
     restart: unless-stopped
     environment:

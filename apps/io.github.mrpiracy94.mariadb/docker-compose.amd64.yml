@@ -1,7 +1,7 @@
 name: mariadb
 services:
   mariadb:
-    image: lscr.io/linuxserver/mariadb:latest
+    image: lscr.io/linuxserver/mariadb:latest@sha256:fa63c6ff84bd6bab0a188d68e1b4cd1e4e1b34c22101fc52d544a53dfd502d45
     container_name: mariadb
     restart: unless-stopped
     environment:

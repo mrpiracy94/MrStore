@@ -1,7 +1,7 @@
 name: budge
 services:
   budge:
-    image: lscr.io/linuxserver/budge:latest
+    image: lscr.io/linuxserver/budge:latest@sha256:a38541a63242cd9924acd5ed624fd08fb3f0080cc89d7c54a71aa431634130c2
     container_name: budge
     restart: unless-stopped
     environment:

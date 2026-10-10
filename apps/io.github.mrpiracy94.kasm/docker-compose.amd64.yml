@@ -1,7 +1,7 @@
 name: kasm
 services:
   kasm:
-    image: lscr.io/linuxserver/kasm:latest
+    image: lscr.io/linuxserver/kasm:latest@sha256:09ef20066315595f40326b523c6681293eaf6119834f971368180eb231a2e79b
     container_name: kasm
     restart: unless-stopped
     environment:

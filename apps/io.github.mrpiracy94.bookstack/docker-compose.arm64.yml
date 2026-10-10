@@ -1,7 +1,7 @@
 name: bookstack
 services:
   bookstack:
-    image: lscr.io/linuxserver/bookstack:latest
+    image: lscr.io/linuxserver/bookstack:latest@sha256:5b320f5faf726cdb2d273b54724229bde3236228f190b50a64e4869a566a26b4
     container_name: bookstack
     restart: unless-stopped
     environment:

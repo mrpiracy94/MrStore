@@ -1,7 +1,7 @@
 name: znc
 services:
   znc:
-    image: lscr.io/linuxserver/znc:latest
+    image: lscr.io/linuxserver/znc:latest@sha256:e91b91f50ea2892ae184ddb5619eee2a349dd6484833c4c576597edf23ecc973
     container_name: znc
     restart: unless-stopped
     environment:

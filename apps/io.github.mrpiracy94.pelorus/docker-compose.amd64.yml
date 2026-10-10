@@ -1,7 +1,7 @@
 name: pelorus
 services:
   pelorus:
-    image: lscr.io/linuxserver/pelorus:latest
+    image: lscr.io/linuxserver/pelorus:latest@sha256:ba13e4a2fccd931ae8104089f573498fd180fedfce5f20b88b269cafd35fe8af
     container_name: pelorus
     restart: unless-stopped
     environment:

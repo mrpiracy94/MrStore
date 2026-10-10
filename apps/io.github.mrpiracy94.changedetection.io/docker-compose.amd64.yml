@@ -1,7 +1,7 @@
 name: changedetection.io
 services:
   changedetection.io:
-    image: lscr.io/linuxserver/changedetection.io:latest
+    image: lscr.io/linuxserver/changedetection.io:latest@sha256:e9c74483a7ee1c6f98aee74a46a1f9fb62080a9cb1bacabcfa29c9f5b9a6ac50
     container_name: changedetection.io
     restart: unless-stopped
     environment:

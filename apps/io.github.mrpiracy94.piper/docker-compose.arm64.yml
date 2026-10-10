@@ -1,7 +1,7 @@
 name: piper
 services:
   piper:
-    image: lscr.io/linuxserver/piper:latest
+    image: lscr.io/linuxserver/piper:latest@sha256:a5e41bb9c6e794462c7ad33dca884a3c1b6676fe7b9b7abd92ca15310f6ea60e
     container_name: piper
     restart: unless-stopped
     environment:

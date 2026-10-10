@@ -1,7 +1,7 @@
 name: minisatip
 services:
   minisatip:
-    image: lscr.io/linuxserver/minisatip:latest
+    image: lscr.io/linuxserver/minisatip:latest@sha256:37c1a07cd72643231979b8b3343b105fbde899c68140cee2566c40e68bac1ffe
     container_name: minisatip
     restart: unless-stopped
     environment:

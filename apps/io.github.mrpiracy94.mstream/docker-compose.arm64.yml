@@ -1,7 +1,7 @@
 name: mstream
 services:
   mstream:
-    image: lscr.io/linuxserver/mstream:latest
+    image: lscr.io/linuxserver/mstream:latest@sha256:42bc24e7eb0184dfc2c2740cf0cb27a714c18a5934fb4ee1692f6c604fa7dba2
     container_name: mstream
     restart: unless-stopped
     environment:

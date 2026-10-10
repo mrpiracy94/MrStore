@@ -1,7 +1,7 @@
 name: intellij-idea
 services:
   intellij-idea:
-    image: lscr.io/linuxserver/intellij-idea:latest
+    image: lscr.io/linuxserver/intellij-idea:latest@sha256:7fb966ca323b03b803e57464bfb3aa1732a2ae7d8ecfdc9660a821982db733f5
     container_name: intellij-idea
     restart: unless-stopped
     environment:

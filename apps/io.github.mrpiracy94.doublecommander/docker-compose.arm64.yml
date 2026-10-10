@@ -1,7 +1,7 @@
 name: doublecommander
 services:
   doublecommander:
-    image: lscr.io/linuxserver/doublecommander:latest
+    image: lscr.io/linuxserver/doublecommander:latest@sha256:ff88836fa8677eebcbac05c6d7177ed48d26a85c91ae10c5203118f4feb4d1e8
     container_name: doublecommander
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: msedge
 services:
   msedge:
-    image: lscr.io/linuxserver/msedge:latest
+    image: lscr.io/linuxserver/msedge:latest@sha256:454bdb0bc9cb0efd5f474bb90693cb2f361ba392a9bc8c4e320fc48e37aa9711
     container_name: msedge
     restart: unless-stopped
     environment:

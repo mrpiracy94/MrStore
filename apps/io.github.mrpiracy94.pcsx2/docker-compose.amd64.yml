@@ -1,7 +1,7 @@
 name: pcsx2
 services:
   pcsx2:
-    image: lscr.io/linuxserver/pcsx2:latest
+    image: lscr.io/linuxserver/pcsx2:latest@sha256:ca11912ab082ac2409cd2cd2adabb75e768a49da9273602dc3a9fa9c977971f8
     container_name: pcsx2
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: diskover
 services:
   diskover:
-    image: lscr.io/linuxserver/diskover:latest
+    image: lscr.io/linuxserver/diskover:latest@sha256:0a0fa31255d57670190a6ebf15763ce76b865bffb73d6c3588f91e45d10b4c73
     container_name: diskover
     restart: unless-stopped
     environment:

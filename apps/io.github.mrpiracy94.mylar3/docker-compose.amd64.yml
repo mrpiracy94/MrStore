@@ -1,7 +1,7 @@
 name: mylar3
 services:
   mylar3:
-    image: lscr.io/linuxserver/mylar3:latest
+    image: lscr.io/linuxserver/mylar3:latest@sha256:6b2ee65fe3ef481c55a5c2fd66aca32e8220539168315d5138fa0844bb35d82c
     container_name: mylar3
     restart: unless-stopped
     environment:

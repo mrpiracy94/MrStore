@@ -1,7 +1,7 @@
 name: retroarch
 services:
   retroarch:
-    image: lscr.io/linuxserver/retroarch:latest
+    image: lscr.io/linuxserver/retroarch:latest@sha256:595c0096f3f3c2a6887296d2495a31f520aea22e1a29d9c5d216212d1424c3bd
     container_name: retroarch
     restart: unless-stopped
     environment:

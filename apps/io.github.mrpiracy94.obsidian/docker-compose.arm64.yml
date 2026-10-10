@@ -1,7 +1,7 @@
 name: obsidian
 services:
   obsidian:
-    image: lscr.io/linuxserver/obsidian:latest
+    image: lscr.io/linuxserver/obsidian:latest@sha256:1582b108382d5f6a10f8bbd6785ebcb942da620d44b63b0154b852cc660a52db
     container_name: obsidian
     restart: unless-stopped
     environment:

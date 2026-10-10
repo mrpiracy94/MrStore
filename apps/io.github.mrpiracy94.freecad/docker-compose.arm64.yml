@@ -1,7 +1,7 @@
 name: freecad
 services:
   freecad:
-    image: lscr.io/linuxserver/freecad:latest
+    image: lscr.io/linuxserver/freecad:latest@sha256:2fe64046b76738c5da5ff089089b475ab711158f3011d6d9ec36f39bdc1f503a
     container_name: freecad
     restart: unless-stopped
     environment:

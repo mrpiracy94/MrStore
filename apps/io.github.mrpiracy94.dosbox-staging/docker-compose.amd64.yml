@@ -1,7 +1,7 @@
 name: dosbox-staging
 services:
   dosbox-staging:
-    image: lscr.io/linuxserver/dosbox-staging:latest
+    image: lscr.io/linuxserver/dosbox-staging:latest@sha256:b3b0703411fd8b34f5689fdb53392b371dc769210253144654fddb1a4b5564c7
     container_name: dosbox-staging
     restart: unless-stopped
     environment:

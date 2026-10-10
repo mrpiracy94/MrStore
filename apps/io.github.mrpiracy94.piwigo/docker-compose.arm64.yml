@@ -1,7 +1,7 @@
 name: piwigo
 services:
   piwigo:
-    image: lscr.io/linuxserver/piwigo:latest
+    image: lscr.io/linuxserver/piwigo:latest@sha256:fac623b89b0c40e7b127b86decd55d3ff7a45903ef9e763d34909f67c70edb05
     container_name: piwigo
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: vscode
 services:
   vscode:
-    image: lscr.io/linuxserver/vscode:latest
+    image: lscr.io/linuxserver/vscode:latest@sha256:c6547632dae3352664afbb6c8ec282db06515a43a1ed9cd5e9d59ac9021cb9d2
     container_name: vscode
     restart: unless-stopped
     environment:

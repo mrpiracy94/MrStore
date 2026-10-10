@@ -1,7 +1,7 @@
 name: tdarr
 services:
   tdarr:
-    image: ghcr.io/haveagitgat/tdarr:latest@sha256:e47d0e75ce8b2d68c079c752dc39e26a6357ae71bda32543cc79673657e8afc4
+    image: ghcr.io/haveagitgat/tdarr:latest@sha256:8531c8261cb7a18f8ae5db5df2d2c93fc5b584472dcb4123bf69812cb429a305
     container_name: tdarr
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: zen
 services:
   zen:
-    image: lscr.io/linuxserver/zen:latest
+    image: lscr.io/linuxserver/zen:latest@sha256:c996efbda605a4ba51d0dfcfd4dc52b63e5f4af5f2b14a6d899c927d5bce43b3
     container_name: zen
     restart: unless-stopped
     environment:

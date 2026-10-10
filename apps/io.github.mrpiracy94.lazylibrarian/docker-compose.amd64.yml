@@ -1,7 +1,7 @@
 name: lazylibrarian
 services:
   lazylibrarian:
-    image: lscr.io/linuxserver/lazylibrarian:latest
+    image: lscr.io/linuxserver/lazylibrarian:latest@sha256:0aece56a912e2de1bbc1ec9b3e2a790f04fe73abac17d84b7ba6b071b3a9b549
     container_name: lazylibrarian
     restart: unless-stopped
     environment:

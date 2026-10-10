@@ -1,7 +1,7 @@
 name: duckdns
 services:
   duckdns:
-    image: lscr.io/linuxserver/duckdns:latest
+    image: lscr.io/linuxserver/duckdns:latest@sha256:58fe471c47b13a281b9620f061db96ff79b44586d18dcc57076c5c3d6c3c17b2
     container_name: duckdns
     restart: unless-stopped
     environment:

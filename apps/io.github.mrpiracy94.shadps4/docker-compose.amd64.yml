@@ -1,7 +1,7 @@
 name: shadps4
 services:
   shadps4:
-    image: lscr.io/linuxserver/shadps4:latest
+    image: lscr.io/linuxserver/shadps4:latest@sha256:3eb64965c1d833d71d1a8dfe9db4209cb4d9c5fdfef1491a2f979dd49dbcfbde
     container_name: shadps4
     restart: unless-stopped
     environment:

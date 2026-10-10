@@ -1,7 +1,7 @@
 name: grav
 services:
   grav:
-    image: lscr.io/linuxserver/grav:latest
+    image: lscr.io/linuxserver/grav:latest@sha256:8d2484894afbcf5efe67d4b2dc0a6b34857772949dbdb5b57f2a2fd6dcbc28c3
     container_name: grav
     restart: unless-stopped
     environment:

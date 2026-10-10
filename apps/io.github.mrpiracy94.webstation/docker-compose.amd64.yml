@@ -1,7 +1,7 @@
 name: webstation
 services:
   webstation:
-    image: lscr.io/linuxserver/webstation:latest
+    image: lscr.io/linuxserver/webstation:latest@sha256:51a5bf3a8d5071a660da0340b048517fbf9532e6aba5e652f1f44e19de861251
     container_name: webstation
     restart: unless-stopped
     environment:

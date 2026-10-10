@@ -1,7 +1,7 @@
 name: kometa
 services:
   kometa:
-    image: lscr.io/linuxserver/kometa:latest
+    image: lscr.io/linuxserver/kometa:latest@sha256:de31fa275504a20a7d72108d168fc51d7e4bfe2019f0097e37c0fe22a94f95fa
     container_name: kometa
     restart: unless-stopped
     environment:

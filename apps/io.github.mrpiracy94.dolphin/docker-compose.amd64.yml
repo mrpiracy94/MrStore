@@ -1,7 +1,7 @@
 name: dolphin
 services:
   dolphin:
-    image: lscr.io/linuxserver/dolphin:latest
+    image: lscr.io/linuxserver/dolphin:latest@sha256:0ed309984b532e2b0a97f9860f861fe037b4ca88d22f6297c24542fbce77ddc4
     container_name: dolphin
     restart: unless-stopped
     environment:

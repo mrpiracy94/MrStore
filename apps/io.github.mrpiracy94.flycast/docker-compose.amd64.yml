@@ -1,7 +1,7 @@
 name: flycast
 services:
   flycast:
-    image: lscr.io/linuxserver/flycast:latest
+    image: lscr.io/linuxserver/flycast:latest@sha256:f61a8764ea636413823f72e548d01a6f4d6b0bfad26d3fb9d28fa997823fb8fa
     container_name: flycast
     restart: unless-stopped
     environment:

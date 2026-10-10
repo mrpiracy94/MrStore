@@ -1,7 +1,7 @@
 name: weixin
 services:
   weixin:
-    image: lscr.io/linuxserver/weixin:latest
+    image: lscr.io/linuxserver/weixin:latest@sha256:c04df4204a60a85be761c281b3c9c911cbfe83c01de6d591c8de6fd2aa345065
     container_name: weixin
     restart: unless-stopped
     environment:

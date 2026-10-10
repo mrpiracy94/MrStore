@@ -1,7 +1,7 @@
 name: orcaslicer
 services:
   orcaslicer:
-    image: lscr.io/linuxserver/orcaslicer:latest
+    image: lscr.io/linuxserver/orcaslicer:latest@sha256:596ea6aae6e1300342db071d48662d3c49a51c63bff64506447c6ca92317912e
     container_name: orcaslicer
     restart: unless-stopped
     environment:

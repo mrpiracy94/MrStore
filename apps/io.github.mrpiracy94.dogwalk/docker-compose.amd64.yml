@@ -1,7 +1,7 @@
 name: dogwalk
 services:
   dogwalk:
-    image: lscr.io/linuxserver/dogwalk:latest
+    image: lscr.io/linuxserver/dogwalk:latest@sha256:c18d5f68ff8fe53f77743e3a0578f08888d33b111af7d7a4410c37d98d198488
     container_name: dogwalk
     restart: unless-stopped
     environment:

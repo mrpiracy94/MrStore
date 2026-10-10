@@ -1,7 +1,7 @@
 name: helium
 services:
   helium:
-    image: lscr.io/linuxserver/helium:latest
+    image: lscr.io/linuxserver/helium:latest@sha256:f96a6fe90d3a6f5ad436df36e7cd8ceb83f0ffdfb4e2f8ffa1d404dd21defa91
     container_name: helium
     restart: unless-stopped
     environment:

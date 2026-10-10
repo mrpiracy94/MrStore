@@ -1,7 +1,7 @@
 name: wireshark
 services:
   wireshark:
-    image: lscr.io/linuxserver/wireshark:latest
+    image: lscr.io/linuxserver/wireshark:latest@sha256:379707be824644d8fd1a7568ec4e247637f9a0edcd24d46c7812690b58598f9f
     container_name: wireshark
     restart: unless-stopped
     environment:

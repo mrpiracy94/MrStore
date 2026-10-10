@@ -1,7 +1,7 @@
 name: onlyoffice
 services:
   onlyoffice:
-    image: lscr.io/linuxserver/onlyoffice:latest
+    image: lscr.io/linuxserver/onlyoffice:latest@sha256:da6da583276f9d5ffacf71df0dee2e629d052a5ba7b9391f562c60b45b326fb6
     container_name: onlyoffice
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: yaak
 services:
   yaak:
-    image: lscr.io/linuxserver/yaak:latest
+    image: lscr.io/linuxserver/yaak:latest@sha256:4a0c36a7004e0c0d38d0ba2361932e782615216f6ebf6e825c45af42e2461549
     container_name: yaak
     restart: unless-stopped
     environment:

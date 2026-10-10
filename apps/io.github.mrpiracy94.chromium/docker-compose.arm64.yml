@@ -1,7 +1,7 @@
 name: chromium
 services:
   chromium:
-    image: lscr.io/linuxserver/chromium:latest
+    image: lscr.io/linuxserver/chromium:latest@sha256:138229f3759666bba2571c9c8cd27e1b3b4a63d8256e0ffe552b55e281776f85
     container_name: chromium
     restart: unless-stopped
     environment:
