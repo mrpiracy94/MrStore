@@ -36,7 +36,7 @@ jobs:
       - name: Inventory ZimaOS launcher compatibility (offline, not runtime proof)
         run: python scripts/compatibility.py
       - name: Audit whether ZimaOS can discover installed app updates
-        run: python scripts/zimaos_update_visibility.py
+        run: python scripts/zimaos_update_visibility.py --strict-main-name
       - name: Update visibility summary
         if: always()
         run: test ! -f out/zimaos-update-visibility.md || cat out/zimaos-update-visibility.md >> "$GITHUB_STEP_SUMMARY"
