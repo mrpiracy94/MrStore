@@ -250,7 +250,7 @@ def main() -> int:
     opts = p.parse_args()
     source_apps = apps(opts.source)
     featured = set(load_featured(opts.featured, {app.folder for app in source_apps}))
-    evidence = read_evidence(source_apps, opts.reports)
+    evidence = read_evidence([app for app in source_apps if app.folder in featured], opts.reports)
     result = stage(opts.source, evidence, opts.stage, load_summaries(), featured=featured)
     opts.report.parent.mkdir(parents=True, exist_ok=True)
     opts.report.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
