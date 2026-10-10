@@ -47,6 +47,20 @@ def verify_live(base, fetcher=fetch_json):
         raise ValueError("Missing approval/quarantine evidence")
     if len(allowed) != approved or len(quarantined) != quarantined_count:
         raise ValueError("Security evidence does not match the catalog")
+    # Counts alone are not sufficient: a report for a different selection can
+    # have exactly the same length as the public index. Require identity too.
+    prefix = "io.github.mrpiracy94."
+    if (not all(isinstance(slug, str) and slug and
+                slug.isascii() and
+                all(ch.islower() or ch.isdigit() or ch in "._-" for ch in slug)
+                for slug in allowed)
+            or len(set(allowed)) != len(allowed)):
+        raise ValueError("Invalid or duplicate approved application slugs")
+    expected = {prefix + slug for slug in allowed}
+    if set(ids) != expected:
+        raise ValueError("Published app IDs differ from the approved CVE selection")
+    if set(quarantined).intersection(allowed):
+        raise ValueError("An application is both approved and quarantined")
     return {"approved": approved, "quarantined": quarantined_count, "total": source_count}
 
 
