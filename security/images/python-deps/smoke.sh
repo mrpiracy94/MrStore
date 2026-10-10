@@ -4,7 +4,7 @@ set -euo pipefail
 app="${1:?App required}"
 arch="${2:?Architecture required}"
 case "$app" in
-  bazarr|beets|limnoria|nzbget|tautulli) ;;
+  bazarr|beets|limnoria|nzbget|sickgear|tautulli) ;;
   *) echo "Unsupported app: $app" >&2; exit 2 ;;
 esac
 case "$arch" in amd64|arm64) ;; *) exit 2 ;; esac
@@ -41,6 +41,7 @@ case "$app" in
   bazarr) port=6767; kind=http ;;
   tautulli) port=8181; kind=http ;;
   nzbget) port=6789; kind=http ;;
+  sickgear) port=8081; kind=http ;;
   limnoria) port=6667; kind=tcp ;;
 esac
 
