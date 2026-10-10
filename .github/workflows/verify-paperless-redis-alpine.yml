@@ -25,7 +25,7 @@ jobs:
       - name: Compare Redis 8 standard and Alpine on selected platform
         run: |
           trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output old.json redis:8
-          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output alpine.json redis:8.10.2-alpine
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output alpine.json redis:8.10.2-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0
       - name: Require zero HIGH and CRITICAL in replacement
         run: |
           python - <<'PY'
@@ -53,9 +53,9 @@ jobs:
       - name: Verify registry multiarch immutable digest
         run: |
           set -euo pipefail
-          docker buildx imagetools inspect redis:8.10.2-alpine | tee redis-manifest.txt
+          docker buildx imagetools inspect redis:8.10.2-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0 | tee redis-manifest.txt
           digest="$(awk '/^Digest:/ {print $2; exit}' redis-manifest.txt)"
-          [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]]
+          [[ "$digest" == "sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0" ]]
           echo "Pinned release candidate digest: $digest" >> "$GITHUB_STEP_SUMMARY"
       - name: Preserve CVE reports
         if: always()

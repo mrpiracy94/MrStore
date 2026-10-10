@@ -232,7 +232,7 @@ class StoreTests(unittest.TestCase):
     def test_paperless_redis_alpine_keeps_persistent_data(self):
         app = next(item for item in apps() if item.folder == 'paperless-ngx')
         service = app.source['services']['paperless-broker']
-        self.assertEqual(service['image'], 'docker.io/library/redis:8.10.2-alpine')
+        self.assertEqual(service['image'], 'docker.io/library/redis:8.10.2-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0')
         self.assertTrue(any(vol.get('source') == '/DATA/AppData/paperless/redis'
                             and vol.get('target') == '/data'
                             for vol in service['volumes']))

@@ -36,7 +36,7 @@ docker exec "$container" redis-cli SAVE | grep -q OK
 sudo test -s "$data_dir/dump.rdb"
 docker rm -f "$container" >/dev/null
 
-start_broker redis:8.10.2-alpine
+start_broker redis:8.10.2-alpine@sha256:3811787313eba226a2ef38658c6ccb91cd5e110edc89c37767de373120a0e5a0
 restored="$(docker exec "$container" redis-cli GET mrstore:compat)"
 test "$restored" = "paperless-rdb-preserved"
 docker exec "$container" redis-cli SET mrstore:second "ok" | grep -q OK
