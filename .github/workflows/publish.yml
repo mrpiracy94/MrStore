@@ -67,11 +67,15 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - name: Validate original catalog and regression tests before expensive image audit
+      - name: Validate catalog and Portuguese summaries before security audit
         run: |
           python scripts/validate.py
           python scripts/curate_taglines.py --check
-          python -m unittest discover -s tests -v
+      - name: Run full regression tests before publishing
+        # On PRs Validate MrStore already runs the same suite for the same SHA.
+        # Main releases must always pass these tests before 32 scan runners start.
+        if: github.event_name != 'pull_request'
+        run: python -m unittest discover -s tests -v
       - name: Reject new dangerous Docker privileges
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
