@@ -52,6 +52,21 @@ significa que passou os scans de segurança da MrStore. Para validar uma
 substituição aprovada, deve indicar o digest efetivamente aprovado no
 catálogo publicado.
 
+## Porque não recomendamos simplesmente fazer `docker pull`
+
+Um `docker pull imagem:latest` atualiza o conteúdo associado à tag
+**na cache Docker**, mas **não recria automaticamente** um contentor
+que já está a utilizar um ID de imagem mais antigo. Portanto,
+verificar apenas `docker image inspect imagem:latest` pode indicar
+uma imagem nova enquanto o contentor continua antigo, gerando um
+**falso negativo**. Não executar `docker pull` só para tentar
+forçar o ZimaOS a mostrar ou apagar avisos de atualização.
+
+Esta ferramenta parte de `docker container inspect <nome> --format '{{.Image}}'`,
+que devolve o ID específico realmente associado à instância do
+contentor, incluindo se a tag local tiver sido atualizada por outra
+ferramenta.
+
 ## Interpretação
 
 | `status` | Significado |
