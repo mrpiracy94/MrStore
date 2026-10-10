@@ -1,0 +1,58 @@
+name: Publish complete editorial MrStore catalog
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Apps/**'
+      - 'data/featured-apps.json'
+      - 'scripts/publish_editorial.py'
+      - '.github/workflows/editorial-pages.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: mrstore-editorial-pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Stage all selected applications without certification claims
+        run: python scripts/publish_editorial.py --stage release-source --report out/release-selection.json
+      - name: Build official ZimaOS v2 catalog
+        uses: IceWhaleTech/build-appstore-action@v1
+        with:
+          source: release-source
+          output: dist
+          base-url: https://mrpiracy94.github.io/MrStore
+          cache-file: .cache/build_appstore/image-size-cache.json
+          digest-cache-file: .cache/build_appstore/image-digest-cache.json
+          report-json: out/build-report.json
+      - name: Check all applications are present
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected = set(json.loads(Path('data/featured-apps.json').read_text())['apps'])
+          index = json.loads(Path('dist/index.json').read_text())
+          actual = {x['id'].removeprefix('io.github.mrpiracy94.') for x in index['apps']}
+          assert actual == expected, f'Missing: {sorted(expected - actual)}; extra: {sorted(actual - expected)}'
+          assert index['app_count'] == len(expected)
+          print('All', len(expected), 'applications present')
+          PY
+      - name: Mark release as editorial, not security certified
+        run: |
+          cp out/release-selection.json dist/release-status.json
+          touch dist/.nojekyll
+      - name: Publish complete catalog to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
