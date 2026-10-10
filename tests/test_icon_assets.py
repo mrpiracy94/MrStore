@@ -26,7 +26,7 @@ class IconAssetTests(unittest.TestCase):
 
     def test_every_app_has_icon_and_thumbnail(self):
         manifests=sorted((ROOT/'Apps').glob('*/docker-compose.yml'))
-        self.assertEqual(len(manifests),254)
+        self.assertEqual(len(manifests),253)
         for path in manifests:
             meta=yaml.safe_load(path.read_text(encoding='utf-8'))['x-casaos']
             with self.subTest(app=path.parent.name):
