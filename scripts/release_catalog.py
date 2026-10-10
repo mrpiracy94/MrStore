@@ -116,17 +116,17 @@ def insecure_defaults(app) -> list[str]:
             if source in DANGEROUS_SOURCE:
                 flags.append(f"{service}: sensitive host volume {source}")
         env = spec.get("environment") or []
-        if "CHANGE_ME" in json.dumps(env):
-            flags.append(f"{service}: default credentials not configured")
-        # ${VAR:?message} and ${VAR?message} both require install-time
-        # Compose environment values; the ZimaOS v2 appstore payload has no
-        # verified prompt for them. Quarantine instead of publishing a broken
-        # one-click installer or leaking dummy passwords into the catalog.
-        # Compose expands variables across service values, not just environment.
-        # Ignore ZimaOS x-* descriptive metadata (not runtime Compose config).
+        # Detect unsafe placeholders across actual Compose service fields,
+        # while ignoring purely descriptive x-casaos installer metadata.
         runtime_spec = {key: value for key, value in spec.items()
                         if not str(key).startswith("x-")}
-        if REQUIRED_COMPOSE_VARIABLE.search(json.dumps(runtime_spec)):
+        runtime_json = json.dumps(runtime_spec)
+        if "CHANGE_ME" in runtime_json:
+            flags.append(f"{service}: default credentials not configured")
+        # ${VAR:?message} and ${VAR?message} both require host-side values;
+        # the verified ZimaOS v2 installer does not expose a reliable prompt.
+        # Never publish a service that would fail Compose interpolation.
+        if REQUIRED_COMPOSE_VARIABLE.search(runtime_json):
             flags.append(f"{service}: required Compose installation variables unsupported by verified ZimaOS v2 installer")
         pairs = (env.items() if isinstance(env, dict) else
                  (value.split("=", 1) for value in env
