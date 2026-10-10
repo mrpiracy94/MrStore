@@ -47,6 +47,10 @@ class PublisherTriggerTests(unittest.TestCase):
     def test_security_gate_and_no_pr_publishing_are_retained(self):
         pub = workflow("publish.yml")
         jobs = pub["jobs"]
+        # PR #81 moved expensive scans to actual releases; keep that rule.
+        # Trigger path matching on PRs only gates fast preflight checks.
+        self.assertEqual(jobs["security_audit"]["if"],
+                         "github.event_name != 'pull_request'")
         self.assertEqual(jobs["security_audit"]["needs"], "preflight")
         self.assertEqual(jobs["build"]["needs"], "security_audit")
         self.assertEqual(jobs["publish"]["needs"], "build")
