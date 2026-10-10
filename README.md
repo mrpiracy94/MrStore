@@ -72,14 +72,22 @@ A compatibilidade *por Compose* não equivale a integração de loja nativa.
 | Homeio / CasaOS | Fonte ZIP experimental (sem certificação de runtime) |
 | Portainer | Templates JSON v2 restritos a apps de contentor único + Compose |
 | Cosmos / Dockge / Docker Linux | Manifestos Compose aprovados, importação manual |
-| HomeDock OS | Compose aprovado via Packager; formato .hds ainda pendente |
+| HomeDock OS | Gerador experimental de pacotes .hds e loja .hdstore, sujeitos a testes reais |
 | umbrelOS | ZIP-semente de loja Git para apps simples; precisa de repo separado |
 | Runtipi | ZIP-semente de loja Git v4+ para apps simples; precisa de repo separado |
-| Olares | Requer OAC/Helm; adaptador e teste nativos pendentes |
+| Olares | Gerador experimental OAC 0.12/Helm para subset elegível; testes Kubernetes/Market pendentes |
 
 O novo seletor no website explica o método por sistema e, quando a publicação
 inclui evidência coincidente, disponibiliza o manifesto Compose aprovado
 diretamente na ficha de cada aplicação.
+
+Depois de um release filtrado, ficam também disponíveis os pacotes
+experimentais [HomeDock `mrstore.hdstore`](https://mrpiracy94.github.io/MrStore/homedock/mrstore.hdstore)
+e [Olares `olares-oac-preview.zip`](https://mrpiracy94.github.io/MrStore/olares/olares-oac-preview.zip).
+Estes URLs **não estão garantidamente publicados** enquanto a PR não for
+testada, aprovada e integrada, e **não são certificações de instalação real**.
+As assinaturas HomeDock são checksums SHA-256 de integridade, não uma
+identidade criptográfica autenticada do publicador.
 
 **[Matriz completa e estado por plataforma](docs/UNIVERSAL_PLATFORMS.md)** ·
 [Plano CasaOS/Homeio](docs/UNIVERSAL_COMPATIBILITY.md) ·
