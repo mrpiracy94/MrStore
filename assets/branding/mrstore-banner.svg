@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="460" viewBox="0 0 1600 460" role="img" aria-labelledby="title desc">
+<title id="title">MrStore — A tua loja de aplicações para ZimaOS</title><desc id="desc">Banner escuro com detalhes laranja, ícone de aplicações e apresentação da loja.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1423"/><stop offset="1" stop-color="#1b2432"/></linearGradient><linearGradient id="orange" x2="0" y2="1"><stop stop-color="#ffbd60"/><stop offset="1" stop-color="#f47721"/></linearGradient></defs>
+<rect width="1600" height="460" rx="32" fill="url(#bg)"/><circle cx="1340" cy="210" r="290" fill="#f47721" opacity=".09"/><circle cx="1450" cy="80" r="180" fill="#f47721" opacity=".08"/>
+<g transform="translate(100 85)"><rect width="116" height="116" rx="27" fill="#17263b" stroke="#f47721" stroke-width="4"/><rect x="22" y="22" width="31" height="31" rx="7" fill="url(#orange)"/><rect x="63" y="22" width="31" height="31" rx="7" fill="#fff"/><rect x="22" y="63" width="31" height="31" rx="7" fill="#fff"/><rect x="63" y="63" width="31" height="31" rx="7" fill="url(#orange)"/></g>
+<text x="245" y="180" font-family="Arial,Helvetica,sans-serif" font-size="94" font-weight="800" fill="#fff">Mr<tspan fill="#ff9638">Store</tspan></text>
+<text x="102" y="268" font-family="Arial,Helvetica,sans-serif" font-size="42" font-weight="700" fill="#fff">A tua loja de aplicações para ZimaOS</text>
+<text x="104" y="332" font-family="Arial,Helvetica,sans-serif" font-size="28" fill="#c5d0dc">Descobre, escolhe e organiza as aplicações do teu servidor.</text>
+<rect x="104" y="368" width="336" height="46" rx="23" fill="#ff9638"/><text x="133" y="399" font-family="Arial,Helvetica,sans-serif" font-size="22" font-weight="700" fill="#141923">Simples de explorar</text>
+<g transform="translate(1160 160)" stroke="#ff9638" fill="none" stroke-width="5"><rect width="120" height="120" rx="25"/><rect x="150" width="120" height="120" rx="25"/><rect y="150" width="120" height="120" rx="25"/><rect x="150" y="150" width="120" height="120" rx="25"/></g></svg>
