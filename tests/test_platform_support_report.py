@@ -46,6 +46,14 @@ class SupportMatrixTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "differs"):
             report(self.selection, self.dist)
 
+    def test_rejects_missing_published_homedock_package(self):
+        (self.dist / "homedock").mkdir()
+        (self.dist / "homedock/catalog.json").write_text(json.dumps({
+            "source_approved": 1, "exported_count": 1,
+            "packages": [{"slug": "demo", "url": "homedock/demo.hds"}]}))
+        with self.assertRaisesRegex(ValueError, "package file"):
+            report(self.selection, self.dist)
+
     def test_rejects_stale_homedock_report(self):
         (self.dist / "homedock").mkdir()
         (self.dist / "homedock/catalog.json").write_text(json.dumps({
