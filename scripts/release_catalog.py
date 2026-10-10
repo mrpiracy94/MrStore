@@ -99,6 +99,15 @@ def read_evidence(source_apps, report_dir: Path, shards: int = 8) -> dict:
 def insecure_defaults(app) -> list[str]:
     """Conservative rule: unresolved dangerous defaults are never released."""
     flags = []
+    # Docker Compose also interpolates top-level network/volume/config values.
+    # Exclude service definitions checked below and descriptive x-* metadata.
+    root_runtime = {key: value for key, value in app.source.items()
+                    if key != "services" and not str(key).startswith("x-")}
+    root_json = json.dumps(root_runtime)
+    if "CHANGE_ME" in root_json:
+        flags.append("compose: default credentials not configured")
+    if REQUIRED_COMPOSE_VARIABLE.search(root_json):
+        flags.append("compose: required Compose installation variables unsupported by verified ZimaOS v2 installer")
     for service, spec in (app.source.get("services") or {}).items():
         if not isinstance(spec, dict):
             flags.append(f"{service}: invalid service spec")
