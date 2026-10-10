@@ -24,7 +24,7 @@ class StoreTests(unittest.TestCase):
     def test_offline_validation(self):
         audit = report()
         self.assertEqual(audit['summary']['errors'], 0, audit['findings'][:8])
-        self.assertEqual(audit['summary']['services'], 260)
+        self.assertEqual(audit['summary']['services'], 261)
         self.assertEqual(audit['summary']['images'], 258)
 
     def test_tcp_and_udp_do_not_collide(self):
@@ -78,6 +78,33 @@ class StoreTests(unittest.TestCase):
         self.assertTrue(any('scripts/verify_dist.py' in str(step.get('run',''))
                             for step in build))
         self.assertIn('if: success()', path.read_text(encoding='utf-8'))
+
+    def test_dozzle_socket_access_requires_readonly_proxy(self):
+        app = next(x for x in apps() if x.folder == 'dozzle')
+        proxy = app.source['services']['dozzle']
+        web = app.source['services']['dozzle-web']
+        self.assertEqual(app.metadata['main'], 'dozzle-web')
+        self.assertEqual(web['image'], 'amir20/dozzle:latest')
+        self.assertEqual(proxy['image'], 'lscr.io/linuxserver/socket-proxy:latest')
+        self.assertFalse(web.get('volumes'))
+        env = dict(x.split('=', 1) for x in proxy['environment'])
+        for key in ('POST', 'EXEC', 'ALLOW_START', 'ALLOW_STOP',
+                    'ALLOW_RESTARTS', 'ALLOW_PAUSE', 'ALLOW_UNPAUSE'):
+            self.assertEqual(env[key], '0')
+        self.assertEqual(env['ALLOW_LOGS'], '1')
+        self.assertEqual(env['CONTAINERS'], '1')
+        web_env = dict(x.split('=', 1) for x in web['environment'])
+        self.assertEqual(web_env['DOZZLE_REMOTE_HOST'], 'tcp://dozzle:2375')
+        self.assertEqual(web_env['DOZZLE_ENABLE_ACTIONS'], 'false')
+        self.assertEqual(web_env['DOZZLE_ENABLE_SHELL'], 'false')
+        self.assertFalse(proxy.get('ports'))
+        self.assertTrue(app.source['networks']['dozzle-backend']['internal'])
+        self.assertEqual(proxy['volumes'][0]['source'], '/var/run/docker.sock')
+        self.assertTrue(proxy['volumes'][0]['read_only'])
+        self.assertTrue(proxy['read_only'])
+        self.assertIn('/run', proxy['tmpfs'])
+        self.assertEqual(web['ports'][0]['target'], 8080)
+        self.assertEqual(str(web['ports'][0]['published']), '30011')
 
     def test_all_shards_are_disjoint_and_complete(self):
         keys=list(image_usage(apps()))

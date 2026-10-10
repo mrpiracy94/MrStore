@@ -1,36 +1,86 @@
 name: dozzle
 services:
   dozzle:
-    image: amir20/dozzle:latest
-    container_name: dozzle
+    # Only the GET-only proxy holds the Docker host socket. The existing key is
+    # retained so existing privilege-policy comparisons remain fail-closed.
+    image: lscr.io/linuxserver/socket-proxy:latest
+    container_name: dozzle-socket-proxy
     restart: unless-stopped
-    ports:
-      - target: 8080
-        published: "30011"
-        protocol: tcp
+    read_only: true
+    tmpfs:
+      - /run
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - "CONTAINERS=1"
+      - "EVENTS=1"
+      - "INFO=1"
+      - "VERSION=1"
+      - "POST=0"
+      - "EXEC=0"
+      - "BUILD=0"
+      - "AUTH=0"
+      - "IMAGES=0"
+      - "SECRETS=0"
+      - "SERVICES=0"
+      - "ALLOW_LOGS=1"
+      - "ALLOW_ARCHIVE=0"
+      - "ALLOW_CHANGES=0"
+      - "ALLOW_EXPORT=0"
+      - "ALLOW_TOP=0"
+      - "ALLOW_START=0"
+      - "ALLOW_STOP=0"
+      - "ALLOW_RESTARTS=0"
+      - "ALLOW_PAUSE=0"
+      - "ALLOW_UNPAUSE=0"
     volumes:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
+        read_only: true
+    networks:
+      - dozzle-backend
+    x-casaos:
+      envs: []
+      volumes:
+        - container: /var/run/docker.sock
+          description:
+            en_US: Host socket accessible exclusively by read-only Docker API proxy
+  dozzle-web:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    depends_on:
+      - dozzle
+    environment:
+      - "DOZZLE_REMOTE_HOST=tcp://dozzle:2375"
+      - "DOZZLE_ENABLE_ACTIONS=false"
+      - "DOZZLE_ENABLE_SHELL=false"
+    ports:
+      - target: 8080
+        published: "30011"
+        protocol: tcp
+    networks:
+      - default
+      - dozzle-backend
     x-casaos:
       envs: []
       ports:
         - container: "8080"
           description:
             en_US: Port 8080/tcp
-      volumes:
-        - container: /var/run/docker.sock
-          description:
-            en_US: /var/run/docker.sock
-
+      volumes: []
+networks:
+  dozzle-backend:
+    internal: true
 x-casaos:
   id: io.github.mrpiracy94.dozzle
-  version: "1.0.0"
-  update_at: "2026-10-09"
+  version: "1.1.0"
+  update_at: "2026-10-10"
   architectures:
     - amd64
     - arm64
-  main: dozzle
+  main: dozzle-web
   author: MrStore
   developer: Dozzle
   category: Others
@@ -39,8 +89,8 @@ x-casaos:
   title:
     en_US: "Dozzle"
   tagline:
-    en_US: "Logs Docker em tempo real"
+    en_US: "Logs Docker em tempo real (API só de leitura)"
   description:
-    en_US: "Logs Docker em tempo real. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+    en_US: "Logs Docker via proxy interno de leitura. Dozzle não monta docker.sock, nega POST, shell, exec e controlo de containers. API 2375 sem porta publicada no host. Exige teste ZimaOS para confirmação real. Docs: https://dozzle.dev/guide/remote-hosts"
   port_map: "30011"
   index: /

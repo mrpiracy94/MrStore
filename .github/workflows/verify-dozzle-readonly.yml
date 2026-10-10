@@ -1,0 +1,37 @@
+name: Verify Dozzle read-only Docker API integration
+on:
+  pull_request:
+    paths:
+      - 'Apps/dozzle/docker-compose.yml'
+      - '.github/workflows/verify-dozzle-readonly.yml'
+permissions:
+  contents: read
+jobs:
+  runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start real Dozzle and Docker socket proxy
+        run: |
+          set -euo pipefail
+          docker compose -p mrstore-dozzle-check -f Apps/dozzle/docker-compose.yml up -d
+      - name: Verify GET and Dozzle UI succeed but Docker POST is denied
+        run: |
+          set -euo pipefail
+          ready=0
+          for n in $(seq 1 50); do
+            if curl --noproxy '*' -fsS --connect-timeout 2 http://127.0.0.1:30011/ >/dev/null; then ready=1; break; fi
+            sleep 2
+          done
+          test "$ready" = 1
+          ip="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dozzle-socket-proxy)"
+          curl --noproxy '*' -fsS "http://$ip:2375/containers/json" >/dev/null
+          code="$(curl --noproxy '*' -sS -o /tmp/dozzle-post -w '%{http_code}' \
+            -X POST -H 'Content-Type: application/json' -d '{}' "http://$ip:2375/containers/create")"
+          test "$code" = "403"
+          test "$(docker inspect -f '{{json .HostConfig.PortBindings}}' dozzle-socket-proxy)" = '{}'
+          docker logs dozzle --tail 30
+      - name: Clean up
+        if: always()
+        run: docker compose -p mrstore-dozzle-check -f Apps/dozzle/docker-compose.yml down --remove-orphans
