@@ -1,47 +1,75 @@
-name: Validate curated 254 MrStore applications (no publish)
+# Public editorial listing is independent of the vulnerability audit.
+# The release-status.json must clearly state certification: not_assessed.
+name: Publish complete MrStore app catalog
 on:
   push:
     branches: [main]
     paths:
       - 'Apps/**'
-      - 'data/featured-apps.json'
+      - 'data/taglines-pt.json'
       - 'scripts/publish_editorial.py'
+      - 'scripts/curate_taglines.py'
+      - 'scripts/stage_storefront.py'
+      - 'store-config.json'
+      - 'supported-languages.json'
+      - 'category-list.json'
+      - 'recommend-list.json'
+      - 'web/**'
       - '.github/workflows/rollout-233.yml'
   workflow_dispatch:
 permissions:
   contents: read
+# The standalone website updater uses this exact lock, so both cannot
+# independently rewrite gh-pages at the same time.
+concurrency:
+  group: mrstore-static-site
+  cancel-in-progress: false
 jobs:
   publish:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 180
+    permissions:
+      contents: write
+      pages: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - name: Generate exact 254-app editorial selection
+      - name: Build full manifest allowlist without filtering for CVEs
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          selected = json.loads(Path('data/featured-apps.json').read_text())['apps']
-          source = {p.parent.name for p in Path('Apps').glob('*/docker-compose.yml')}
-          assert len(selected) == len(set(selected)) == 254 and set(selected) <= source
+          source = sorted(p.parent.name for p in Path('Apps').glob('*/docker-compose.yml'))
+          if len(source) < 254 or len(source) != len(set(source)):
+              raise SystemExit('Source inventory unexpectedly shrank or contains duplicates')
           Path('out').mkdir(exist_ok=True)
-          Path('out/featured-all.json').write_text(json.dumps({'schema': 1, 'description': '254 editorial apps, not certified', 'apps': selected}, indent=2) + chr(10))
+          Path('out/featured-all.json').write_text(
+              json.dumps({
+                  'schema': 1,
+                  'description': 'Complete editorial app inventory; not a security or installation certification',
+                  'apps': source,
+              }, ensure_ascii=False, indent=2) + '\n',
+              encoding='utf-8',
+          )
+          print(f'{len(source)} source applications selected for public listing')
           PY
-      - name: Stage entire editorial selection
+      - name: Stage full editorial selection
         run: python scripts/publish_editorial.py --featured out/featured-all.json --stage release-source --report out/release-selection.json
-      - name: Confirm 254 app definitions before building
+      - name: Verify zero omissions and no security certification
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          selected = json.loads(Path("out/featured-all.json").read_text())["apps"]
-          staged = {p.parent.name for p in Path("release-source/Apps").glob("*/docker-compose.yml")}
-          assert len(selected) == 254 and staged == set(selected)
-          print("254 manifests ready")
+          source = {p.parent.name for p in Path('Apps').glob('*/docker-compose.yml')}
+          staged = {p.parent.name for p in Path('release-source/Apps').glob('*/docker-compose.yml')}
+          result = json.loads(Path('out/release-selection.json').read_text(encoding='utf-8'))
+          if source != staged or result['certification'] != 'not_assessed' or result['approved_count'] != len(source):
+              raise SystemExit('Editorial staging is incomplete or misleading')
+          print(f'Validated all {len(source)} applications; certification not_assessed')
           PY
       - name: Build official ZimaOS v2 catalog
         uses: IceWhaleTech/build-appstore-action@v1
@@ -52,27 +80,42 @@ jobs:
           cache-file: .cache/build_appstore/image-size-cache.json
           digest-cache-file: .cache/build_appstore/image-digest-cache.json
           report-json: out/build-report.json
-      - name: Confirm all 254 applications are in official index
+      - name: Verify complete published index
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          expected = {"io.github.mrpiracy94." + x for x in json.loads(Path("data/featured-apps.json").read_text())["apps"]}
-          index = json.loads(Path("dist/index.json").read_text())
-          actual = {x["id"] for x in index["apps"]}
-          assert index["app_count"] == 254 and actual == expected, f"missing {sorted(expected-actual)}; extra {sorted(actual-expected)}"
-          print("Verified", len(actual), "published entries")
+          source = {'io.github.mrpiracy94.' + p.parent.name for p in Path('Apps').glob('*/docker-compose.yml')}
+          index = json.loads(Path('dist/index.json').read_text(encoding='utf-8'))
+          ids = [a['id'] for a in index['apps']]
+          if index.get('app_count') != len(source) or len(ids) != len(set(ids)) or set(ids) != source:
+              raise SystemExit('Built catalog omits or duplicates one or more apps')
           PY
-      - name: Stage website and uncertified editorial status
+      - name: Stage website and transparent editorial status
         run: |
           cp out/release-selection.json dist/release-status.json
           python scripts/stage_storefront.py --source web --dist dist
           touch dist/.nojekyll
-      # Never overwrite the audited gh-pages release with editorial manifests.
-      - name: Preserve uncertified editorial preview as CI artifact
+      - name: Preserve complete build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mrstore-editorial-preview-254
+          name: mrstore-complete-editorial-catalog
           path: dist/
           include-hidden-files: true
           if-no-files-found: error
+      - name: Publish full editorial catalog (not security-certified)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+      - name: Trigger public GitHub Pages rebuild
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl --fail-with-body --show-error --silent --retry 3 --retry-delay 3 \
+            --request POST \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/pages/builds"
