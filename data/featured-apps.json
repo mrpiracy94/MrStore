@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Seleção editorial de 64 aplicações existentes no repositório; publicação não equivale a certificação de segurança.",
+  "description": "Seleção editorial de 80 aplicações existentes no repositório; publicação não equivale a certificação de segurança.",
   "apps": [
     "jellyfin",
     "plex",
@@ -65,6 +65,22 @@
     "mosquitto",
     "node-red",
     "handbrake",
-    "calibre"
+    "calibre",
+    "mariadb",
+    "speedtest-tracker",
+    "wireguard",
+    "netdata",
+    "photoprism",
+    "pairdrop",
+    "planka",
+    "pocket-id",
+    "rustdesk",
+    "searxng",
+    "tautulli",
+    "transmission",
+    "unifi-network-application",
+    "wikijs",
+    "sabnzbd",
+    "tdarr"
   ]
 }
