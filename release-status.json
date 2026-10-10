@@ -1,7 +1,7 @@
 {
-  "source_apps": 253,
-  "featured_count": 253,
-  "approved_count": 253,
+  "source_apps": 254,
+  "featured_count": 254,
+  "approved_count": 254,
   "approved": [
     "actual-budget",
     "adguardhome-sync",
@@ -60,6 +60,7 @@
     "faster-whisper",
     "ferdium",
     "ffmpeg",
+    "filebrowser",
     "filezilla",
     "firefox",
     "flaresolverr",
@@ -630,5 +631,5 @@
     ]
   },
   "certification": "not_assessed",
-  "policy": "Editorial listing only; upstream images are not certified by MrStore"
+  "policy": "Editorial listing only; the 254 indexed manifests are not certified by MrStore security scanners or real-device installation tests"
 }
