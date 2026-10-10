@@ -124,3 +124,12 @@ Resultados positivos são apenas candidatos C2 a revisão; não constituem C3
 (persistência/função completa), C4 (backup/upgrade/rollback), nem comprovam
 outras plataformas como CasaOS, ZimaOS, Umbrel ou Olares. Não acrescentar
 o registro à lista C4 sem ensaio e dupla revisão humana.
+
+## Contagem ativa após remoção segura de SteamOS
+
+O commit principal de 10-10-2026 retirou SteamOS do catálogo ativo devido
+à descontinuação upstream. O catálogo agora tem **253 aplicações ativas**, e
+não se deve voltar a incluir SteamOS para cumprir artificialmente a antiga
+meta de 254. Os testes de inventário mantêm a contagem ativa como uma
+restrição de regressão; a matriz de certificação cobre as aplicações
+que efetivamente estão no repositório.
