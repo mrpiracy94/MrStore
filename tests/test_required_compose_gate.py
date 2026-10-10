@@ -51,6 +51,27 @@ class RequiredInstallerEnvironmentTests(unittest.TestCase):
                 self.assertFalse(any("required Compose installation variables" in e
                                      for e in insecure_defaults(fixture([text]))))
 
+    def test_required_interpolation_in_non_environment_compose_values(self):
+        # Compose resolves these before a ZimaOS installer can ask for secrets.
+        for field, value in (
+            ("command", ["--token=${REQUIRED_TOKEN:?set token}"]),
+            ("labels", {"api.token": "${REQUIRED_TOKEN?set token}"}),
+            ("hostname", "${REQUIRED_HOSTNAME:?set hostname}"),
+        ):
+            with self.subTest(field=field):
+                app = fixture(["TZ=Europe/Lisbon"])
+                app.source["services"]["example"][field] = value
+                self.assertTrue(any("required Compose installation variables" in e
+                                    for e in insecure_defaults(app)))
+
+    def test_zimaos_documentation_is_not_runtime_secret_interpolation(self):
+        app = fixture(["TZ=Europe/Lisbon"])
+        app.source["services"]["example"]["x-casaos"] = {
+            "description": "${EXAMPLE:?documentation only}"
+        }
+        self.assertFalse(any("required Compose installation variables" in e
+                             for e in insecure_defaults(app)))
+
     def test_public_change_me_also_stays_quarantined(self):
         self.assertTrue(any("default credentials not configured" in x
                             for x in insecure_defaults(fixture(["PASSWORD=CHANGE_ME"]))))
