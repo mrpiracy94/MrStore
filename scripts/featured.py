@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 import re
 
-SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+SLUG = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 
 
 def load_featured(path: Path, known: set[str] | None = None) -> tuple[str, ...]:
