@@ -6,7 +6,7 @@
   <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Descobre aplicações self-hosted num catálogo comunitário pensado para unir sistemas, servidores e plataformas. Uma identidade independente do teu sistema operativo.</p>
 
   <p>
-    <a href="https://mrpiracy94.github.io/MrStore/"><strong>🌐 Explorar a loja</strong></a>
+    <a href="https://mrpiracy94.github.io/"><strong>🌐 Explorar a loja</strong></a>
     &nbsp; · &nbsp;
     <a href="#-plataformas-e-compatibilidade"><strong>🌍 Plataformas</strong></a>
     &nbsp; · &nbsp;
@@ -20,7 +20,7 @@
 
 ## ✨ O que é a MrStore?
 
-A **MrStore** reúne aplicações **self-hosted** para servidores, NAS e projetos homelab, independentemente da marca ou sistema utilizado. O repositório organiza definições Docker Compose; a seleção pública pode conter menos aplicações porque apenas são publicadas as entradas aprovadas pelos controlos de segurança.
+A **MrStore** reúne aplicações **self-hosted** para servidores, NAS e projetos homelab, independentemente da marca ou sistema utilizado. O repositório organiza definições Docker Compose; a montra pública destaca uma seleção editorial reduzida, identificada como não certificada até existir um relatório de publicação aprovado.
 
 **A montra web é universal para descoberta, não para instalação automática.** A instalação nativa depende do adaptador e da validação de cada plataforma.
 
@@ -28,7 +28,7 @@ A **MrStore** reúne aplicações **self-hosted** para servidores, NAS e projeto
 |:---|:---|:---|
 | Pesquisa por nome, categoria, arquitetura e favoritos na montra web. | Catálogo de origem organizado por categorias, com IDs estáveis. | Verificação das imagens Docker, digest imutável e quarentena de resultados vulneráveis ou inconclusivos. |
 
-**[Abrir a montra da MrStore →](https://mrpiracy94.github.io/MrStore/)**
+**[Abrir a montra da MrStore →](https://mrpiracy94.github.io/)**
 
 > **Nota:** a montra em GitHub Pages permite descobrir aplicações e consultar o catálogo real, mas não instala contentores. Só considera uma edição validada quando os relatórios da publicação correspondem ao índice apresentado.
 
@@ -49,12 +49,14 @@ A identidade *multiplataforma* traduz a visão do projeto, **não uma certifica�
 
 📖 [Guia técnico de instalação da integração disponível](docs/ZIMAOS_INSTALLATION.md) · [Relatórios e ensaios em equipamento](docs/ZIMAOS_COMPATIBILITY.md)
 
-## ⭐ Seleção inicial — 32 apps
+## ⭐ Seleção piloto — 6 apps
 
-Para já, a MrStore tem **32 aplicações candidatas** escolhidas para o catálogo
-público, em vez de publicar tudo indiscriminadamente. Só aparecem as que passarem
-a auditoria CVE e os controlos de permissões. As **outras 221** continuam no
-repositório, disponíveis para expansão gradual — não foram apagadas.
+A MrStore destaca agora **6 aplicações candidatas** na nova montra:
+Home Assistant, Jellyfin, Immich, Nextcloud, qBittorrent e Vaultwarden.
+A seleção é editorial e **não constitui certificação de segurança ou de instalação**.
+As restantes **247 definições** continuam no repositório, disponíveis para futuras
+fases — não foram apagadas. A publicação técnica de versões aprovadas continua
+a depender dos controlos CVE, das permissões e dos testes de integração.
 
 📖 [Consultar e aumentar a seleção inicial](docs/CURATED_STORE.md)
 
@@ -122,7 +124,7 @@ python -m unittest discover -s tests -v
 python scripts/compatibility.py
 ```
 
-A montra web é integrada pelo `scripts/stage_storefront.py` **apenas depois** de o builder oficial criar os JSON v2 e de o relatório da seleção aprovada ser validado. Não substitui `store.json`, `index.json` nem os Compose das aplicações.
+A nova montra pública é mantida no repositório [`mrpiracy94.github.io`](https://github.com/mrpiracy94/mrpiracy94.github.io). Apresenta as candidatas com uma indicação explícita de aprovação pendente e atualiza automaticamente a seleção. O `scripts/stage_storefront.py` continua a proteger a publicação técnica em `gh-pages`, exigindo um release validado; a montra independente não substitui o catálogo, os relatórios de segurança nem os Compose.
 
 📖 [Como funciona a montra](docs/STORE_FRONTEND.md) · [GitHub Actions](https://github.com/mrpiracy94/MrStore/actions) · [Guia de integração](docs/ZIMAOS_INSTALLATION.md)
 
