@@ -12,8 +12,8 @@ from scripts.asset_audit_online import (
 
 class ArtworkAuditTests(unittest.TestCase):
     def test_image_signatures(self):
-        self.assertTrue(is_image(b"\\x89PNG\\r\\n\\x1a\\nmore", "image/png"))
-        self.assertTrue(is_image(b"\\xff\\xd8\\xffmore", "image/jpeg"))
+        self.assertTrue(is_image(b"\x89PNG\r\n\x1a\nmore", "image/png"))
+        self.assertTrue(is_image(b"\xff\xd8\xffmore", "image/jpeg"))
         self.assertTrue(is_image(b"RIFF1234WEBPmore", "image/webp"))
         self.assertTrue(is_image(b"<svg xmlns='http://www.w3.org/2000/svg'></svg>",
                                  "image/svg+xml"))
@@ -53,9 +53,9 @@ class ArtworkAuditTests(unittest.TestCase):
             (root / "store-config.json").write_text(
                 '{"icon": "' + OWN_RAW_PREFIX + 'branding/mrstore-icon.svg"}')
             (root / "Apps/test/docker-compose.yml").write_text(
-                "x-casaos:\\n"
-                "  icon: https://assets.example.org/app.png\\n"
-                "  thumbnail: https://assets.example.org/app.png\\n")
+                "x-casaos:\n"
+                "  icon: https://assets.example.org/app.png\n"
+                "  thumbnail: https://assets.example.org/app.png\n")
             with patch("scripts.asset_audit_online.check_url",
                        return_value={"status": "ok"}) as checker:
                 result = audit(root, defer_unpublished=True)
