@@ -40,6 +40,7 @@
   let homedockReady = false;
   let olaresCharts = new Map();
   let olaresReady = false;
+  let platformEligibility = new Map();
   let selectedStoreURL = STORE_URL;
 
   function renderPlatform() {
@@ -73,7 +74,11 @@
       : ((id === "casaos" || id === "homeio") && !previewZipReady
         ? "O ZIP experimental não está publicado nesta edição. Não uses o ZIP da branch main, que inclui apps em quarentena."
         : guide[1] + ". Suporte por formato não equivale a teste real de instalação.");
-    $("platform-help").textContent = guide[0] + " · " + intro;
+    const eligible = platformEligibility.get(id);
+    const eligibilityNote = Number.isInteger(eligible)
+      ? " · " + eligible + " formato(s) elegível(is) nesta edição; instalações e upgrades reais não certificados."
+      : "";
+    $("platform-help").textContent = guide[0] + " · " + intro + eligibilityNote;
     $("store-address").textContent = selectedStoreURL ||
       (COMPOSE_TARGETS.has(id) ? "Escolhe uma app → Descarregar Compose aprovado" : "Integração nativa ainda indisponível");
     $("copy-store").disabled = !selectedStoreURL;
@@ -115,6 +120,32 @@
       });
       previewZipReady = response.ok;
     } catch (_) { previewZipReady = false; }
+    renderPlatform();
+  }
+  async function checkPlatformSupportReport() {
+    if (!state.validated) return;
+    try {
+      const response = await fetch("./universal/support-report.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Support evidence not published");
+      const data = await response.json();
+      if (data.version !== 1 || data.runtime_tested !== false ||
+          data.security_selection_count !== state.apps.length ||
+          !Array.isArray(data.systems) || data.systems.length !== 11) throw new Error("Stale report");
+      const counts = new Map();
+      for (const item of data.systems) {
+        if (!item || !Object.prototype.hasOwnProperty.call(PLATFORM_GUIDES, item.id) ||
+            !Number.isInteger(item.format_eligible_count) ||
+            item.format_eligible_count < 0 ||
+            item.format_eligible_count > state.apps.length ||
+            item.runtime_verified_count !== 0 || item.upgrade_verified_count !== 0 ||
+            item.native_certified !== false || counts.has(item.id)) {
+          throw new Error("Invalid compatibility evidence");
+        }
+        counts.set(item.id, item.format_eligible_count);
+      }
+      if (counts.size !== 11) throw new Error("Missing platforms");
+      platformEligibility = counts;
+    } catch (_) { platformEligibility = new Map(); }
     renderPlatform();
   }
   async function checkNativePackages() {
@@ -411,7 +442,7 @@
       setNotice("Esta edição pública não inclui evidência completa de quarentena, ou existe uma divergência entre o índice e os relatórios. Podes consultar as fichas, mas NÃO interpretes estas aplicações como aprovadas pelos scanners atuais. Verifica os relatórios no GitHub antes de instalar.", true);
     }
     categoryList(); render();
-    checkUniversalPublication(); checkPreviewZip(); checkNativePackages();
+    checkUniversalPublication(); checkPreviewZip(); checkNativePackages(); checkPlatformSupportReport();
   }
   $("search").addEventListener("input", function (event) { state.query = event.target.value; state.limit = BATCH_SIZE; render(); });
   $("architecture").addEventListener("change", function (event) { state.arch = event.target.value; state.limit = BATCH_SIZE; render(); });
