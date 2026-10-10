@@ -141,7 +141,15 @@ jobs:
               "$ref-amd64" "$ref-arm64"
             docker buildx imagetools inspect --raw "$ref" | jq -e \
               '[(.manifests[] | select(.platform.os=="linux") | .platform.architecture)] | sort == ["amd64","arm64"]'
-            digest="$(docker buildx imagetools inspect "$ref" | awk '/^Digest:/ { print $2; exit }')"
+            # A private GHCR package does NOT qualify as a publicly published release.
+            anonymous="$(mktemp -d)"
+            if ! DOCKER_CONFIG="$anonymous" docker buildx imagetools inspect "$ref" > "out/$app-anonymous-inspect.txt"; then
+              rm -rf "$anonymous"
+              echo "GHCR $ref is not anonymously accessible" >&2
+              exit 1
+            fi
+            rm -rf "$anonymous"
+            digest="$(awk '/^Digest:/ {print $2; exit}' "out/$app-anonymous-inspect.txt")"
             [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]] || { echo "Missing digest for $ref" >&2; exit 1; }
             echo "$ref@$digest" | tee -a out/go-patched-digests.txt
           done
