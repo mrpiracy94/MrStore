@@ -1,5 +1,5 @@
-# The editorial catalog is published ONLY by rollout-233.yml.
-# This workflow must not race gh-pages and wipe the actual homepage.
+# The editorial catalog is a CI-only preview in rollout-233.yml.
+# Neither editorial workflow may overwrite the CVE-gated gh-pages catalog.
 name: Validate editorial MrStore selection (no publish)
 on:
   push:
