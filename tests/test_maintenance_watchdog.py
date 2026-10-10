@@ -46,6 +46,71 @@ class WatchdogTests(unittest.TestCase):
             "discover-apps.yml", [], NOW, 960, "mrpiracy94/MrStore")
         self.assertEqual(problem["id"], "missing:discover-apps.yml")
 
+    def test_recent_workflow_without_first_schedule_is_not_prematurely_failed(self):
+        created = (NOW - timedelta(hours=4)).isoformat()
+        status, problem = mw.evaluate_run(
+            "discover-apps.yml", [], NOW, 960, "mrpiracy94/MrStore", created)
+        self.assertIsNone(problem)
+        self.assertIn("A aguardar primeira execução", status)
+        self.assertNotIn("OK", status)
+
+    def test_bootstrap_grace_expires_for_missing_schedule(self):
+        created = (NOW - timedelta(hours=961)).isoformat()
+        _, problem = mw.evaluate_run(
+            "discover-apps.yml", [], NOW, 960, "mrpiracy94/MrStore", created)
+        self.assertEqual(problem["id"], "missing:discover-apps.yml")
+
+    def test_failed_run_remains_failed_even_if_workflow_was_created_today(self):
+        created = (NOW - timedelta(hours=2)).isoformat()
+        _, problem = mw.evaluate_run(
+            "cve-scan.yml", [run(conclusion="failure")], NOW,
+            60, "mrpiracy94/MrStore", created)
+        self.assertEqual(problem["id"], "failed:cve-scan.yml:failure")
+
+    def test_future_workflow_creation_date_is_not_treated_as_grace(self):
+        created = (NOW + timedelta(hours=1)).isoformat()
+        _, problem = mw.evaluate_run(
+            "cve-scan.yml", [], NOW, 60, "mrpiracy94/MrStore", created)
+        self.assertEqual(problem["id"], "missing:cve-scan.yml")
+
+    def test_malformed_workflow_creation_date_is_not_a_grace_pass(self):
+        for created in ("not-a-date", "2026-99-99", ""):
+            with self.subTest(created=created):
+                _, problem = mw.evaluate_run(
+                    "cve-scan.yml", [], NOW, 60, "mrpiracy94/MrStore",
+                    created)
+                self.assertEqual(problem["id"], "missing:cve-scan.yml")
+
+    def test_disabled_workflow_is_flagged_even_inside_bootstrap_grace(self):
+        with (patch.dict(mw.WORKFLOWS, {"cve-scan.yml": 60}, clear=True),
+              patch.object(mw, "api", return_value={
+                  "state": "disabled_manually",
+                  "created_at": (NOW - timedelta(hours=1)).isoformat()
+              }) as api,
+              patch.object(mw, "api_pages", return_value=[])):
+            problems, notes, outcomes = mw.github_review("mrpiracy94/MrStore", NOW)
+        self.assertEqual([item["id"] for item in problems],
+                         ["inactive:cve-scan.yml"])
+        self.assertIn("inativo", outcomes["workflows"]["cve-scan.yml"])
+        self.assertTrue(any("⚠️" in note for note in notes))
+        api.assert_called_once()  # Disabled schedules must not pass.
+
+    def test_initial_schedule_grace_is_pending_not_reported_as_success(self):
+        def fake_api(path):
+            if path.endswith("/runs?event=schedule&per_page=10"):
+                return {"workflow_runs": []}
+            return {"state": "active",
+                    "created_at": (NOW - timedelta(hours=2)).isoformat()}
+
+        with (patch.dict(mw.WORKFLOWS, {"cve-scan.yml": 60}, clear=True),
+              patch.object(mw, "api", side_effect=fake_api),
+              patch.object(mw, "api_pages", return_value=[])):
+            problems, notes, outcomes = mw.github_review("mrpiracy94/MrStore", NOW)
+        self.assertEqual(problems, [])
+        self.assertTrue(any("⏳ cve-scan.yml" in line for line in notes))
+        self.assertFalse(any("✅ cve-scan.yml" in line for line in notes))
+        self.assertIn("A aguardar", outcomes["workflows"]["cve-scan.yml"])
+
     def test_active_recent_run_is_not_a_failure(self):
         _, problem = mw.evaluate_run(
             "cve-scan.yml", [run(hours=1, status="in_progress", conclusion=None)],

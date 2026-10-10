@@ -40,12 +40,29 @@ def finding(kind: str, identifier: str, message: str, url: str = "") -> dict:
 
 
 def evaluate_run(filename: str, runs: list[dict], now: datetime,
-                 max_hours: int, repo: str) -> tuple[str, dict | None]:
+                 max_hours: int, repo: str,
+                 workflow_created_at: str | None = None) -> tuple[str, dict | None]:
+    """Alert on absent schedules only after the workflow's initial grace window.
+
+    A workflow added today cannot already have a successful monthly or weekly
+    scheduled execution. The grace window is bounded by its freshness SLA.
+    Missing creation metadata is *not* accepted as proof of a healthy workflow.
+    """
     link = f"https://github.com/{repo}/actions/workflows/{filename}"
     if not runs:
+        if workflow_created_at:
+            try:
+                started = timestamp(workflow_created_at)
+                age = (now - started).total_seconds() / 3600
+            except (TypeError, ValueError, OverflowError):
+                age = -1  # Corrupt timestamp is never evidence of health.
+            if 0 <= age <= max_hours:
+                return (f"A aguardar primeira execução agendada (criado há {age:.0f} h)", None)
         return ("Sem execução agendada confirmada",
                 finding("workflow", f"missing:{filename}",
-                        f"**{filename}**: nenhuma execução agendada encontrada.", link))
+                        f"**{filename}**: nenhuma execução agendada encontrada "
+                        f"após período inicial de {max_hours} h ou sem data de criação verificável.",
+                        link))
     run = max(runs, key=lambda item: item.get("created_at", ""))
     link = run.get("html_url") or link
     age = (now - timestamp(run["created_at"])).total_seconds() / 3600
@@ -152,12 +169,31 @@ def github_review(repo: str, now: datetime) -> tuple[list[dict], list[str], dict
     escaped_repo = quote(repo, safe="/")
     for filename, max_hours in WORKFLOWS.items():
         wf = quote(filename, safe="")
+        # GitHub reports the creation timestamp for each registered workflow.
+        # Use it only to avoid premature "missing schedule" alerts, never to
+        # mask an actually failed/overdue run.
+        metadata = api(f"/repos/{escaped_repo}/actions/workflows/{wf}")
+        # A workflow explicitly disabled in GitHub Actions cannot fulfill its
+        # schedule, even if it was created recently. Missing state is also not
+        # proof of an active monitor.
+        if metadata.get("state") != "active":
+            status = f"Workflow inativo ou estado não verificável ({metadata.get('state') or 'desconhecido'})"
+            problems.append(finding(
+                "workflow", f"inactive:{filename}",
+                f"**{filename}**: {status}; reativar/confirmar a configuração do GitHub Actions.",
+                f"https://github.com/{repo}/actions/workflows/{filename}"))
+            outcomes["workflows"][filename] = status
+            notes.append(f"- ⚠️ {filename}: {status}")
+            continue
         data = api(f"/repos/{escaped_repo}/actions/workflows/{wf}/runs"
                    "?event=schedule&per_page=10")
         label, problem = evaluate_run(filename, data.get("workflow_runs", []),
-                                      now, max_hours, repo)
+                                      now, max_hours, repo,
+                                      metadata.get("created_at"))
         outcomes["workflows"][filename] = label
-        notes.append(f"- {'⚠️' if problem else '✅'} {filename}: {label}")
+        # Initial grace is not an actual successful scheduled scan.
+        marker = "⚠️" if problem else ("⏳" if label.startswith("A aguardar") else "✅")
+        notes.append(f"- {marker} {filename}: {label}")
         if problem:
             problems.append(problem)
     prs = api_pages(f"/repos/{escaped_repo}/pulls?state=open", limit=10)

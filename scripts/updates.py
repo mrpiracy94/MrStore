@@ -95,11 +95,17 @@ def main() -> int:
     opts = p.parse_args()
     previous = json.loads(opts.snapshot.read_text(encoding='utf-8')) if opts.snapshot.exists() else {'images': {}}
     snapshot, details = monitor(image_usage(apps(opts.root)), previous, workers=opts.workers)
-    opts.snapshot.parent.mkdir(parents=True, exist_ok=True)
-    opts.snapshot.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
+    # Keep the last successful baseline on partial registry/network failures.
+    # Preserve diagnostics even if a single image cannot be resolved; next run
+    # must still compare against the last *complete* set of observations.
     opts.output.parent.mkdir(parents=True, exist_ok=True)
     opts.output.write_text(json.dumps(details, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
+    opts.summary.parent.mkdir(parents=True, exist_ok=True)
     opts.summary.write_text(summarize(details), encoding='utf-8')
+    if not details['failed'] and details['resolved'] == details['checked']:
+        opts.snapshot.parent.mkdir(parents=True, exist_ok=True)
+        opts.snapshot.write_text(
+            json.dumps(snapshot, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
     print(f"Digests: {details['resolved']}/{details['checked']}; changed {len(details['changed'])}; failed {len(details['failed'])}")
     return 2 if details['failed'] else 0
 
