@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Seleção editorial de 80 aplicações existentes no repositório; publicação não equivale a certificação de segurança.",
+  "description": "Seleção editorial de 96 aplicações existentes no repositório; publicação não equivale a certificação de segurança.",
   "apps": [
     "jellyfin",
     "plex",
@@ -81,6 +81,22 @@
     "unifi-network-application",
     "wikijs",
     "sabnzbd",
-    "tdarr"
+    "tdarr",
+    "lldap",
+    "maintainerr",
+    "netbox",
+    "nzbget",
+    "nzbhydra2",
+    "obsidian",
+    "onlyoffice",
+    "ombi",
+    "organizr",
+    "phpmyadmin",
+    "piwigo",
+    "recyclarr",
+    "resilio-sync",
+    "smokeping",
+    "swag",
+    "unpackerr"
   ]
 }
