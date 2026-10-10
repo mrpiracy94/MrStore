@@ -20,7 +20,10 @@ class FeaturedCatalogTests(unittest.TestCase):
     def test_initial_selection_is_small_unique_and_from_existing_source(self):
         known = {x.parent.name for x in (ROOT / "Apps").glob("*/docker-compose.yml")}
         featured = load_featured(STARTER, known)
-        self.assertEqual(len(featured), 233)  # Published editorial target, not full source inventory.
+        # Staged migration: 233 were published first; the next release targets
+        # all 253 source apps. Never silently shrink the selected catalog.
+        self.assertGreaterEqual(len(featured), 233)
+        self.assertLessEqual(len(featured), len(known))
         self.assertEqual(len(known), len(featured))
         self.assertIn("jellyfin", featured)
         self.assertIn("immich", featured)
