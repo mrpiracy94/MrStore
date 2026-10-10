@@ -59,11 +59,18 @@ def inspect_shard(report: dict, shard: int, usage: dict,
             findings = scan.get("findings", [])
             if not isinstance(findings, list):
                 raise ValueError("Malformed findings: " + image)
+            count_by_severity = {"HIGH": 0, "CRITICAL": 0}
             for item in findings:
                 if not isinstance(item, dict):
                     raise ValueError("Malformed CVE entry: " + image)
-                if item.get("severity") in ("HIGH", "CRITICAL") and item.get("cve"):
-                    identifiers.add(item["cve"])
+                severity = item.get("severity")
+                if severity in count_by_severity:
+                    count_by_severity[severity] += 1
+                    if item.get("cve"):
+                        identifiers.add(item["cve"])
+            if (count_by_severity["HIGH"] != scan["high"]
+                    or count_by_severity["CRITICAL"] != scan["critical"]):
+                raise ValueError("CVE totals differ from findings: " + image)
         pinned = row.get("pinned")
         pinned_ok = (isinstance(pinned, str) and bool(PINNED.search(pinned))
                      and pinned.split("@sha256:", 1)[0] == image.split("@sha256:", 1)[0]
@@ -114,7 +121,7 @@ def make_report(items: list, evidence: dict, warnings: list,
         observed = [evidence.get(image) for image in image_refs]
         vulnerable = any(entry and entry["status"] == "VULNERABLE" for entry in observed)
         bad_scan = any(entry and entry["status"] == "SCANNER_ERROR" for entry in observed)
-        missing = any(entry is None for entry in observed)
+        missing = not image_refs or any(entry is None for entry in observed)
         state = ("CVE_DETECTED" if vulnerable else
                  "SCAN_ERROR" if bad_scan else
                  "PENDING_EVIDENCE" if missing else
