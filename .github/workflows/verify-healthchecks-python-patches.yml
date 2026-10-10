@@ -1,0 +1,75 @@
+name: Verify Healthchecks LinuxServer exact Python security patches
+on:
+  pull_request:
+    paths:
+      - 'security/images/healthchecks/Dockerfile'
+      - 'scripts/test_healthchecks_lsio_patches.sh'
+      - '.github/workflows/verify-healthchecks-python-patches.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    # Run on native CPUs: QEMU ARM64 first-run Django migrations can exceed
+    # the smoke-test deadline without ever opening the HTTP port.
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Prove native runner matches scanned CPU architecture
+        run: |
+          case "${{ matrix.arch }}" in
+            amd64) test "$(uname -m)" = x86_64 ;;
+            arm64) test "$(uname -m)" = aarch64 ;;
+          esac
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Record original Healthchecks findings
+        run: |
+          mkdir -p out
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output out/old.json lscr.io/linuxserver/healthchecks:latest
+      - name: Build original LSIO with four patched Python modules
+        run: |
+          docker buildx build --pull --platform linux/${{ matrix.arch }} --load -f security/images/healthchecks/Dockerfile -t mrstore-healthchecks-patched:${{ matrix.arch }} .
+      - name: Scan exact patched image
+        run: |
+          trivy image --quiet --image-src docker --platform linux/${{ matrix.arch }} --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output out/new.json mrstore-healthchecks-patched:${{ matrix.arch }}
+      - name: Block on any remaining HIGH CRITICAL or incomplete Trivy scan
+        run: |
+          python - <<'PY'
+          import json, os
+          from collections import Counter
+          def count(path):
+              with open(path,encoding='utf-8') as f:
+                  result=json.load(f)
+              if not isinstance(result.get('Results'),list) or not result['Results']:
+                  raise SystemExit('Incomplete Trivy results '+path)
+              return Counter(finding.get('Severity') for entry in result['Results']
+                             for finding in entry.get('Vulnerabilities') or []
+                             if finding.get('Severity') in ('HIGH','CRITICAL'))
+          old,new=count('out/old.json'),count('out/new.json')
+          summary=('## Healthchecks ${{ matrix.arch }} exact Python patch\n\n'
+                   '| Image | CRITICAL | HIGH |\n|---|---:|---:|\n'
+                   f"| Original LSIO | {old['CRITICAL']} | {old['HIGH']} |\n"
+                   f"| Patched modules | {new['CRITICAL']} | {new['HIGH']} |\n")
+          print(summary)
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as out:
+              out.write(summary)
+          if new['CRITICAL'] or new['HIGH']:
+              raise SystemExit('Do not deploy a Healthchecks image with HIGH/CRITICAL')
+          PY
+      - name: Verify login UI, default web port, persistent config on this architecture
+        run: bash scripts/test_healthchecks_lsio_patches.sh ${{ matrix.arch }}
+      - name: Preserve raw vulnerability evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: healthchecks-${{ matrix.arch }}-lsio-patches
+          path: out/*.json
+          if-no-files-found: warn
