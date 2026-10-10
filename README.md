@@ -59,6 +59,21 @@ A montra web foi concebida para facilitar o uso:
 
 Para ver todos os manifests da origem, incluindo os que possam estar em quarentena, consulta a pasta [Apps/](Apps/).
 
+## 🧩 MrStore Universal — CasaOS e Homeio (pré-visualização)
+
+A MrStore conserva o catálogo **ZimaOS v2** como integração principal.
+A fase universal acrescenta uma exportação ZIP experimental para
+**CasaOS/Homeio**, produzida **exclusivamente a partir das aplicações
+aprovadas pela auditoria de segurança**. A origem com 254 manifests
+não é distribuída como pacote de instalação.
+
+Depois de uma publicação segura, o pacote provisório ficará em
+[`store/casaos-homeio-preview.zip`](https://mrpiracy94.github.io/MrStore/store/casaos-homeio-preview.zip).
+Ainda **não** representa compatibilidade confirmada por testes num CasaOS/Homeio real.
+A integração UmbrelOS requer um adaptador próprio e fica para a fase seguinte.
+
+Consulta [plano e protocolo de testes](docs/UNIVERSAL_COMPATIBILITY.md).
+
 ## 🛡️ Segurança e transparência
 
 A MrStore não considera uma imagem segura simplesmente por constar da lista. O processo de publicação deve:
