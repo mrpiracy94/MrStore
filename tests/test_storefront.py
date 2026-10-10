@@ -87,6 +87,13 @@ class StorefrontTests(unittest.TestCase):
         self.assertNotIn("new Function(", js)
         self.assertNotIn("@import", css)
         self.assertIn("@media(max-width:520px)", css)
+        # HTML's hidden attribute must win over author-level flex/button CSS.
+        self.assertIn("[hidden]{display:none!important}", css)
+        self.assertIn('id="details-preview" hidden', html)
+        self.assertIn("safePath(app.thumbnail)", js)
+        self.assertIn("preview.replaceChildren()", js)
+        self.assertIn('screenshot.addEventListener("error"', js)
+        self.assertIn("#details-icon>.detail-icon-inner img", css)
         for bad in ("https://cdn.", "https://fonts.googleapis.com", "unpkg.com"):
             self.assertNotIn(bad, html)
 
