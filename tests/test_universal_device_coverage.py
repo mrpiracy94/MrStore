@@ -15,7 +15,7 @@ class DeviceCoverageTests(unittest.TestCase):
         self.root = Path(folder.name)
         path = self.root / "Apps/demo/docker-compose.yml"
         path.parent.mkdir(parents=True)
-        path.write_text("services:\n  web:\n    image: example@sha256:" + "a"*64 + "\n")
+        path.write_text("services:\n  web:\n    image: example@sha256:" + "a"*64 + "\nx-casaos:\n  architectures: [amd64]\n")
         self.sha = hashlib.sha256(path.read_bytes()).hexdigest()
         (self.root / "data").mkdir()
         self.registry = self.root / "data/universal-device-tests.json"
