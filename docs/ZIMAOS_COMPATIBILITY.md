@@ -163,7 +163,7 @@ sem lista estática de 254 nomes.
 
 ### Registar um teste realizado no ZimaOS
 
-1. Criar um [issue de teste real](../.github/ISSUE_TEMPLATE/zimaos-device-test.yml)
+1. Criar um [issue de teste real](https://github.com/mrpiracy94/MrStore/issues/new?template=zimaos-device-test.yml)
    e descrever a aplicação, CPU, versão ZimaOS, função exercitada, persistência
    e respetiva evidência **anonimizada**. Não publicar dados pessoais, IPs,
    passwords nem logs com segredos.
