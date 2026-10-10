@@ -12,7 +12,8 @@ import shutil
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = ("index.html", "assets/site.css", "assets/site.js",
            "assets/mark.svg", "assets/readme-banner.svg",
-           "assets/mrstore-hero.webp")
+           "assets/mrstore-hero.webp", "assets/platform-homeio.png",
+           "assets/platform-homedock.svg", "assets/platform-olares.svg")
 PREFIX = "io.github.mrpiracy94."
 
 
