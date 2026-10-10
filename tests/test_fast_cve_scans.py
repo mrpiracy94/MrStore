@@ -199,6 +199,17 @@ class FastAppAuditTests(unittest.TestCase):
         self.assertEqual(list(workflow["on"]), ["workflow_dispatch"])
         self.assertEqual(workflow["jobs"]["scan"]["strategy"]["max-parallel"], "32")
 
+    def test_validation_cancels_obsolete_pr_runs_but_not_main(self):
+        import yaml
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/validate.yml").read_text(encoding="utf-8"),
+            Loader=yaml.BaseLoader,
+        )
+        self.assertIn("pull_request", workflow["concurrency"]["cancel-in-progress"])
+        self.assertIn("github.ref", workflow["concurrency"]["group"])
+        self.assertIn("pull_request", workflow["on"])
+        self.assertIn("push", workflow["on"])
+
     def test_inconclusive_recheck_has_bounded_parallelism_and_no_stale_pr_runs(self):
         import yaml
         workflow = yaml.load(
