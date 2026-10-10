@@ -110,7 +110,12 @@ def immich_major_upgrade_hazards(old: dict | None, new: dict, folder: str) -> li
     if new_volume:
         new_volume = ("/" + posixpath.normpath(new_volume).lstrip("/")
                       if new_volume.startswith("/") else None)
-    if not old_volume or not new_volume or old_volume == new_volume:
+    overlap = bool(old_volume and new_volume and (
+        new_volume == old_volume or
+        new_volume.startswith(old_volume.rstrip("/") + "/") or
+        old_volume.startswith(new_volume.rstrip("/") + "/")
+    ))
+    if not old_volume or not new_volume or overlap:
         return [
             f"Immich PostgreSQL {former}->{future or 'unknown'}: direct major/unknown image change "
             "with the previous/missing data directory is forbidden. "
