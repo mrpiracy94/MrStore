@@ -1,5 +1,6 @@
 """Tests: the storefront cannot alter the ZimaOS v2 release contract."""
 import json
+import hashlib
 from pathlib import Path
 import sys
 import tempfile
@@ -71,6 +72,37 @@ class StorefrontTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "overwrite"):
             stage(self.source, self.dist)
         self.assertEqual((self.dist / "index.html").read_text(), "original")
+
+
+    def test_platform_cards_use_genuine_versioned_brand_icons(self):
+        html = (self.source / "index.html").read_text(encoding="utf-8")
+        css = (self.source / "assets/site.css").read_text(encoding="utf-8")
+        deployment = (ROOT / ".github/workflows/publish-storefront.yml").read_text(
+            encoding="utf-8")
+        official_blobs = {
+            "platform-homeio.png": "0eeb090e1effe3d680ae943aceca2b9d43b717e1",
+            "platform-homedock.svg": "61eeaa7877371e508daa2315142baf9bd42cd183",
+            "platform-olares.svg": "05a864946511bf8f3554cf474dc20e0b63024e49",
+        }
+        for icon, expected_blob in official_blobs.items():
+            with self.subTest(icon=icon):
+                name = "assets/" + icon
+                file = self.source / name
+                self.assertTrue(file.is_file(), f"Official brand asset missing: {name}")
+                data = file.read_bytes()
+                self.assertTrue(data)
+                self.assertLess(len(data), 50_000)
+                git_blob = b"blob " + str(len(data)).encode("ascii") + b"\0" + data
+                self.assertEqual(hashlib.sha1(git_blob).hexdigest(), expected_blob)
+                self.assertIn(f'src="./assets/{icon}"', html)
+                self.assertIn(f'web/assets/{icon}', deployment)
+                self.assertIn(f'assets/{icon}', deployment)
+                self.assertIn(name, ALLOWED)
+        self.assertTrue((self.source / "assets/platform-homeio.png").read_bytes()
+                        .startswith(b"\x89PNG\r\n\x1a\n"))
+        self.assertIn(".system-glyph.platform-logo img", css)
+        for label in ("Homeio", "HomeDock OS", "Olares"):
+            self.assertIn(f"<strong>{label}</strong>", html)
 
     def test_ui_only_consumes_local_index_and_has_no_remote_dependencies(self):
         html = (self.source / "index.html").read_text(encoding="utf-8")
