@@ -203,7 +203,16 @@
       }
       seen.add(app.id);
     }
-    return data.apps.slice().sort(function (a, b) { return appTitle(a).localeCompare(appTitle(b), "pt"); });
+    // Display the original concept's examples first only when they genuinely
+    // exist in the approved published index. Never inject extra app records.
+    const preferred = ["plex", "immich", "nextcloud", "jellyfin"];
+    function rank(app) {
+      const index = preferred.indexOf(app.id.slice(PREFIX.length));
+      return index < 0 ? preferred.length : index;
+    }
+    return data.apps.slice().sort(function (a, b) {
+      return rank(a) - rank(b) || appTitle(a).localeCompare(appTitle(b), "pt");
+    });
   }
   function verifyRelease(release, appList) {
     if (!release || !Array.isArray(release.approved) ||
