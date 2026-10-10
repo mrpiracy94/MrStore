@@ -159,6 +159,59 @@ class FastAppAuditTests(unittest.TestCase):
                          sorted(refs))
         self.assertTrue(all(len(group) > 0 for group in groups))
 
+    def test_release_compiles_crane_once_not_per_shard(self):
+        import yaml
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/publish.yml").read_text(encoding="utf-8"),
+            Loader=yaml.BaseLoader,
+        )
+        jobs = workflow["jobs"]
+        self.assertEqual(jobs["security_audit"]["needs"], ["preflight", "prepare_crane"])
+        prepare = " ".join(str(s.get("run", "")) for s in jobs["prepare_crane"]["steps"])
+        scan = " ".join(str(s.get("run", "")) for s in jobs["security_audit"]["steps"])
+        self.assertIn("go install github.com/google/go-containerregistry/cmd/crane@v0.21.7", prepare)
+        self.assertNotIn("go install", scan)
+        self.assertTrue(any(s.get("uses") == "actions/download-artifact@v8"
+                            and s.get("with", {}).get("name") == "mrstore-pinned-crane"
+                            for s in jobs["security_audit"]["steps"]))
+
+    def test_release_does_not_repeat_preflight_tests_after_scan(self):
+        import yaml
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/publish.yml").read_text(encoding="utf-8"),
+            Loader=yaml.BaseLoader,
+        )
+        jobs = workflow["jobs"]
+        preflight = jobs["preflight"]["steps"]
+        self.assertTrue(any("python -m unittest discover -s tests -v" in s.get("run", "")
+                            and s.get("if") == "github.event_name != 'pull_request'"
+                            for s in preflight))
+        build = jobs["build"]["steps"]
+        self.assertFalse(any("python -m unittest" in s.get("run", "")
+                             for s in build))
+
+    def test_126_capacity_stress_does_not_run_on_every_pr_edit(self):
+        import yaml
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/cve-capacity-validation.yml").read_text(encoding="utf-8"),
+            Loader=yaml.BaseLoader,
+        )
+        self.assertEqual(list(workflow["on"]), ["workflow_dispatch"])
+        self.assertEqual(workflow["jobs"]["scan"]["strategy"]["max-parallel"], "32")
+
+    def test_inconclusive_recheck_has_bounded_parallelism_and_no_stale_pr_runs(self):
+        import yaml
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/retry-inconclusive-cves.yml").read_text(encoding="utf-8"),
+            Loader=yaml.BaseLoader,
+        )
+        self.assertEqual(workflow["jobs"]["rescan"]["strategy"]["max-parallel"], "4")
+        step = next(s for s in workflow["jobs"]["rescan"]["steps"]
+                    if s.get("id") == "scan")
+        self.assertIn("--workers 4", step["run"])
+        self.assertEqual(step["env"]["MRSTORE_CVE_DB_PREPARED"], "1")
+        self.assertIn("pull_request", workflow["concurrency"]["cancel-in-progress"])
+
     def test_parallel_trivy_uses_memory_cache_only_when_db_is_prepared(self):
         done = subprocess.CompletedProcess(["trivy"], 0, json.dumps(
             {"Results": [{"Target": "example/app:1", "Vulnerabilities": []}]}), "")
