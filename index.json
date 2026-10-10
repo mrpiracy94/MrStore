@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "updated_at": "2026-10-10T14:39:40Z",
-  "app_count": 223,
+  "updated_at": "2026-10-10T14:46:29Z",
+  "app_count": 233,
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "apps": [
     {
@@ -4150,7 +4150,7 @@
       "thumbnail": "/apps/io.github.mrpiracy94.shadps4/assets/shadps4-logo.webp",
       "compose_url": "/apps/io.github.mrpiracy94.shadps4/docker-compose.yml",
       "meta_url": "/apps/io.github.mrpiracy94.shadps4/meta.json",
-      "content_hash": "019d7f34",
+      "content_hash": "f93e91ae",
       "version": "1.0.1"
     },
     {
@@ -4320,6 +4320,68 @@
       "version": "1.0.1"
     },
     {
+      "id": "io.github.mrpiracy94.spotube",
+      "title": "Spotube",
+      "tagline": "Leitor de música com integração de serviços",
+      "category": "Media",
+      "categories": [
+        "media"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.spotube/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.spotube/assets/spotube-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.spotube/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.spotube/meta.json",
+      "content_hash": "14fc68c9",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.sqlitebrowser",
+      "title": "DB Browser for SQLite",
+      "tagline": "Editor visual de bases de dados SQLite",
+      "category": "Developer",
+      "categories": [
+        "developer"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.sqlitebrowser/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.sqlitebrowser/assets/sqlitebrowser.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.sqlitebrowser/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.sqlitebrowser/meta.json",
+      "content_hash": "6f7f34b4",
+      "version": "1.0.2"
+    },
+    {
+      "id": "io.github.mrpiracy94.steam",
+      "title": "Steam",
+      "tagline": "Plataforma de jogos para computador",
+      "category": "Others",
+      "categories": [
+        "others"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.steam/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.steam/assets/steam.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.steam/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.steam/meta.json",
+      "content_hash": "70bc1ad2",
+      "version": "1.0.1"
+    },
+    {
       "id": "io.github.mrpiracy94.stirling-pdf",
       "title": "Stirling PDF",
       "tagline": "Converte e edita ficheiros PDF",
@@ -4404,6 +4466,27 @@
       "version": "1.0.1"
     },
     {
+      "id": "io.github.mrpiracy94.syslog-ng",
+      "title": "syslog-ng",
+      "tagline": "Recolhe e centraliza logs de sistemas",
+      "category": "Networking",
+      "categories": [
+        "networking"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.syslog-ng/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.syslog-ng/assets/syslog-ng-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.syslog-ng/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.syslog-ng/meta.json",
+      "content_hash": "2b1fbbda",
+      "version": "1.0.1"
+    },
+    {
       "id": "io.github.mrpiracy94.tailscale",
       "title": "Tailscale",
       "tagline": "Rede privada segura entre dispositivos",
@@ -4467,6 +4550,69 @@
       "version": "1.0.1"
     },
     {
+      "id": "io.github.mrpiracy94.telegram",
+      "title": "Telegram",
+      "tagline": "Mensagens e conversas no Telegram",
+      "category": "Social",
+      "categories": [
+        "social"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.telegram/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.telegram/assets/telegram.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.telegram/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.telegram/meta.json",
+      "content_hash": "c3b22f56",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.thelounge",
+      "title": "The Lounge",
+      "tagline": "Cliente IRC acessível no navegador",
+      "category": "Social",
+      "categories": [
+        "social"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.thelounge/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.thelounge/assets/thelounge.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.thelounge/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.thelounge/meta.json",
+      "content_hash": "4cfbcdab",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.thunderbird",
+      "title": "Thunderbird",
+      "tagline": "Cliente de correio eletrónico e calendário",
+      "category": "Productivity",
+      "categories": [
+        "productivity"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.thunderbird/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.thunderbird/assets/thunderbird.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.thunderbird/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.thunderbird/meta.json",
+      "content_hash": "de4747d7",
+      "version": "1.0.1"
+    },
+    {
       "id": "io.github.mrpiracy94.transmission",
       "title": "Transmission",
       "tagline": "Cliente BitTorrent leve",
@@ -4507,6 +4653,48 @@
       "meta_url": "/apps/io.github.mrpiracy94.tvheadend/meta.json",
       "content_hash": "dbc21df2",
       "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.ubooquity",
+      "title": "Ubooquity",
+      "tagline": "Servidor de ebooks e banda desenhada",
+      "category": "Media",
+      "categories": [
+        "media"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.ubooquity/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.ubooquity/assets/ubooquity.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.ubooquity/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.ubooquity/meta.json",
+      "content_hash": "53eeac61",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.ungoogled-chromium",
+      "title": "Ungoogled Chromium",
+      "tagline": "Navegador Chromium sem serviços Google",
+      "category": "Productivity",
+      "categories": [
+        "productivity"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.ungoogled-chromium/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.ungoogled-chromium/assets/ungoogled-chromium-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.ungoogled-chromium/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.ungoogled-chromium/meta.json",
+      "content_hash": "45b194c5",
+      "version": "1.0.2"
     },
     {
       "id": "io.github.mrpiracy94.unifi-network-application",
@@ -4593,6 +4781,27 @@
       "version": "1.0.3"
     },
     {
+      "id": "io.github.mrpiracy94.vivaldi",
+      "title": "Vivaldi",
+      "tagline": "Navegador web personalizável",
+      "category": "Productivity",
+      "categories": [
+        "productivity"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.vivaldi/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.vivaldi/assets/vivaldi.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.vivaldi/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.vivaldi/meta.json",
+      "content_hash": "ba294c5c",
+      "version": "1.0.1"
+    },
+    {
       "id": "io.github.mrpiracy94.wikijs",
       "title": "Wiki.js",
       "tagline": "Wiki moderna para documentação de equipas",
@@ -4655,6 +4864,5 @@
       "content_hash": "0343cac2",
       "version": "1.0.1"
     }
-  ],
-  "catalogue_status": "editorial_pilot_unverified"
+  ]
 }

@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
-<title id="title">MrStore</title><desc id="desc">Monograma M branco num ícone grafite com ponto laranja.</desc>
-<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#23242D"/><stop offset="1" stop-color="#10131B"/></linearGradient><linearGradient id="sun" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFB45F"/><stop offset="1" stop-color="#FF771E"/></linearGradient></defs>
-<rect x="3" y="3" width="122" height="122" rx="30" fill="url(#bg)" stroke="#A36A48" stroke-width="2"/>
-<rect x="10" y="10" width="108" height="108" rx="26" fill="none" stroke="#FA8C382F" stroke-width="2"/>
-<path d="M32 91V40L64 72 96 40V91" stroke="#F9FAFB" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-<path d="M32 91V40" stroke="url(#sun)" stroke-width="5" stroke-linecap="round" fill="none"/>
-<circle cx="96" cy="91" r="11" fill="url(#sun)" stroke="#141721" stroke-width="3"/>
-</svg>

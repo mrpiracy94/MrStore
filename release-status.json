@@ -1,7 +1,7 @@
 {
   "source_apps": 253,
-  "featured_count": 253,
-  "approved_count": 253,
+  "featured_count": 233,
+  "approved_count": 233,
   "approved": [
     "actual-budget",
     "adguardhome-sync",
@@ -233,6 +233,14 @@
     "uptime-kuma",
     "vaultwarden",
     "vivaldi",
+    "wikijs",
+    "wireguard",
+    "wizarr"
+  ],
+  "quarantined_count": 0,
+  "quarantined": {},
+  "deferred_count": 20,
+  "deferred": [
     "vlc",
     "vscode",
     "vscodium",
@@ -243,11 +251,8 @@
     "webtop",
     "weixin",
     "whisparr",
-    "wikijs",
     "winegui",
-    "wireguard",
     "wireshark",
-    "wizarr",
     "wps-office",
     "xbackbone",
     "xemu",
@@ -257,10 +262,6 @@
     "znc",
     "zotero"
   ],
-  "quarantined_count": 0,
-  "quarantined": {},
-  "deferred_count": 0,
-  "deferred": [],
   "warnings": {
     "altus": [
       "altus: dangerous security_opt=seccomp:unconfined"
@@ -582,51 +583,9 @@
     "vivaldi": [
       "vivaldi: dangerous security_opt=seccomp:unconfined"
     ],
-    "vlc": [
-      "vlc: dangerous security_opt=seccomp:unconfined"
-    ],
-    "vscode": [
-      "vscode: dangerous security_opt=seccomp:unconfined"
-    ],
-    "vscodium": [
-      "vscodium: dangerous security_opt=seccomp:unconfined"
-    ],
-    "webcord": [
-      "webcord: dangerous security_opt=seccomp:unconfined"
-    ],
-    "webstation": [
-      "webstation: dangerous security_opt=seccomp:unconfined"
-    ],
-    "webtop": [
-      "webtop: dangerous security_opt=seccomp:unconfined"
-    ],
-    "weixin": [
-      "weixin: dangerous security_opt=seccomp:unconfined"
-    ],
-    "winegui": [
-      "winegui: dangerous security_opt=seccomp:unconfined"
-    ],
     "wireguard": [
       "wireguard: dangerous cap_add=NET_ADMIN",
       "wireguard: dangerous cap_add=SYS_MODULE"
-    ],
-    "wireshark": [
-      "wireshark: dangerous security_opt=seccomp:unconfined"
-    ],
-    "wps-office": [
-      "wps-office: dangerous security_opt=seccomp:unconfined"
-    ],
-    "xemu": [
-      "xemu: dangerous security_opt=seccomp:unconfined"
-    ],
-    "yaak": [
-      "yaak: dangerous security_opt=seccomp:unconfined"
-    ],
-    "zen": [
-      "zen: dangerous security_opt=seccomp:unconfined"
-    ],
-    "zotero": [
-      "zotero: dangerous security_opt=seccomp:unconfined"
     ]
   },
   "certification": "not_assessed",
