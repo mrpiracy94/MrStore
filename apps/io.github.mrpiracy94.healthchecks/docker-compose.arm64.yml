@@ -1,0 +1,30 @@
+name: healthchecks
+services:
+  healthchecks:
+    image: lscr.io/linuxserver/healthchecks:latest@sha256:07c21fb43d9ca31f51bdf61e5190f2d999a82203257f55e4d1553eb37207cf57
+    container_name: healthchecks
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "SITE_ROOT=http://zimaos.local:8000"
+      - "SUPERUSER_EMAIL=admin@example.com"
+      - "SUPERUSER_PASSWORD=CHANGE_ME"
+    ports:
+      - target: 8000
+        published: "20037"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/healthchecks/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.healthchecks
+  version: "1.0.1"
+  main: healthchecks
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.healthchecks/assets/icon.png
+  title:
+    en_US: "Healthchecks"
+  port_map: "20037"
+  index: /

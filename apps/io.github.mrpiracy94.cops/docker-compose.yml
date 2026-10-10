@@ -1,0 +1,30 @@
+name: cops
+services:
+  cops:
+    image: lscr.io/linuxserver/cops:latest
+    container_name: cops
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20054"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/cops/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Books
+        target: /books
+x-casaos:
+  id: io.github.mrpiracy94.cops
+  version: "1.0.1"
+  main: cops
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.cops/assets/icon.png
+  title:
+    en_US: "COPS"
+  port_map: "20054"
+  index: /

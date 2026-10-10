@@ -1,0 +1,32 @@
+name: lldap
+services:
+  lldap:
+    image: lldap/lldap:stable@sha256:05d7e9f683aa25974c83555465ec1c3e99cf6cb05e1b6b7a33adeb4a971a2f05
+    container_name: lldap
+    restart: unless-stopped
+    environment:
+      - "LLDAP_JWT_SECRET=CHANGE_ME"
+      - "LLDAP_KEY_SEED=CHANGE_ME"
+      - "LLDAP_LDAP_BASE_DN=dc=example,dc=com"
+      - "LLDAP_LDAP_USER_PASS=CHANGE_ME"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 17170
+        published: "17170"
+        protocol: tcp
+      - target: 3890
+        published: "3890"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lldap
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.lldap
+  version: "1.0.1"
+  main: lldap
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lldap/assets/icon.png
+  title:
+    en_US: "LLDAP"
+  port_map: "17170"
+  index: /

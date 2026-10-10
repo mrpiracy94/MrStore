@@ -1,0 +1,34 @@
+name: duckstation
+services:
+  duckstation:
+    image: lscr.io/linuxserver/duckstation:latest@sha256:aa7341b08ada7caece9917f4a397622c27c67a99fe7cbb956494bec82b69bc71
+    container_name: duckstation
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=DuckStation"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21048"
+        protocol: tcp
+      - target: 3001
+        published: "21049"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/duckstation/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.duckstation
+  version: "1.0.1"
+  main: duckstation
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.duckstation/assets/icon.png
+  title:
+    en_US: "DuckStation"
+  port_map: "21048"
+  index: /

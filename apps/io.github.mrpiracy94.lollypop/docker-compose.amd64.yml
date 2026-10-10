@@ -1,0 +1,34 @@
+name: lollypop
+services:
+  lollypop:
+    image: lscr.io/linuxserver/lollypop:latest@sha256:79d5e1d737ea00e08bd21dae7886e67e1d332dea7d6090f5fadaff5985615acc
+    container_name: lollypop
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Lollypop"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21092"
+        protocol: tcp
+      - target: 3001
+        published: "21093"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lollypop/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.lollypop
+  version: "1.0.2"
+  main: lollypop
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lollypop/assets/icon.png
+  title:
+    en_US: "Lollypop"
+  port_map: "21092"
+  index: /

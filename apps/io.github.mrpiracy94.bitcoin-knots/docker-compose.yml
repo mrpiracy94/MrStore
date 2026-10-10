@@ -1,0 +1,27 @@
+name: bitcoin-knots
+services:
+  bitcoin-knots:
+    image: lscr.io/linuxserver/bitcoin-knots:latest
+    container_name: bitcoin-knots
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8333
+        published: "8333"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/bitcoin-knots/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.bitcoin-knots
+  version: "1.0.1"
+  main: bitcoin-knots
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.bitcoin-knots/assets/icon.png
+  title:
+    en_US: "Bitcoin Knots"
+  port_map: "0"
+  index: /

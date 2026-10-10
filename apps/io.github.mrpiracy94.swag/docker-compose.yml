@@ -1,0 +1,32 @@
+name: swag
+services:
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "URL=example.com"
+      - "VALIDATION=http"
+    ports:
+      - target: 443
+        published: "20007"
+        protocol: tcp
+      - target: 80
+        published: "20008"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/swag/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.swag
+  version: "1.0.1"
+  main: swag
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.swag/assets/icon.gif
+  title:
+    en_US: "SWAG"
+  port_map: "20007"
+  index: /

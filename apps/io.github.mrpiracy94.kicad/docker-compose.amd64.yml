@@ -1,0 +1,34 @@
+name: kicad
+services:
+  kicad:
+    image: lscr.io/linuxserver/kicad:latest@sha256:b2b76efa64b04c6894526c0cd3b7f714e86acab2a9ee9514a743dfaed2e6782d
+    container_name: kicad
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=KiCad"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21084"
+        protocol: tcp
+      - target: 3001
+        published: "21085"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/kicad/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.kicad
+  version: "1.0.1"
+  main: kicad
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.kicad/assets/icon.png
+  title:
+    en_US: "KiCad"
+  port_map: "21084"
+  index: /

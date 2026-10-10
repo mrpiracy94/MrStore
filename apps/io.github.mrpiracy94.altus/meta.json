@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Social",
+  "thumbnail": "/apps/io.github.mrpiracy94.altus/assets/altus-logo.webp",
+  "tagline": "Cliente de WhatsApp com várias contas",
+  "description": "Altus — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/altus:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-altus/",
+  "title": "Altus",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.altus",
+  "version": "1.0.1",
+  "categories": [
+    "social"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 1095658349,
+    "arm64": 1052507338
+  }
+}

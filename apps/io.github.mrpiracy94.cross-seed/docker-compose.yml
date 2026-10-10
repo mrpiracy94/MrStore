@@ -1,0 +1,29 @@
+name: cross-seed
+services:
+  cross-seed:
+    image: ghcr.io/cross-seed/cross-seed:latest
+    container_name: cross-seed
+    restart: unless-stopped
+    command: ["daemon"]
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 2468
+        published: "2468"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/cross-seed
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.cross-seed
+  version: "1.0.2"
+  main: cross-seed
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.cross-seed/assets/icon.png
+  title:
+    en_US: "cross-seed"
+  port_map: "0"
+  index: /

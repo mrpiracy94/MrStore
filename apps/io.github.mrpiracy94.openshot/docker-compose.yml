@@ -1,0 +1,34 @@
+name: openshot
+services:
+  openshot:
+    image: lscr.io/linuxserver/openshot:latest
+    container_name: openshot
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=OpenShot"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21108"
+        protocol: tcp
+      - target: 3001
+        published: "21109"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/openshot/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.openshot
+  version: "1.0.1"
+  main: openshot
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.openshot/assets/icon.png
+  title:
+    en_US: "OpenShot"
+  port_map: "21108"
+  index: /

@@ -1,0 +1,36 @@
+name: ubooquity
+services:
+  ubooquity:
+    image: lscr.io/linuxserver/ubooquity:latest@sha256:e51d0ff22e09ef04557ddcbd3b9ead8057300c09a7bf95dceeb3f69026e84ab8
+    container_name: ubooquity
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 2202
+        published: "2202"
+        protocol: tcp
+      - target: 2203
+        published: "2203"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ubooquity/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Books
+        target: /books
+      - type: bind
+        source: /DATA/Media/Comics
+        target: /comics
+x-casaos:
+  id: io.github.mrpiracy94.ubooquity
+  version: "1.0.1"
+  main: ubooquity
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ubooquity/assets/icon.png
+  title:
+    en_US: "Ubooquity"
+  port_map: "2202"
+  index: /

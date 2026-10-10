@@ -1,0 +1,27 @@
+name: sealskin
+services:
+  sealskin:
+    image: lscr.io/linuxserver/sealskin:latest@sha256:23433134048ffcdd3c1e65a2ee60a2b161070fff400f38a3de035627917cdb35
+    container_name: sealskin
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "20058"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/sealskin/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.sealskin
+  version: "1.0.1"
+  main: sealskin
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.sealskin/assets/icon.png
+  title:
+    en_US: "SealSkin"
+  port_map: "20058"
+  index: /

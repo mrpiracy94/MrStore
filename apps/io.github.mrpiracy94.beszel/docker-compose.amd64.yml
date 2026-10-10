@@ -1,0 +1,23 @@
+name: beszel
+services:
+  beszel:
+    image: henrygd/beszel:latest@sha256:7b3ee8cd890263b2c1b2f332b139b91a22f6d770bbfb0eced5737b3be9add65b
+    container_name: beszel
+    restart: unless-stopped
+    ports:
+      - target: 8090
+        published: "30012"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/beszel
+        target: /beszel_data
+x-casaos:
+  id: io.github.mrpiracy94.beszel
+  version: "1.0.1"
+  main: beszel
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.beszel/assets/icon.png
+  title:
+    en_US: "Beszel"
+  port_map: "30012"
+  index: /

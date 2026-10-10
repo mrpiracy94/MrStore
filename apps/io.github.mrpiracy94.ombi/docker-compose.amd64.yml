@@ -1,0 +1,27 @@
+name: ombi
+services:
+  ombi:
+    image: lscr.io/linuxserver/ombi:latest@sha256:2662bcfb561e2e561eef6fc7452a6fd864d8fa31e760801cded0dbdae981df8d
+    container_name: ombi
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3579
+        published: "3579"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/ombi/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.ombi
+  version: "1.0.1"
+  main: ombi
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ombi/assets/icon.png
+  title:
+    en_US: "Ombi"
+  port_map: "3579"
+  index: /

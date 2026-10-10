@@ -1,0 +1,30 @@
+name: jackett
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 9117
+        published: "9117"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/jackett/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.jackett
+  version: "1.0.1"
+  main: jackett
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.jackett/assets/icon.png
+  title:
+    en_US: "Jackett"
+  port_map: "9117"
+  index: /

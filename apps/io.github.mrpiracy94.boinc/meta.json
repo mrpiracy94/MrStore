@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.boinc/assets/boinc.webp",
+  "tagline": "Participa em projetos de computação científica",
+  "description": "BOINC — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/boinc:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-boinc/",
+  "title": "BOINC",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.boinc",
+  "version": "1.0.1",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 1044231663,
+    "arm64": 1007539170
+  }
+}

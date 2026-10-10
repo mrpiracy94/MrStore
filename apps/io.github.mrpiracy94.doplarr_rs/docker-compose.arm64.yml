@@ -1,0 +1,23 @@
+name: doplarr_rs
+services:
+  doplarr_rs:
+    image: lscr.io/linuxserver/doplarr_rs:latest@sha256:bef7c384d193e7627a84495ac1e46ebe33d2772f3b7392d9c6809f777cd08c5a
+    container_name: doplarr_rs
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/doplarr_rs/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.doplarr_rs
+  version: "1.0.2"
+  main: doplarr_rs
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.doplarr_rs/assets/icon.png
+  title:
+    en_US: "Doplarr RS"
+  port_map: "0"
+  index: /

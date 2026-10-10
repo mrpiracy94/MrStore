@@ -1,0 +1,34 @@
+name: kasm
+services:
+  kasm:
+    image: lscr.io/linuxserver/kasm:latest@sha256:a4df7756f9b424db56089af528b880e7ac0d1a7f505d1a5623a8422d2bbc07c0
+    container_name: kasm
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    privileged: true
+    ports:
+      - target: 3000
+        published: "20040"
+        protocol: tcp
+      - target: 3001
+        published: "20041"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/kasm/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/kasm/opt
+        target: /opt
+x-casaos:
+  id: io.github.mrpiracy94.kasm
+  version: "1.0.1"
+  main: kasm
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.kasm/assets/icon.png
+  title:
+    en_US: "Kasm Workspaces"
+  port_map: "20040"
+  index: /

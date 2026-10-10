@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "jlesage",
+  "category": "Networking",
+  "thumbnail": "/apps/io.github.mrpiracy94.jdownloader/assets/jdownloader.webp",
+  "tagline": "Gestor de downloads de ficheiros e links",
+  "description": "JDownloader 2 — origem: seedit4.me catalog. Imagem: jlesage/jdownloader-2:latest. Verifica portas/variáveis na documentação do projeto.",
+  "title": "JDownloader 2",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.jdownloader",
+  "version": "1.0.1",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 203704018,
+    "arm64": 195871011
+  }
+}

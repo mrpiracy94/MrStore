@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Networking",
+  "thumbnail": "/apps/io.github.mrpiracy94.flexget/assets/flexget.webp",
+  "tagline": "Automatiza a recolha de conteúdos e downloads",
+  "description": "FlexGet — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/flexget:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-flexget/",
+  "title": "FlexGet",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.flexget",
+  "version": "1.0.1",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 231691546,
+    "arm64": 227609570
+  }
+}

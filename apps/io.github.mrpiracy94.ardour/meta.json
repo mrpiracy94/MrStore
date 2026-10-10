@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Productivity",
+  "thumbnail": "/apps/io.github.mrpiracy94.ardour/assets/ardour-logo.webp",
+  "tagline": "Gravação, edição e mistura de áudio",
+  "description": "Ardour — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ardour:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ardour/",
+  "title": "Ardour",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.ardour",
+  "version": "1.0.1",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 1360456249,
+    "arm64": 1371759428
+  }
+}

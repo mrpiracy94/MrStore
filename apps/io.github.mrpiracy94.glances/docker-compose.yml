@@ -1,0 +1,26 @@
+name: glances
+services:
+  glances:
+    image: nicolargo/glances:latest-full
+    container_name: glances
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+      - "GLANCES_OPT=-w"
+    ports:
+      - target: 61208
+        published: "61208"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+x-casaos:
+  id: io.github.mrpiracy94.glances
+  version: "1.0.1"
+  main: glances
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.glances/assets/icon.png
+  title:
+    en_US: "Glances"
+  port_map: "61208"
+  index: /

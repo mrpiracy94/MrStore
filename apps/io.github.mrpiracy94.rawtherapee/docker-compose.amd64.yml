@@ -1,0 +1,34 @@
+name: rawtherapee
+services:
+  rawtherapee:
+    image: lscr.io/linuxserver/rawtherapee:latest@sha256:63e7d33d61f4167205a75189bf1fe68a6fb61db65d89cc47b3f5bb17d58d6500
+    container_name: rawtherapee
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=RawTherapee"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21124"
+        protocol: tcp
+      - target: 3001
+        published: "21125"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/rawtherapee/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.rawtherapee
+  version: "1.0.1"
+  main: rawtherapee
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.rawtherapee/assets/icon.png
+  title:
+    en_US: "RawTherapee"
+  port_map: "21124"
+  index: /

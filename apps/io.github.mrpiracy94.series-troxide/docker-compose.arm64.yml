@@ -1,0 +1,34 @@
+name: series-troxide
+services:
+  series-troxide:
+    image: lscr.io/linuxserver/series-troxide:latest@sha256:74d3abff0d0ddc3c84b15f563271701bafd58b9aa3a62947d5e65417706d9b59
+    container_name: series-troxide
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=Series Troxide"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21136"
+        protocol: tcp
+      - target: 3001
+        published: "21137"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/series-troxide/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.series-troxide
+  version: "1.0.1"
+  main: series-troxide
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.series-troxide/assets/icon.png
+  title:
+    en_US: "Series Troxide"
+  port_map: "21136"
+  index: /

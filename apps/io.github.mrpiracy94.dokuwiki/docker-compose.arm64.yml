@@ -1,0 +1,27 @@
+name: dokuwiki
+services:
+  dokuwiki:
+    image: lscr.io/linuxserver/dokuwiki:latest@sha256:90ce039dbf9243128d9ca397f75a0aa8d2f5d183bafcdbe2a12cc6158a743d12
+    container_name: dokuwiki
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20028"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/dokuwiki/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.dokuwiki
+  version: "1.0.1"
+  main: dokuwiki
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dokuwiki/assets/icon.png
+  title:
+    en_US: "DokuWiki"
+  port_map: "20028"
+  index: /

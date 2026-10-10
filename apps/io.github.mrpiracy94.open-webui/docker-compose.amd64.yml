@@ -1,0 +1,25 @@
+name: open-webui
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main@sha256:34d884bba14a22a9745b00303f343cbdcfcbc16c004b4fe78af07c275b99a236
+    container_name: open-webui
+    restart: unless-stopped
+    environment:
+      - "OLLAMA_BASE_URL=http://host.docker.internal:11434"
+    ports:
+      - target: 8080
+        published: "30016"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/open-webui
+        target: /app/backend/data
+x-casaos:
+  id: io.github.mrpiracy94.open-webui
+  version: "1.0.1"
+  main: open-webui
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.open-webui/assets/icon.png
+  title:
+    en_US: "Open WebUI"
+  port_map: "30016"
+  index: /

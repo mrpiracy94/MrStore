@@ -1,0 +1,30 @@
+name: apprise-api
+services:
+  apprise-api:
+    image: lscr.io/linuxserver/apprise-api:latest
+    container_name: apprise-api
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8000
+        published: "20038"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/apprise-api/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/apprise-api/attach
+        target: /attach
+x-casaos:
+  id: io.github.mrpiracy94.apprise-api
+  version: "1.0.2"
+  main: apprise-api
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.apprise-api/assets/icon.png
+  title:
+    en_US: "Apprise API"
+  port_map: "20038"
+  index: /

@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "Organizr",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.organizr/assets/organizr.webp",
+  "tagline": "Organiza serviços numa única página",
+  "description": "Organizr — origem: seedit4.me catalog. Imagem: organizr/organizr:latest. Verifica portas/variáveis na documentação do projeto.",
+  "title": "Organizr",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.organizr",
+  "version": "1.0.1",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 25701877,
+    "arm64": 26367798
+  }
+}

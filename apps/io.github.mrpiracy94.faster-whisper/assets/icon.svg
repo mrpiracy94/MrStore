@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Faster Whisper - pictograma ilustrativo MrStore (não oficial)">
+ <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#1c3666"/><stop offset="1" stop-color="#08203b"/></linearGradient><linearGradient id="mic" x2="0" y2="1"><stop stop-color="#abedff"/><stop offset="1" stop-color="#39baea"/></linearGradient></defs>
+ <rect width="256" height="256" rx="50" fill="url(#bg)"/>
+ <path d="M38 89h42M28 121h40M39 152h37" stroke="#50d4f6" stroke-width="9" stroke-linecap="round" opacity=".9"/>
+ <rect x="104" y="48" width="53" height="111" rx="27" fill="url(#mic)"/>
+ <path d="M91 117c0 40 17 61 40 61s40-21 40-61" fill="none" stroke="#d5f8ff" stroke-width="11" stroke-linecap="round"/>
+ <path d="M131 179v26m-28 0h57" stroke="#d5f8ff" stroke-width="10" stroke-linecap="round"/>
+ <path d="m171 58 17 15-17 15m17-15h27" stroke="#5ce4cd" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+ <path d="m186 105 11 10-11 11m10-11h20" stroke="#5ce4cd" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

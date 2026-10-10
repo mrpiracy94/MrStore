@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Developer",
+  "thumbnail": "/apps/io.github.mrpiracy94.nginx/assets/nginx.webp",
+  "tagline": "Servidor web e proxy reverso",
+  "description": "NGINX — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/nginx:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-nginx/",
+  "title": "NGINX",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.nginx",
+  "version": "1.0.1",
+  "categories": [
+    "developer"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 56611524,
+    "arm64": 57197992
+  }
+}

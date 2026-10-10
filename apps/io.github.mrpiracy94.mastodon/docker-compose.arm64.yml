@@ -1,0 +1,27 @@
+name: mastodon
+services:
+  mastodon:
+    image: lscr.io/linuxserver/mastodon:latest@sha256:1c9345aa088e7ba519acd9cfa8c2c04c972cbab986bfef85142e54e57717165d
+    container_name: mastodon
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "20050"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/mastodon/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.mastodon
+  version: "1.0.1"
+  main: mastodon
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.mastodon/assets/icon.png
+  title:
+    en_US: "Mastodon"
+  port_map: "20050"
+  index: /

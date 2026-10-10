@@ -1,0 +1,27 @@
+name: grav
+services:
+  grav:
+    image: lscr.io/linuxserver/grav:latest
+    container_name: grav
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20031"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/grav/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.grav
+  version: "1.0.1"
+  main: grav
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.grav/assets/icon.png
+  title:
+    en_US: "Grav"
+  port_map: "20031"
+  index: /

@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.diskover/assets/diskover.webp",
+  "tagline": "Analisa utilização e organização de ficheiros",
+  "description": "Diskover — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/diskover:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-diskover/",
+  "title": "Diskover",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.diskover",
+  "version": "1.0.1",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 50820404,
+    "arm64": 52272005
+  }
+}

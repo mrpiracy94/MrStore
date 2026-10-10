@@ -1,0 +1,29 @@
+name: seerr
+services:
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest@sha256:c33702abebcec295b69a1371417b3a350e31dfeacbae3158e790c86908dc3659
+    container_name: seerr
+    restart: unless-stopped
+    init: true
+    user: "1000:1000"
+    environment:
+      - "LOG_LEVEL=info"
+      - "PORT=5055"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 5055
+        published: "5055"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/seerr
+        target: /app/config
+x-casaos:
+  id: io.github.mrpiracy94.seerr
+  version: "1.0.1"
+  main: seerr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.seerr/assets/icon.png
+  title:
+    en_US: "Seerr"
+  port_map: "5055"
+  index: /

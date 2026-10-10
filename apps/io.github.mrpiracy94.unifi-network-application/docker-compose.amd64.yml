@@ -1,0 +1,39 @@
+name: unifi-network-application
+services:
+  unifi-network-application:
+    image: lscr.io/linuxserver/unifi-network-application:latest@sha256:c6049562c14dd90b3fb7a3e9a872368fe1e4cf83fbdf3361138aa5d213fd7a7c
+    container_name: unifi-network-application
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "MONGO_HOST=mongo"
+      - "MONGO_PORT=27017"
+      - "MONGO_DBNAME=unifi"
+    ports:
+      - target: 8443
+        published: "8443"
+        protocol: tcp
+      - target: 8080
+        published: "20015"
+        protocol: tcp
+      - target: 3478
+        published: "3478"
+        protocol: udp
+      - target: 10001
+        published: "10001"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/unifi-network-application/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.unifi-network-application
+  version: "1.0.1"
+  main: unifi-network-application
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.unifi-network-application/assets/icon.png
+  title:
+    en_US: "UniFi Network Application"
+  port_map: "8443"
+  index: /

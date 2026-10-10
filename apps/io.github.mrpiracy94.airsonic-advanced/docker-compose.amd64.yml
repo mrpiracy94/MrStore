@@ -1,0 +1,33 @@
+name: airsonic-advanced
+services:
+  airsonic-advanced:
+    image: lscr.io/linuxserver/airsonic-advanced:latest@sha256:096fc5b7c2e24ec47bc94c6a29c0155d1e3eec4990561dc6f92754b9666e427f
+    container_name: airsonic-advanced
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 4040
+        published: "4040"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/airsonic-advanced/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/Music
+        target: /music
+      - type: bind
+        source: /DATA/Media/Playlists
+        target: /playlists
+x-casaos:
+  id: io.github.mrpiracy94.airsonic-advanced
+  version: "1.0.2"
+  main: airsonic-advanced
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.airsonic-advanced/assets/icon.png
+  title:
+    en_US: "Airsonic Advanced"
+  port_map: "4040"
+  index: /

@@ -1,0 +1,23 @@
+name: actual-budget
+services:
+  actual-budget:
+    image: ghcr.io/actualbudget/actual:latest
+    container_name: actual-budget
+    restart: unless-stopped
+    ports:
+      - target: 5006
+        published: "5006"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/actual-budget
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.actual-budget
+  version: "1.0.1"
+  main: actual-budget
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.actual-budget/assets/icon.png
+  title:
+    en_US: "Actual Budget"
+  port_map: "5006"
+  index: /

@@ -1,0 +1,27 @@
+name: freshrss
+services:
+  freshrss:
+    image: lscr.io/linuxserver/freshrss:latest@sha256:a374a152f0338f58645fc9a18cf224cc42202103833f55782d02de54ff891ad4
+    container_name: freshrss
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20032"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/freshrss/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.freshrss
+  version: "1.0.1"
+  main: freshrss
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.freshrss/assets/icon.png
+  title:
+    en_US: "FreshRSS"
+  port_map: "20032"
+  index: /

@@ -1,0 +1,30 @@
+name: smokeping
+services:
+  smokeping:
+    image: lscr.io/linuxserver/smokeping:latest@sha256:43d89f225085d9df04123899ccb7909ef1dfe0c6ab49e499306b58ce6ccff496
+    container_name: smokeping
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20012"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/smokeping/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/smokeping/data
+        target: /data
+x-casaos:
+  id: io.github.mrpiracy94.smokeping
+  version: "1.0.1"
+  main: smokeping
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.smokeping/assets/icon.png
+  title:
+    en_US: "SmokePing"
+  port_map: "20012"
+  index: /

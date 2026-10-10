@@ -1,0 +1,27 @@
+name: pocket-id
+services:
+  pocket-id:
+    image: ghcr.io/pocket-id/pocket-id:latest
+    container_name: pocket-id
+    restart: unless-stopped
+    environment:
+      - "APP_URL=http://zimaos.local:1411"
+      - "TRUST_PROXY=true"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 1411
+        published: "1411"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/pocket-id
+        target: /app/data
+x-casaos:
+  id: io.github.mrpiracy94.pocket-id
+  version: "1.0.1"
+  main: pocket-id
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.pocket-id/assets/icon.png
+  title:
+    en_US: "Pocket ID"
+  port_map: "1411"
+  index: /

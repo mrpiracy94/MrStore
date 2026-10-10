@@ -1,0 +1,33 @@
+name: medusa
+services:
+  medusa:
+    image: lscr.io/linuxserver/medusa:latest
+    container_name: medusa
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8081
+        published: "8081"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/medusa/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /tv
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.medusa
+  version: "1.0.1"
+  main: medusa
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.medusa/assets/icon.png
+  title:
+    en_US: "Medusa"
+  port_map: "8081"
+  index: /

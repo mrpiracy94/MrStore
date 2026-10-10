@@ -1,0 +1,27 @@
+name: pairdrop
+services:
+  pairdrop:
+    image: lscr.io/linuxserver/pairdrop:latest@sha256:82fdd391b17c8ec79de7e92f97389d5af81e7110a5c8d2eb42bece41338ca322
+    container_name: pairdrop
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3000
+        published: "20018"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/pairdrop/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.pairdrop
+  version: "1.0.1"
+  main: pairdrop
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.pairdrop/assets/icon.png
+  title:
+    en_US: "PairDrop"
+  port_map: "20018"
+  index: /

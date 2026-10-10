@@ -1,0 +1,33 @@
+name: sickgear
+services:
+  sickgear:
+    image: lscr.io/linuxserver/sickgear:latest@sha256:9cd1cc62531c83fbe512c9ef1dd548ee8fb2ca7c511fba2803c8992dba64752f
+    container_name: sickgear
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8081
+        published: "20002"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/sickgear/config
+        target: /config
+      - type: bind
+        source: /DATA/Media/TV
+        target: /tv
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.sickgear
+  version: "1.0.1"
+  main: sickgear
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.sickgear/assets/icon.png
+  title:
+    en_US: "SickGear"
+  port_map: "20002"
+  index: /

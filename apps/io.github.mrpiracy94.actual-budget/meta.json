@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "Actual Budget",
+  "category": "Productivity",
+  "thumbnail": "/apps/io.github.mrpiracy94.actual-budget/assets/actual-budget.webp",
+  "tagline": "Gestão de orçamento e despesas pessoais",
+  "description": "Orçamento pessoal. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "title": "Actual Budget",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.actual-budget",
+  "version": "1.0.1",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 120070142,
+    "arm64": 119908734
+  }
+}

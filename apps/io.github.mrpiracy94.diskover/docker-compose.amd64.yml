@@ -1,0 +1,27 @@
+name: diskover
+services:
+  diskover:
+    image: lscr.io/linuxserver/diskover:latest@sha256:37c1131360ba1986bf84682bb3c193163a1a8ac79e1efd5022e5f4cc6f2305d2
+    container_name: diskover
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20049"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/diskover/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.diskover
+  version: "1.0.1"
+  main: diskover
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.diskover/assets/icon.png
+  title:
+    en_US: "Diskover"
+  port_map: "20049"
+  index: /

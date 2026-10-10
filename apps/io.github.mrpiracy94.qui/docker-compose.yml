@@ -1,0 +1,25 @@
+name: qui
+services:
+  qui:
+    image: ghcr.io/autobrr/qui:latest
+    container_name: qui
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 7476
+        published: "7476"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/qui/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.qui
+  version: "1.0.1"
+  main: qui
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.qui/assets/icon.png
+  title:
+    en_US: "qui"
+  port_map: "7476"
+  index: /

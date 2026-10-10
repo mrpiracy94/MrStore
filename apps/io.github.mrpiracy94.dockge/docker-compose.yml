@@ -1,0 +1,31 @@
+name: dockge
+services:
+  dockge:
+    image: louislam/dockge:1
+    container_name: dockge
+    restart: unless-stopped
+    environment:
+      - "DOCKGE_STACKS_DIR=/DATA/AppData/dockge/stacks"
+    ports:
+      - target: 5001
+        published: "5001"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /DATA/AppData/dockge/data
+        target: /app/data
+      - type: bind
+        source: /DATA/AppData/dockge/stacks
+        target: /DATA/AppData/dockge/stacks
+x-casaos:
+  id: io.github.mrpiracy94.dockge
+  version: "1.0.1"
+  main: dockge
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dockge/assets/icon.png
+  title:
+    en_US: "Dockge"
+  port_map: "5001"
+  index: /

@@ -1,0 +1,27 @@
+name: pydio-cells
+services:
+  pydio-cells:
+    image: lscr.io/linuxserver/pydio-cells:latest@sha256:98384469e5ad8d35c0224ff43dba2b099f920809d5af63f281573000013579bd
+    container_name: pydio-cells
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8080
+        published: "20022"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/pydio-cells/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.pydio-cells
+  version: "1.0.2"
+  main: pydio-cells
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.pydio-cells/assets/icon.png
+  title:
+    en_US: "Pydio Cells"
+  port_map: "20022"
+  index: /

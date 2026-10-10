@@ -1,0 +1,27 @@
+name: manyfold
+services:
+  manyfold:
+    image: lscr.io/linuxserver/manyfold:latest@sha256:5fb8097c0c8cb3a63a522309ce26485d936aab66ce4b1fb137f9220e411927dc
+    container_name: manyfold
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 3214
+        published: "3214"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/manyfold/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.manyfold
+  version: "1.0.1"
+  main: manyfold
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.manyfold/assets/icon.png
+  title:
+    en_US: "Manyfold"
+  port_map: "3214"
+  index: /

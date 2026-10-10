@@ -1,0 +1,23 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.dosbox-staging/assets/icon_512.webp",
+  "tagline": "Emula programas e jogos clássicos de DOS",
+  "description": "DOSBox Staging — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/dosbox-staging:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-dosbox-staging/",
+  "title": "DOSBox Staging",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.dosbox-staging",
+  "version": "1.0.1",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 1015685109
+  }
+}

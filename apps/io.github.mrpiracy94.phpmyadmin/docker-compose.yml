@@ -1,0 +1,28 @@
+name: phpmyadmin
+services:
+  phpmyadmin:
+    image: lscr.io/linuxserver/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "PMA_ARBITRARY=1"
+    ports:
+      - target: 80
+        published: "20042"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/phpmyadmin/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.phpmyadmin
+  version: "1.0.1"
+  main: phpmyadmin
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.phpmyadmin/assets/icon.png
+  title:
+    en_US: "phpMyAdmin"
+  port_map: "20042"
+  index: /

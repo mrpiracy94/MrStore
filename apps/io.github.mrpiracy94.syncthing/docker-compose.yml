@@ -1,0 +1,39 @@
+name: syncthing
+services:
+  syncthing:
+    image: lscr.io/linuxserver/syncthing:latest
+    container_name: syncthing
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8384
+        published: "8384"
+        protocol: tcp
+      - target: 22000
+        published: "22000"
+        protocol: tcp
+      - target: 22000
+        published: "22000"
+        protocol: udp
+      - target: 21027
+        published: "21027"
+        protocol: udp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/syncthing/config
+        target: /config
+      - type: bind
+        source: /DATA/Syncthing
+        target: /data1
+x-casaos:
+  id: io.github.mrpiracy94.syncthing
+  version: "1.0.1"
+  main: syncthing
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.syncthing/assets/icon.png
+  title:
+    en_US: "Syncthing"
+  port_map: "8384"
+  index: /

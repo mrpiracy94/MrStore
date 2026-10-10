@@ -1,0 +1,33 @@
+name: bookstack
+services:
+  bookstack:
+    image: lscr.io/linuxserver/bookstack:latest@sha256:9b5cd22653b503a53a764671ed96e2e87ea3f62bc3fba6250de86a73d642c426
+    container_name: bookstack
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "APP_URL=http://zimaos.local:6875"
+      - "DB_HOST=bookstack_db"
+      - "DB_PORT=3306"
+      - "DB_USER=bookstack"
+      - "DB_PASS=CHANGE_ME"
+      - "DB_DATABASE=bookstackapp"
+    ports:
+      - target: 80
+        published: "20026"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/bookstack/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.bookstack
+  version: "1.0.1"
+  main: bookstack
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.bookstack/assets/icon.png
+  title:
+    en_US: "BookStack"
+  port_map: "20026"
+  index: /

@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "IT-Tools",
+  "category": "Developer",
+  "thumbnail": "/apps/io.github.mrpiracy94.it-tools/assets/it-tools.webp",
+  "tagline": "Coleção de ferramentas para programadores",
+  "description": "Ferramentas úteis para programadores. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "title": "IT-Tools",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.it-tools",
+  "version": "1.0.1",
+  "categories": [
+    "developer"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 22560297,
+    "arm64": 23588766
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Networking",
+  "thumbnail": "/apps/io.github.mrpiracy94.nzbhydra2/assets/nzbhydra2.webp",
+  "tagline": "Pesquisa em vários indexadores Usenet",
+  "description": "NZBHydra2 — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/nzbhydra2:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-nzbhydra2/",
+  "title": "NZBHydra2",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.nzbhydra2",
+  "version": "1.0.1",
+  "categories": [
+    "networking"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 167082532,
+    "arm64": 164353963
+  }
+}

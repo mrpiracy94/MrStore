@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "Dockge",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.dockge/assets/dockge.webp",
+  "tagline": "Gere stacks Docker Compose numa interface web",
+  "description": "Gestor de stacks Docker Compose (alternativa ao Portainer). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "title": "Dockge",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.dockge",
+  "version": "1.0.1",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 263544193,
+    "arm64": 257965124
+  }
+}

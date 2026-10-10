@@ -1,0 +1,21 @@
+name: unpackerr
+services:
+  unpackerr:
+    image: golift/unpackerr:latest@sha256:7000ff3072154ea8f82d7905c6214571b8bbfb68c937ed989dab3cac39f6017f
+    container_name: unpackerr
+    restart: unless-stopped
+    environment:
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.unpackerr
+  version: "1.0.1"
+  main: unpackerr
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.unpackerr/assets/icon.png
+  title:
+    en_US: "Unpackerr"
+  port_map: "0"
+  index: /

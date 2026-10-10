@@ -1,0 +1,30 @@
+name: piwigo
+services:
+  piwigo:
+    image: lscr.io/linuxserver/piwigo:latest@sha256:757039bc2fc63388974e65ef8bdb046ca9b4b402b20bbd9aec97c623256a2f49
+    container_name: piwigo
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20025"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/piwigo/config
+        target: /config
+      - type: bind
+        source: /DATA/Gallery
+        target: /gallery
+x-casaos:
+  id: io.github.mrpiracy94.piwigo
+  version: "1.0.1"
+  main: piwigo
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.piwigo/assets/icon.png
+  title:
+    en_US: "Piwigo"
+  port_map: "20025"
+  index: /

@@ -1,0 +1,34 @@
+name: lm-studio
+services:
+  lm-studio:
+    image: lscr.io/linuxserver/lm-studio:latest
+    container_name: lm-studio
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=LM Studio"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21010"
+        protocol: tcp
+      - target: 3001
+        published: "21011"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/lm-studio/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.lm-studio
+  version: "1.0.1"
+  main: lm-studio
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.lm-studio/assets/icon.png
+  title:
+    en_US: "LM Studio"
+  port_map: "21010"
+  index: /

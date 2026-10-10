@@ -1,0 +1,27 @@
+name: grocy
+services:
+  grocy:
+    image: lscr.io/linuxserver/grocy:latest@sha256:7589ab58ddd292340427a85086a2524f80b13df91effb239a2d1cff1efd0fb5b
+    container_name: grocy
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 80
+        published: "20034"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/grocy/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.grocy
+  version: "1.0.1"
+  main: grocy
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.grocy/assets/icon.png
+  title:
+    en_US: "Grocy"
+  port_map: "20034"
+  index: /

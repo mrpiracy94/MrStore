@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.kasm/assets/kasm.webp",
+  "tagline": "Ambientes de trabalho e aplicações no navegador",
+  "description": "Kasm Workspaces — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kasm:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kasm/",
+  "title": "Kasm Workspaces",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.kasm",
+  "version": "1.0.1",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 295014091,
+    "arm64": 284528322
+  }
+}

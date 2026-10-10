@@ -1,0 +1,34 @@
+name: libreoffice
+services:
+  libreoffice:
+    image: lscr.io/linuxserver/libreoffice:latest@sha256:d74d0af5cf122e05b1cc044f4dd78be63d1585eff1fb8a489459bfe96bbcd7bf
+    container_name: libreoffice
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "TITLE=LibreOffice"
+    shm_size: "1gb"
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - target: 3000
+        published: "21088"
+        protocol: tcp
+      - target: 3001
+        published: "21089"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/libreoffice/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.libreoffice
+  version: "1.0.1"
+  main: libreoffice
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.libreoffice/assets/icon.png
+  title:
+    en_US: "LibreOffice"
+  port_map: "21088"
+  index: /

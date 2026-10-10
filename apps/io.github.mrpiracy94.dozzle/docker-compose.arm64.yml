@@ -1,0 +1,23 @@
+name: dozzle
+services:
+  dozzle:
+    image: amir20/dozzle:latest@sha256:13a4f444c6bdf358b094aadc06a08ffaae33e435de4f18c76ba666d31b8991af
+    container_name: dozzle
+    restart: unless-stopped
+    ports:
+      - target: 8080
+        published: "30011"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+x-casaos:
+  id: io.github.mrpiracy94.dozzle
+  version: "1.0.1"
+  main: dozzle
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.dozzle/assets/icon.png
+  title:
+    en_US: "Dozzle"
+  port_map: "30011"
+  index: /

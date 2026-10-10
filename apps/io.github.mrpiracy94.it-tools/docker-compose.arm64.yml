@@ -1,0 +1,20 @@
+name: it-tools
+services:
+  it-tools:
+    image: corentinth/it-tools:latest@sha256:72dad89132f46a92e17e1ef479494403a87d6609894931a18a31cffdf9b534a1
+    container_name: it-tools
+    restart: unless-stopped
+    ports:
+      - target: 80
+        published: "30013"
+        protocol: tcp
+
+x-casaos:
+  id: io.github.mrpiracy94.it-tools
+  version: "1.0.1"
+  main: it-tools
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.it-tools/assets/icon.png
+  title:
+    en_US: "IT-Tools"
+  port_map: "30013"
+  index: /

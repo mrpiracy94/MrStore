@@ -1,0 +1,33 @@
+name: pyload-ng
+services:
+  pyload-ng:
+    image: lscr.io/linuxserver/pyload-ng:latest
+    container_name: pyload-ng
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8000
+        published: "8000"
+        protocol: tcp
+      - target: 9666
+        published: "9666"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/pyload-ng/config
+        target: /config
+      - type: bind
+        source: /DATA/Downloads
+        target: /downloads
+x-casaos:
+  id: io.github.mrpiracy94.pyload-ng
+  version: "1.0.2"
+  main: pyload-ng
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.pyload-ng/assets/icon.png
+  title:
+    en_US: "pyLoad-ng"
+  port_map: "8000"
+  index: /

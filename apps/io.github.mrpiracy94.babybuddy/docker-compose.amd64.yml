@@ -1,0 +1,27 @@
+name: babybuddy
+services:
+  babybuddy:
+    image: lscr.io/linuxserver/babybuddy:latest@sha256:b2c5fae64dd981947f00ef1b6468dc51fed29715e556a3a432c2469384825fcb
+    container_name: babybuddy
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    ports:
+      - target: 8000
+        published: "20035"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/babybuddy/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.babybuddy
+  version: "1.0.1"
+  main: babybuddy
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.babybuddy/assets/icon.png
+  title:
+    en_US: "Baby Buddy"
+  port_map: "20035"
+  index: /
