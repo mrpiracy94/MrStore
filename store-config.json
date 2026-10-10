@@ -2,13 +2,14 @@
   "version": 2,
   "store_id": "io.github.mrpiracy94.mrstore",
   "name": {
-    "en_US": "MrStore",
-    "pt_PT": "MrStore"
+    "en_US": "MrStore — Community App Store",
+    "pt_PT": "MrStore — Loja Comunitária"
   },
   "description": {
-    "en_US": "Community ZimaOS app catalog with vulnerability and container update monitoring.",
-    "pt_PT": "Catálogo comunitário ZimaOS com monitorização de vulnerabilidades e atualizações de imagens Docker."
+    "en_US": "An independent ZimaOS app catalog with curated self-hosted tools, Portuguese descriptions and security-gated releases. Only apps approved by the current security audit are published.",
+    "pt_PT": "Loja comunitária independente para ZimaOS, com aplicações autoalojadas, descrições em português e publicação condicionada a auditorias de segurança. Apenas aplicações aprovadas são disponibilizadas."
   },
   "maintainer": "mrpiracy94",
-  "url": "https://github.com/mrpiracy94/MrStore"
+  "url": "https://github.com/mrpiracy94/MrStore",
+  "icon": "https://raw.githubusercontent.com/mrpiracy94/MrStore/main/branding/mrstore-icon.svg"
 }
