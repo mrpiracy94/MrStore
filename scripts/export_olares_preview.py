@@ -198,6 +198,7 @@ def package(source: Path, selection: Path, output: Path) -> dict:
         raise ValueError("Olares export destination already exists")
     converted = {}
     blocked = {}
+    packages = []
     for slug in selection_data["approved"]:
         compose = inputs[f"Apps/{slug}/docker-compose.yml"]
         chart = convert(slug, yaml.safe_load(compose))
@@ -208,6 +209,8 @@ def package(source: Path, selection: Path, output: Path) -> dict:
         if name in converted:
             raise ValueError("Olares chart naming collision")
         converted[name] = chart
+        packages.append({"slug": slug, "chart": name,
+                         "url": "olares/" + name + ".tgz"})
     if not converted:
         raise ValueError("No eligible Olares pilot charts")
     output.mkdir(parents=True)
@@ -222,6 +225,7 @@ def package(source: Path, selection: Path, output: Path) -> dict:
             (output / (name + ".tgz")).write_bytes(create_tgz(name, files))
         report = {"version": 1, "source_approved": len(selection_data["approved"]),
                   "chart_count": len(converted), "charts": sorted(converted),
+                  "packages": sorted(packages, key=lambda x: x["slug"]),
                   "excluded": blocked, "runtime_verified": False}
         (output / "catalog.json").write_text(json.dumps(
             report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
