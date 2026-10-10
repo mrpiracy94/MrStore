@@ -34,6 +34,8 @@ class PublisherTriggerTests(unittest.TestCase):
             "scripts/release_catalog.py",
             "scripts/validate.py",
             "scripts/verify_dist.py",
+            "scripts/privilege_policy.py",
+            "scripts/compose_preflight.py",
             ".github/workflows/publish.yml",
         ]
         for event in ("push", "pull_request"):
