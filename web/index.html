@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0d0f14">
-  <meta name="description" content="Explora aplicações self-hosted na MrStore. Catálogo comunitário com integração disponível para ZimaOS v2 e visão multiplataforma.">
+  <meta name="description" content="MrStore — O teu homelab. As tuas apps. Uma só loja. Descobre aplicações self-hosted para o teu servidor e acompanha a evolução multiplataforma.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="MrStore — O teu homelab. As tuas apps. Uma só loja.">
+  <meta property="og:description" content="Descobre o universo self-hosted. Uma montra de aplicações para o teu homelab.">
+  <meta property="og:image" content="https://mrpiracy94.github.io/MrStore/assets/mrstore-hero.webp">
   <link rel="icon" href="./assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/site.css">
   <script src="./assets/site.js" defer></script>
-  <title>MrStore — A tua loja de aplicações para o homelab</title>
+  <title>MrStore — O teu homelab. As tuas apps. Uma só loja.</title>
 </head>
 <body>
   <a class="skip-link" href="#catalogo">Saltar para o catálogo</a>
@@ -18,7 +22,7 @@
     <div class="shell topbar">
       <a class="brand" href="./" aria-label="MrStore, página inicial">
         <img src="./assets/mark.svg" width="44" height="44" alt="">
-        <span class="brand-text">Mr<span>Store</span><small>SELF-HOSTED APP STORE</small></span>
+        <span class="brand-text">Mr<span>Store</span><small>THE HOMELAB APP HUB</small></span>
       </a>
       <nav aria-label="Navegação principal" class="main-nav">
         <a href="#catalogo">Explorar aplicações</a>
@@ -26,7 +30,7 @@
         <a href="#como-instalar">Como instalar</a>
         <a href="https://github.com/mrpiracy94/MrStore" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
-      <a class="header-action" href="#como-instalar">Adicionar ao ZimaOS <span aria-hidden="true">↗</span></a>
+      <a class="header-action" href="#catalogo">Explorar catálogo <span aria-hidden="true">↗</span></a>
       <details class="mobile-nav">
         <summary>Menu <span aria-hidden="true">☰</span></summary>
         <nav aria-label="Navegação móvel">
@@ -39,33 +43,28 @@
     </div>
   </header>
   <main>
-    <section class="hero shell" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="pulse"></span> ECOSSISTEMA SELF-HOSTED · ZIMAOS V2</div>
-        <h1 id="hero-title">A tua loja de <span>aplicações</span><br>para o homelab</h1>
-        <p>Descobre aplicações para organizar os teus ficheiros, ver filmes e séries, guardar fotografias, fazer cópias de segurança e muito mais. Pesquisa o catálogo real antes de instalar. A integração disponível é ZimaOS v2.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#catalogo">Ver todas as aplicações <span aria-hidden="true">→</span></a>
-          <a class="btn btn-outline" href="#como-instalar">Como funciona <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="hero-trust"><span><span class="tick">✓</span> Comunidade & código aberto</span><span><span class="tick">✓</span> ZimaOS v2</span><span><span class="tick">✓</span> Sem instalação automática</span></div>
+    <section class="hero-universe" aria-labelledby="hero-title">
+      <div class="hero-banner-wrap">
+        <img class="hero-banner-image" src="./assets/mrstore-hero.webp"
+             width="2290" height="687" decoding="async" fetchpriority="high"
+             alt="MrStore. O teu homelab. As tuas apps. Uma só loja. Ecossistema homelab multiplataforma.">
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-        <div class="visual-window">
-          <div class="window-top"><span class="traffic"><i></i><i></i><i></i></span><span class="window-pill">MrStore / Apps</span><span class="tiny-dot"></span></div>
-          <div class="window-head"><div><span class="window-kicker">O TEU ECOSSISTEMA</span><strong>Descobre apps.<br>Faz mais.</strong></div><div class="mini-symbol">✦</div></div>
-          <div class="mock-search"><span>⌕</span> Pesquisa a tua próxima aplicação <span class="shortcut">⌘ K</span></div>
-          <div class="mock-grid">
-            <div class="mock-app"><span class="mock-icon mint">◈</span><span>Multimédia<small>Explorar</small></span></div>
-            <div class="mock-app"><span class="mock-icon amber">⌘</span><span>Produtividade<small>Explorar</small></span></div>
-            <div class="mock-app"><span class="mock-icon blue">▣</span><span>Rede<small>Explorar</small></span></div>
-            <div class="mock-app"><span class="mock-icon pink">✳</span><span>Ferramentas<small>Explorar</small></span></div>
-          </div>
-          <div class="window-bottom"><span class="live-light"></span> As apps que fazem o teu servidor crescer <span>↗</span></div>
+      <div class="shell hero-universe-content">
+        <div class="hero-universe-copy">
+          <span class="hero-overline"><span class="hero-overline-dot" aria-hidden="true"></span> A TUA MONTRA SELF-HOSTED</span>
+          <h1 id="hero-title">Descobre a próxima app para <em>o teu homelab.</em></h1>
+          <p>Explora um catálogo comunitário de aplicações para os teus projetos, serviços e servidores. Pesquisa por categoria, consulta os requisitos e verifica a compatibilidade antes de instalar.</p>
         </div>
-        <div class="floating-card floating-top"><span>✦</span><span>Self-hosted<br><strong>Sem complicações</strong></span></div>
-        <div class="floating-card floating-bottom"><span class="live-light"></span> Explora por categorias</div>
+        <div class="hero-universe-actions">
+          <a class="btn btn-primary" href="#catalogo">Explorar aplicações <span aria-hidden="true">→</span></a>
+          <a class="btn btn-outline" href="#ecossistema">Ver plataformas <span aria-hidden="true">↗</span></a>
+          <span class="hero-helper">A montra informa; a instalação é efetuada na plataforma suportada.</span>
+        </div>
+      </div>
+      <div class="shell hero-trust-row" aria-label="Sobre a MrStore">
+        <span><span aria-hidden="true">✦</span> Comunidade self-hosted</span>
+        <span><span aria-hidden="true">◇</span> Catálogo dinâmico</span>
+        <span><span aria-hidden="true">◎</span> Transparência na publicação</span>
       </div>
     </section>
     <section class="stats-strip" aria-label="Visão geral">
@@ -73,7 +72,7 @@
         <div class="stat"><strong id="total-apps">—</strong><span>Aplicações no índice</span></div>
         <div class="stat"><strong id="total-categories">—</strong><span>Categorias</span></div>
         <div class="stat"><strong>2</strong><span>Arquiteturas do catálogo</span></div>
-        <div class="stat stat-last"><strong>v2</strong><span>Protocolo ZimaOS</span></div>
+        <div class="stat stat-last"><strong>v2</strong><span>Formato atual do catálogo</span></div>
       </div>
     </section>
     <section id="catalogo" class="catalog-section shell" aria-labelledby="catalog-title">
@@ -99,7 +98,7 @@
         <div class="platform-heading">
           <span class="section-kicker">UM ECOSSISTEMA, MAIS POSSIBILIDADES</span>
           <h2 id="platform-title">Uma loja pensada para <em>o teu homelab.</em></h2>
-          <p>A MrStore nasce no ZimaOS, mas a visão é levar o catálogo a outros ambientes. Compatibilidade anunciada apenas depois de validação técnica.</p>
+          <p>Uma identidade para todo o homelab: um único ponto de descoberta e um ecossistema em evolução. A instalação nativa depende de integrações validadas em cada plataforma.</p>
         </div>
         <div class="platform-grid">
           <div class="platform-supported">

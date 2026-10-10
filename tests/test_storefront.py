@@ -107,6 +107,12 @@ class StorefrontTests(unittest.TestCase):
         self.assertIn('$("favorites-toggle").setAttribute("aria-pressed", "false")', js)
         self.assertIn("PLATAFORMAS-ALVO · NÃO DISPONÍVEIS AINDA", html)
         self.assertIn("ZimaOS v2", html)
+        self.assertIn('src="./assets/mrstore-hero.webp"', html)
+        self.assertIn("hero-universe", html)
+        self.assertIn("hero-banner-image", css)
+        self.assertIn("assets/mrstore-hero.webp", ALLOWED)
+        self.assertLessEqual((self.source / "assets/mrstore-hero.webp").stat().st_size, 250_000)
+        self.assertEqual((self.source / "assets/mrstore-hero.webp").read_bytes()[:4], b"RIFF")
         self.assertIn(".platform-grid{display:grid", css)
         self.assertIn("@media(max-width:960px)", css)
         for asset in ("mark.svg", "readme-banner.svg"):
