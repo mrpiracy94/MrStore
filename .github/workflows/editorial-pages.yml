@@ -1,58 +1,42 @@
-name: Publish complete editorial MrStore catalog
+# The editorial catalog is published ONLY by rollout-233.yml.
+# This workflow must not race gh-pages and wipe the actual homepage.
+name: Validate editorial MrStore selection (no publish)
 on:
   push:
     branches: [main]
     paths:
-      - 'Apps/**'
       - 'data/featured-apps.json'
-      - 'scripts/publish_editorial.py'
+      - 'data/rollout-233.json'
+      - 'scripts/featured.py'
+      - 'scripts/rollout_233.py'
+      - '.github/workflows/editorial-pages.yml'
+  pull_request:
+    paths:
+      - 'data/featured-apps.json'
+      - 'data/rollout-233.json'
+      - 'scripts/featured.py'
+      - 'scripts/rollout_233.py'
       - '.github/workflows/editorial-pages.yml'
   workflow_dispatch:
 permissions:
-  contents: write
-concurrency:
-  group: mrstore-editorial-pages
-  cancel-in-progress: false
+  contents: read
 jobs:
-  publish:
+  validate_selection:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - name: Stage all selected applications without certification claims
-        run: python scripts/publish_editorial.py --stage release-source --report out/release-selection.json
-      - name: Build official ZimaOS v2 catalog
-        uses: IceWhaleTech/build-appstore-action@v1
-        with:
-          source: release-source
-          output: dist
-          base-url: https://mrpiracy94.github.io/MrStore
-          cache-file: .cache/build_appstore/image-size-cache.json
-          digest-cache-file: .cache/build_appstore/image-digest-cache.json
-          report-json: out/build-report.json
-      - name: Check all applications are present
+      - name: Verify policy, 233 application IDs and progressive milestones
         run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          expected = set(json.loads(Path('data/featured-apps.json').read_text())['apps'])
-          index = json.loads(Path('dist/index.json').read_text())
-          actual = {x['id'].removeprefix('io.github.mrpiracy94.') for x in index['apps']}
-          assert actual == expected, f'Missing: {sorted(expected - actual)}; extra: {sorted(actual - expected)}'
-          assert index['app_count'] == len(expected)
-          print('All', len(expected), 'applications present')
-          PY
-      - name: Mark release as editorial, not security certified
+          python -m unittest discover -s tests -p 'test_rollout_233.py' -v
+          python scripts/rollout_233.py --plan data/rollout-233.json
+          python scripts/validate.py
+      - name: Publication ownership
         run: |
-          cp out/release-selection.json dist/release-status.json
-          touch dist/.nojekyll
-      - name: Publish complete catalog to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./dist
+          echo 'No write permissions; this workflow never touches gh-pages.'
+          echo 'The coordinated rollout-233.yml job handles editorial publication.'
+          echo 'The audited publish.yml is the only CVE-gated installer release process.'
