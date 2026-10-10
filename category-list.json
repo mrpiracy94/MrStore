@@ -1,74 +1,47 @@
 [
   {
-    "name": "Browser",
-    "font": "compass",
-    "description": "Browser",
-    "count": 12
-  },
-  {
-    "name": "Cloud",
-    "font": "cloud",
-    "description": "Cloud",
-    "count": 8
-  },
-  {
-    "name": "Developer",
-    "font": "code",
-    "description": "Developer",
-    "count": 20
-  },
-  {
-    "name": "Downloader",
-    "font": "download",
-    "description": "Downloader",
-    "count": 19
-  },
-  {
-    "name": "Games",
-    "font": "gamepad",
-    "description": "Games",
-    "count": 22
-  },
-  {
-    "name": "Graphics",
-    "font": "image",
-    "description": "Graphics",
-    "count": 17
-  },
-  {
-    "name": "Home",
-    "font": "home",
-    "description": "Home",
-    "count": 6
-  },
-  {
     "name": "Media",
-    "font": "play-circle",
-    "description": "Media",
-    "count": 50
-  },
-  {
-    "name": "Network",
-    "font": "globe",
-    "description": "Network",
-    "count": 23
+    "font": "play-circle-outline",
+    "description": "Multimédia, filmes, música e fotografias"
   },
   {
     "name": "Productivity",
-    "font": "file-text",
-    "description": "Productivity",
-    "count": 28
+    "font": "toolbox-outline",
+    "description": "Produtividade, documentos e gestão pessoal"
+  },
+  {
+    "name": "Home",
+    "font": "home-automation",
+    "description": "Automação residencial e casa inteligente"
+  },
+  {
+    "name": "Networking",
+    "font": "lan",
+    "description": "Redes, acesso remoto e infraestrutura"
+  },
+  {
+    "name": "AI",
+    "font": "chat-processing-outline",
+    "description": "Inteligência artificial e automação local"
+  },
+  {
+    "name": "Finance",
+    "font": "currency-usd",
+    "description": "Finanças pessoais e orçamento"
   },
   {
     "name": "Social",
-    "font": "message-circle",
-    "description": "Social",
-    "count": 12
+    "font": "account-box-outline",
+    "description": "Comunicação e comunidades"
   },
   {
-    "name": "Utilities",
-    "font": "tool",
-    "description": "Utilities",
-    "count": 37
+    "name": "Developer",
+    "font": "code-greater-than-or-equal",
+    "description": "Desenvolvimento, ferramentas e bases de dados"
+  },
+  {
+    "name": "Others",
+    "font": "apps",
+    "description": "Utilitários, jogos e outras aplicações"
   }
 ]
