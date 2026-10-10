@@ -196,6 +196,19 @@ class UpdateVisibilityTests(unittest.TestCase):
         self.assertTrue(any(c[:3] == ["docker", "container", "inspect"] and
                             c[3] == "my-real-container" for c in calls))
 
+    def test_disagreeing_docker_snapshots_do_not_inspect_unrelated_name(self):
+        def runner(command, **kwargs):
+            if command[:3] == ["docker", "ps", "-a"]:
+                value = "expected-container" if "--filter" not in command else "gone-labeled-container"
+                return subprocess.CompletedProcess(command, 0, value, "")
+            self.fail("A vanished scoped container must not trigger another inspect")
+
+        item = catalog_item(fixture(name="demo", service="app",
+                                    container="expected-container"))
+        result = runtime_check(item, runner=runner)
+        self.assertEqual(result["installed"], "not_found_by_expected_name")
+        self.assertEqual(result["update_evidence"], "unknown_container_not_identified")
+
     def test_multiple_matching_compose_replicas_does_not_guess(self):
         calls = []
 
