@@ -50,8 +50,8 @@ x-casaos:
   author: MrStore
   developer: LinuxServer.io
   category: Productivity
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cura.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/cura.png
+  icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/cura.png
+  thumbnail: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/cura.png
   title:
     en_US: "Cura"
   tagline:
