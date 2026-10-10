@@ -15,6 +15,9 @@ on:
       - 'store-config.json'
       - 'category-list.json'
       - 'recommend-list.json'
+      - 'featured-apps.json'
+      - 'branding/**'
+      - 'scripts/branding_report.py'
       - 'supported-languages.json'
       - 'requirements.txt'
       - '.github/workflows/publish.yml'
@@ -35,6 +38,9 @@ on:
       - 'store-config.json'
       - 'category-list.json'
       - 'recommend-list.json'
+      - 'featured-apps.json'
+      - 'branding/**'
+      - 'scripts/branding_report.py'
       - 'supported-languages.json'
       - 'requirements.txt'
       - '.github/workflows/publish.yml'
@@ -62,6 +68,7 @@ jobs:
         run: |
           python scripts/validate.py
           python scripts/curate_taglines.py --check
+          python scripts/branding_report.py --strict
           python -m unittest discover -s tests -v
       - name: Reject new dangerous Docker privileges
         env:
@@ -170,6 +177,11 @@ jobs:
           report = json.loads(Path("out/release-selection.json").read_text())
           verify_published(Path("dist"), report, Path("release-source"))
           PY
+      - name: Export safe featured/recommended lists for compatible store clients
+        run: |
+          cp release-source/featured-apps.json dist/featured-apps.json
+          cp release-source/recommend-list.json dist/recommend-list.json
+          cp release-source/category-list.json dist/category-list.json
       - name: Verify PT subtitles of approved apps
         run: >-
           python -S scripts/curate_taglines.py --verify-dist dist/index.json
