@@ -64,9 +64,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/qbittorrent.png
   title:
     en_US: "qBittorrent"
+    pt_PT: "qBittorrent"
   tagline:
     en_US: "qBittorrent (LinuxServer.io)"
   description:
     en_US: "qBittorrent — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/qbittorrent:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-qbittorrent/"
+    pt_PT: "Cliente BitTorrent com interface web para gerir torrents e transferências. Guarda a configuração em /DATA/AppData/qbittorrent/config e os downloads em /DATA/Downloads. Confirma a porta 8080 e as permissões antes de instalar."
   port_map: "8080"
   index: /
