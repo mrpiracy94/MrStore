@@ -46,3 +46,11 @@
 .card{box-shadow:0 7px 22px #00000025}
 @media(min-width:1300px){.showcase-brand .cube{width:96px;height:96px}.section-head{min-height:60px}.section-head h2{font-size:23px}.category-showcase{grid-template-columns:repeat(8,minmax(0,1fr))}}
 @media(max-width:760px){.showcase-brand .cube{width:57px;height:57px}.all-apps-link{order:3}.section-head .search{margin-left:0}}
+
+/* Descoberta do catálogo: pesquisa, ordenação e estados vazios. */
+.catalog-tools{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.catalog-tools .chips{flex:1;min-width:0}
+.sort-label{display:flex;align-items:center;gap:9px;font-size:12px;color:#aebfd3;white-space:nowrap}
+.sort-label select{background:#142236;color:#f3f7ff;border:1px solid #344960;border-radius:9px;padding:9px 13px;font:inherit}
+.sort-label select:focus-visible{outline:2px solid #61a9ff;outline-offset:2px}
+@media(max-width:700px){.catalog-tools{align-items:stretch}.sort-label{margin-left:auto}}
