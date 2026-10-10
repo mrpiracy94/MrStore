@@ -12,12 +12,13 @@ from sync_cve_issues import sync
 
 
 class IssueSyncTests(unittest.TestCase):
-    def run_sync(self, issues, critical=1, high=3, failures=0):
+    def run_sync(self, issues, critical=1, high=3, failures=0, coverage=None):
         with tempfile.TemporaryDirectory() as tmp:
             report_path = Path(tmp) / "cves.json"
             summary_path = Path(tmp) / "cves.md"
             report_path.write_text(json.dumps({
                 "shard": 1, "critical": critical, "high": high, "failures": failures,
+                "coverage": coverage,
             }), encoding="utf-8")
             summary_path.write_text("# Full CVE evidence\n", encoding="utf-8")
             calls = []
@@ -58,9 +59,18 @@ class IssueSyncTests(unittest.TestCase):
             {"number": 15, "title": "MrStore CVE HIGH/CRITICAL — shard 1", "state": "OPEN"},
             {"number": 16, "title": "MrStore CVE CRITICAL — shard 1", "state": "OPEN"},
         ]
-        result, calls = self.run_sync(issues, critical=0, high=0)
+        result, calls = self.run_sync(issues, critical=0, high=0, coverage={
+            "amd64": {"complete": True, "scanned": 10, "expected": 10},
+            "arm64": {"complete": True, "scanned": 10, "expected": 10},
+        })
         self.assertEqual(result, {"action": "closed", "duplicates_closed": 1})
         self.assertEqual([x[-1] for x in calls if x[:3] == ["gh", "issue", "close"]], ["15", "16"])
+
+    def test_zero_findings_without_architecture_coverage_stays_open(self):
+        issues = [{"number": 15, "title": "MrStore CVE HIGH/CRITICAL — shard 1", "state": "OPEN"}]
+        result, calls = self.run_sync(issues, critical=0, high=0)
+        self.assertEqual(result["action"], "scan_incomplete")
+        self.assertFalse(any(x[:3] == ["gh", "issue", "close"] for x in calls))
 
     def test_reopens_a_closed_canonical_when_findings_return(self):
         issues = [
