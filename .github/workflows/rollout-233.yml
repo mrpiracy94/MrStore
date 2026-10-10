@@ -1,0 +1,204 @@
+# Sequential editorial roll-out: 6 -> 18 -> ... -> 222 -> 233 applications.
+# This does NOT imply CVE certification. Retain the independent security gate
+# for any separately certified release.
+name: Roll out 233 MrStore apps in batches of 12
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/rollout-233.yml'
+      - 'scripts/rollout_233.py'
+      - 'data/rollout-233.json'
+  pull_request:
+    paths:
+      - 'data/rollout-233.json'
+      - 'data/featured-apps.json'
+      - 'scripts/rollout_233.py'
+      - 'scripts/featured.py'
+      - 'scripts/publish_editorial.py'
+      - 'tests/test_rollout_233.py'
+      - '.github/workflows/rollout-233.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mrstore-static-site
+  cancel-in-progress: false
+
+jobs:
+  validate_plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -p 'test_rollout_233.py' -v
+      - run: python scripts/rollout_233.py --plan data/rollout-233.json
+  rollout:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate_plan
+    name: Build once, publish 19 cumulative stages
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Verify source, 233 unique identifiers, and 19 staged milestones
+        run: |
+          test ! -e Apps/steamos/docker-compose.yml
+          python -m unittest discover -s tests -p 'test_rollout_233.py' -v
+          python scripts/rollout_233.py --plan data/rollout-233.json --policy-output out/featured-233.json
+          python scripts/validate.py
+          python scripts/curate_taglines.py --check
+      - name: Stage 233 editorial app definitions without security certification
+        run: >
+          python scripts/publish_editorial.py --featured out/featured-233.json
+          --stage release-source --report out/release-selection.json
+      - name: Confirm stage matches 233 exactly (no apps silently substituted)
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          policy = json.loads(Path("out/featured-233.json").read_text())
+          report = json.loads(Path("out/release-selection.json").read_text())
+          folders = {p.parent.name for p in Path("release-source/Apps").glob("*/docker-compose.yml")}
+          assert folders == set(policy["apps"]) and len(folders) == 233
+          assert report["certification"] == "not_assessed"
+          assert report["approved_count"] == 233
+          assert report["source_apps"] == 253
+          print("233 editorial apps staged, not certified")
+          PY
+      - name: Validate staged Compose syntax with official Docker Compose parser
+        run: >-
+          python scripts/compose_preflight.py --root release-source
+          --json out/release-compose.json --md out/release-compose.md
+      - name: Build canonical full ZimaOS v2 catalog once
+        uses: IceWhaleTech/build-appstore-action@v1
+        with:
+          source: release-source
+          output: dist
+          base-url: https://mrpiracy94.github.io/MrStore
+          cache-file: .cache/build_appstore/image-size-cache.json
+          digest-cache-file: .cache/build_appstore/image-digest-cache.json
+          report-json: out/build-report.json
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Verify exact built 233-app set before any staged publication
+        run: |
+          python scripts/verify_dist.py --expected 233
+          python -S scripts/curate_taglines.py --verify-dist dist/index.json \
+            --approved-file out/release-selection.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected = {"io.github.mrpiracy94." + x for x in
+                      json.loads(Path("data/rollout-233.json").read_text())["apps"]}
+          idx = json.loads(Path("dist/index.json").read_text())
+          actual = {x["id"] for x in idx["apps"]}
+          assert len(idx["apps"]) == 233 and actual == expected
+          assert "io.github.mrpiracy94.steamos" not in actual
+          PY
+      - name: Stage website and explicit uncertified editorial status
+        run: |
+          cp out/release-selection.json dist/release-status.json
+          python scripts/stage_storefront.py --source web --dist dist
+          touch dist/.nojekyll
+      - name: Publish successive increments of 12, stopping at 233
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+          dest="$RUNNER_TEMP/mrstore-rollout-pages"
+          git worktree add --detach "$dest" origin/gh-pages
+          previous=6
+          for count in 18 30 42 54 66 78 90 102 114 126 138 150 162 174 186 198 210 222 233; do
+            stage="$RUNNER_TEMP/curated-$count"
+            python scripts/rollout_233.py --plan data/rollout-233.json \
+              --full-dist dist --output "$stage" --count "$count"
+            committed=false
+            for attempt in 1 2 3 4; do
+              git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+              git -C "$dest" reset --hard origin/gh-pages
+              existing=$(python - "$dest/index.json" <<'PY'
+          import json, sys
+          d=json.load(open(sys.argv[1],encoding='utf-8'))
+          print(d.get("app_count",-1))
+          PY
+              )
+              if [[ "$existing" == "$count" ]]; then
+                echo "Milestone $count already deployed; resuming."
+                committed=true
+                break
+              fi
+              if [[ "$existing" != "$previous" ]]; then
+                echo "::error::Unexpected published count: $existing; expected $previous before $count"
+                exit 3
+              fi
+              rsync -a --delete --exclude='.git' "$stage/" "$dest/"
+              git -C "$dest" add -A
+              if git -C "$dest" diff --cached --quiet; then
+                echo "::error::Milestone $count produced no changes"
+                exit 4
+              fi
+              git -C "$dest" commit -m "deploy(catalog): progressive editorial milestone $count/233"
+              if git -C "$dest" push origin HEAD:gh-pages; then
+                echo "PUBLISHED $count/233 (editorial only, not CVE-certified)"
+                committed=true
+                break
+              fi
+              echo "Concurrent pages change, retrying milestone $count ($attempt/4)"
+              sleep "$((attempt * 3))"
+            done
+            if [[ "$committed" != true ]]; then
+              echo "::error::Unable to publish milestone $count after four attempts"
+              exit 5
+            fi
+            rm -rf "$stage"
+            previous="$count"
+            # GitHub token pushes do not necessarily schedule Pages deployment.
+            # Request rebuild, allowing the platform to coalesce busy builds.
+            curl --fail-with-body --silent --show-error --max-time 20 \
+              --request POST \
+              --header "Accept: application/vnd.github+json" \
+              --header "Authorization: Bearer $GH_TOKEN" \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/pages/builds" \
+              >/dev/null || echo "::warning::Pages rebuild request busy; gh-pages milestone $count is committed"
+            echo "- Editorial milestone: $count applications" >> "$GITHUB_STEP_SUMMARY"
+          done
+          echo "### Reached 233/233 editorial listings" >> "$GITHUB_STEP_SUMMARY"
+          echo "20 source apps are preserved but deferred. CVE certification NOT asserted." >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve source audit, build and final editorial diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-progressive-233-report
+          path: |
+            out/featured-233.json
+            out/release-selection.json
+            out/release-compose.json
+            out/build-report.json
+          if-no-files-found: warn
+          retention-days: 30

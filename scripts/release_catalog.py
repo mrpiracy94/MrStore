@@ -176,6 +176,7 @@ def stage(source: Path, evidence: dict, destination: Path, summaries: dict,
         else:
             approved[app.folder] = (app, locked)
     result = {
+        "certification": "verified",  # Only after read_evidence checks all eight shards.
         "source_apps": len(source_apps), "approved_count": len(approved),
         "quarantined_count": len(quarantine), "deferred_count": len(deferred),
         "featured_count": len(featured) if featured is not None else len(source_apps),

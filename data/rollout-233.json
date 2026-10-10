@@ -1,6 +1,9 @@
 {
   "schema": 1,
-  "description": "Editorial shortlist of 233 homelab applications introduced in 12-app increments. CVE certification is not implied.",
+  "target_count": 233,
+  "batch_size": 12,
+  "starting_count": 6,
+  "description": "Progressive editorial rollout. Initial six, 18 additions of 12, then 11 to reach 233. No automatic CVE certification; source manifests preserved.",
   "apps": [
     "homeassistant",
     "immich",
