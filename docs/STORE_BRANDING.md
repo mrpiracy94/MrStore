@@ -49,3 +49,16 @@ O relatório `out/branding-audit.json` indica quantas descrições PT e
 screenshots locais existem e quantas referências externas são usadas.
 A compatibilidade visual só fica comprovada depois de instalar a loja num
 ZimaOS real, com a publicação v2 concluída.
+
+
+### Capturas reais incluídas
+
+Três imagens PNG foram copiadas, sem alterações de conteúdo, das
+definições da [App Store oficial ZimaOS](https://github.com/IceWhaleTech/CasaOS-AppStore):
+[Immich](https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/Apps/Immich/screenshot-1.png),
+[Nextcloud](https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/Apps/Nextcloud/screenshot-1.png)
+e [Vaultwarden](https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/Apps/Vaultwarden/screenshot-1.png).
+Estes ficheiros entram no build v2 apenas quando a app passa a quarentena.
+As marcas e interfaces permanecem propriedade dos respetivos projetos; a
+reutilização segue a origem e deve respeitar as licenças aplicáveis.
+
