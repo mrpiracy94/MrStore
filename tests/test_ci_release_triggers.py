@@ -55,7 +55,7 @@ class PublisherTriggerTests(unittest.TestCase):
         self.assertEqual(jobs["build"]["needs"], "security_audit")
         self.assertEqual(jobs["publish"]["needs"], "build")
         self.assertEqual(jobs["security_audit"]["strategy"]["matrix"]["shard"],
-                         [str(i) for i in range(8)])
+                         [str(i) for i in range(32)])
         self.assertIn("github.event_name != 'pull_request'",
                       jobs["publish"]["if"])
         self.assertEqual(pub["permissions"]["contents"], "read")
