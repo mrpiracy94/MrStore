@@ -168,6 +168,14 @@ def stage(source: Path, evidence: dict, destination: Path, summaries: dict) -> d
     recommendations = json.loads((source / "recommend-list.json").read_text(encoding="utf-8"))
     recommendations = [item for item in recommendations if item.get("name") in approved]
     (destination / "recommend-list.json").write_text(json.dumps(recommendations, indent=2) + "\n")
+    # Optional legacy/storefront hints: only feature release-approved apps.
+    # ZimaOS v2 clients may ignore these lists; never advertise quarantined apps.
+    featured_path = source / "featured-apps.json"
+    if featured_path.is_file():
+        featured = json.loads(featured_path.read_text(encoding="utf-8"))
+        featured = [item for item in featured if item.get("appid") in approved]
+        (destination / "featured-apps.json").write_text(
+            json.dumps(featured, indent=2) + "\n", encoding="utf-8")
     for folder, (app, locked) in approved.items():
         target = destination / "Apps" / folder
         shutil.copytree(app.path.parent, target)
