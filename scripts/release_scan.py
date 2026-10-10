@@ -12,6 +12,7 @@ import re
 import subprocess
 import time
 from catalog import ROOT, apps, image_usage
+from featured import load_featured
 from cves import scan, shard_images, RETRYABLE, BACKOFF_SECONDS, MAX_ATTEMPTS
 
 DIGEST = re.compile(r"^sha256:[a-f0-9]{64}$")
@@ -145,10 +146,15 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--shard", type=int, required=True)
+    p.add_argument("--featured", type=Path, default=None)
     p.add_argument("--shards", type=int, default=8)
     p.add_argument("--output-dir", type=Path, default=ROOT / "out")
     o = p.parse_args()
-    report = audit_shard(apps(), o.shard, o.shards)
+    selected = apps()
+    if o.featured is not None:
+        allowed = load_featured(o.featured, {app.folder for app in selected})
+        selected = [app for app in selected if app.folder in allowed]
+    report = audit_shard(selected, o.shard, o.shards)
     o.output_dir.mkdir(parents=True, exist_ok=True)
     dest = o.output_dir / f"release-cves-shard-{o.shard}.json"
     dest.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
