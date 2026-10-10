@@ -1,0 +1,149 @@
+name: Fix and test shared LinuxServer Python CVEs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'security/images/python-deps/**'
+      - '.github/workflows/python-deps-patches.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: mrstore-python-cve-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: Verify ${{ matrix.app }} / ${{ matrix.arch }}
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        app: [bazarr, beets, limnoria, nzbget, tautulli]
+        arch: [amd64, arm64]
+    env:
+      APP: ${{ matrix.app }}
+      ARCH: ${{ matrix.arch }}
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-python-${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Confirm native CPU architecture
+        run: |
+          case "$ARCH" in
+            amd64) test "$(uname -m)" = x86_64 ;;
+            arm64) test "$(uname -m)" = aarch64 ;;
+            *) exit 2 ;;
+          esac
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Build patched LinuxServer image
+        run: |
+          docker buildx build --pull --platform "linux/$ARCH" --load \
+            --build-arg "APP=$APP" \
+            --file security/images/python-deps/Dockerfile \
+            --tag "mrstore-python-deps:$APP-$ARCH" .
+      - name: Scan both OS and application libraries without suppressions
+        run: |
+          mkdir -p out
+          trivy image --quiet --image-src docker --scanners vuln \
+            --severity HIGH,CRITICAL --platform "linux/$ARCH" \
+            --timeout 15m --format json --output "out/$APP-$ARCH.json" \
+            "mrstore-python-deps:$APP-$ARCH"
+      - name: Require complete Trivy evidence with zero HIGH and CRITICAL
+        run: |
+          python - <<'PY'
+          import json, os
+          app, arch = os.environ['APP'], os.environ['ARCH']
+          with open(f'out/{app}-{arch}.json', encoding='utf-8') as source:
+              data = json.load(source)
+          results = data.get('Results')
+          if not isinstance(results, list) or not results:
+              raise SystemExit('Incomplete Trivy scan: no results')
+          findings = []
+          for result in results:
+              if not isinstance(result, dict) or not result.get('Target'):
+                  raise SystemExit('Incomplete Trivy scan target')
+              vulnerabilities = result.get('Vulnerabilities') or []
+              if not isinstance(vulnerabilities, list):
+                  raise SystemExit('Invalid vulnerabilities data')
+              findings.extend(v for v in vulnerabilities
+                              if v.get('Severity') in ('HIGH', 'CRITICAL'))
+          critical = sum(v['Severity'] == 'CRITICAL' for v in findings)
+          high = sum(v['Severity'] == 'HIGH' for v in findings)
+          print(f'{app}/{arch}: {critical} CRITICAL, {high} HIGH')
+          for v in findings:
+              print(v.get('VulnerabilityID'), v.get('PkgName'),
+                    v.get('InstalledVersion'), '->',
+                    v.get('FixedVersion') or 'no known fix')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
+              out.write(f'### {app}/{arch}: {critical} CRITICAL, {high} HIGH\n')
+          if findings:
+              raise SystemExit('Reject vulnerable image. No CVEs ignored.')
+          PY
+      - name: Test live application and persistent configuration
+        run: bash security/images/python-deps/smoke.sh "$APP" "$ARCH"
+      - name: Preserve complete Trivy evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-cve-${{ matrix.app }}-${{ matrix.arch }}
+          path: out/*.json
+          if-no-files-found: warn
+      - name: Login to GHCR after both security and runtime checks
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish tested architecture with immutable build tag
+        run: |
+          set -euo pipefail
+          dest="$IMAGE:secfix-$GITHUB_SHA-$ARCH"
+          docker tag "mrstore-python-deps:$APP-$ARCH" "$dest"
+          docker push "$dest"
+
+  publish:
+    name: Create verified multiarch ${{ matrix.app }}
+    if: always()
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [bazarr, beets, limnoria, nzbget, tautulli]
+    env:
+      APP: ${{ matrix.app }}
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-python-${{ matrix.app }}
+    steps:
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Combine only when BOTH vetted platform images exist
+        run: |
+          set -euo pipefail
+          amd64="$IMAGE:secfix-$GITHUB_SHA-amd64"
+          arm64="$IMAGE:secfix-$GITHUB_SHA-arm64"
+          if ! docker buildx imagetools inspect "$amd64" >/dev/null 2>&1 ||
+             ! docker buildx imagetools inspect "$arm64" >/dev/null 2>&1; then
+            echo "NOT RELEASED: $APP has no fully tested AMD64+ARM64 pair" | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          combined="$IMAGE:secfix-$GITHUB_SHA"
+          docker buildx imagetools create --tag "$combined" "$amd64" "$arm64"
+          docker buildx imagetools inspect "$combined" | tee manifest.txt
+          grep -q 'linux/amd64' manifest.txt
+          grep -q 'linux/arm64' manifest.txt
+          digest="$(awk '/^Digest:/{print $2;exit}' manifest.txt)"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          echo "PASS $APP MULTIARCH=$IMAGE@$digest" | tee -a "$GITHUB_STEP_SUMMARY"
