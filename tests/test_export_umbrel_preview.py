@@ -27,6 +27,18 @@ class UmbrelPreviewTests(unittest.TestCase):
         self.assertIn("$" + "{APP_DATA_DIR}/config", compose)
         self.assertIn("sha256:" + SHA, compose)
 
+    def test_reject_credentials_and_unresolved_interpolation(self):
+        for environment in (
+            ["API_KEY=super-secret-value"],
+            ["DB_PASSWORD=hard-coded"],
+            ["TZ=${UNRESOLVED_TZ}"],
+            ["TZ=CHANGE_ME"],
+        ):
+            with self.subTest(environment=environment):
+                doc = self.doc()
+                doc["services"]["web"]["environment"] = environment
+                self.assertIsNone(convert("demo", doc))
+
     def test_reject_multiservice_external_path_or_privilege(self):
         doc = self.doc()
         doc["services"]["db"] = {"image": "postgres@sha256:" + SHA}
