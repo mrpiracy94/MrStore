@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Verify older Meilisearch indices survive v1.54.3 migration
         run: bash scripts/test_meili_migration.sh
       - name: Configure Docker Buildx for multi-architecture digest inspection
