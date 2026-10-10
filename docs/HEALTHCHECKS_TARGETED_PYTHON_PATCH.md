@@ -38,3 +38,17 @@ ping URLs, secret keys and login work after restart. Never reset the database.
 
 Upstream: https://docs.linuxserver.io/images/docker-healthchecks/
 Pip vendoring and CVE metadata: https://github.com/aquasecurity/trivy/discussions/11031
+
+## Ensaios nativos AMD64/ARM64
+
+O teste emulado com QEMU no runner x86_64 executou migrações Django ARM64
+mas não abriu a porta HTTP antes do limite dos 250 probes, devolvendo HTTP 000.
+**Isto não comprova incompatibilidade ARM64**, nem autoriza tratar o teste
+como aprovado. O workflow de validação passou a usar `ubuntu-24.04-arm`
+para ARM64 e `ubuntu-24.04` para AMD64, com verificação explícita de
+`uname -m` antes de executar os mesmos scans, bootstrap da UI,
+verificação de módulos e persistência temporária em `/config`.
+
+A publicação mantém-se bloqueada até as duas arquiteturas e o gate de
+regressão passarem com resultados reais. O runner ARM64 nativo não é
+equivalente a um teste C3 de instalação no ZimaOS.
