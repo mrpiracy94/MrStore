@@ -56,6 +56,55 @@ def classify(old: dict | None, new: dict, folder: str) -> dict:
             "reasons": sorted(set(reasons))}
 
 
+IMMICH_POSTGRES = re.compile(r"(?:^|/)immich-app/postgres:(\\d+)-")
+
+
+def _pg_major(image: object) -> int | None:
+    match = IMMICH_POSTGRES.search(str(image or ""))
+    return int(match.group(1)) if match else None
+
+
+def _postgres_data_source(service: dict) -> str | None:
+    for volume in service.get("volumes") or []:
+        if isinstance(volume, dict):
+            if volume.get("target") == "/var/lib/postgresql/data":
+                return str(volume.get("source") or "")
+        elif isinstance(volume, str):
+            fields = volume.split(":")
+            if len(fields) >= 2 and fields[1] == "/var/lib/postgresql/data":
+                return fields[0]
+    return None
+
+
+def immich_major_upgrade_hazards(old: dict | None, new: dict, folder: str) -> list[str]:
+    """Reject in-place PG major changes on the actual persistent data directory.
+
+    This never performs database commands. A major version migration must use
+    a NEW directory populated by a separately proven restore or upgrade.
+    """
+    if folder != "immich" or old is None:
+        return []
+    prev = (old.get("services") or {}).get("immich-database")
+    curr = (new.get("services") or {}).get("immich-database")
+    if not isinstance(prev, dict) or not isinstance(curr, dict):
+        return []
+    former = _pg_major(prev.get("image"))
+    future = _pg_major(curr.get("image"))
+    if former is None or future is None or former == future:
+        return []
+    old_volume = _postgres_data_source(prev)
+    new_volume = _postgres_data_source(curr)
+    if not old_volume or not new_volume or old_volume == new_volume:
+        return [
+            f"Immich PostgreSQL {former}->{future}: direct major version change "
+            "with the previous/missing data directory is forbidden. "
+            "Keep the PG14 directory untouched and migrate/restore into "
+            "a separate persistent directory with a tested backup, restore "
+            "and rollback procedure before any catalog image change."
+        ]
+    return []
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--base-sha", required=True)
@@ -77,7 +126,9 @@ def main() -> None:
             blocked.append(f"{folder}: app removed without migration plan")
             continue
         candidate = yaml.safe_load(current_path.read_text(encoding="utf-8"))
-        finding = classify(baseline(args.base_sha, path), candidate, folder)
+        previous = baseline(args.base_sha, path)
+        finding = classify(previous, candidate, folder)
+        blocked.extend(immich_major_upgrade_hazards(previous, candidate, folder))
         if finding["risk"] == "high":
             upgrade_doc = ROOT / "docs" / "upgrades" / (folder + ".md")
             if not upgrade_doc.exists():
