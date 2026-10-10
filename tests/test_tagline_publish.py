@@ -33,14 +33,14 @@ class PublishedSubtitleTests(unittest.TestCase):
                 cwd=ROOT,
             )
 
-    def test_all_253_cards_pass_without_pyyaml(self):
+    def test_all_current_cards_pass_without_pyyaml(self):
         entries = [
             {"id": PREFIX + app, "tagline": tagline}
             for app, tagline in self.summaries.items()
         ]
         result = self.invoke(entries)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("253", result.stdout)
+        self.assertIn(str(len(entries)), result.stdout)
 
     def test_wrong_subtitle_causes_publication_failure(self):
         entries = [
