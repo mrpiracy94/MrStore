@@ -100,6 +100,55 @@ class FastAppAuditTests(unittest.TestCase):
         self.assertIn('--shards 8 --shard "$SHARD" --workers 4', command)
         self.assertEqual(int(job["strategy"]["max-parallel"]) * 4, 32)
 
+    def test_release_audit_is_configured_for_32_simultaneous_images(self):
+        import yaml
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/publish.yml").read_text(encoding="utf-8"),
+            Loader=yaml.BaseLoader,
+        )
+        job = workflow["jobs"]["security_audit"]
+        self.assertEqual(job["strategy"]["max-parallel"], "8")
+        self.assertEqual(len(job["strategy"]["matrix"]["shard"]), 8)
+        command = next(step["run"] for step in job["steps"]
+                       if step.get("name") ==
+                       "Scan all catalog images by immutable digest on AMD64 and ARM64")
+        self.assertIn("--workers 4", command)
+        self.assertEqual(int(job["strategy"]["max-parallel"]) * 4, 32)
+
+    def test_release_parallel_checks_preserve_every_architecture_and_status(self):
+        from catalog import App
+        from release_scan import audit_shard
+
+        barrier = threading.Barrier(4)
+        items = []
+        for i in range(4):
+            folder = f"app{i}"
+            items.append(App(
+                folder, ROOT / "Apps" / folder / "docker-compose.yml",
+                {"services": {"web": {"image": f"example/demo{i}:1"}}},
+                {"architectures": ["amd64", "arm64"]}))
+
+        def resolve(image):
+            barrier.wait(timeout=5)
+            return image + "@sha256:" + "a" * 64, None
+
+        def scanner(image, platform):
+            return ([{"severity": "HIGH", "package": "demo",
+                      "cve": "CVE-TEST", "installed": "1", "fixed": "2"}]
+                    if image.startswith("example/demo2:") and platform == "arm64"
+                    else []), None
+
+        report = audit_shard(items, 0, 1, resolver=resolve,
+                             scanner=scanner, workers=4)
+        self.assertEqual(len(report["results"]), 4)
+        self.assertEqual([result["image"] for result in report["results"]],
+                         [f"example/demo{i}:1" for i in range(4)])
+        self.assertEqual(
+            [result["status"] for result in report["results"]],
+            ["clean", "clean", "vulnerable", "clean"])
+        self.assertTrue(all(set(result["scans"]) == {"amd64", "arm64"}
+                            for result in report["results"]))
+
     def test_parallel_trivy_uses_memory_cache_only_when_db_is_prepared(self):
         done = subprocess.CompletedProcess(["trivy"], 0, json.dumps(
             {"Results": [{"Target": "example/app:1", "Vulnerabilities": []}]}), "")
