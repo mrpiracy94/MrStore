@@ -158,7 +158,7 @@
     if (thumbnail && /\.(?:png|jpe?g|webp|avif)$/i.test(new URL(thumbnail).pathname)) {
       const screenshot = document.createElement("img");
       screenshot.alt = "Pré-visualização de " + appTitle(app);
-      screenshot.loading = "lazy";
+      screenshot.loading = "eager"; // Hidden preview containers cannot trigger lazy loads reliably.
       screenshot.decoding = "async";
       screenshot.addEventListener("load", function () { preview.hidden = false; }, { once: true });
       screenshot.addEventListener("error", function () { preview.hidden = true; screenshot.remove(); }, { once: true });
