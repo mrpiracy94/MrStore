@@ -36,6 +36,17 @@ não tem `container_name` explícito ou não coincide com ele, e quais as
 imagens principais que usam `:latest`. **São riscos de compatibilidade**,
 não garantias de erro nem prova de desatualização.
 
+## Prevenir novas apps invisíveis às atualizações
+
+A Action `Validate MrStore` executa também
+`python scripts/zimaos_update_visibility.py --strict-main-name`.
+Bloqueia **novos** manifests cujo `x-casaos.main` não tem
+`container_name` explícito igual ao serviço principal, porque são
+incompatíveis com o comportamento reportado no ZimaOS 1.7.1 (#592).
+Esta regra não cria CVEs, não altera contentores existentes e **não**
+bloqueia apps apenas por usarem `:latest` — isso é uma condição
+diagnosticada no NAS, não uma prova de falha no repositório.
+
 ## Diagnóstico voluntário num ZimaOS real (só leitura)
 
 É necessário executar no **próprio NAS** com o repositório MrStore acessível,
