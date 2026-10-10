@@ -11,6 +11,7 @@
     Finance: "Finanças", Social: "Social", Utilities: "Utilitários",
     Others: "Outras"
   };
+  const CATEGORY_SYMBOLS = { "": "▦", Media: "▣", Productivity: "◈", Home: "⌂", Networking: "⛨", Network: "⛨", Cloud: "☁", Browser: "◉", Downloader: "↓", Games: "✦", Graphics: "▧", Developer: "</>", AI: "✺", Finance: "▤", Social: "◎", Utilities: "⚙", Others: "◇" };
   const $ = (id) => document.getElementById(id);
   const state = { apps: [], filtered: [], category: "", query: "", arch: "",
     favoritesOnly: false, limit: BATCH_SIZE, saved: new Set(), validated: false };
@@ -75,8 +76,9 @@
       const button = element("button", "chip" + (state.category === entry[0] ? " active" : ""));
       button.type = "button"; button.dataset.category = entry[0];
       button.setAttribute("aria-pressed", String(state.category === entry[0]));
-      button.append(document.createTextNode(entry[1] + " "));
-      button.appendChild(element("span", "count", String(entry[2])));
+      button.appendChild(element("span", "chip-symbol", CATEGORY_SYMBOLS[entry[0]] || "◇"));
+      button.appendChild(element("span", "chip-label", entry[1]));
+      button.appendChild(element("span", "count", entry[2] + " aplicações"));
       button.addEventListener("click", function () {
         state.category = entry[0]; state.limit = BATCH_SIZE; categoryList(); render();
       });
@@ -96,6 +98,21 @@
   }
   function makeCard(app) {
     const card = element("article", "app-card"), head = element("div", "app-card-head");
+    // Screenshot from index.json, with a local icon fallback when unavailable.
+    const cover = element("div", "app-card-cover");
+    const screenshotURL = safePath(app.thumbnail);
+    function coverFallback() {
+      cover.classList.add("cover-placeholder");
+      cover.replaceChildren(iconNode(app, "cover-placeholder-icon"));
+    }
+    if (screenshotURL && /\.(?:png|jpe?g|webp|avif)$/i.test(new URL(screenshotURL).pathname)) {
+      const shot = document.createElement("img");
+      shot.src = screenshotURL;
+      shot.loading = "lazy"; shot.decoding = "async"; shot.alt = "";
+      shot.addEventListener("error", coverFallback, { once: true });
+      cover.appendChild(shot);
+    } else coverFallback();
+    card.appendChild(cover);
     head.appendChild(iconNode(app, "app-icon"));
     const copy = element("div", "app-header-copy");
     copy.appendChild(element("h3", "", appTitle(app)));
