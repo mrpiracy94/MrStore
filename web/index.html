@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0d0f14">
-  <meta name="description" content="MrStore — O teu homelab. As tuas apps. Uma só loja. Descobre aplicações self-hosted para o teu servidor e acompanha a evolução multiplataforma.">
+  <meta name="theme-color" content="#10141b">
+  <meta name="description" content="MrStore — O teu homelab. As tuas apps. Uma só loja. Explora o catálogo comunitário de aplicações self-hosted, com pesquisa, filtros e informação de compatibilidade.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <meta property="og:type" content="website">
   <meta property="og:title" content="MrStore — O teu homelab. As tuas apps. Uma só loja.">
-  <meta property="og:description" content="Descobre o universo self-hosted. Uma montra de aplicações para o teu homelab.">
+  <meta property="og:description" content="Descobre, explora e organiza aplicações self-hosted. Uma loja para o teu homelab.">
   <meta property="og:image" content="https://mrpiracy94.github.io/MrStore/assets/mrstore-hero.webp">
   <link rel="icon" href="./assets/mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/site.css">
@@ -22,21 +22,27 @@
     <div class="shell topbar">
       <a class="brand" href="./" aria-label="MrStore, página inicial">
         <img src="./assets/mark.svg" width="44" height="44" alt="">
-        <span class="brand-text">Mr<span>Store</span><small>THE HOMELAB APP HUB</small></span>
+        <span class="brand-text">Mr<span>Store</span><small>HOMELAB APP HUB</small></span>
       </a>
       <nav aria-label="Navegação principal" class="main-nav">
-        <a href="#catalogo">Explorar aplicações</a>
-        <a href="#ecossistema">Ecossistema</a>
-        <a href="#como-instalar">Como instalar</a>
-        <a href="https://github.com/mrpiracy94/MrStore" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <a href="#catalogo">Aplicações</a>
+        <a href="#ecossistema">Plataformas</a>
+        <a href="#vantagens">Vantagens</a>
+        <a href="#vistaprevia">A montra</a>
+        <a href="#como-instalar">Instalação</a>
       </nav>
-      <a class="header-action" href="#catalogo">Explorar catálogo <span aria-hidden="true">↗</span></a>
+      <div class="nav-utilities">
+        <a class="nav-search" href="#catalogo" aria-label="Ir para a pesquisa de aplicações"><span aria-hidden="true">⌕</span> Pesquisar apps <kbd>/</kbd></a>
+        <a class="header-action" href="#catalogo">Começar agora <span aria-hidden="true">↗</span></a>
+      </div>
       <details class="mobile-nav">
-        <summary>Menu <span aria-hidden="true">☰</span></summary>
+        <summary aria-label="Abrir menu">Menu <span aria-hidden="true">☰</span></summary>
         <nav aria-label="Navegação móvel">
-          <a href="#catalogo">Explorar aplicações</a>
-          <a href="#ecossistema">Ecossistema</a>
-          <a href="#como-instalar">Como instalar</a>
+          <a href="#catalogo">Aplicações</a>
+          <a href="#ecossistema">Plataformas</a>
+          <a href="#vantagens">Vantagens</a>
+          <a href="#vistaprevia">A montra</a>
+          <a href="#como-instalar">Instalação</a>
           <a href="https://github.com/mrpiracy94/MrStore" rel="noopener noreferrer">GitHub ↗</a>
         </nav>
       </details>
@@ -44,88 +50,136 @@
   </header>
   <main>
     <section class="hero-universe" aria-labelledby="hero-title">
-      <div class="hero-banner-wrap">
-        <img class="hero-banner-image" src="./assets/mrstore-hero.webp"
-             width="2290" height="687" decoding="async" fetchpriority="high"
-             alt="MrStore. O teu homelab. As tuas apps. Uma só loja. Ecossistema homelab multiplataforma.">
-      </div>
-      <div class="shell hero-universe-content">
-        <div class="hero-universe-copy">
-          <span class="hero-overline"><span class="hero-overline-dot" aria-hidden="true"></span> A TUA MONTRA SELF-HOSTED</span>
-          <h1 id="hero-title">Descobre a próxima app para <em>o teu homelab.</em></h1>
-          <p>Explora um catálogo comunitário de aplicações para os teus projetos, serviços e servidores. Pesquisa por categoria, consulta os requisitos e verifica a compatibilidade antes de instalar.</p>
+      <div class="shell hero-main">
+        <div class="hero-lead">
+          <span class="hero-overline"><span class="hero-overline-dot" aria-hidden="true"></span> A LOJA UNIVERSAL PARA O TEU HOMELAB</span>
+          <h1 id="hero-title">O universo <span>self-hosted</span> começa aqui.</h1>
+          <p class="hero-subtitle">O teu homelab. As tuas apps. <strong>Uma só loja.</strong></p>
+          <p class="hero-description">Descobre aplicações para servidores, NAS e ambientes self-hosted. Pesquisa o catálogo, explora cada projeto e acompanha a evolução de uma loja criada para unir plataformas.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#catalogo">Explorar aplicações <span aria-hidden="true">→</span></a>
+            <a class="btn btn-outline" href="#ecossistema"><span class="play-icon" aria-hidden="true">▷</span> Ver plataformas</a>
+          </div>
+          <div class="hero-metrics" aria-label="Dados do catálogo">
+            <div><strong id="total-apps">—</strong><span>Apps no catálogo publicado</span></div>
+            <div><strong id="total-categories">—</strong><span>Categorias disponíveis</span></div>
+            <div><strong>100%</strong><span>Foco self-hosted</span></div>
+          </div>
         </div>
-        <div class="hero-universe-actions">
-          <a class="btn btn-primary" href="#catalogo">Explorar aplicações <span aria-hidden="true">→</span></a>
-          <a class="btn btn-outline" href="#ecossistema">Ver plataformas <span aria-hidden="true">↗</span></a>
-          <span class="hero-helper">A montra informa; a instalação é efetuada na plataforma suportada.</span>
+        <div class="hero-orbits" aria-hidden="true">
+          <div class="cosmos-glow"></div><div class="orbit-ring orbit-ring-1"></div><div class="orbit-ring orbit-ring-2"></div><div class="orbit-ring orbit-ring-3"></div>
+          <div class="orbit-connector orbit-connector-a"></div><div class="orbit-connector orbit-connector-b"></div>
+          <div class="cosmos-center"><img src="./assets/mark.svg" width="116" height="116" alt=""><span class="center-plus">+</span></div>
+          <div class="orbit-bubble orbit-bubble-a"><span>⌂</span></div>
+          <div class="orbit-bubble orbit-bubble-b"><span>◈</span></div>
+          <div class="orbit-bubble orbit-bubble-c"><span>▤</span></div>
+          <div class="orbit-bubble orbit-bubble-d"><span>⌘</span></div>
+          <div class="orbit-bubble orbit-bubble-e"><span>⬡</span></div>
+          <div class="orbit-node orbit-node-a"></div><div class="orbit-node orbit-node-b"></div><div class="orbit-node orbit-node-c"></div>
+          <div class="orbit-label orbit-label-apps"><i></i><strong>APLICAÇÕES</strong><span>Explora. Descobre.</span></div>
+          <div class="orbit-label orbit-label-systems"><i></i><strong>PLATAFORMAS</strong><span>Mais possibilidades.</span></div>
+          <div class="orbit-label orbit-label-you"><i></i><strong>O TEU SERVIDOR</strong><span>Os teus dados. As tuas regras.</span></div>
+          <div class="orbit-label orbit-label-home"><i></i><strong>HOMELAB</strong><span>Mais liberdade.</span></div>
         </div>
       </div>
-      <div class="shell hero-trust-row" aria-label="Sobre a MrStore">
-        <span><span aria-hidden="true">✦</span> Comunidade self-hosted</span>
-        <span><span aria-hidden="true">◇</span> Catálogo dinâmico</span>
-        <span><span aria-hidden="true">◎</span> Transparência na publicação</span>
+      <div class="shell hero-footnote"><span class="footnote-spark">✦</span> Feita para a comunidade, com uma identidade independente do sistema operativo. <a href="#ecossistema">Ver estado das integrações ↗</a></div>
+    </section>
+
+    <section class="platform-section" id="ecossistema" aria-labelledby="platform-title">
+      <div class="shell">
+        <div class="platform-heading platform-heading-new">
+          <div><span class="section-kicker dark-kicker">✦ O ECOSSISTEMA MRSTORE</span><h2 id="platform-title">Uma loja. <strong>Várias plataformas.</strong></h2></div>
+          <p>Uma experiência de descoberta comum para os teus projetos self-hosted, com integrações nativas desenvolvidas e validadas separadamente.</p>
+        </div>
+        <div class="platform-grid" aria-label="Plataformas do ecossistema">
+          <div class="system-card"><span class="system-glyph purple">∩</span><strong>UmbrelOS</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph cyan">●</span><strong>CasaOS</strong><small>Integração planeada</small></div>
+          <div class="system-card system-ready"><span class="system-glyph midnight">▣</span><strong>ZimaOS v2</strong><small>Catálogo disponível</small></div>
+          <div class="system-card"><span class="system-glyph blue">▤</span><strong>Portainer</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph deep">◉</span><strong>Cosmos</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph sky">⬡</span><strong>Dockge</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph ruby">⬢</span><strong>Runtipi</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph aqua">⚙</span><strong>Docker / Linux</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph peach">⌂</span><strong>Homeio</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph violet">▧</span><strong>HomeDock OS</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph green">✳</span><strong>Olares</strong><small>Integração planeada</small></div>
+        </div>
+        <div class="platform-status">
+          <span class="platform-label">PLATAFORMAS-ALVO · NÃO DISPONÍVEIS AINDA</span>
+          <p><strong>Estado atual:</strong> a montra é universal, mas o formato de instalação publicado é ZimaOS App Store v2. As outras integrações só serão anunciadas após testes reais. <a href="#como-instalar">Consultar instalação ↗</a></p>
+        </div>
       </div>
     </section>
-    <section class="stats-strip" aria-label="Visão geral">
-      <div class="shell stats-grid">
-        <div class="stat"><strong id="total-apps">—</strong><span>Aplicações no índice</span></div>
-        <div class="stat"><strong id="total-categories">—</strong><span>Categorias</span></div>
-        <div class="stat"><strong>2</strong><span>Arquiteturas do catálogo</span></div>
-        <div class="stat stat-last"><strong>v2</strong><span>Formato atual do catálogo</span></div>
-      </div>
-    </section>
+
     <section id="catalogo" class="catalog-section shell" aria-labelledby="catalog-title">
-      <div class="categories" id="categories" role="group" aria-label="Filtrar por categoria"><button type="button" class="chip active" data-category="" aria-pressed="true">Todas</button></div>
-      <div class="section-heading">
-        <div><span class="section-kicker">DESCOBRE A MRSTORE</span><h2 id="catalog-title">Encontra a app <em>ideal.</em></h2><p>Pesquisa, filtra e consulta os detalhes antes de instalar no teu servidor.</p></div>
+      <div class="section-heading catalog-intro">
+        <div><span class="section-kicker">✦ DESCOBRE NOVAS APLICAÇÕES</span><h2 id="catalog-title">As apps para o teu <em>homelab.</em></h2><p>De servidores multimédia a ferramentas de produtividade. Pesquisa e explora as aplicações efetivamente publicadas.</p></div>
         <div class="results-summary" id="results-summary" aria-live="polite">A carregar catálogo…</div>
       </div>
-      <div id="catalog-alert" class="notice" role="status" hidden></div>
+      <div class="categories" id="categories" role="group" aria-label="Filtrar por categoria"><button type="button" class="chip active" data-category="" aria-pressed="true">Todas</button></div>
       <div class="toolbar">
         <label class="searchbox" for="search"><span aria-hidden="true" class="search-glyph">⌕</span><input type="search" id="search" placeholder="Pesquisar aplicações, categorias…" autocomplete="off"><kbd>/</kbd></label>
         <label class="arch-filter"><span>Arquitetura</span><select id="architecture"><option value="">Todas</option><option value="amd64">AMD64</option><option value="arm64">ARM64</option></select></label>
         <button class="favorites-toggle" id="favorites-toggle" type="button" aria-pressed="false" title="Mostrar favoritos guardados neste navegador">☆ <span>Favoritos</span></button>
         <button class="clear-filters" id="clear-filters" type="button" disabled>Limpar filtros</button>
       </div>
-      
+      <div id="catalog-alert" class="notice" role="status" hidden></div>
       <div id="catalog-state" class="catalog-state" role="status" aria-live="polite">A carregar aplicações…</div>
       <div class="app-grid" id="app-grid" aria-label="Resultados do catálogo"></div>
       <div class="load-more-wrap"><button id="load-more" class="btn btn-more" type="button" hidden>Mostrar mais aplicações ↓</button></div>
+      <div class="catalog-disclaimer"><span>ⓘ</span> A montra consulta a publicação verificada, não a lista completa de manifests. As apps em quarentena não aparecem como aprovadas.</div>
     </section>
-    <section class="platform-section" id="ecossistema" aria-labelledby="platform-title">
+
+    <section class="benefits-section" id="vantagens" aria-labelledby="benefits-title">
       <div class="shell">
-        <div class="platform-heading">
-          <span class="section-kicker">UM ECOSSISTEMA, MAIS POSSIBILIDADES</span>
-          <h2 id="platform-title">Uma loja pensada para <em>o teu homelab.</em></h2>
-          <p>Uma identidade para todo o homelab: um único ponto de descoberta e um ecossistema em evolução. A instalação nativa depende de integrações validadas em cada plataforma.</p>
-        </div>
-        <div class="platform-grid">
-          <div class="platform-supported">
-            <span class="platform-label">INTEGRAÇÃO ATUAL</span>
-            <div class="platform-supported-title"><span class="platform-mark" aria-hidden="true">✓</span><strong>ZimaOS v2</strong></div>
-            <p>Catálogo preparado para o protocolo ZimaOS App Store v2. A instalação e as atualizações dependem do dispositivo e da versão instalada.</p>
-            <a href="#como-instalar">Ver instruções para ZimaOS <span aria-hidden="true">↗</span></a>
-          </div>
-          <div class="platform-roadmap">
-            <span class="platform-label">PLATAFORMAS-ALVO · NÃO DISPONÍVEIS AINDA</span>
-            <div class="platform-tags" aria-label="Plataformas na visão de expansão">
-              <span>UmbrelOS</span><span>Homeio</span><span>CasaOS</span><span>Cosmos</span><span>Portainer</span>
-              <span>HomeDock OS</span><span>Olares</span><span>Dockge</span><span>Runtipi</span><span>Docker / Linux</span>
-            </div>
-            <p>Estes sistemas fazem parte do plano de evolução — não são lojas instaláveis através do endereço ZimaOS atual.</p>
-          </div>
+        <div class="benefits-heading"><div><span class="section-kicker">✦ PORQUÊ A MRSTORE?</span><h2 id="benefits-title">Uma forma melhor de <em>descobrir.</em></h2></div><p>Uma montra pensada para simplificar a pesquisa e a consulta de projetos self-hosted, sem comprometer a transparência técnica.</p></div>
+        <div class="benefits-grid">
+          <article class="benefit-card"><div class="benefit-icon">▦</div><h3>Visão multiplataforma</h3><p>Uma identidade comum para o homelab. Integrações desenvolvidas separadamente para cada ambiente.</p></article>
+          <article class="benefit-card"><div class="benefit-icon">⚡</div><h3>Descoberta simples</h3><p>Encontra aplicações por categoria, nome e arquitetura. Guarda as tuas favoritas no navegador.</p></article>
+          <article class="benefit-card"><div class="benefit-icon">⟳</div><h3>Segurança transparente</h3><p>Consulta o estado de publicação e os requisitos antes de instalar. A segurança é verificada, nunca presumida.</p></article>
+          <article class="benefit-card"><div class="benefit-icon">✧</div><h3>Ecossistema comunitário</h3><p>Projetos self-hosted organizados numa experiência visual consistente, com ligações às respetivas fontes.</p></article>
         </div>
       </div>
     </section>
+
+    <section class="showcase-section" id="vistaprevia" aria-labelledby="showcase-title">
+      <div class="shell showcase-panel">
+        <div class="showcase-copy">
+          <span class="section-kicker">✦ CONHECE A MONTRA</span>
+          <h2 id="showcase-title">Um design limpo. <em>Uma experiência poderosa.</em></h2>
+          <p>Explora o catálogo num só local. Pesquisa, filtra, consulta as fichas técnicas e regressa às tuas aplicações favoritas quando quiseres.</p>
+          <div class="showcase-actions"><a class="btn btn-primary" href="#catalogo">Explorar catálogo →</a><a href="https://github.com/mrpiracy94/MrStore" rel="noopener noreferrer">Ver no GitHub ↗</a></div>
+          <p class="showcase-hint">Sem contas, sem pesquisa remota. Os favoritos ficam no teu navegador.</p>
+        </div>
+        <div class="showcase-art" aria-hidden="true">
+          <div class="showcase-window">
+            <div class="showcase-sidebar"><div class="showcase-mini-brand"><img src="./assets/mark.svg" width="28" height="28" alt=""> Mr<span>Store</span></div><div class="sidebar-item selected">▦ &nbsp; Aplicações</div><div class="sidebar-item">☆ &nbsp; Favoritos</div><div class="sidebar-item">◎ &nbsp; Plataformas</div><div class="sidebar-item">⚙ &nbsp; Definições</div></div>
+            <div class="showcase-screen"><div class="screen-search">⌕ &nbsp; Pesquisar aplicações <span>/</span></div><span class="screen-kicker">EXPLORAR</span><h3>Descobre aplicações</h3><p>Uma montra feita para o teu homelab.</p><div class="screen-tags"><span class="chosen">Todas</span><span>Multimédia</span><span>Produtividade</span><span>Redes</span></div><div class="screen-grid"><div><b>◈</b><strong>Multimédia</strong><small>Explorar projetos</small></div><div><b>☁</b><strong>Cloud</strong><small>Explorar projetos</small></div><div><b>⌂</b><strong>Casa</strong><small>Explorar projetos</small></div><div><b>⚙</b><strong>Utilitários</strong><small>Explorar projetos</small></div></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="shell brand-preview"><img class="hero-banner-image" src="./assets/mrstore-hero.webp" width="2290" height="687" loading="lazy" decoding="async" alt="Identidade visual da MrStore: o teu homelab, as tuas apps, uma só loja."></div>
+    </section>
+
     <section class="installation" id="como-instalar" aria-labelledby="installation-title">
       <div class="shell installation-layout">
-        <div><span class="section-kicker">INTEGRAÇÃO DISPONÍVEL · ZIMAOS V2</span><h2 id="installation-title">A MrStore no ZimaOS.<br><em>Em poucos passos.</em></h2><p>Adiciona o endereço da MrStore na área de lojas externas do teu ZimaOS. O catálogo não instala nem atualiza contentores automaticamente.</p><div class="install-address"><code id="store-address">https://mrpiracy94.github.io/MrStore</code><button id="copy-store" type="button" aria-label="Copiar endereço da MrStore">Copiar <span aria-hidden="true">⧉</span></button></div><span class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></span></div>
-        <ol class="steps"><li><span>01</span><div><strong>Abre o teu ZimaOS</strong><p>Entra na loja de aplicações e procura a opção de adicionar uma loja externa compatível com v2.</p></div></li><li><span>02</span><div><strong>Adiciona o endereço</strong><p>Copia o URL da MrStore e confirma a importação da loja no ZimaOS.</p></div></li><li><span>03</span><div><strong>Explora com atenção</strong><p>Consulta versões, permissões, requisitos e vulnerabilidades antes de instalar qualquer aplicação.</p></div></li></ol>
+        <div><span class="section-kicker">✦ INTEGRAÇÃO ATUAL · ZIMAOS V2</span><h2 id="installation-title">Pronto para descobrir <em>a MrStore?</em></h2><p>Adiciona o endereço da loja na área de lojas externas do ZimaOS. A navegação web não instala aplicações diretamente e as restantes plataformas continuam em desenvolvimento.</p><div class="install-address"><code id="store-address">https://mrpiracy94.github.io/MrStore</code><button id="copy-store" type="button" aria-label="Copiar endereço da MrStore">Copiar <span aria-hidden="true">⧉</span></button></div><span class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></span></div>
+        <ol class="steps"><li><span>01</span><div><strong>Abre o ZimaOS</strong><p>Na App Store, procura a opção para adicionar uma loja externa compatível com v2.</p></div></li><li><span>02</span><div><strong>Adiciona o endereço</strong><p>Copia o endereço da MrStore e confirma a importação do catálogo.</p></div></li><li><span>03</span><div><strong>Consulta antes de instalar</strong><p>Confirma as permissões, arquiteturas, versões e possíveis vulnerabilidades.</p></div></li></ol>
       </div>
     </section>
+    <section class="final-cta" aria-labelledby="final-title">
+      <div class="shell final-cta-inner"><div><span class="hero-overline"><span class="hero-overline-dot" aria-hidden="true"></span> O TEU HOMELAB COMEÇA AQUI</span><h2 id="final-title">Uma loja. Vários sistemas.<br><em>Possibilidades sem fim.</em></h2></div><div><p>Explora aplicações, participa na comunidade e acompanha as próximas integrações da MrStore.</p><a href="#catalogo" class="btn btn-primary">Começar a explorar →</a><a href="https://github.com/mrpiracy94/MrStore/discussions" class="btn btn-outline" rel="noopener noreferrer">Comunidade ↗</a></div></div>
+    </section>
   </main>
-  <footer class="site-footer"><div class="shell footer-layout"><div class="footer-brand"><img src="./assets/mark.svg" width="32" height="32" alt=""><div><strong>MrStore</strong><small>O teu homelab. As tuas apps. Uma só loja.</small></div></div><div class="footer-links"><a href="https://github.com/mrpiracy94/MrStore">Repositório</a><a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/SAFE_RELEASE_POLICY.md">Segurança</a><a href="./store.json">Protocolo v2</a></div><p>Projeto comunitário não oficial. Sem afiliação à IceWhaleTech ou aos fabricantes das plataformas.</p></div></footer>
+  <footer class="site-footer">
+    <div class="shell footer-layout">
+      <div class="footer-brand"><img src="./assets/mark.svg" width="40" height="40" alt=""><div><strong>Mr<span>Store</span></strong><small>O teu homelab. As tuas apps. Uma só loja.</small><p>Um projeto aberto à comunidade self-hosted. <span aria-hidden="true">♥</span></p></div></div>
+      <nav aria-label="Produtos" class="footer-column"><strong>Produto</strong><a href="#catalogo">Aplicações</a><a href="#ecossistema">Plataformas</a><a href="#vantagens">Vantagens</a></nav>
+      <nav aria-label="Recursos" class="footer-column"><strong>Recursos</strong><a href="#como-instalar">Instalação</a><a href="./store.json">Catálogo v2</a><a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/SAFE_RELEASE_POLICY.md">Segurança</a></nav>
+      <nav aria-label="Comunidade" class="footer-column"><strong>Comunidade</strong><a href="https://github.com/mrpiracy94/MrStore">GitHub</a><a href="https://github.com/mrpiracy94/MrStore/discussions">Discussões</a><a href="https://github.com/mrpiracy94/MrStore/issues">Sugestões</a></nav>
+    </div>
+    <div class="shell footer-bottom"><span>© 2026 MrStore · Projeto comunitário não oficial.</span><span>Sem afiliação aos fabricantes das plataformas. A compatibilidade deve ser validada antes da instalação.</span></div>
+  </footer>
   <dialog id="details" aria-labelledby="details-title"><div class="dialog-layout"><button class="dialog-close" id="details-close" type="button" aria-label="Fechar detalhes">×</button><div class="detail-header"><div class="detail-icon" id="details-icon"></div><div><span class="detail-label">DETALHES DA APLICAÇÃO</span><h2 id="details-title">Aplicação</h2><p id="details-tagline"></p></div></div><div class="detail-preview" id="details-preview" hidden aria-label="Pré-visualização da aplicação"></div><div class="detail-attributes"><div><span>Categoria</span><strong id="details-category"></strong></div><div><span>Arquiteturas</span><strong id="details-arches"></strong></div><div><span>Versão do pacote</span><strong id="details-version"></strong></div><div><span>Origem</span><strong id="details-developer"></strong></div></div><p class="detail-disclaimer">As versões indicam revisões do catálogo, não necessariamente a versão upstream. A compatibilidade real e ausência de CVEs não são garantidas.</p><div class="detail-links"><a class="btn btn-primary" id="details-compose" href="#" target="_blank" rel="noopener noreferrer">Ver manifesto Docker ↗</a><a class="btn btn-outline" id="details-github" href="https://github.com/mrpiracy94/MrStore" target="_blank" rel="noopener noreferrer">Ver no GitHub ↗</a></div></div></dialog>
 </body>
 </html>
