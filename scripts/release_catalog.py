@@ -23,7 +23,7 @@ DANGEROUS_SOURCE = {"/", "/etc", "/root", "/var/run/docker.sock", "/run/docker.s
 # x-casaos.envs: the official store v2 builder strips that service metadata.
 # Do not mistake an unresolved secret for a usable or safe install.
 REQUIRED_COMPOSE_VARIABLE = re.compile(
-    r"\\$\\{[A-Za-z_][A-Za-z0-9_]*(?::\\?|\\?)[^}]*\\}"
+    r"\$\{[A-Za-z_][A-Za-z0-9_]*(?::\?|\?)[^}]*\}"
 )
 
 
