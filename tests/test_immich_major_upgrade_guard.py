@@ -51,6 +51,13 @@ class ImmichPostgresGuardTests(unittest.TestCase):
         self.assertFalse(immich_major_upgrade_hazards(self.original, new, "immich"))
         self.assertEqual(classify(self.original, new, "immich")["risk"], "high")
 
+    def test_switch_to_unrecognised_database_image_on_old_volume_blocked(self):
+        new = copy.deepcopy(self.original)
+        new["services"]["immich-database"]["image"] = "postgres:16-alpine"
+        findings = immich_major_upgrade_hazards(self.original, new, "immich")
+        self.assertEqual(len(findings), 1)
+        self.assertIn("unknown", findings[0])
+
     def test_downgrade_same_directory_is_also_rejected(self):
         old = copy.deepcopy(self.original)
         old["services"]["immich-database"]["image"] = (
