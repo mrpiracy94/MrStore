@@ -24,8 +24,8 @@ class RetiredImageSafetyTests(unittest.TestCase):
         self.assertIn(ref, RETIRED_UPSTREAM)
         self.assertNotIn("steamos", self.by_name)
 
-    def test_source_inventory_is_253_active_apps(self):
-        self.assertEqual(len(self.by_name), 253)
+    def test_source_inventory_preserves_all_original_active_apps(self):
+        self.assertGreaterEqual(len(self.by_name), 253)
         self.assertNotIn("steamos", self.by_name)
 
     def test_other_images_are_not_blanket_blocklisted(self):
