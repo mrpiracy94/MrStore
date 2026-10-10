@@ -38,6 +38,27 @@ def service_images(compose: dict, app_id: str) -> dict[str, str]:
     return images
 
 
+def compare_approved_images(old_images: dict[str, str],
+                            new_images: dict[str, str]) -> tuple[list[str], list[str]]:
+    """First immutable pin is a baseline, not evidence of an upstream update."""
+    updated, first_pins = [], []
+    for service in sorted(set(old_images) | set(new_images)):
+        before, after = old_images.get(service), new_images.get(service)
+        if before == after:
+            continue
+        if before is None or after is None:
+            updated.append(service)
+            continue
+        if "@sha256:" not in before and "@sha256:" in after:
+            if after.split("@sha256:", 1)[0] == before:
+                first_pins.append(service)
+                continue
+        if "@sha256:" in before and "@sha256:" not in after:
+            raise ValueError(f"{service}: refusing to downgrade immutable image to mutable tag")
+        updated.append(service)
+    return updated, first_pins
+
+
 def read_previous(previous: Path) -> tuple[dict[str, dict], int]:
     """Load published app versions, including historical quarantined apps."""
     index_path = previous / "index.json"
@@ -124,8 +145,7 @@ def promote(stage: Path, previous: Path, today: date | None = None) -> dict:
             old_version = parse_version(before["version"], app_id)
             old_version_text = format_version(old_version)
             old_images = before["images"]
-            changed_services = sorted(k for k in set(old_images) | set(images)
-                                      if old_images.get(k) != images.get(k))
+            changed_services, newly_pinned_services = compare_approved_images(old_images, images)
             newer_version = max(source_version, old_version)
             if changed_services and newer_version <= old_version:
                 newer_version = (old_version[0], old_version[1], old_version[2] + 1)
@@ -140,6 +160,8 @@ def promote(stage: Path, previous: Path, today: date | None = None) -> dict:
                 reason = "approved-image-change"
             elif newer_version > old_version:
                 reason = "explicit-source-version"
+            elif newly_pinned_services:
+                reason = "initial-immutable-baseline"
             else:
                 reason = "retained"
                 if isinstance(before.get("update_at"), str):
@@ -161,6 +183,7 @@ def promote(stage: Path, previous: Path, today: date | None = None) -> dict:
             "id": app_id, "old": old_version_text,
             "new": meta["version"], "reason": reason,
             "changed_services": changed_services,
+            "baseline_services": newly_pinned_services if before else [],
         })
 
     return {
@@ -169,6 +192,7 @@ def promote(stage: Path, previous: Path, today: date | None = None) -> dict:
         "image_updates": sum(r["reason"] == "approved-image-change" for r in results),
         "explicit_updates": sum(r["reason"] == "explicit-source-version" for r in results),
         "carried_forward": sum(r["reason"] == "retained" for r in results),
+        "baseline_pins": sum(r["reason"] == "initial-immutable-baseline" for r in results),
         "new_to_store": sum(r["reason"] == "new-to-store" for r in results),
         "apps": results,
         "state": {"schema": 1, "apps": dict(sorted(snapshots.items()))},
@@ -190,6 +214,7 @@ def main() -> int:
     print("MrStore package versions:",
           report["image_updates"], "approved image changes;",
           report["carried_forward"], "versions retained;",
+          report["baseline_pins"], "first immutable baselines (no fake update);",
           report["new_to_store"], "new apps.")
     return 0
 
