@@ -168,7 +168,7 @@ def github_review(repo: str, now: datetime) -> tuple[list[dict], list[str], dict
         wf = quote(filename, safe="")
         # GitHub reports the creation timestamp for each registered workflow.
         # Use it only to avoid premature "missing schedule" alerts, never to
-        mask an actually failed/overdue run.
+        # mask an actually failed/overdue run.
         metadata = api(f"/repos/{escaped_repo}/actions/workflows/{wf}")
         data = api(f"/repos/{escaped_repo}/actions/workflows/{wf}/runs"
                    "?event=schedule&per_page=10")
