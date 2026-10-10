@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#11131a">
+  <meta name="theme-color" content="#080e19">
   <meta name="description" content="Explora as aplicações da MrStore para ZimaOS, por categoria e arquitetura. Catálogo de aplicações self-hosted.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
   <link rel="icon" href="./assets/mark.svg" type="image/svg+xml">
@@ -32,10 +32,10 @@
     <section class="hero shell" aria-labelledby="hero-title">
       <div class="hero-copy">
         <div class="eyebrow"><span class="pulse"></span> CATÁLOGO COMUNITÁRIO · ZIMAOS V2</div>
-        <h1 id="hero-title">O teu servidor.<br><span>Mais possibilidades.</span></h1>
-        <p>Descobre aplicações para transformar o teu homelab. Tudo organizado num só lugar, com categorias claras, pesquisa rápida e informação sobre compatibilidade.</p>
+        <h1 id="hero-title">A tua loja de <span>aplicações</span><br>para ZimaOS</h1>
+        <p>Descobre aplicações para organizar os teus ficheiros, ver filmes e séries, guardar fotografias, fazer cópias de segurança e muito mais. Pesquisa o catálogo real antes de instalar.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#catalogo">Explorar catálogo <span aria-hidden="true">→</span></a>
+          <a class="btn btn-primary" href="#catalogo">Ver todas as aplicações <span aria-hidden="true">→</span></a>
           <a class="btn btn-outline" href="#como-instalar">Como funciona <span aria-hidden="true">↗</span></a>
         </div>
         <div class="hero-trust"><span><span class="tick">✓</span> Comunidade & código aberto</span><span><span class="tick">✓</span> ZimaOS v2</span><span><span class="tick">✓</span> Sem instalação automática</span></div>
@@ -67,6 +67,7 @@
       </div>
     </section>
     <section id="catalogo" class="catalog-section shell" aria-labelledby="catalog-title">
+      <div class="categories" id="categories" role="group" aria-label="Filtrar por categoria"><button type="button" class="chip active" data-category="" aria-pressed="true">Todas</button></div>
       <div class="section-heading">
         <div><span class="section-kicker">DESCOBRE A MRSTORE</span><h2 id="catalog-title">Encontra a app <em>ideal.</em></h2><p>Pesquisa, filtra e consulta os detalhes antes de instalar no teu servidor.</p></div>
         <div class="results-summary" id="results-summary" aria-live="polite">A carregar catálogo…</div>
@@ -77,7 +78,7 @@
         <label class="arch-filter"><span>Arquitetura</span><select id="architecture"><option value="">Todas</option><option value="amd64">AMD64</option><option value="arm64">ARM64</option></select></label>
         <button class="favorites-toggle" id="favorites-toggle" type="button" aria-pressed="false" title="Mostrar favoritos guardados neste navegador">☆ <span>Favoritos</span></button>
       </div>
-      <div class="categories" id="categories" role="group" aria-label="Filtrar por categoria"><button type="button" class="chip active" data-category="" aria-pressed="true">Todas</button></div>
+      
       <div id="catalog-state" class="catalog-state" role="status" aria-live="polite">A carregar aplicações…</div>
       <div class="app-grid" id="app-grid" aria-label="Resultados do catálogo"></div>
       <div class="load-more-wrap"><button id="load-more" class="btn btn-more" type="button" hidden>Mostrar mais aplicações ↓</button></div>
