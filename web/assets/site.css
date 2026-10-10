@@ -518,6 +518,12 @@ body{background:#10151d;overflow-x:hidden}
 }
 @media(prefers-reduced-motion:reduce){.orbit-bubble{animation:none}.system-card,.app-card,.btn{transition:none}}
 
+/* Marca universal: a documentação de integração não sobrepõe o foco na descoberta. */
+.installation-technical{margin-top:16px!important;color:#b1acb2;font-size:12px!important;line-height:1.7;max-width:600px}
+.installation-technical a{color:#ffbc80;text-decoration:underline;text-underline-offset:3px;font-weight:800}
+.installation-technical a:hover{color:#ffe0b6}
+@media(max-width:520px){.installation-technical{font-size:11px!important}}
+
 /* Universal platform selector: accessible in desktop and mobile layouts. */
 .platform-picker{display:grid;gap:8px;margin-top:22px;max-width:460px}
 .platform-picker label{font-size:12px;color:var(--orange2);font-weight:800;letter-spacing:.25px}
