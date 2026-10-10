@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from zimaos_update_visibility import (
-    catalog_item, classify_native_visibility, compare_digests, docker_compose_names, docker_repo_digests, is_latest,
+    canonical_repository, catalog_item, classify_native_visibility, compare_digests, docker_compose_names, docker_repo_digests, is_latest,
     native_upgradable, runtime_check, scan_catalog, validate_api_base,
 )
 from catalog import App
@@ -72,6 +72,32 @@ class UpdateVisibilityTests(unittest.TestCase):
         self.assertEqual(compare_digests(None, b), "unknown_local_inspection_failed")
         self.assertEqual(compare_digests(["demo@" + a], None), "unknown_remote_not_checked")
 
+    def test_different_repository_same_digest_is_not_a_match(self):
+        digest = "sha256:" + "a" * 64
+        # A single image ID can have RepoDigests from multiple registries.
+        self.assertEqual(compare_digests(["evil.example/team/app@" + digest],
+                                         digest, "ghcr.io/team/app:latest"),
+                         "unknown_no_matching_repository_digest")
+        self.assertEqual(compare_digests(["docker.io/library/alpine@" + digest],
+                                         digest, "alpine:latest"), "digest_matches")
+        self.assertEqual(canonical_repository("registry.example:5000/team/app:1.2"),
+                         "registry.example:5000/team/app")
+        self.assertEqual(canonical_repository("index.docker.io/library/alpine:latest"),
+                         "docker.io/library/alpine")
+        # Docker Hub image aliases can be normalized, different registries cannot.
+        self.assertEqual(canonical_repository("alpine:latest"), "docker.io/library/alpine")
+
+    def test_only_matching_repo_digests_count_as_current(self):
+        good = "sha256:" + "a" * 64
+        other = "sha256:" + "b" * 64
+        self.assertEqual(compare_digests(["other/app@" + good,
+                                          "ghcr.io/group/app@" + other],
+                                         good, "ghcr.io/group/app:latest"),
+                         "digest_differs_review_required")
+        self.assertEqual(compare_digests(["ghcr.io/group/app@" + other],
+                                         other, "ghcr.io/group/app:latest"),
+                         "digest_matches")
+
     def test_docker_digest_probe_avoids_exposing_inspect_environment(self):
         runner = fake_run_for({"docker image inspect": '["demo@sha256:' + "a"*64 + '"]'})
         values, error = docker_repo_digests("demo:latest", runner)
@@ -81,6 +107,7 @@ class UpdateVisibilityTests(unittest.TestCase):
     def test_runtime_with_absent_digest_marks_unknown(self):
         runner = fake_run_for({
             "docker ps -a": "test-app\n",
+            "label=": "test-app\n",
             "--format {{.Image}}": "sha256:" + "c" * 64,
             "docker container inspect": "example/installed:latest",
             "docker image inspect": "[]",
@@ -195,6 +222,38 @@ class UpdateVisibilityTests(unittest.TestCase):
         self.assertIn("label=com.docker.compose.service=app", filters)
         self.assertTrue(any(c[:3] == ["docker", "container", "inspect"] and
                             c[3] == "my-real-container" for c in calls))
+
+    def test_same_named_container_without_scoped_labels_is_never_inspected(self):
+        calls = []
+
+        def runner(command, **kwargs):
+            calls.append(command)
+            if command[:3] == ["docker", "ps", "-a"]:
+                return subprocess.CompletedProcess(
+                    command, 0, "" if "--filter" in command else "app", "")
+            self.fail("Unverified app container must not be inspected")
+
+        item = catalog_item(fixture(name="another-app", service="app",
+                                    container="app"))
+        result = runtime_check(item, runner=runner)
+        self.assertEqual(result["installed"], "unverified_container_name")
+        self.assertEqual(result["container_resolution"], "unverified_named_container_ignored")
+        self.assertEqual(result["update_evidence"], "unknown_container_identity_unverified")
+        self.assertFalse(any(c[:3] == ["docker", "container", "inspect"] for c in calls))
+
+    def test_failed_label_lookup_must_not_fall_back_to_name(self):
+        def runner(command, **kwargs):
+            if command[:3] == ["docker", "ps", "-a"]:
+                if "--filter" in command:
+                    return subprocess.CompletedProcess(command, 1, "", "permission error")
+                return subprocess.CompletedProcess(command, 0, "app", "")
+            self.fail("Failed scoped query must not inspect a same-named container")
+
+        item = catalog_item(fixture(name="another-app", service="app",
+                                    container="app"))
+        result = runtime_check(item, runner=runner)
+        self.assertEqual(result["update_evidence"], "unknown_container_identity_unverified")
+        self.assertEqual(result["compose_label_error"], "command_failed")
 
     def test_disagreeing_docker_snapshots_do_not_inspect_unrelated_name(self):
         def runner(command, **kwargs):
