@@ -72,3 +72,33 @@ jobs:
           name: manifest-security-audit
           path: out/audit.*
           if-no-files-found: warn
+
+  artwork_audit:
+    name: Audit remote artwork (HTTPS)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Check every storefront icon and thumbnail online
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            python scripts/asset_audit_online.py --strict --defer-unpublished
+          else
+            python scripts/asset_audit_online.py --strict
+          fi
+      - name: Show online audit summary
+        if: always()
+        run: test ! -f out/asset-audit-online.md || cat out/asset-audit-online.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Save per-URL artwork audit evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-online-artwork-audit
+          path: out/asset-audit-online.*
+          if-no-files-found: warn
