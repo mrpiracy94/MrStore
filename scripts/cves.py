@@ -62,11 +62,17 @@ def scan(image: str, binary: str = 'trivy', platform: str | None = None) -> tupl
                        not result['Target'].strip()
                        for result in report['Results']):
                     return [], 'Incomplete Trivy report (invalid scan target)'
+                # Validate all vulnerability records before interpreting any
+                # report as clean. Malformed records are not zero CVEs.
+                for result in report['Results']:
+                    vulnerabilities = result.get('Vulnerabilities')
+                    if vulnerabilities is not None and (
+                            not isinstance(vulnerabilities, list) or
+                            any(not isinstance(item, dict) for item in vulnerabilities)):
+                        return [], 'Incomplete Trivy report (invalid vulnerabilities)'
                 hits = []
                 seen = set()
                 for result in report['Results']:
-                    if not isinstance(result, dict):
-                        continue
                     for item in result.get('Vulnerabilities') or []:
                         if item.get('Severity') not in ('HIGH', 'CRITICAL'):
                             continue
