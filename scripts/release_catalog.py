@@ -17,9 +17,9 @@ from cves import shard_images
 from curate_taglines import load_summaries, render_manifest
 from release_scan import image_platforms
 from image_freshness import RETIRED_UPSTREAM
+from privilege_policy import risky_settings
 
 HEX = re.compile(r"^[a-f0-9]{64}$")
-DANGEROUS_SOURCE = {"/", "/etc", "/root", "/var/run/docker.sock", "/run/docker.sock"}
 
 
 def read_evidence(source_apps, report_dir: Path, shards: int = 8) -> dict:
@@ -93,29 +93,25 @@ def read_evidence(source_apps, report_dir: Path, shards: int = 8) -> dict:
 
 def insecure_defaults(app) -> list[str]:
     """Conservative rule: unresolved dangerous defaults are never released."""
-    flags = []
+    # Use the exact same host-privilege policy as PR validation. Releasing a
+    # manifest must never accept an unsafe path alias or a parent-directory
+    # bind that the PR checker would reject.
+    flags = [f"{service}: dangerous {code}={detail}"
+             for service, code, detail in sorted(risky_settings(app.source))]
     for service, spec in (app.source.get("services") or {}).items():
         if not isinstance(spec, dict):
             flags.append(f"{service}: invalid service spec")
             continue
-        for setting in ("privileged", "network_mode", "pid", "ipc", "userns"):
-            value = spec.get(setting)
-            if value is True and setting == "privileged" or value == "host":
-                flags.append(f"{service}: unsafe {setting}")
+        # userns host is separately risky even if the other namespace knobs
+        # happen to be absent. Everything else is checked by risky_settings.
+        if spec.get("userns") == "host":
+            flags.append(f"{service}: unsafe userns=host")
         # An officially discontinued/unavailable upstream must never be published
         # just because a vulnerability scanner finds no known issues.
         image_ref = spec.get("image")
         if image_ref in RETIRED_UPSTREAM:
             flags.append(f"{service}: discontinued upstream image {image_ref}; "
                          f"see {RETIRED_UPSTREAM[image_ref]}")
-        if spec.get("cap_add") or spec.get("devices"):
-            flags.append(f"{service}: privileged devices/capabilities require manual approval")
-        if any("seccomp:unconfined" in str(x) for x in (spec.get("security_opt") or [])):
-            flags.append(f"{service}: seccomp unconfined")
-        for v in spec.get("volumes") or []:
-            source = v.get("source", "") if isinstance(v, dict) else str(v).split(":", 1)[0]
-            if source in DANGEROUS_SOURCE:
-                flags.append(f"{service}: sensitive host volume {source}")
         env = spec.get("environment") or []
         if "CHANGE_ME" in json.dumps(env):
             flags.append(f"{service}: default credentials not configured")
