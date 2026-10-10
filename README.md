@@ -59,20 +59,31 @@ A montra web foi concebida para facilitar o uso:
 
 Para ver todos os manifests da origem, incluindo os que possam estar em quarentena, consulta a pasta [Apps/](Apps/).
 
-## 🧩 MrStore Universal — CasaOS e Homeio (pré-visualização)
+## 🧩 MrStore Universal — 11 ecossistemas
 
-A MrStore conserva o catálogo **ZimaOS v2** como integração principal.
-A fase universal acrescenta uma exportação ZIP experimental para
-**CasaOS/Homeio**, produzida **exclusivamente a partir das aplicações
-aprovadas pela auditoria de segurança**. A origem com 254 manifests
-não é distribuída como pacote de instalação.
+A MrStore passa a apresentar **11 sistemas** num único catálogo, sem
+duplicar os 254 manifests de origem. Os downloads universais são gerados
+**apenas a partir do release aprovado** pela auditoria de imagens Docker.
+A compatibilidade *por Compose* não equivale a integração de loja nativa.
 
-Depois de uma publicação segura, o pacote provisório ficará em
-[`store/casaos-homeio-preview.zip`](https://mrpiracy94.github.io/MrStore/store/casaos-homeio-preview.zip).
-Ainda **não** representa compatibilidade confirmada por testes num CasaOS/Homeio real.
-A integração UmbrelOS requer um adaptador próprio e fica para a fase seguinte.
+| Integração | Estado |
+|---|---|
+| ZimaOS | Loja v2 existente, mantida |
+| Homeio / CasaOS | Fonte ZIP experimental (sem certificação de runtime) |
+| Portainer | Templates JSON v2 restritos a apps de contentor único + Compose |
+| Cosmos / Dockge / Docker Linux | Manifestos Compose aprovados, importação manual |
+| HomeDock OS | Compose aprovado via Packager; formato .hds ainda pendente |
+| umbrelOS | ZIP-semente de loja Git para apps simples; precisa de repo separado |
+| Runtipi | ZIP-semente de loja Git v4+ para apps simples; precisa de repo separado |
+| Olares | Requer OAC/Helm; adaptador e teste nativos pendentes |
 
-Consulta [plano e protocolo de testes](docs/UNIVERSAL_COMPATIBILITY.md).
+O novo seletor no website explica o método por sistema e, quando a publicação
+inclui evidência coincidente, disponibiliza o manifesto Compose aprovado
+diretamente na ficha de cada aplicação.
+
+**[Matriz completa e estado por plataforma](docs/UNIVERSAL_PLATFORMS.md)** ·
+[Plano CasaOS/Homeio](docs/UNIVERSAL_COMPATIBILITY.md) ·
+[Política de publicação segura](docs/SAFE_RELEASE_POLICY.md)
 
 ## 🛡️ Segurança e transparência
 
