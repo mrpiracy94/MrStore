@@ -55,14 +55,10 @@ def sync(report_path: Path, summary_path: Path, runner=subprocess.run) -> dict:
         and coverage[arch]["scanned"] == coverage[arch]["expected"]
         for arch in ("amd64", "arm64")
     )
-    images = coverage.get("images") if isinstance(coverage, dict) else None
-    image_coverage = (isinstance(images, dict)
-                      and images.get('complete') is True
-                      and type(images.get('expected')) is int
-                      and images['expected'] > 0
-                      and type(images.get('scanned')) is int
-                      and images['scanned'] == images['expected'])
-    complete = full_architecture_coverage or image_coverage
+    # Checking all image references on one host architecture is not
+    # proof that ARM64 is clean. Only close alerts when BOTH architectures
+    # have complete, independently checked security evidence.
+    complete = full_architecture_coverage
     findings = report["critical"] or report["high"]
     failures = report["failures"]
     if findings:
