@@ -41,6 +41,18 @@ jobs:
           test "$code" = "403"
           test "$(docker inspect -f '{{json .HostConfig.PortBindings}}' dozzle-socket-proxy)" = '{}'
           docker logs dozzle --tail 30
+      - name: Collect Dozzle and proxy diagnostics on failure
+        if: failure()
+        run: |
+          echo "## Dozzle / proxy startup diagnostics" >> "$GITHUB_STEP_SUMMARY"
+          docker ps -a --filter label=com.docker.compose.project=mrstore-dozzle-check || true
+          docker compose -p mrstore-dozzle-check -f Apps/dozzle/docker-compose.yml ps || true
+          # Only these two disposable CI containers; never dump host logs.
+          for service in dozzle dozzle-web; do
+            echo "::group::${service} recent logs"
+            docker compose -p mrstore-dozzle-check -f Apps/dozzle/docker-compose.yml logs --no-color --tail 120 "$service" || true
+            echo "::endgroup::"
+          done
       - name: Clean up
         if: always()
         run: docker compose -p mrstore-dozzle-check -f Apps/dozzle/docker-compose.yml down --remove-orphans
