@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from zimaos_update_visibility import (
     canonical_repository, catalog_item, classify_native_visibility, compare_digests, docker_compose_names, docker_repo_digests, is_latest,
-    native_upgradable, runtime_check, scan_catalog, validate_api_base,
+    native_upgradable, runtime_check, scan_catalog, strict_main_name_failures, validate_api_base,
 )
 from catalog import App
 
@@ -344,6 +344,17 @@ class UpdateVisibilityTests(unittest.TestCase):
         result = native_upgradable("http://127.0.0.1:4000", "io.github.mrpiracy94.demo",
                                    "demo", opener=opener)
         self.assertEqual(result, "not_listed_not_proof_of_current")
+
+    def test_strict_main_name_guard_only_blocks_naming_incompatibilities(self):
+        good = catalog_item(fixture(name="good", service="web", container="web"))
+        bad = catalog_item(fixture(name="bad", service="app", container="real-name"))
+        unnamed = catalog_item(fixture(name="unnamed", service="app", container=None))
+        self.assertEqual(
+            strict_main_name_failures({"apps": [good, bad, unnamed]}),
+            ["bad", "unnamed"],
+        )
+        # A floating tag warning alone cannot tell us whether RepoDigests is missing.
+        self.assertEqual(strict_main_name_failures({"apps": [good]}), [])
 
     def test_static_scan_from_temp_compose_tree(self):
         import yaml
