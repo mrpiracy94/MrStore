@@ -108,3 +108,25 @@ os destaques legados. A apresentação final continua por validar no NAS.
 
 Consulta [o guia de branding](docs/STORE_BRANDING.md) e executa
 `python scripts/branding_report.py --strict` para verificar os dados.
+
+### Validação online e screenshots com proveniência
+
+A branch de branding inclui `scripts/asset_audit_online.py` para verificar
+todos os URLs externos de ícones e thumbnails, com deteção de links quebrados,
+respostas inconclusivas, destinos HTTPS inseguros e relatório por URL no CI.
+Links para recursos novos em `main` são marcados como adiados até à publicação.
+
+Dez screenshots genuínos adicionais são transferidos exclusivamente para a
+área de construção de aplicações **aprovadas**, a partir de um commit imutável
+da App Store oficial, com hash Git validado. Só passam a integrar a loja
+efetivamente publicada quando o build e os scans terminarem com êxito.
+
+Os manifests mantêm as 15 descrições PT escritas diretamente; o catálogo
+aprovado recebe descrições PT-PT suplementares derivadas dos 254 subtítulos
+curados quando não existe uma descrição traduzida. Isso não equivale a uma
+tradução humana integral de todos os textos, nem altera a configuração Docker.
+
+A auditoria online e a verificação de proveniência exigem rede e podem
+terminar inconclusivas. **Não afirmar compatibilidade visual no ZimaOS real
+sem teste num equipamento ZimaOS.** Consultar
+[os detalhes e critérios](docs/STORE_BRANDING.md).
