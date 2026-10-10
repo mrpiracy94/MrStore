@@ -38,9 +38,11 @@ x-casaos:
   thumbnail: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/57e939e504eda0ea764098015da93aa666ad6f31/png/home-assistant.png
   title:
     en_US: "Home Assistant"
+    pt_PT: "Home Assistant"
   tagline:
     en_US: "Home Assistant (LinuxServer.io)"
   description:
     en_US: "Home Assistant — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/homeassistant:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-homeassistant/"
+    pt_PT: "Plataforma de automação residencial para integrar sensores, dispositivos e serviços. Revê as permissões de rede, integrações e volumes antes de instalar no NAS."
   port_map: "8123"
   index: /
