@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Socket Proxy - pictograma ilustrativo MrStore (não oficial)">
- <defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0c566b"/><stop offset="1" stop-color="#122946"/></linearGradient></defs>
- <rect width="256" height="256" rx="50" fill="url(#bg)"/>
- <path d="m129 35 80 35v51c0 59-36 91-80 109-45-18-81-50-81-109V70Z" fill="#164768" stroke="#7ed9e7" stroke-width="9" stroke-linejoin="round"/>
- <path d="M96 91h20v28h28V91h20v28a34 34 0 0 1-30 34v31" fill="none" stroke="#d0f8ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
- <path d="M80 183h104" stroke="#5ce3c4" stroke-width="10" stroke-linecap="round"/>
- <path d="m91 170-14 13 14 13m82-26 14 13-14 13" fill="none" stroke="#5ce3c4" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
