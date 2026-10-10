@@ -20,7 +20,7 @@ jobs:
       IMAGE: ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
       - name: Confirm exact image is public and contains both architectures
         run: |
           docker logout ghcr.io || true
