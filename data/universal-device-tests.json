@@ -1,0 +1,5 @@
+{
+  "schema": 1,
+  "description": "Observações de instalação em equipamentos/VMs reais; sem registos sintéticos. C4 exige backup, atualização e reversão.",
+  "tests": []
+}
