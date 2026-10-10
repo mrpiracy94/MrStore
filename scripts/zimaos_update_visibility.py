@@ -158,16 +158,46 @@ def registry_digest(image: str, runner=subprocess.run) -> tuple[str | None, str 
     return (value, None) if SHA256.fullmatch(value or "") else (None, "invalid_registry_digest")
 
 
-def compare_digests(local: list[str] | None, remote: str | None) -> str:
+def canonical_repository(image: str) -> str:
+    """Normalize repository identity (not tags) for Docker Hub and other registries.
+
+    Docker image inspect may expose RepoDigests for multiple repositories
+    sharing one image ID. Only compare a digest from the requested repository.
+    """
+    name = image.split("@", 1)[0]
+    parts = name.split("/")
+    parts[-1] = parts[-1].split(":", 1)[0]
+    if not parts[0] or not parts[-1]:
+        return ""
+    if "." not in parts[0] and ":" not in parts[0] and parts[0] != "localhost":
+        parts.insert(0, "docker.io")
+    if parts[0] in ("index.docker.io", "registry-1.docker.io"):
+        parts[0] = "docker.io"
+    if parts[0] == "docker.io" and len(parts) == 2:
+        parts.insert(1, "library")
+    return "/".join(parts)
+
+
+def compare_digests(local: list[str] | None, remote: str | None,
+                    requested_image: str | None = None) -> str:
     if local is None:
         return "unknown_local_inspection_failed"
     if not local:
         return "unknown_missing_repodigests"
     if remote is None:
         return "unknown_remote_not_checked"
-    digests = {value.rsplit("@", 1)[-1] for value in local if "@sha256:" in value}
+    expected = canonical_repository(requested_image) if requested_image else None
+    digests = set()
+    for entry in local:
+        repository, separator, digest = entry.rpartition("@")
+        if not separator or not SHA256.fullmatch(digest):
+            continue
+        if expected is not None and canonical_repository(repository) != expected:
+            continue
+        digests.add(digest)
     if not digests:
-        return "unknown_missing_usable_repodigest"
+        return ("unknown_no_matching_repository_digest" if requested_image
+                else "unknown_missing_usable_repodigest")
     return "digest_matches" if remote in digests else "digest_differs_review_required"
 
 
@@ -254,28 +284,27 @@ def runtime_check(item: dict, *, check_registry: bool = False,
     matching, label_error = docker_compose_names(item["compose_project"], item["main_service"], runner)
     if label_error:
         outcome["compose_label_error"] = label_error
+    # Never inspect a guessed container when the scoped query has failed or
+    # found no match. A globally named "app" could belong to someone else.
+    actual = None
     if matching is not None and len(matching) > 1:
-        # Replicas can legitimately exist, but selecting one image at random
-        # could lead to an incorrect verdict. Report the ambiguity.
+        # Several Compose replicas may be on different image revisions.
         outcome["installed"] = "ambiguous_multiple_main_containers"
+        outcome["container_resolution"] = "multiple_compose_replicas"
         outcome["update_evidence"] = "unknown_ambiguous_main_containers"
-        actual = None
+    elif matching and matching[0] in names:
+        actual = matching[0]
+        outcome["installed"] = "found"
+        outcome["container_resolution"] = "compose_project_and_service_labels"
     else:
-        labeled = matching[0] if matching else None
-        # Never substitute a same-named container when a scoped label query
-        # returned a different, now-missing container (possible Docker race).
-        actual = (labeled if labeled in names else None) if labeled else (
-            expected if expected in names else None
-        )
-        outcome["installed"] = "found" if actual else "not_found_by_expected_name"
-        outcome["container_resolution"] = (
-            "compose_project_and_service_labels" if labeled and actual == labeled
-            else "expected_name_unverified" if actual
-            else "not_resolved"
-        )
-        if not actual:
-            # Do not equate "not found by our expected name" with "not installed".
-            outcome["update_evidence"] = "unknown_container_not_identified"
+        named_but_unverified = expected in names and not matching
+        outcome["installed"] = ("unverified_container_name" if named_but_unverified
+                                else "not_found_by_expected_name")
+        outcome["container_resolution"] = ("unverified_named_container_ignored"
+                                           if named_but_unverified else "not_resolved")
+        outcome["update_evidence"] = ("unknown_container_identity_unverified"
+                                      if named_but_unverified or label_error
+                                      else "unknown_container_not_identified")
     if actual:
         local_ref, container_error = installed_container_image(actual, runner)
         if container_error:
@@ -299,7 +328,7 @@ def runtime_check(item: dict, *, check_registry: bool = False,
                 check_registry and catalog_ref) else (None, None)
             if remote_error:
                 outcome["registry_error"] = remote_error
-            outcome["update_evidence"] = compare_digests(local, remote)
+            outcome["update_evidence"] = compare_digests(local, remote, catalog_ref)
             # Never expose Docker image inspect/config/env/credentials.
     if api_base is not None:
         outcome["native_update_api"] = native_upgradable(
