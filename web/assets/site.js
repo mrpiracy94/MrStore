@@ -16,6 +16,95 @@
   const state = { apps: [], filtered: [], category: "", query: "", arch: "",
     favoritesOnly: false, limit: BATCH_SIZE, saved: new Set(), validated: false };
   const base = new URL("./", window.location.href);
+  // One audited manifest source, separate user instructions per target platform.
+  // A portable Compose file is NOT proof of native store integration.
+  const PLATFORM_GUIDES = {
+    zimaos: ["ZimaOS", "Loja externa ZimaOS v2", ["Abre a App Store do ZimaOS.", "Adiciona a URL base da MrStore como loja externa v2.", "Confirma arquitetura, permissões e backup antes de instalar."]],
+    homeio: ["Homeio", "Fonte ZIP CasaOS em pré-visualização", ["Abre as fontes da App Store no Homeio.", "Adiciona a URL do ZIP experimental aprovado.", "Testa em ambiente de ensaio: instalação, portas e persistência."]],
+    casaos: ["CasaOS", "Formato CasaOS em pré-visualização", ["Verifica se a tua versão aceita a fonte ZIP.", "Experimenta a importação em ambiente de teste (não é ZIP legado v1 certificado).", "Revê volumes /DATA, segredos e portas antes de instalar."]],
+    umbrelos: ["umbrelOS", "Loja nativa pendente", ["A Community App Store do umbrelOS requer um repositório Git próprio.", "O exportador de manifestos Umbrel ainda não foi validado.", "Não adiciones o URL da MrStore ZimaOS como se fosse uma loja Umbrel."]],
+    cosmos: ["Cosmos", "Importação Docker Compose", ["Escolhe uma aplicação e descarrega o Compose aprovado.", "Em ServApps, seleciona Import Docker Compose.", "Verifica a conversão, redes, volumes e exposição de portas antes de criar."]],
+    portainer: ["Portainer", "Stacks a partir de Compose", ["Escolhe uma aplicação e descarrega o Compose aprovado.", "Vai a Stacks → Add stack → Web editor ou Upload.", "Corrige os caminhos dos volumes, valida variáveis e faz Deploy."]],
+    homedock: ["HomeDock OS", "Packager com Compose", ["Descarrega o Compose aprovado na ficha da aplicação.", "Abre o Packager do HomeDock OS e importa o Compose.", "Revê e testa o pacote gerado; ainda não há .hds nativo certificado."]],
+    olares: ["Olares", "OAC/Helm nativo pendente", ["O Market do Olares utiliza Olares Application Charts (OAC).", "Um Docker Compose não é diretamente uma aplicação nativa Olares.", "A conversão e os testes Kubernetes ainda não estão concluídos."]],
+    dockge: ["Dockge", "Stacks Docker Compose", ["Escolhe uma aplicação e descarrega o Compose aprovado.", "Cria uma nova stack ou coloca o ficheiro na pasta de stacks.", "Revê caminhos de volumes/portas e inicia depois da validação."]],
+    runtipi: ["Runtipi", "Loja Git Runtipi pendente", ["Runtipi v4+ aceita lojas externas como repositórios Git.", "Faltam config.json, x-runtipi, logo e testes por aplicação.", "O endereço ZimaOS/ZIP não substitui uma loja Runtipi."]],
+    "docker-linux": ["Docker / Linux", "Docker Compose (CLI)", ["Escolhe uma aplicação e descarrega o Compose aprovado.", "Personaliza os volumes e as variáveis em ambiente seguro.", "Executa docker compose config e, depois de rever o resultado, docker compose up -d."]]
+  };
+  const COMPOSE_TARGETS = new Set(["cosmos", "portainer", "homedock", "dockge", "docker-linux"]);
+  let universalApps = new Map();
+  let universalReady = false;
+  let previewZipReady = false;
+  let selectedStoreURL = STORE_URL;
+
+  function renderPlatform() {
+    const id = $("platform-select").value;
+    const guide = PLATFORM_GUIDES[id] || PLATFORM_GUIDES.zimaos;
+    const steps = $("platform-steps");
+    steps.replaceChildren();
+    guide[2].forEach(function (line, index) {
+      const item = element("li");
+      item.appendChild(element("span", "", String(index + 1).padStart(2, "0")));
+      const inner = element("div");
+      inner.appendChild(element("strong", "", ["Preparar", "Importar", "Validar"][index]));
+      inner.appendChild(element("p", "", line));
+      item.appendChild(inner); steps.appendChild(item);
+    });
+    selectedStoreURL = "";
+    if (id === "zimaos") selectedStoreURL = STORE_URL;
+    else if ((id === "homeio" || id === "casaos") && previewZipReady) {
+      selectedStoreURL = STORE_URL + "/store/casaos-homeio-preview.zip";
+    }
+    const intro = COMPOSE_TARGETS.has(id)
+      ? (universalReady
+        ? "Seleciona uma aplicação e usa «Descarregar Compose aprovado» na respetiva ficha. Não é uma loja nativa integrada neste sistema."
+        : "O catálogo Compose aprovado ainda não está disponível nesta publicação.")
+      : ((id === "casaos" || id === "homeio") && !previewZipReady
+        ? "O ZIP experimental não está publicado nesta edição. Não uses o ZIP da branch main, que inclui apps em quarentena."
+        : guide[1] + ". Suporte por formato não equivale a teste real de instalação.");
+    $("platform-help").textContent = guide[0] + " · " + intro;
+    $("store-address").textContent = selectedStoreURL ||
+      (COMPOSE_TARGETS.has(id) ? "Escolhe uma app → Descarregar Compose aprovado" : "Integração nativa ainda indisponível");
+    $("copy-store").disabled = !selectedStoreURL;
+    $("copy-feedback").textContent = "";
+  }
+
+  async function checkUniversalPublication() {
+    // Match the EXACT security-selected app set; do not advertise older partial artifacts.
+    if (!state.validated) { renderPlatform(); return; }
+    try {
+      const response = await fetch("./universal/catalog.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Universal catalog missing");
+      const catalog = await response.json();
+      const expected = new Set(state.apps.map(function (app) { return app.id; }));
+      if (catalog.version !== 1 || catalog.approved_count !== expected.size ||
+          !Array.isArray(catalog.apps) || catalog.apps.length !== expected.size) throw new Error("Mismatch");
+      const verified = new Map();
+      for (const item of catalog.apps) {
+        if (!item || typeof item.slug !== "string" ||
+            !/^[a-z0-9][a-z0-9._-]*$/.test(item.slug) ||
+            item.id !== PREFIX + item.slug || !expected.has(item.id) ||
+            item.compose !== "universal/compose/" + item.slug + ".yml" ||
+            verified.has(item.slug)) throw new Error("Invalid app reference");
+        verified.set(item.slug, item);
+      }
+      if (verified.size !== expected.size) throw new Error("Missing apps");
+      universalApps = verified;
+      universalReady = true;
+    } catch (_) { universalApps = new Map(); universalReady = false; }
+    renderPlatform();
+  }
+
+  async function checkPreviewZip() {
+    if (!state.validated) return;
+    try {
+      const response = await fetch("./store/casaos-homeio-preview.zip", {
+        method: "HEAD", cache: "no-store"
+      });
+      previewZipReady = response.ok;
+    } catch (_) { previewZipReady = false; }
+    renderPlatform();
+  }
   function readFavorites() {
     try {
       const value = JSON.parse(localStorage.getItem("mrstore-favorites-v1") || "[]");
@@ -185,6 +274,9 @@
     const compose = $("details-compose"), url = safePath(app.compose_url, ".yml");
     compose.hidden = !url; if (url) compose.href = url;
     const slug = app.id.slice(PREFIX.length);
+    const portable = $("details-universal");
+    portable.hidden = !state.validated || !universalApps.has(slug);
+    if (!portable.hidden) portable.href = new URL("./universal/compose/" + encodeURIComponent(slug) + ".yml", base).href;
     $("details-github").href = "https://github.com/mrpiracy94/MrStore/tree/main/Apps/" + encodeURIComponent(slug);
     $("details").showModal();
   }
@@ -246,6 +338,7 @@
       setNotice("Esta edição pública não inclui evidência completa de quarentena, ou existe uma divergência entre o índice e os relatórios. Podes consultar as fichas, mas NÃO interpretes estas aplicações como aprovadas pelos scanners atuais. Verifica os relatórios no GitHub antes de instalar.", true);
     }
     categoryList(); render();
+    checkUniversalPublication(); checkPreviewZip();
   }
   $("search").addEventListener("input", function (event) { state.query = event.target.value; state.limit = BATCH_SIZE; render(); });
   $("architecture").addEventListener("change", function (event) { state.arch = event.target.value; state.limit = BATCH_SIZE; render(); });
@@ -262,12 +355,14 @@
     if ($("details").open) return;
     event.preventDefault(); $("search").focus();
   });
+  $("platform-select").addEventListener("change", renderPlatform);
   $("copy-store").addEventListener("click", async function () {
     try {
       if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error("Clipboard não disponível");
-      await navigator.clipboard.writeText(STORE_URL);
+      if (!selectedStoreURL) return;
+      await navigator.clipboard.writeText(selectedStoreURL);
       $("copy-feedback").textContent = "Endereço copiado!";
     } catch (_) { $("copy-feedback").textContent = "Seleciona e copia o endereço manualmente."; }
   });
-  readFavorites(); initialize();
+  renderPlatform(); readFavorites(); initialize();
 })();
