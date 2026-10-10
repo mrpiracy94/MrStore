@@ -31,7 +31,7 @@ jobs:
       VERSION: lsio-python-venv-secfix-20261010
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
       - name: Confirm native architecture
         run: |
           case "$ARCH" in
@@ -97,7 +97,7 @@ jobs:
       IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-healthchecks
       VERSION: lsio-python-venv-secfix-20261010
     steps:
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io

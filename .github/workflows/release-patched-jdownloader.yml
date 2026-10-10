@@ -108,7 +108,9 @@ jobs:
             done
             docker logs --tail 50 "$name" || true
             docker rm -f "$name" || true
-            rm -rf "$scratch"
+            # Container-created config files use the image UID, not the runner UID.
+            # This cleanup touches only the private mktemp test directory.
+            sudo rm -rf -- "$scratch"
             if [ "$ok" -ne 1 ]; then
               echo "::error::JDownloader HTTP GUI failed on $arch"
               exit 1
@@ -148,24 +150,43 @@ jobs:
         run: |
           set -euo pipefail
           docker logout ghcr.io
+          # Confirm the immutable multiarch index is publicly readable.
+          public_manifest="$(docker buildx imagetools inspect "$IMAGE@$PATCHED_DIGEST")"
+          printf '%s\n' "$public_manifest"
+          printf '%s\n' "$public_manifest" | grep -q 'linux/amd64'
+          printf '%s\n' "$public_manifest" | grep -q 'linux/arm64'
+          # Docker's classic image store cannot pull two platforms under the
+          # same digest reference at once; use a distinct tag for the ARM64
+          # anonymous pull after verifying it belongs to the published index.
           docker pull --platform linux/amd64 "$IMAGE@$PATCHED_DIGEST"
-          docker pull --platform linux/arm64 "$IMAGE@$PATCHED_DIGEST"
+          docker pull --platform linux/arm64 "$IMAGE:$VERSION-arm64"
       - name: Update existing ZimaOS entry only after all gates pass
         run: |
           set -euo pipefail
+          # Other approved fixes may reach main while this image is building.
+          # Start from the current main and refuse to overwrite an updated app.
+          git fetch origin main
+          git checkout -B jdownloader-secfix-release origin/main
           python - <<'PY'
           from pathlib import Path
           import os, re
           path = Path("Apps/jdownloader/docker-compose.yml")
           text = path.read_text(encoding="utf-8")
-          original = "    image: jlesage/jdownloader-2:latest"
-          if text.count(original) != 1:
-              raise SystemExit("Catalog entry changed; refusing unattended update")
           digest = os.environ["PATCHED_DIGEST"]
           if not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
               raise SystemExit("Invalid immutable digest")
           image = f"{os.environ['IMAGE']}:{os.environ['VERSION']}@{digest}"
-          text = text.replace(original, f"    image: {image}", 1)
+          image_lines = re.findall(r"(?m)^    image: (.+)$", text)
+          if len(image_lines) != 1:
+              raise SystemExit("Unexpected image entries in catalog")
+          current = image_lines[0]
+          legacy = "jlesage/jdownloader-2:latest"
+          tested_release = re.fullmatch(
+              re.escape(f"{os.environ['IMAGE']}:{os.environ['VERSION']}@") +
+              r"sha256:[0-9a-f]{64}", current)
+          if current != legacy and not tested_release:
+              raise SystemExit("Catalog uses a different image; refusing overwrite")
+          text = text.replace(f"    image: {current}", f"    image: {image}", 1)
           text = text.replace('  version: "1.0.0"', '  version: "1.0.1"', 1)
           text = text.replace('  update_at: "2026-10-09"', '  update_at: "2026-10-10"', 1)
           text = text.replace(
@@ -185,5 +206,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add Apps/jdownloader/docker-compose.yml
+          if git diff --cached --quiet; then
+            echo "JDownloader already pinned to this validated multiarch digest"
+            exit 0
+          fi
           git commit -m "security(jdownloader): publish scanned multiarch CVE-fixed digest"
           git push origin HEAD:main

@@ -1,0 +1,236 @@
+name: Fix and test shared LinuxServer Python CVEs
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'security/images/python-deps/**'
+      - '.github/workflows/python-deps-patches.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: mrstore-python-cve-${{ github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify ${{ matrix.app }} / ${{ matrix.arch }}
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        app: [beets, limnoria, nzbget, sickgear, tautulli]
+        arch: [amd64, arm64]
+    env:
+      APP: ${{ matrix.app }}
+      ARCH: ${{ matrix.arch }}
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-python-${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Confirm native CPU architecture
+        run: |
+          case "$ARCH" in
+            amd64) test "$(uname -m)" = x86_64 ;;
+            arm64) test "$(uname -m)" = aarch64 ;;
+            *) exit 2 ;;
+          esac
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Build patched LinuxServer image
+        run: |
+          docker buildx build --pull --platform "linux/$ARCH" --load \
+            --build-arg "APP=$APP" \
+            --file security/images/python-deps/Dockerfile \
+            --tag "mrstore-python-deps:$APP-$ARCH" .
+      - name: Scan both OS and application libraries without suppressions
+        run: |
+          mkdir -p out
+          trivy image --quiet --image-src docker --scanners vuln \
+            --severity HIGH,CRITICAL --platform "linux/$ARCH" \
+            --timeout 15m --format json --output "out/$APP-$ARCH.json" \
+            "mrstore-python-deps:$APP-$ARCH"
+      - name: Require complete Trivy evidence with zero HIGH and CRITICAL
+        run: |
+          python - <<'PY'
+          import json, os
+          app, arch = os.environ['APP'], os.environ['ARCH']
+          with open(f'out/{app}-{arch}.json', encoding='utf-8') as source:
+              data = json.load(source)
+          results = data.get('Results')
+          if not isinstance(results, list) or not results:
+              raise SystemExit('Incomplete Trivy scan: no results')
+          findings = []
+          for result in results:
+              if not isinstance(result, dict) or not result.get('Target'):
+                  raise SystemExit('Incomplete Trivy scan target')
+              vulnerabilities = result.get('Vulnerabilities') or []
+              if not isinstance(vulnerabilities, list):
+                  raise SystemExit('Invalid vulnerabilities data')
+              findings.extend(v for v in vulnerabilities
+                              if v.get('Severity') in ('HIGH', 'CRITICAL'))
+          critical = sum(v['Severity'] == 'CRITICAL' for v in findings)
+          high = sum(v['Severity'] == 'HIGH' for v in findings)
+          print(f'{app}/{arch}: {critical} CRITICAL, {high} HIGH')
+          for v in findings:
+              print(v.get('VulnerabilityID'), v.get('PkgName'),
+                    v.get('InstalledVersion'), '->',
+                    v.get('FixedVersion') or 'no known fix')
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
+              out.write(f'### {app}/{arch}: {critical} CRITICAL, {high} HIGH\n')
+          if findings:
+              raise SystemExit('Reject vulnerable image. No CVEs ignored.')
+          PY
+      - name: Test live application and persistent configuration
+        run: bash security/images/python-deps/smoke.sh "$APP" "$ARCH"
+      - name: Preserve complete Trivy evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-cve-${{ matrix.app }}-${{ matrix.arch }}
+          path: out/*.json
+          if-no-files-found: warn
+      - name: Login to GHCR after both security and runtime checks
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish tested architecture with immutable build tag
+        run: |
+          set -euo pipefail
+          dest="$IMAGE:secfix-$GITHUB_SHA-$ARCH"
+          docker tag "mrstore-python-deps:$APP-$ARCH" "$dest"
+          docker push "$dest"
+
+  publish:
+    name: Create verified multiarch ${{ matrix.app }}
+    if: always()
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [beets, limnoria, nzbget, sickgear, tautulli]
+    env:
+      APP: ${{ matrix.app }}
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-python-${{ matrix.app }}
+    steps:
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Combine only when BOTH vetted platform images exist
+        run: |
+          set -euo pipefail
+          amd64="$IMAGE:secfix-$GITHUB_SHA-amd64"
+          arm64="$IMAGE:secfix-$GITHUB_SHA-arm64"
+          if ! docker buildx imagetools inspect "$amd64" >/dev/null 2>&1 ||
+             ! docker buildx imagetools inspect "$arm64" >/dev/null 2>&1; then
+            echo "NOT RELEASED: $APP has no fully tested AMD64+ARM64 pair" | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          combined="$IMAGE:secfix-$GITHUB_SHA"
+          docker buildx imagetools create --tag "$combined" "$amd64" "$arm64"
+          docker buildx imagetools inspect "$combined" | tee manifest.txt
+          grep -q 'linux/amd64' manifest.txt
+          grep -q 'linux/arm64' manifest.txt
+          digest="$(awk '/^Digest:/{print $2;exit}' manifest.txt)"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          echo "PASS $APP MULTIARCH=$IMAGE@$digest" | tee -a "$GITHUB_STEP_SUMMARY"
+
+
+  promote_catalog:
+    name: Promote only publicly verified 0-CVE image digests to MrStore
+    # Even if another app fails, correctly tested public images may be promoted.
+    if: always()
+    needs: [verify, publish]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: docker/setup-buildx-action@v3
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Verify anonymous GHCR manifests and prepare immutable digests
+        env:
+          IMAGE_OWNER: ${{ github.repository_owner }}
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          : > out/approved.txt
+          anonymous="$(mktemp -d)"
+          trap 'rm -rf "$anonymous"' EXIT
+          for app in beets limnoria nzbget sickgear tautulli; do
+            image="ghcr.io/$IMAGE_OWNER/mrstore-python-$app"
+            tag="$image:secfix-$GITHUB_SHA"
+            if ! DOCKER_CONFIG="$anonymous" docker buildx imagetools inspect "$tag" > out/inspect.txt 2>/dev/null; then
+              echo "NOT PROMOTED $app: no published public multiarch image" | tee -a "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            grep -q 'linux/amd64' out/inspect.txt || exit 1
+            grep -q 'linux/arm64' out/inspect.txt || exit 1
+            digest="$(awk '$1=="Digest:" { print $2; exit }' out/inspect.txt)"
+            [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]] || exit 1
+            echo "$app|$image@$digest" >> out/approved.txt
+            echo "VERIFIED $app $image@$digest" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
+      - name: Promote approved digests to original app manifests in one commit
+        run: |
+          set -euo pipefail
+          if ! test -s out/approved.txt; then
+            echo 'No new fully verified multiarch image; no catalog change' | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git fetch origin main
+          git checkout -B mrstore-python-cve-promotion origin/main
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          for row in Path('out/approved.txt').read_text().splitlines():
+              app,image=row.split('|',1)
+              if app not in {'beets','limnoria','nzbget','sickgear','tautulli'}:
+                  raise SystemExit('Unexpected application')
+              if not re.fullmatch(r'ghcr\.io/[a-z0-9-]+/mrstore-python-[a-z0-9-]+@sha256:[0-9a-f]{64}',image):
+                  raise SystemExit('Invalid immutable image reference')
+              path=Path('Apps')/app/'docker-compose.yml'
+              text=path.read_text(encoding='utf8')
+              original=f'    image: lscr.io/linuxserver/{app}:latest'
+              if original not in text:
+                  print('SKIP changed or already updated manifest:',app)
+                  continue
+              if text.count(original)!=1:
+                  raise SystemExit('Ambiguous image entry: '+app)
+              text=text.replace(original,'    image: '+image,1)
+              text=text.replace('  version: "1.0.0"','  version: "1.0.1"',1)
+              text=text.replace('  update_at: "2026-10-09"','  update_at: "2026-10-10"',1)
+              path.write_text(text,encoding='utf8')
+              print('PROMOTED',app,image)
+          PY
+          if git diff --quiet -- Apps; then
+            echo 'No catalog differences' | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          python -m pip install -r requirements.txt
+          python scripts/validate.py
+          python -m unittest discover -s tests -q
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Apps/beets/docker-compose.yml Apps/limnoria/docker-compose.yml Apps/nzbget/docker-compose.yml Apps/sickgear/docker-compose.yml Apps/tautulli/docker-compose.yml
+          git commit -m 'fix(batch): deploy verified Python CVE-free multiarch image digests'
+          # Fast-forward only; concurrent changes must never be overwritten.
+          git push origin HEAD:main
