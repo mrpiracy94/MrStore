@@ -1,4 +1,4 @@
-"""Fail-closed per-app release selection with strict 8-shard Trivy evidence.
+"""Fail-closed per-app release selection with strict 32-shard Trivy evidence.
 
 No source app is removed from git; unsafe or inconclusive apps are quarantined.
 Every published service image is rewritten to the exact image digest scanned.
@@ -28,7 +28,7 @@ REQUIRED_COMPOSE_VARIABLE = re.compile(
 )
 
 
-def read_evidence(source_apps, report_dir: Path, shards: int = 8) -> dict:
+def read_evidence(source_apps, report_dir: Path, shards: int = 32) -> dict:
     """Accept only exact full evidence from this image set and these shards."""
     usage = image_usage(source_apps)
     expected = set(usage)
