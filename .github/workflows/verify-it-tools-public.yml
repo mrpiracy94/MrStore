@@ -3,11 +3,15 @@ on:
   pull_request:
     paths:
       - 'Apps/it-tools/docker-compose.yml'
-      - 'tests/test_mrstore.py'
       - '.github/workflows/verify-it-tools-public.yml'
   workflow_dispatch:
 permissions:
   contents: read
+# Testing a generic catalogue assertion should not re-pull both image architectures.
+# Re-run this expensive proof only when its app manifest or this workflow changes.
+concurrency:
+  group: mrstore-public-image-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   anonymous_registry_scan:
     runs-on: ubuntu-latest
