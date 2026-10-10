@@ -89,3 +89,22 @@ Os relatórios são escritos em `out/` e carregados como artefactos no GitHub Ac
 - [Renovate](https://github.com/renovatebot/renovate)
 
 MrStore não é uma loja oficial IceWhaleTech. Os projetos originais continuam a pertencer aos respetivos desenvolvedores; o catálogo não garante disponibilidade, manutenção ou segurança de cada imagem.
+
+## Personalização e identidade da MrStore
+
+A MrStore usa uma identidade laranja/preto, nome e descrição bilingues
+(`store-config.json`) e um logótipo próprio (`branding/mrstore-icon.svg`).
+As nove categorias correspondem às categorias realmente usadas nos
+manifests. Quinze aplicações receberam títulos e descrições em português.
+
+Os ícones e thumbnails das apps mantêm as referências dos respetivos
+projetos; screenshots devem representar aplicações reais (não existem
+capturas inventadas). O catálogo publica ficheiros opcionais de
+destaques/recomendações **filtrados pelas aprovações de segurança**.
+
+**Limite do ZimaOS:** estes metadados personalizam o catálogo, mas não
+mudam o CSS/cores da interface nativa, nem garantem que o cliente mostre
+os destaques legados. A apresentação final continua por validar no NAS.
+
+Consulta [o guia de branding](docs/STORE_BRANDING.md) e executa
+`python scripts/branding_report.py --strict` para verificar os dados.
