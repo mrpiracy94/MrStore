@@ -36,11 +36,11 @@ SOURCES = (
 def verify_image(data: bytes, extension: str, blob_sha: str) -> None:
     if len(data) < 128 or len(data) > MAX_IMAGE_BYTES:
         raise ValueError(f"Image size outside 128..{MAX_IMAGE_BYTES} bytes")
-    if extension == ".png" and not data.startswith(b"\\x89PNG\\r\\n\\x1a\\n"):
+    if extension == ".png" and not data.startswith(b"\x89PNG\r\n\x1a\n"):
         raise ValueError("Not a PNG screenshot")
-    if extension in (".jpg", ".jpeg") and not data.startswith(b"\\xff\\xd8\\xff"):
+    if extension in (".jpg", ".jpeg") and not data.startswith(b"\xff\xd8\xff"):
         raise ValueError("Not a JPEG screenshot")
-    git_hash = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\\0" + data).hexdigest()
+    git_hash = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
     if git_hash != blob_sha:
         raise ValueError(f"Screenshot content mismatch: expected {blob_sha}, got {git_hash}")
 
