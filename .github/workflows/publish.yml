@@ -7,7 +7,6 @@ on:
       - 'scripts/catalog.py'
       - 'scripts/cves.py'
       - 'scripts/release_scan.py'
-      - 'scripts/publish_editorial.py'
       - 'scripts/release_catalog.py'
       - 'scripts/image_freshness.py'
       - 'scripts/privilege_policy.py'
@@ -41,8 +40,6 @@ on:
       - 'scripts/privilege_policy.py'
       - 'scripts/compose_preflight.py'
       - 'data/taglines-pt.json'
-      - 'data/featured-apps.json'
-      - 'scripts/featured.py'
       - 'store-config.json'
       - 'web/**'
       - 'scripts/stage_storefront.py'
@@ -65,7 +62,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - uses: actions/setup-python@v7
@@ -83,14 +80,57 @@ jobs:
         run: |
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
-  build:
+  security_audit:
+    # Run full eight-shard audits only on main/manual releases; PRs get preflight.
+    if: github.event_name != 'pull_request'
     needs: preflight
+    name: Scan release images and platforms (shard ${{ matrix.shard }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.26'
+      - name: Install pinned crane registry client
+        run: |
+          go install github.com/google/go-containerregistry/cmd/crane@v0.21.7
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+      - name: Install pinned Trivy scanner
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan all catalog images by immutable digest on AMD64 and ARM64
+        run: >-
+          python scripts/release_scan.py --shards 8 --shard ${{ matrix.shard }}
+          --output-dir out --featured data/featured-apps.json
+      - name: Preserve complete per-image evidence, including vulnerable/inconclusive
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-release-security-shard-${{ matrix.shard }}
+          path: out/release-cves-shard-${{ matrix.shard }}.json
+          if-no-files-found: error
+          retention-days: 30
+  build:
+    needs: security_audit
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
@@ -99,16 +139,25 @@ jobs:
         run: |
           python scripts/validate.py
           python -m unittest discover -s tests -v
-      - name: Stage curated editorial applications without certification claims
+      - name: Fetch eight mandatory security evidence reports
+        uses: actions/download-artifact@v8
+        with:
+          pattern: mrstore-release-security-shard-*
+          path: out/release-evidence
+          merge-multiple: false
+      - name: Generate isolated approved release catalog; quarantine everything else
         id: release
         run: |
-          python scripts/publish_editorial.py --featured data/featured-apps.json --stage release-source --report out/release-selection.json
+          python scripts/release_catalog.py --reports out/release-evidence --featured data/featured-apps.json --stage release-source --report out/release-selection.json
           python - <<'PY'
-          import json, os
+          import json
+          import os
           from pathlib import Path
-          result = json.loads(Path("out/release-selection.json").read_text())
-          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as fh:
-              fh.write(f"approved={result['approved_count']}\n")
+          selected = json.loads(Path("out/release-selection.json").read_text())
+          if selected["approved_count"] < 1:
+              raise SystemExit("Empty safe catalog; do not publish misleading empty release")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as file:
+              file.write(f"approved={selected['approved_count']}\n")
           PY
       - name: Validate staged Compose manifests with official Docker Compose parser
         run: >-
@@ -135,16 +184,14 @@ jobs:
           python -c 'import sys, yaml; assert sys.version_info[:2] == (3, 12); print("PyYAML", yaml.__version__)'
       - name: Verify exact approved count and generated v2 files
         run: python scripts/verify_dist.py --expected ${{ steps.release.outputs.approved }}
-      - name: Verify exact published editorial application set
+      - name: Verify published app set and every image digest was retained
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
+          from scripts.release_catalog import verify_published
           report = json.loads(Path("out/release-selection.json").read_text())
-          index = json.loads(Path("dist/index.json").read_text())
-          actual = {entry["id"] for entry in index["apps"]}
-          expected = {"io.github.mrpiracy94." + slug for slug in report["approved"]}
-          assert len(actual) == len(index["apps"]) == report["approved_count"] and actual == expected
+          verify_published(Path("dist"), report, Path("release-source"))
           PY
       - name: Verify PT subtitles of approved apps
         run: >-
@@ -179,7 +226,7 @@ jobs:
           include-hidden-files: true
           if-no-files-found: error
   publish:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     needs: build
     runs-on: ubuntu-latest
     permissions:
