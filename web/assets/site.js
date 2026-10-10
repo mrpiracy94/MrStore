@@ -12,9 +12,30 @@
     Others: "Outras"
   };
   const CATEGORY_SYMBOLS = { "": "▦", Media: "▣", Productivity: "◈", Home: "⌂", Networking: "⛨", Network: "⛨", Cloud: "☁", Browser: "◉", Downloader: "↓", Games: "✦", Graphics: "▧", Developer: "</>", AI: "✺", Finance: "▤", Social: "◎", Utilities: "⚙", Others: "◇" };
+
+  const slugOf = (app) => app.id.slice(PREFIX.length);
+  const photoApp = (app) => /^(immich|photoprism|piwigo|lychee|librephotos|ente|chevereto|photostructure)$/.test(slugOf(app));
+  const filesApp = (app) => /^(nextcloud|seafile|filebrowser|filebrowser-quantum|filestash|owncloud|pydio|sftpgo|samba|copyparty)$/.test(slugOf(app));
+  const backupApp = (app) => /^(duplicati|syncthing|restic|resticprofile|borgmatic|urbackup|kopia|duplicacy|backrest)$/.test(slugOf(app)) || /backup/.test(slugOf(app));
+  const COLLECTIONS = [
+    {key:"",name:"Todas",description:"Ver todas as aplicações",glyph:"▦",match:()=>true},
+    {key:"media",name:"Multimédia",description:"Filmes, séries e música",glyph:"▣",match:(a)=>a.category==="Media"&&!photoApp(a)},
+    {key:"photos",name:"Fotografias",description:"Organiza as tuas fotos",glyph:"▧",match:photoApp},
+    {key:"files",name:"Ficheiros",description:"Armazenamento e partilha",glyph:"▱",match:filesApp},
+    {key:"backup",name:"Cópias de segurança",description:"Protege os teus dados",glyph:"⟳",match:backupApp},
+    {key:"utilities",name:"Utilitários",description:"Ferramentas úteis",glyph:"⚒",match:(a)=>["Productivity","Utilities","Others","Home","Social"].includes(a.category)&&!filesApp(a)&&!backupApp(a)},
+    {key:"development",name:"Desenvolvimento",description:"Para programadores",glyph:"⌘",match:(a)=>a.category==="Developer"},
+    {key:"network",name:"Rede e segurança",description:"Monitoriza e protege",glyph:"⬡",match:(a)=>["Networking","Network","Security"].includes(a.category)}
+  ];
+  function displayCategory(app) {
+    if (photoApp(app)) return "Fotografias";
+    if (filesApp(app)) return "Ficheiros";
+    if (backupApp(app)) return "Cópias de segurança";
+    return categoryLabel(app.category);
+  }
   const $ = (id) => document.getElementById(id);
   const state = { apps: [], filtered: [], category: "", query: "", arch: "",
-    favoritesOnly: false, limit: BATCH_SIZE, saved: new Set(), validated: false };
+    favoritesOnly: false, limit: BATCH_SIZE, expanded: false, saved: new Set(), validated: false };
   const base = new URL("./", window.location.href);
   function readFavorites() {
     try {
@@ -64,27 +85,30 @@
     return wrap;
   }
   function categoryList() {
-    const counts = new Map();
-    state.apps.forEach(function (app) { counts.set(app.category, (counts.get(app.category) || 0) + 1); });
     const list = $("categories"); list.replaceChildren();
-    const all = [["", "Todas", state.apps.length]].concat(
-      Array.from(counts).sort(function (a, b) {
-        return categoryLabel(a[0]).localeCompare(categoryLabel(b[0]), "pt");
-      }).map(function (entry) { return [entry[0], categoryLabel(entry[0]), entry[1]]; })
-    );
-    all.forEach(function (entry) {
-      const button = element("button", "chip" + (state.category === entry[0] ? " active" : ""));
-      button.type = "button"; button.dataset.category = entry[0];
-      button.setAttribute("aria-pressed", String(state.category === entry[0]));
-      button.appendChild(element("span", "chip-symbol", CATEGORY_SYMBOLS[entry[0]] || "◇"));
-      button.appendChild(element("span", "chip-label", entry[1]));
-      button.appendChild(element("span", "count", entry[2] + " aplicações"));
+    COLLECTIONS.forEach(function (collection) {
+      const count = state.apps.filter(collection.match).length;
+      const active = state.category === collection.key;
+      const button = element("button", "chip" + (active ? " active" : ""));
+      button.type = "button"; button.dataset.category = collection.key;
+      button.setAttribute("aria-pressed", String(active));
+      button.setAttribute("aria-label", collection.name + ": " + count + " aplicações");
+      button.title = count + " aplicações nesta categoria";
+      button.appendChild(element("span", "chip-symbol", collection.glyph));
+      const content = element("span", "chip-copy");
+      content.appendChild(element("strong", "chip-label", collection.name));
+      content.appendChild(element("small", "chip-desc", collection.description));
+      button.appendChild(content);
       button.addEventListener("click", function () {
-        state.category = entry[0]; state.limit = BATCH_SIZE; categoryList(); render();
+        state.category = collection.key;
+        state.expanded = true;
+        state.limit = BATCH_SIZE;
+        $("catalog-tools").hidden = false;
+        categoryList(); render();
+        $("catalog-title").scrollIntoView({behavior: "smooth",block:"start"});
       });
       list.appendChild(button);
     });
-    $("total-categories").textContent = String(counts.size);
   }
   function fold(value) {
     return String(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt");
@@ -116,7 +140,7 @@
     head.appendChild(iconNode(app, "app-icon"));
     const copy = element("div", "app-header-copy");
     copy.appendChild(element("h3", "", appTitle(app)));
-    copy.appendChild(element("span", "app-category", categoryLabel(app.category)));
+
     head.appendChild(copy);
     const favorite = element("button", "favorite-btn", state.saved.has(app.id) ? "★" : "☆");
     favorite.type = "button";
@@ -133,37 +157,51 @@
     (app.architectures || []).forEach(function (arch) {
       arches.appendChild(element("span", "architecture", arch.toUpperCase()));
     });
+    footer.appendChild(element("span", "app-category app-category-pill", displayCategory(app)));
     footer.appendChild(arches);
-    const details = element("button", "details-button", "Ver detalhes →");
+    const details = element("button", "details-button", "♧ Instalar");
+    details.setAttribute("aria-label", "Como instalar " + appTitle(app));
     details.type = "button"; details.addEventListener("click", function () { openDetails(app); });
     footer.appendChild(details); card.appendChild(footer);
     return card;
   }
   function render() {
     const needle = fold(state.query.trim());
+    const collection = COLLECTIONS.find(function (c) {return c.key===state.category;}) || COLLECTIONS[0];
     state.filtered = state.apps.filter(function (app) {
-      return (!state.category || app.category === state.category) &&
+      return collection.match(app) &&
         (!state.arch || (app.architectures || []).includes(state.arch)) &&
         (!state.favoritesOnly || state.saved.has(app.id)) &&
         (!needle || scoreSearch(app, needle));
     });
+    const maxVisible = state.expanded ? state.limit : 4;
     const grid = $("app-grid"), fragment = document.createDocumentFragment();
-    state.filtered.slice(0, state.limit).forEach(function (app) { fragment.appendChild(makeCard(app)); });
+    state.filtered.slice(0, maxVisible).forEach(function (app) { fragment.appendChild(makeCard(app)); });
     grid.replaceChildren(fragment);
-    const shown = Math.min(state.limit, state.filtered.length);
+    const shown = Math.min(maxVisible, state.filtered.length);
+    $("catalog-title").textContent = state.expanded ? "Explorar aplicações" : "Aplicações em destaque";
+    $("catalog-subtitle").textContent = state.expanded
+      ? "Pesquisa as aplicações disponíveis nesta edição da MrStore"
+      : "As aplicações em destaque disponíveis nesta edição da MrStore";
+    $("catalog-tools").hidden = !state.expanded;
+    const showAll = $("show-all");
+    showAll.setAttribute("aria-expanded", String(state.expanded));
+    showAll.textContent = state.expanded ? "Voltar aos destaques ↑" : "Ver todas as aplicações →";
+    $("results-summary").hidden = !state.expanded;
     $("results-summary").textContent = state.filtered.length + " resultado(s)";
     $("catalog-state").hidden = state.filtered.length > 0;
     if (!state.filtered.length) {
       $("catalog-state").textContent = "Não encontrámos aplicações com estes filtros. Experimenta outra pesquisa ou categoria.";
     }
-    const more = $("load-more"); more.hidden = shown >= state.filtered.length;
+    const more = $("load-more");
+    more.hidden = !state.expanded || shown >= state.filtered.length;
     if (!more.hidden) more.textContent = "Mostrar mais aplicações (" + (state.filtered.length - shown) + " restantes) ↓";
   }
   function openDetails(app) {
     $("details-icon").replaceChildren(iconNode(app, "detail-icon-inner"));
     $("details-title").textContent = appTitle(app);
     $("details-tagline").textContent = app.tagline || "Aplicação self-hosted";
-    $("details-category").textContent = categoryLabel(app.category);
+    $("details-category").textContent = displayCategory(app);
     $("details-arches").textContent = (app.architectures || []).map(function (x) { return x.toUpperCase(); }).join(" / ") || "Não indicado";
     $("details-version").textContent = app.version || "Não indicada";
     $("details-developer").textContent = app.developer || "Não indicado";
@@ -234,7 +272,7 @@
       $("catalog-state").textContent = "Catálogo indisponível.";
       $("results-summary").textContent = "Indisponível"; return;
     }
-    $("total-apps").textContent = String(state.apps.length);
+
     try {
       const reply = await fetch("./release-status.json", { cache: "no-store" });
       if (!reply.ok) throw new Error("Sem relatório de publicação");
@@ -247,6 +285,20 @@
     }
     categoryList(); render();
   }
+  $("show-all").addEventListener("click", function () {
+    state.expanded = !state.expanded;
+    if (!state.expanded) {
+      state.category = ""; state.query = ""; state.arch = ""; state.favoritesOnly = false;
+      $("search").value = ""; $("architecture").value = "";
+      $("favorites-toggle").setAttribute("aria-pressed", "false");
+      categoryList();
+    }
+    state.limit = BATCH_SIZE; render();
+  });
+  $("show-install-guide").addEventListener("click", function () {
+    $("como-instalar").hidden = false;
+    $("como-instalar").scrollIntoView({behavior:"smooth",block:"start"});
+  });
   $("search").addEventListener("input", function (event) { state.query = event.target.value; state.limit = BATCH_SIZE; render(); });
   $("architecture").addEventListener("change", function (event) { state.arch = event.target.value; state.limit = BATCH_SIZE; render(); });
   $("favorites-toggle").addEventListener("click", function () {
@@ -260,7 +312,7 @@
     if (event.key !== "/" || event.ctrlKey || event.metaKey || event.altKey) return;
     if (document.activeElement && ["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) return;
     if ($("details").open) return;
-    event.preventDefault(); $("search").focus();
+    event.preventDefault(); state.expanded = true; render(); $("search").focus();
   });
   $("copy-store").addEventListener("click", async function () {
     try {
