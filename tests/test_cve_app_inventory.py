@@ -35,8 +35,8 @@ class CVEAppInventoryTests(unittest.TestCase):
                     "platforms": ["amd64"],
                     "scans": {"amd64": {
                         "status": "ok", "error": None,
-                        "critical": 1 if is_vulnerable else 0,
-                        "high": 2 if is_vulnerable else 0,
+                        "critical": 0,
+                        "high": 1 if is_vulnerable else 0,
                         "findings": [{"cve": "CVE-2026-1234", "severity": "HIGH"}]
                         if is_vulnerable else []
                     }}
