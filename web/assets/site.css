@@ -140,6 +140,57 @@ dialog{background:#1d1c24;border-color:#705246}
 @media(max-width:750px){.hero.shell{grid-template-columns:1fr;padding:58px 24px 46px}.hero-art{min-height:340px}.stats-grid{grid-template-columns:repeat(2,1fr)}.section-heading{align-items:flex-start}.toolbar{flex-wrap:wrap}.searchbox{flex-basis:100%}.clear-filters{flex:1}.platform-grid{grid-template-columns:1fr}.platform-section{padding:70px 0}.installation-layout{grid-template-columns:1fr}}
 @media(max-width:520px){.hero.shell{padding:42px 16px}.hero h1{font-size:clamp(36px,11vw,48px);letter-spacing:-2px}.hero-art{min-height:305px}.visual-window{width:96%}.stats-grid .stat{padding:21px 14px}.stat strong{font-size:25px}.categories{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.chip{min-height:96px;padding:12px}.catalog-section{padding-top:30px}.app-grid{grid-template-columns:1fr}.app-card-cover{height:174px}.platform-supported,.platform-roadmap{padding:22px 18px}.platform-tags span{font-size:11px}.arch-filter{flex:1}.favorites-toggle{flex:1}.clear-filters{flex-basis:100%}.site-footer p{max-width:none}}
 
+/* MrStore 2026 · hero unificado com o banner editorial do README.
+   As imagens são locais, sem dependências CDN nem alterações à lógica do catálogo. */
+.hero-universe{position:relative;padding:36px 0 47px;overflow:hidden;
+  background:radial-gradient(ellipse at 50% 10%,#5c291d3f,transparent 64%),#0d0f14;
+  border-bottom:1px solid #40302e}
+.hero-banner-wrap{position:relative;width:min(1500px,calc(100% - 48px));margin:0 auto;
+  border-radius:22px;overflow:hidden;background:#15151b;border:1px solid #82543a;
+  box-shadow:0 34px 85px #0008,0 0 65px #ff831f18}
+.hero-banner-wrap:after{content:"";position:absolute;inset:0;
+  border-radius:inherit;box-shadow:inset 0 0 0 1px #ffffff0b;pointer-events:none}
+.hero-banner-image{display:block;width:100%;height:auto;aspect-ratio:2290/687;object-fit:cover}
+.hero-universe-content{display:grid;grid-template-columns:1fr auto;gap:42px;align-items:center;
+  padding-top:43px;padding-bottom:28px}
+.hero-universe-copy{max-width:750px}
+.hero-overline{display:inline-flex;align-items:center;gap:11px;color:#ffbd87;
+  font-size:10px;font-weight:900;letter-spacing:2.1px}
+.hero-overline-dot{height:9px;width:9px;border-radius:50%;background:#ff9738;
+  box-shadow:0 0 0 5px #ff973822}
+.hero-universe h1{font-size:clamp(28px,3.2vw,43px);font-weight:900;line-height:1.18;
+  letter-spacing:-1.8px;margin:14px 0 14px}
+.hero-universe h1 em{font-style:normal;color:#ff9e51}
+.hero-universe-copy p{font-size:14px;color:#b8b6c0;line-height:1.85;margin:0}
+.hero-universe-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  align-items:start;gap:10px;min-width:355px}
+.hero-universe-actions .btn{padding:12px 15px;font-size:12px;white-space:nowrap}
+.hero-helper{grid-column:1/-1;color:#96939e;font-size:10px;max-width:360px;line-height:1.6}
+.hero-trust-row{display:flex;align-items:center;flex-wrap:wrap;gap:15px 30px;
+  border-top:1px solid #473b3a;padding-top:18px;color:#b8aeb0;font-size:11px;font-weight:700}
+.hero-trust-row span span{color:#ffad70;font-size:15px;margin-right:7px}
+.site-header .brand img{width:44px;height:44px;border-radius:11px}
+.site-footer .footer-brand img{border-radius:8px}
+@media(max-width:1050px){
+  .hero-universe-content{grid-template-columns:1fr;gap:24px}
+  .hero-universe-actions{min-width:0;max-width:440px}
+}
+@media(max-width:750px){
+  .hero-universe{padding:21px 0 40px}
+  .hero-banner-wrap{width:calc(100% - 28px);border-radius:14px}
+  .hero-universe-content{padding-top:34px;gap:23px}
+  .hero-universe h1{font-size:clamp(28px,6.6vw,40px)}
+  .hero-trust-row{gap:10px 16px}
+}
+@media(max-width:520px){
+  .hero-banner-wrap{width:calc(100% - 20px);border-radius:11px}
+  .hero-universe-content{padding-top:28px;padding-bottom:19px}
+  .hero-universe h1{letter-spacing:-.9px}
+  .hero-universe-actions{grid-template-columns:1fr;max-width:100%;gap:10px}
+  .hero-helper{grid-column:1}
+  .hero-trust-row{flex-direction:column;align-items:flex-start;gap:7px}
+}
+
 /* Universal platform selector: accessible in desktop and mobile layouts. */
 .platform-picker{display:grid;gap:8px;margin-top:22px;max-width:460px}
 .platform-picker label{font-size:12px;color:var(--orange2);font-weight:800;letter-spacing:.25px}
