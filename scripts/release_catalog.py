@@ -17,6 +17,7 @@ from cves import shard_images
 from curate_taglines import load_summaries, render_manifest
 from release_scan import image_platforms
 from image_freshness import RETIRED_UPSTREAM
+from privilege_policy import sensitive_host_bind
 
 HEX = re.compile(r"^[a-f0-9]{64}$")
 DANGEROUS_SOURCE = {"/", "/etc", "/root", "/var/run/docker.sock", "/run/docker.sock"}
@@ -114,7 +115,7 @@ def insecure_defaults(app) -> list[str]:
             flags.append(f"{service}: seccomp unconfined")
         for v in spec.get("volumes") or []:
             source = v.get("source", "") if isinstance(v, dict) else str(v).split(":", 1)[0]
-            if source in DANGEROUS_SOURCE:
+            if sensitive_host_bind(source):
                 flags.append(f"{service}: sensitive host volume {source}")
         env = spec.get("environment") or []
         if "CHANGE_ME" in json.dumps(env):
