@@ -274,7 +274,7 @@ class StoreTests(unittest.TestCase):
         entry = next(item for item in apps() if item.folder == 'netbootxyz')
         service = entry.source['services']['netbootxyz']
         self.assertTrue(service['image'].startswith(
-            'ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527'), service['image'])
+            'ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:65fb1c5201721b4768ccd03d3a6b365518d1223ca356a8332b3061883f17c4e7'), service['image'])
         self.assertEqual(set(entry.metadata['architectures']), {'amd64', 'arm64'})
         ports = {(p['target'], str(p['published']), p['protocol'])
                  for p in service['ports']}
