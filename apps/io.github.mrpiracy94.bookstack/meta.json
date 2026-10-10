@@ -9,11 +9,11 @@
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.bookstack/assets/bookstack.webp",
   "tagline": "Documentação e wiki para equipas",
-  "description": "BookStack — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/bookstack:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-bookstack/",
+  "description": "BookStack — exige configuração manual ANTES da instalação: servidor MariaDB/MySQL EXTERNO já criado e acessível, DB_HOST, DB_USERNAME, DB_PASSWORD e DB_DATABASE válidos, APP_KEY gerada e APP_URL ajustada ao nome/domínio real do NAS (porta 20026). Esta entrada NÃO inclui base de dados e NÃO é instalação de um clique. Nunca uses CHANGE_ME em produção. Docs: https://docs.linuxserver.io/images/docker-bookstack/",
   "title": "BookStack",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.bookstack",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "productivity"
   ],

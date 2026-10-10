@@ -9,17 +9,17 @@
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.code-server/assets/code-server.webp",
   "tagline": "Editor VS Code acessível no navegador",
-  "description": "code-server — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/code-server:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-code-server/",
+  "description": "code-server LinuxServer original com correções individuais de shell-quote 1.11.0 e basic-ftp 6.2.1, imagem GHCR de digest imutável testada em AMD64/ARM64 (Trivy 0 HIGH/CRITICAL, HTTP, volumes e FTP). Mantém /config e /workspace e porta 20045 -> 8443. Faz backup de ambos antes de atualizar e confirma integrações FTP especiais; basic-ftp v6 bloqueia hosts de transferência alternativos por defeito. Ver docs/CODE_SERVER_TARGETED_PATCH.md.",
   "title": "code-server",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.code-server",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "developer"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 317650425,
-    "arm64": 314967468
+    "amd64": 317700193,
+    "arm64": 315017232
   }
 }

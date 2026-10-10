@@ -1,7 +1,7 @@
 name: it-tools
 services:
   it-tools:
-    image: corentinth/it-tools:latest
+    image: ghcr.io/mrpiracy94/mrstore-it-tools:static-nginx-alpine-secfix-20261010@sha256:36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073
     container_name: it-tools
     restart: unless-stopped
     ports:
@@ -11,7 +11,7 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.it-tools
-  version: "1.0.1"
+  version: "1.0.2"
   main: it-tools
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.it-tools/assets/icon.png
   title:

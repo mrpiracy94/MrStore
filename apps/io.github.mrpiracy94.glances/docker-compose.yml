@@ -11,13 +11,10 @@ services:
       - target: 61208
         published: "61208"
         protocol: tcp
-    volumes:
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
+
 x-casaos:
   id: io.github.mrpiracy94.glances
-  version: "1.0.1"
+  version: "1.0.2"
   main: glances
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.glances/assets/icon.png
   title:

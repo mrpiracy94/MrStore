@@ -8,12 +8,12 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
-      - "DB_HOST=hedgedoc_db"
+      - "DB_HOST=CHANGE_ME_DB_HOST"
       - "DB_PORT=3306"
       - "DB_USER=hedgedoc"
       - "DB_PASS=CHANGE_ME"
       - "DB_NAME=hedgedoc"
-      - "CMD_DOMAIN=localhost"
+      - "CMD_DOMAIN=CHANGE_ME_DOMAIN"
       - "CMD_URL_ADDPORT=false"
       - "CMD_PROTOCOL_USESSL=false"
     ports:
@@ -26,7 +26,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.hedgedoc
-  version: "1.0.1"
+  version: "1.0.2"
   main: hedgedoc
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.hedgedoc/assets/icon.png
   title:

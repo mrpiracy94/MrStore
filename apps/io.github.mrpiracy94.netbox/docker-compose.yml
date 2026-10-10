@@ -8,16 +8,20 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
-      - "SUPERUSER_EMAIL=admin@example.com"
+      - "SUPERUSER_EMAIL=CHANGE_ME_EMAIL"
       - "SUPERUSER_PASSWORD=CHANGE_ME"
-      - "ALLOWED_HOST=*"
+      - "ALLOWED_HOST=zimaos.local"
       - "DB_NAME=netbox"
       - "DB_USER=netbox"
       - "DB_PASSWORD=CHANGE_ME"
-      - "DB_HOST=netbox_db"
+      - "DB_HOST=CHANGE_ME_DB_HOST"
       - "DB_PORT=5432"
-      - "REDIS_HOST=netbox_redis"
+      - "REDIS_HOST=CHANGE_ME_REDIS_HOST"
       - "REDIS_PORT=6379"
+      - "REDIS_USERNAME="
+      - "REDIS_PASSWORD="
+      - "REDIS_DB_TASK=0"
+      - "REDIS_DB_CACHE=1"
     ports:
       - target: 8000
         published: "20048"
@@ -28,7 +32,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.netbox
-  version: "1.0.1"
+  version: "1.0.2"
   main: netbox
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.netbox/assets/icon.png
   title:

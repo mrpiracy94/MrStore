@@ -9,11 +9,11 @@
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.netbox/assets/netbox.webp",
   "tagline": "Documenta redes, racks, IPs e equipamentos",
-  "description": "NetBox — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/netbox:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-netbox/",
+  "description": "NetBox requer PostgreSQL e Redis EXTERNOS, não incluídos. Personalizar DB_HOST, REDIS_HOST, os dados de acesso, o email e password de administrador e ALLOWED_HOST com o hostname real, nunca *. Mantidas porta 20048 e pasta /config. Docs: https://docs.linuxserver.io/images/docker-netbox/",
   "title": "NetBox",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.netbox",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "developer"
   ],

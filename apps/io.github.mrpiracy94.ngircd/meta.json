@@ -1,5 +1,5 @@
 {
-  "update_at": "2026-10-09",
+  "update_at": "2026-10-10",
   "architectures": [
     "amd64",
     "arm64"
@@ -9,17 +9,17 @@
   "category": "Social",
   "thumbnail": "/apps/io.github.mrpiracy94.ngircd/assets/ngircd-icon.webp",
   "tagline": "Servidor de conversação IRC",
-  "description": "ngIRCd — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ngircd:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ngircd/",
+  "description": "ngIRCd — imagem LinuxServer recompilada com atualizações de segurança, fixada por digest imutável. Trivy 0 HIGH e 0 CRITICAL em AMD64/ARM64, TCP 6667 e persistência /config verificados em CI. Confirma compatibilidade na tua instalação ZimaOS antes de atualizar; mantém backup de /DATA/AppData/ngircd/config. Docs: https://docs.linuxserver.io/images/docker-ngircd/",
   "title": "ngIRCd",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.ngircd",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "social"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 12401013,
-    "arm64": 13422671
+    "amd64": 16161559,
+    "arm64": 17483323
   }
 }

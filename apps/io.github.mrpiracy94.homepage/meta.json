@@ -9,11 +9,11 @@
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.homepage/assets/homepage.webp",
   "tagline": "Página inicial personalizável para o homelab",
-  "description": "Dashboard configurável. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "description": "Dashboard configurável. Proteção do cabeçalho Host ativada para zimaos.local:30007; se usas IP, outro hostname ou proxy, edita HOMEPAGE_ALLOWED_HOSTS na instalação. O Docker socket foi removido para reduzir privilégios: widgets/integracões Docker ficam desativados por omissão. Mantêm-se a porta 30007 e os dados em /DATA/AppData/homepage.",
   "title": "Homepage",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.homepage",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "others"
   ],

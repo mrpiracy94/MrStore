@@ -1,5 +1,5 @@
 {
-  "update_at": "2026-10-09",
+  "update_at": "2026-10-10",
   "architectures": [
     "amd64",
     "arm64"
@@ -9,17 +9,17 @@
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.healthchecks/assets/healthchecks.webp",
   "tagline": "Deteta falhas em tarefas e backups programados",
-  "description": "Healthchecks — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/healthchecks:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-healthchecks/",
+  "description": "Monitorização de tarefas agendadas. A imagem LinuxServer exige SECRET_KEY, SITE_ROOT, SITE_NAME, SUPERUSER_EMAIL e SUPERUSER_PASSWORD. Todos estão agora disponíveis na instalação: gerar chave privada, definir email/password seguros e trocar zimaos.local pelo hostname ou IP real. UI na porta 20037; dados mantidos em /config. Nunca usar CHANGE_ME. Docs: https://docs.linuxserver.io/images/docker-healthchecks/",
   "title": "Healthchecks",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.healthchecks",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "categories": [
     "others"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 91297704,
-    "arm64": 91686701
+    "amd64": 91819814,
+    "arm64": 92197092
   }
 }

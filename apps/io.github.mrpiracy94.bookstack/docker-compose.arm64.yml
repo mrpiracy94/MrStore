@@ -8,11 +8,12 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
-      - "APP_URL=http://zimaos.local:6875"
-      - "DB_HOST=bookstack_db"
+      - "APP_URL=http://zimaos.local:20026"
+      - "APP_KEY=CHANGE_ME"
+      - "DB_HOST=CHANGE_ME_DB_HOST"
       - "DB_PORT=3306"
-      - "DB_USER=bookstack"
-      - "DB_PASS=CHANGE_ME"
+      - "DB_USERNAME=bookstack"
+      - "DB_PASSWORD=CHANGE_ME"
       - "DB_DATABASE=bookstackapp"
     ports:
       - target: 80
@@ -24,7 +25,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.bookstack
-  version: "1.0.1"
+  version: "1.0.2"
   main: bookstack
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.bookstack/assets/icon.png
   title:

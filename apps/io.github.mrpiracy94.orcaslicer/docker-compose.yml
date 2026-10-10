@@ -10,8 +10,6 @@ services:
       - "TZ=Europe/Lisbon"
       - "TITLE=OrcaSlicer"
     shm_size: "1gb"
-    security_opt:
-      - seccomp:unconfined
     ports:
       - target: 3000
         published: "21112"

@@ -1,7 +1,7 @@
 name: qbittorrent-4
 services:
   qbittorrent-4:
-    image: lscr.io/linuxserver/qbittorrent:4.6.7
+    image: ghcr.io/mrpiracy94/mrstore-qbittorrent:5.2.4-libtorrentv1-secfix-20261009@sha256:6e0475093e34571c90fc0d1ede2920ca847f1b4a1ac127351931eab6e12c6c4c
     container_name: qbittorrent-4
     restart: unless-stopped
     environment:
@@ -28,10 +28,10 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.qbittorrent-4
-  version: "1.0.1"
+  version: "1.1.1"
   main: qbittorrent-4
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.qbittorrent-4/assets/icon.png
   title:
-    en_US: "qBittorrent 4.x"
+    en_US: "qBittorrent 5.2 (libtorrent v1)"
   port_map: "20069"
   index: /

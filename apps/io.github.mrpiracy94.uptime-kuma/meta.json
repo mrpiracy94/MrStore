@@ -1,5 +1,5 @@
 {
-  "update_at": "2026-10-09",
+  "update_at": "2026-10-10",
   "architectures": [
     "amd64",
     "arm64"
@@ -9,7 +9,7 @@
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.uptime-kuma/assets/uptime-kuma.webp",
   "tagline": "Monitoriza disponibilidade de serviços",
-  "description": "Monitorização de serviços. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "description": "Monitorização de serviços. Imagem oficial Uptime Kuma 2.5.6; mantém porta 3001 e volume /app/data. Antes de atualizar, guardar cópia de /DATA/AppData/uptime-kuma. Publicação condicionada a scans AMD64/ARM64 sem HIGH/CRITICAL.",
   "title": "Uptime Kuma",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.uptime-kuma",

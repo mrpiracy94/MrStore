@@ -9,11 +9,11 @@
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.hedgedoc/assets/hedgedoc.webp",
   "tagline": "Editor colaborativo de notas Markdown",
-  "description": "HedgeDoc — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/hedgedoc:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-hedgedoc/",
+  "description": "HedgeDoc requer MariaDB/MySQL externos, DB_HOST/DB_PASS e um CMD_DOMAIN reais. A base de dados não é incluída nesta entrada. Configura os callbacks externos e SSL para o teu domínio ou proxy. Mantidas porta 20029 e persistência de /config. Docs: https://docs.linuxserver.io/images/docker-hedgedoc/",
   "title": "HedgeDoc",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.hedgedoc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "productivity"
   ],

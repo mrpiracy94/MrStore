@@ -1,7 +1,7 @@
 name: ngircd
 services:
   ngircd:
-    image: lscr.io/linuxserver/ngircd:latest@sha256:4b6b78d31bedf9b7039cf0b06fe885ca8b772cc028e3cc87ff6e99506c316cf3
+    image: ghcr.io/mrpiracy94/mrstore-lowcve-ngircd:secfix-38353c004df31ee7ac721591496f8937b9013dc9@sha256:8ec35cbc9b8cfbc0ba5645a2a7274662e48b3d706d2447a5f2781195847cc40a
     container_name: ngircd
     restart: unless-stopped
     environment:
@@ -18,7 +18,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.ngircd
-  version: "1.0.1"
+  version: "1.0.2"
   main: ngircd
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.ngircd/assets/icon.png
   title:

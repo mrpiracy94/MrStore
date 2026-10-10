@@ -9,11 +9,11 @@
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.glances/assets/glances.webp",
   "tagline": "Monitoriza CPU, memória, discos e rede",
-  "description": "Glances — origem: seedit4.me catalog. Imagem: nicolargo/glances:latest-full. Verifica portas/variáveis na documentação do projeto.",
+  "description": "Glances — monitorização via web na porta 61208 sem acesso ao Docker socket por omissão. As métricas Docker/containers não estarão disponíveis nesta instalação; para as ativar é necessária revisão explícita das permissões do host. Mantidos imagem oficial e parâmetros de UI; requer análise CVE da imagem.",
   "title": "Glances",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.glances",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "others"
   ],

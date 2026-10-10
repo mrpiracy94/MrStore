@@ -1,7 +1,7 @@
 name: sonarr
 services:
   sonarr:
-    image: lscr.io/linuxserver/sonarr:latest@sha256:8416db4409b57b9eb1b83afca159af11fa4b8d79cbf4a656a2d64cc3f310b1a0
+    image: lscr.io/linuxserver/sonarr:latest@sha256:09744123b2faed45d701fd1422896015c59837dc60308143240594faa16235f8
     container_name: sonarr
     restart: unless-stopped
     environment:

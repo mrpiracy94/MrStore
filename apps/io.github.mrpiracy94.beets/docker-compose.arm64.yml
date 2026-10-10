@@ -1,7 +1,7 @@
 name: beets
 services:
   beets:
-    image: lscr.io/linuxserver/beets:latest@sha256:fd4e826c8d44a62fe1bc37a4e33121ebdb19f8d16497ef7416b652a38d4da5b9
+    image: ghcr.io/mrpiracy94/mrstore-python-beets@sha256:731e25db040b766afade34c113195d361575806de141f6b1227447ae64ad1ab0
     container_name: beets
     restart: unless-stopped
     environment:
@@ -24,7 +24,7 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.beets
-  version: "1.0.1"
+  version: "1.0.2"
   main: beets
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.beets/assets/icon.png
   title:

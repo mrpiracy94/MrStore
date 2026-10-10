@@ -1,5 +1,5 @@
 {
-  "update_at": "2026-10-09",
+  "update_at": "2026-10-10",
   "architectures": [
     "amd64",
     "arm64"
@@ -13,13 +13,13 @@
   "title": "Tautulli",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.tautulli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "media"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 58481258,
-    "arm64": 59350547
+    "amd64": 59557935,
+    "arm64": 60413980
   }
 }

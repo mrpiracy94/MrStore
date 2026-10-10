@@ -5,21 +5,21 @@
     "arm64"
   ],
   "author": "MrStore",
-  "developer": "LinuxServer.io",
+  "developer": "netboot.xyz",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.netbootxyz/assets/netbootxyz.webp",
   "tagline": "Arranca sistemas e utilitários pela rede",
-  "description": "netboot.xyz — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/netbootxyz:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-netbootxyz/",
+  "description": "netboot.xyz — imagem oficial netboot.xyz com pacotes de segurança atualizados, publicada pelo MrStore no GHCR e fixada em digest imutável. A imagem antiga LinuxServer.io foi descontinuada. Os dados permanecem em /DATA/AppData/netbootxyz; a porta de configuração é 20013, TFTP 69/udp, e servidor de ficheiros 20014. NGINX_PORT=8080 conserva a porta interna existente. Documentação: https://github.com/netbootxyz/docker-netbootxyz",
   "title": "netboot.xyz",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.netbootxyz",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "categories": [
     "networking"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 0,
-    "arm64": 0
+    "amd64": 83728446,
+    "arm64": 83682811
   }
 }

@@ -9,17 +9,17 @@
   "category": "Developer",
   "thumbnail": "/apps/io.github.mrpiracy94.phpmyadmin/assets/phpmyadmin.webp",
   "tagline": "Administra bases de dados MySQL no navegador",
-  "description": "phpMyAdmin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/phpmyadmin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-phpmyadmin/",
+  "description": "phpMyAdmin LinuxServer original com Twig, Symfony Cache e pacotes Alpine atualizados individualmente para corrigir CVEs. Imagem GHCR verificada em AMD64/ARM64 com 0 HIGH/CRITICAL no Trivy, página web, /config e consulta MariaDB. Mantém 20042→80 e a configuração PUID/PGID/PMA_ARBITRARY; antes de atualizar faz backup de /DATA/AppData/phpmyadmin/config. Ver docs/PHPMYADMIN_LSIO_SECURITY_PATCH.md.",
   "title": "phpMyAdmin",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.phpmyadmin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "developer"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 54947533,
-    "arm64": 55489608
+    "amd64": 63994810,
+    "arm64": 64833005
   }
 }

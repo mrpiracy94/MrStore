@@ -1,7 +1,7 @@
 name: lm-studio
 services:
   lm-studio:
-    image: lscr.io/linuxserver/lm-studio:latest@sha256:bedf65eab9b1b93bfbbc8b0db1dfb69abaf1c6fe124f2c16593bccd7af11edad
+    image: lscr.io/linuxserver/lm-studio:latest@sha256:64b3c9cacab3035cbf114dc40544ee0d555e3c48311a58f07d0824b8d053b88f
     container_name: lm-studio
     restart: unless-stopped
     environment:

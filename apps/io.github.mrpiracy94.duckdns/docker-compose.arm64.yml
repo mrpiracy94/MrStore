@@ -8,7 +8,7 @@ services:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
-      - "SUBDOMAINS=sub"
+      - "SUBDOMAINS=CHANGE_ME_SUBDOMAIN"
       - "TOKEN=CHANGE_ME"
     volumes:
       - type: bind
@@ -16,7 +16,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.duckdns
-  version: "1.0.1"
+  version: "1.0.2"
   main: duckdns
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.duckdns/assets/icon.png
   title:

@@ -1,7 +1,7 @@
 name: tautulli
 services:
   tautulli:
-    image: lscr.io/linuxserver/tautulli:latest@sha256:b8f0c6d11fc9b2f21fc4c2cbecb6781b7ec46778294af44e8fb571ce8aa61b71
+    image: ghcr.io/mrpiracy94/mrstore-python-tautulli@sha256:6d9fa8bf48dd804b6b6ba2833a892f2cebfe05ffcbaf365c9474a9efe1c29c8b
     container_name: tautulli
     restart: unless-stopped
     environment:
@@ -18,7 +18,7 @@ services:
         target: /config
 x-casaos:
   id: io.github.mrpiracy94.tautulli
-  version: "1.0.1"
+  version: "1.0.2"
   main: tautulli
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.tautulli/assets/icon.png
   title:

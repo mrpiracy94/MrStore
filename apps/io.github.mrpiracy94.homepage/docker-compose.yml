@@ -5,7 +5,7 @@ services:
     container_name: homepage
     restart: unless-stopped
     environment:
-      - "HOMEPAGE_ALLOWED_HOSTS=*"
+      - "HOMEPAGE_ALLOWED_HOSTS=zimaos.local:30007"
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
@@ -17,13 +17,9 @@ services:
       - type: bind
         source: /DATA/AppData/homepage
         target: /app/config
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-        read_only: true
 x-casaos:
   id: io.github.mrpiracy94.homepage
-  version: "1.0.1"
+  version: "1.0.2"
   main: homepage
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.homepage/assets/icon.png
   title:

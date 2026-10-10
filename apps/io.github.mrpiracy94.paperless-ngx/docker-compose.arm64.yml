@@ -31,7 +31,7 @@ services:
         source: /DATA/Documents/consume
         target: /usr/src/paperless/consume
   paperless-broker:
-    image: docker.io/library/redis:8@sha256:ec87069acc319552b908ba0709277d17a0fe768fcfbdd78b7271d77b4a1bd3ed
+    image: docker.io/library/redis:8.10.1-alpine@sha256:0ba1ade8d2139544540fb6aa1338bb6a95ca4e44f4ae8a49627abee1db345da7
     container_name: paperless-broker
     restart: unless-stopped
     volumes:
@@ -40,7 +40,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.paperless-ngx
-  version: "1.0.1"
+  version: "1.0.2"
   main: paperless-ngx
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.paperless-ngx/assets/icon.png
   title:

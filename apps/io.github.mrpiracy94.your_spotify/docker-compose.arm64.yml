@@ -1,0 +1,29 @@
+name: your_spotify
+services:
+  your_spotify:
+    image: lscr.io/linuxserver/your_spotify:latest@sha256:d31fa8e076b1f914c4184642c74acad3d043f9fb66f0c61c97d8c8a34cc9940a
+    container_name: your_spotify
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+      - "API_ENDPOINT=http://zimaos.local:8080"
+      - "CLIENT_ENDPOINT=http://zimaos.local:8081"
+    ports:
+      - target: 80
+        published: "20056"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/your_spotify/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.your_spotify
+  version: "1.0.1"
+  main: your_spotify
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.your_spotify/assets/icon.png
+  title:
+    en_US: "Your Spotify"
+  port_map: "20056"
+  index: /

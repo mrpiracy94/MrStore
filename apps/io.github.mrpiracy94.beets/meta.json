@@ -1,5 +1,5 @@
 {
-  "update_at": "2026-10-09",
+  "update_at": "2026-10-10",
   "architectures": [
     "amd64",
     "arm64"
@@ -13,13 +13,13 @@
   "title": "Beets",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.beets",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "media"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 236933816,
-    "arm64": 228123030
+    "amd64": 237754511,
+    "arm64": 228933313
   }
 }

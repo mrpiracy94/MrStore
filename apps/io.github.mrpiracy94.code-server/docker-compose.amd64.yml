@@ -1,7 +1,7 @@
 name: code-server
 services:
   code-server:
-    image: lscr.io/linuxserver/code-server:latest@sha256:962e701cec5a19a9808083e9ea6e51b54e42832e737dc97ec52a74f37e8a9dfb
+    image: ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe
     container_name: code-server
     restart: unless-stopped
     environment:
@@ -22,7 +22,7 @@ services:
         target: /workspace
 x-casaos:
   id: io.github.mrpiracy94.code-server
-  version: "1.0.1"
+  version: "1.0.2"
   main: code-server
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.code-server/assets/icon.png
   title:

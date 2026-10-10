@@ -9,17 +9,17 @@
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.paperless-ngx/assets/paperless-ngx.webp",
   "tagline": "Digitaliza e organiza documentos com OCR",
-  "description": "Arquivo de documentos com OCR. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. O LinuxServer.io deixou de manter paperless-ngx; esta é a imagem oficial do projeto.",
+  "description": "Arquivo de documentos com OCR. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. O LinuxServer.io deixou de manter paperless-ngx; esta é a imagem oficial do projeto. Broker Redis usa Alpine 8.10.1 com o mesmo volume /DATA/AppData/paperless/redis; faz backup antes de atualizar uma instalação real.",
   "title": "Paperless-ngx",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.paperless-ngx",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "productivity"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 887329525,
-    "arm64": 842860118
+    "amd64": 870775916,
+    "arm64": 826183647
   }
 }

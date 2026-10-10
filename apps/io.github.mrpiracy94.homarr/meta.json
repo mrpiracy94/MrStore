@@ -9,17 +9,17 @@
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.homarr/assets/homarr.webp",
   "tagline": "Painel de controlo para serviços do homelab",
-  "description": "Dashboard para a casa/homelab. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "description": "Dashboard para o homelab. Docker socket removido por omissão para reduzir privilégios; gestão e descoberta de containers Docker exigem proxy com permissões limitadas, configurado separadamente. Obrigatório substituir SECRET_ENCRYPTION_KEY por 64 caracteres hexadecimais privados ANTES da instalação; guardar a chave para recuperar os dados. Os dados persistem em /DATA/AppData/homarr.",
   "title": "Homarr",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.homarr",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "others"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 145102232,
-    "arm64": 147132950
+    "amd64": 142812488,
+    "arm64": 144821980
   }
 }

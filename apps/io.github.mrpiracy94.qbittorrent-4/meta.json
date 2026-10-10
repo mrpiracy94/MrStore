@@ -8,18 +8,18 @@
   "developer": "LinuxServer.io",
   "category": "Networking",
   "thumbnail": "/apps/io.github.mrpiracy94.qbittorrent-4/assets/qbittorrent.webp",
-  "tagline": "Cliente BitTorrent com interface web, versão 4",
-  "description": "qBittorrent 4.x — origem: seedit4.me catalog (versão 4). Imagem: lscr.io/linuxserver/qbittorrent:4.6.7. Verifica portas/variáveis na documentação do projeto.",
-  "title": "qBittorrent 4.x",
+  "tagline": "Cliente BitTorrent 5.2 com libtorrent v1",
+  "description": "Variante corrigida de segurança do antigo qBittorrent 4.x, agora 5.2.4 com libtorrent v1. Imagem GitHub GHCR fixada por digest após análise HIGH/CRITICAL sem achados em AMD64 e ARM64. Mantém o ID de catálogo anterior para não perder a ligação às instalações. Antes de atualizar uma instalação 4.x existente: pára o contentor, cria uma cópia de segurança completa de /DATA/AppData/qbittorrent-4/config e confirma compatibilidade, permissões e WebUI. Não é uma migração automática garantida. Fonte: https://docs.linuxserver.io/images/docker-qbittorrent/",
+  "title": "qBittorrent 5.2 (libtorrent v1)",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.qbittorrent-4",
-  "version": "1.0.1",
+  "version": "1.1.1",
   "categories": [
     "networking"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 85357821,
-    "arm64": 85829728
+    "amd64": 117117582,
+    "arm64": 116037928
   }
 }

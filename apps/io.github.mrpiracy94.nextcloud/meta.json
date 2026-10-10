@@ -9,11 +9,11 @@
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.nextcloud/assets/nextcloud.webp",
   "tagline": "Nuvem privada para ficheiros e colaboração",
-  "description": "Nextcloud — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/nextcloud:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-nextcloud/",
+  "description": "Nextcloud — origem: LinuxServer.io. O serviço LinuxServer.io usa HTTPS na porta interna 443, publicada na porta 20019. O certificado inicial pode ser autoassinado e exigir confirmação no browser; valida a instalação no ZimaOS. Docs: https://docs.linuxserver.io/images/docker-nextcloud/",
   "title": "Nextcloud",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.nextcloud",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "categories": [
     "productivity"
   ],

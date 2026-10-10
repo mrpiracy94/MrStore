@@ -1,7 +1,7 @@
 name: homarr
 services:
   homarr:
-    image: ghcr.io/homarr-labs/homarr:latest@sha256:dbc4453cdf0945ea4d04ee6a22e5e46e6aa3bf20cfef659d271a8d2dafcf1ab3
+    image: ghcr.io/homarr-labs/homarr:latest@sha256:6219bd7a50f046fad2403c469366f2e463bde1558c5676828586ae98c44e7a75
     container_name: homarr
     restart: unless-stopped
     environment:
@@ -14,12 +14,9 @@ services:
       - type: bind
         source: /DATA/AppData/homarr
         target: /appdata
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
 x-casaos:
   id: io.github.mrpiracy94.homarr
-  version: "1.0.1"
+  version: "1.0.2"
   main: homarr
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.homarr/assets/icon.png
   title:

@@ -1,7 +1,7 @@
 name: jellyfin
 services:
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest@sha256:daff148274c7d28548185931ff9a49e338c478ef633f0976e1c8bbe0ba6861a2
+    image: ghcr.io/mrpiracy94/mrstore-pebble-jellyfin@sha256:3d572cac49486117afc12d5fa5bf4a1823a57b15d370e26bcc4d8a9e92d09979
     container_name: jellyfin
     restart: unless-stopped
     environment:
@@ -33,7 +33,7 @@ services:
         target: /data/movies
 x-casaos:
   id: io.github.mrpiracy94.jellyfin
-  version: "1.0.1"
+  version: "1.0.2"
   main: jellyfin
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.jellyfin/assets/icon.png
   title:

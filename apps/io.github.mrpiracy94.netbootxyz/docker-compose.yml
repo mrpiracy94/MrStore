@@ -1,13 +1,15 @@
 name: netbootxyz
 services:
   netbootxyz:
-    image: lscr.io/linuxserver/netbootxyz:latest
+    image: ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527
     container_name: netbootxyz
     restart: unless-stopped
     environment:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
+      - "WEB_APP_PORT=3000"
+      - "NGINX_PORT=8080"
     ports:
       - target: 3000
         published: "20013"
@@ -27,7 +29,7 @@ services:
         target: /assets
 x-casaos:
   id: io.github.mrpiracy94.netbootxyz
-  version: "1.0.1"
+  version: "1.1.1"
   main: netbootxyz
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.netbootxyz/assets/icon.png
   title:

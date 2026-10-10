@@ -1,7 +1,7 @@
 name: sickgear
 services:
   sickgear:
-    image: lscr.io/linuxserver/sickgear:latest
+    image: ghcr.io/mrpiracy94/mrstore-python-sickgear@sha256:01e888bbe243143797e5d6e9247f87c2d90d985ac6af54f700d84b42d5e58562
     container_name: sickgear
     restart: unless-stopped
     environment:
@@ -24,7 +24,7 @@ services:
         target: /downloads
 x-casaos:
   id: io.github.mrpiracy94.sickgear
-  version: "1.0.1"
+  version: "1.0.2"
   main: sickgear
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.sickgear/assets/icon.png
   title:

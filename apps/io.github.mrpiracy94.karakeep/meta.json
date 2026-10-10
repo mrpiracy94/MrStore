@@ -9,17 +9,17 @@
   "category": "Productivity",
   "thumbnail": "/apps/io.github.mrpiracy94.karakeep/assets/karakeep.webp",
   "tagline": "Guarda e pesquisa favoritos, notas e imagens",
-  "description": "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. MEILI_MASTER_KEY tem de ser igual nos dois serviços. O Chrome utiliza a imagem oficial do Karakeep com a porta interna 9222 e configuração de proxy própria. Antes de atualizar Meilisearch, confirma a compatibilidade com o Karakeep.",
+  "description": "Guarda tudo: bookmarks, notas, imagens (com IA opcional). Estado: verificado em out/2026 (patrocinador ativo do selfh.st, ago-out/2026). Confirma portas e variáveis na documentação do projeto. NEXTAUTH_URL usa porta 30002 por omissão; ajustar o hostname/domínio e HTTPS de acordo com o NAS antes de instalar. MEILI_MASTER_KEY tem de ser igual nos dois serviços. O Chrome utiliza a imagem oficial do Karakeep com a porta interna 9222 e configuração de proxy própria. Meilisearch v1.54.3 utiliza --upgrade-db para migrar índices antigos; faz backup de /DATA/AppData/karakeep/meili e dos dados Karakeep ANTES de atualizar. Para rollback, restaura ambos os diretórios e as imagens antigas.",
   "title": "Karakeep",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.karakeep",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "categories": [
     "productivity"
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 757439771,
-    "arm64": 735387816
+    "amd64": 767686066,
+    "arm64": 744676706
   }
 }

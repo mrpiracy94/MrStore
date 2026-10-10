@@ -1,7 +1,7 @@
 name: jdownloader
 services:
   jdownloader:
-    image: jlesage/jdownloader-2:latest
+    image: ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:4b7e4ba450fb511da21ffa56d2618d012d4cb6d5c553da1bd2797b1eb4b06769
     container_name: jdownloader
     restart: unless-stopped
     environment:
@@ -19,7 +19,7 @@ services:
         target: /output
 x-casaos:
   id: io.github.mrpiracy94.jdownloader
-  version: "1.0.1"
+  version: "1.0.2"
   main: jdownloader
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.jdownloader/assets/icon.png
   title:

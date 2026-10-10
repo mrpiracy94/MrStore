@@ -7,7 +7,7 @@
   "author": "MrStore",
   "developer": "LinuxServer.io",
   "category": "Productivity",
-  "thumbnail": "/apps/io.github.mrpiracy94.ungoogled-chromium/assets/chromium.webp",
+  "thumbnail": "/apps/io.github.mrpiracy94.ungoogled-chromium/assets/ungoogled-chromium-logo.webp",
   "tagline": "Navegador Chromium sem serviços Google",
   "description": "Ungoogled Chromium — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ungoogled-chromium:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ungoogled-chromium/",
   "title": "Ungoogled Chromium",
@@ -19,7 +19,7 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 1280950512,
-    "arm64": 1228113974
+    "amd64": 1281759566,
+    "arm64": 1227872782
   }
 }

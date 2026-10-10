@@ -4,18 +4,40 @@ services:
     image: lscr.io/linuxserver/socket-proxy:latest
     container_name: socket-proxy
     restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /run
+    security_opt:
+      - no-new-privileges:true
     environment:
       - "PUID=1000"
       - "PGID=1000"
       - "TZ=Europe/Lisbon"
       - "CONTAINERS=1"
+      - "POST=0"
+      - "EXEC=0"
+      - "BUILD=0"
+      - "AUTH=0"
+      - "IMAGES=0"
+      - "SECRETS=0"
+      - "SERVICES=0"
+      - "ALLOW_START=0"
+      - "ALLOW_STOP=0"
+      - "ALLOW_RESTARTS=0"
+      - "ALLOW_PAUSE=0"
+      - "ALLOW_UNPAUSE=0"
+      - "ALLOW_ARCHIVE=0"
+      - "ALLOW_CHANGES=0"
+      - "ALLOW_EXPORT=0"
+      - "ALLOW_TOP=0"
     volumes:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
+        read_only: true
 x-casaos:
   id: io.github.mrpiracy94.socket-proxy
-  version: "1.0.1"
+  version: "1.1.1"
   main: socket-proxy
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.socket-proxy/assets/icon.svg
   title:

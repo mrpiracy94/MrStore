@@ -1,7 +1,7 @@
 name: plex
 services:
   plex:
-    image: lscr.io/linuxserver/plex:latest
+    image: ghcr.io/mrpiracy94/mrstore-pebble-plex@sha256:0d624cc85c6911c0d5af20f33fd733f90f86d612ae15f84424dab0e0187bcbbb
     container_name: plex
     restart: unless-stopped
     environment:
@@ -55,7 +55,7 @@ services:
         target: /music
 x-casaos:
   id: io.github.mrpiracy94.plex
-  version: "1.0.1"
+  version: "1.0.2"
   main: plex
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.plex/assets/icon.png
   title:

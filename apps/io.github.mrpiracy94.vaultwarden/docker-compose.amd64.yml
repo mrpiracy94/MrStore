@@ -1,7 +1,7 @@
 name: vaultwarden
 services:
   vaultwarden:
-    image: vaultwarden/server:latest@sha256:2bb2e0344616c62a6d76ea10558497499f8ed3f731400e143dc7bf17b757b5b9
+    image: vaultwarden/server:1.37.4-alpine@sha256:7d90670a4e2531e752f014e58f7283b9d197847b6f073bf84e99598f49d80ffd
     container_name: vaultwarden
     restart: unless-stopped
     environment:
@@ -17,7 +17,7 @@ services:
         target: /data
 x-casaos:
   id: io.github.mrpiracy94.vaultwarden
-  version: "1.0.1"
+  version: "1.0.3"
   main: vaultwarden
   icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.vaultwarden/assets/icon.png
   title:
