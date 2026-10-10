@@ -143,14 +143,14 @@ def summarize(report: dict) -> str:
                  key=lambda x: -x["build_age_days"])
     for x in old:
         suffix = " (digest fixo)" if x["reference"] == "immutable" else ""
-        lines.append(f"- {x['build_age_days']} dias — \`{x['image']}\`{suffix} "
+        lines.append(f"- {x['build_age_days']} dias — `{x['image']}`{suffix} "
                      f"({', '.join(x['apps'])})")
     for x in report["results"]:
         if x.get("upstream_deprecation"):
             lines.append(f"- **Fornecedor confirmou descontinuação:** "
-                         f"\`{x['image']}\` — {x['upstream_deprecation']}")
+                         f"`{x['image']}` — {x['upstream_deprecation']}")
         if x["status"] == "error":
-            lines.append(f"- **Consulta inconclusiva:** \`{x['image']}\` — {x['error']}")
+            lines.append(f"- **Consulta inconclusiva:** `{x['image']}` — {x['error']}")
     return "\n".join(lines) + "\n"
 
 

@@ -18,14 +18,22 @@ def main():
     opts = p.parse_args()
     source = apps(ROOT)
     featured = set(load_featured(opts.featured, {app.folder for app in source}))
+    # Fail before creating the staging directory, so a missing translation
+    # cannot leave a partial release that looks ready for publishing.
+    selected = [app for app in source if app.folder in featured]
+    summaries = load_summaries()
+    missing = sorted({app.folder for app in selected} - set(summaries))
+    if missing:
+        raise SystemExit(
+            "Missing Portuguese subtitles for selected applications: "
+            + ", ".join(missing)
+        )
     if opts.stage.exists():
         raise SystemExit("Staging directory already exists")
     opts.stage.mkdir(parents=True)
     (opts.stage / "Apps").mkdir()
     for name in ("store-config.json", "supported-languages.json"):
         shutil.copyfile(ROOT / name, opts.stage / name)
-    selected = [app for app in source if app.folder in featured]
-    summaries = load_summaries()
     warnings = {}
     for app in selected:
         target = opts.stage / "Apps" / app.folder

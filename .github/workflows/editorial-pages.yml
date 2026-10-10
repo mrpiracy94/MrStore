@@ -1,5 +1,5 @@
-# The editorial catalog is published ONLY by rollout-233.yml.
-# This workflow must not race gh-pages and wipe the actual homepage.
+# The editorial catalog is a CI-only preview in rollout-233.yml.
+# Neither editorial workflow may overwrite the CVE-gated gh-pages catalog.
 name: Validate editorial MrStore selection (no publish)
 on:
   push:
@@ -38,5 +38,5 @@ jobs:
       - name: Publication ownership
         run: |
           echo 'No write permissions; this workflow never touches gh-pages.'
-          echo 'The coordinated rollout-233.yml job handles editorial publication.'
+          echo 'The rollout-233.yml job produces an uncertified CI preview artifact, never a gh-pages deployment.'
           echo 'The audited publish.yml is the only CVE-gated installer release process.'
