@@ -86,34 +86,36 @@ class FastAppAuditTests(unittest.TestCase):
         self.assertEqual(status["critical"], 1)
         self.assertFalse(status["complete"])
 
-    def test_daily_scan_is_configured_for_32_simultaneous_images(self):
+    def test_daily_scan_is_configured_for_126_simultaneous_images(self):
         import yaml
         workflow = yaml.load(
             (ROOT / ".github/workflows/cve-scan.yml").read_text(encoding="utf-8"),
             Loader=yaml.BaseLoader,
         )
         job = workflow["jobs"]["trivy"]
-        self.assertEqual(job["strategy"]["max-parallel"], "8")
-        self.assertIn("[0,1,2,3,4,5,6,7]", job["strategy"]["matrix"]["shard"])
+        self.assertEqual(job["strategy"]["max-parallel"], "32")
+        self.assertIn(",".join(str(i) for i in range(32)), job["strategy"]["matrix"]["shard"])
         command = next(step["run"] for step in job["steps"]
                        if step.get("name") == "Scan image shard for critical CVEs")
-        self.assertIn('--shards 8 --shard "$SHARD" --workers 4', command)
-        self.assertEqual(int(job["strategy"]["max-parallel"]) * 4, 32)
+        self.assertIn('--shards 32 --shard "$SHARD" --workers "$workers"', command)
+        self.assertIn('if [ "$SHARD" = \'31\' ]; then workers=2; fi', command)
+        self.assertEqual((int(job["strategy"]["max-parallel"]) - 1) * 4 + 2, 126)
 
-    def test_release_audit_is_configured_for_32_simultaneous_images(self):
+    def test_release_audit_is_configured_for_126_simultaneous_images(self):
         import yaml
         workflow = yaml.load(
             (ROOT / ".github/workflows/publish.yml").read_text(encoding="utf-8"),
             Loader=yaml.BaseLoader,
         )
         job = workflow["jobs"]["security_audit"]
-        self.assertEqual(job["strategy"]["max-parallel"], "8")
-        self.assertEqual(len(job["strategy"]["matrix"]["shard"]), 8)
+        self.assertEqual(job["strategy"]["max-parallel"], "32")
+        self.assertEqual(len(job["strategy"]["matrix"]["shard"]), 32)
         command = next(step["run"] for step in job["steps"]
                        if step.get("name") ==
                        "Scan all catalog images by immutable digest on AMD64 and ARM64")
-        self.assertIn("--workers 4", command)
-        self.assertEqual(int(job["strategy"]["max-parallel"]) * 4, 32)
+        self.assertIn('--workers "$workers"', command)
+        self.assertIn('if [ "${{ matrix.shard }}" = \'31\' ]; then workers=2; fi', command)
+        self.assertEqual((int(job["strategy"]["max-parallel"]) - 1) * 4 + 2, 126)
 
     def test_release_parallel_checks_preserve_every_architecture_and_status(self):
         from catalog import App
@@ -148,6 +150,14 @@ class FastAppAuditTests(unittest.TestCase):
             ["clean", "clean", "vulnerable", "clean"])
         self.assertTrue(all(set(result["scans"]) == {"amd64", "arm64"}
                             for result in report["results"]))
+
+    def test_32_way_partition_is_complete_and_disjoint(self):
+        from cves import shard_images
+        refs = [f"example/app{i}:1" for i in range(258)]
+        groups = [shard_images(refs, i, 32) for i in range(32)]
+        self.assertEqual(sorted([item for group in groups for item in group]),
+                         sorted(refs))
+        self.assertTrue(all(len(group) > 0 for group in groups))
 
     def test_parallel_trivy_uses_memory_cache_only_when_db_is_prepared(self):
         done = subprocess.CompletedProcess(["trivy"], 0, json.dumps(
