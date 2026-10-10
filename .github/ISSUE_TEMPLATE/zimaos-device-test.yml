@@ -2,32 +2,74 @@ name: Teste real num equipamento ZimaOS
 description: Registar instalação e atualização reais, para além da validação GitHub Actions
 title: "ZimaOS device test: "
 body:
+  - type: markdown
+    attributes:
+      value: "Partilha apenas resultados anonimizados. Não incluir IPs privados, tokens, credenciais, dumps de Docker inspect nem dados pessoais."
+  - type: input
+    id: app
+    attributes:
+      label: Aplicação (nome exato da pasta Apps/)
+      placeholder: actual-budget
+    validations:
+      required: true
+  - type: dropdown
+    id: architecture
+    attributes:
+      label: Arquitetura testada
+      options:
+        - amd64
+        - arm64
+    validations:
+      required: true
   - type: input
     id: model
     attributes:
-      label: Equipamento e versão ZimaOS
+      label: Modelo do equipamento
+    validations:
+      required: true
+  - type: input
+    id: zimaos-version
+    attributes:
+      label: Versão exata do ZimaOS
     validations:
       required: true
   - type: input
     id: release
     attributes:
-      label: Release/catalog SHA testado
+      label: Release/catalog commit testado
+    validations:
+      required: true
+  - type: input
+    id: compose-sha256
+    attributes:
+      label: SHA-256 do docker-compose.yml testado
+      description: "Calcular com: sha256sum Apps/NOME/docker-compose.yml"
+    validations:
+      required: true
+  - type: input
+    id: image
+    attributes:
+      label: Referência da imagem realmente instalada (tag ou digest)
     validations:
       required: true
   - type: checkboxes
     id: steps
     attributes:
-      label: Ensaios realizados
+      label: Ensaios realizados (selecionar apenas os comprovados)
       options:
-        - label: Catálogo v2 importado e listado corretamente
-        - label: Imagens e ícones válidos para a arquitetura
-        - label: Instalação e interface web de app testada
+        - label: Container e dependências observados em execução
+        - label: Interface web ou função de serviço verificada
+        - label: Aplicação instalada através da MrStore no ZimaOS
+        - label: Função principal testada, para além de abrir a UI
         - label: Volumes e dados preservados após reinício
-        - label: Backup, migração e restauração testados
+        - label: Backup realizado
+        - label: Upgrade e migração testados
+        - label: Restauração de dados testada
         - label: Rollback executado no ambiente de ensaio
   - type: textarea
     id: results
     attributes:
-      label: Logs (sem credenciais), bloqueios e conclusões
+      label: Resultados, prova anonimizada e limitações
+      description: Explica o procedimento, os resultados e eventuais falhas. Este issue não certifica automaticamente a aplicação.
     validations:
       required: true

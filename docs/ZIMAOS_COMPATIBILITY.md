@@ -142,3 +142,79 @@ reinício ou dados persistentes. O Markdown contém as checklists C3 em branco.
 Nunca executar estas aplicações apenas para produzir um resultado positivo
 enquanto existirem riscos CRITICAL/HIGH não aceites num NAS de produção.
 A ausência de máquina ZimaOS não pode ser substituída por mocks da CI.
+
+## Inventário completo de evidências por aplicação (C2–C4)
+
+A partir do registo `data/zimaos-device-tests.json`, `scripts/zimaos_coverage.py`
+gera um relatório com **todas** as entradas atuais da pasta `Apps/`, incluindo as
+que ainda não têm prova de testes num equipamento real. Não confundir "sem
+registo" com "incompatível" ou "nunca testado": podem existir testes do autor
+ainda não documentados.
+
+```bash
+python scripts/zimaos_coverage.py
+```
+
+Consultar `out/zimaos-coverage.md` (tabela por app e arquitetura) e
+`out/zimaos-coverage.json` (dados estruturados). O workflow `Validate MrStore`
+valida o registo em todas as PRs e disponibiliza ambos os relatórios como
+artefactos. O total é calculado a partir dos manifestos no momento do teste,
+sem lista estática de 254 nomes.
+
+### Registar um teste realizado no ZimaOS
+
+1. Criar um [issue de teste real](https://github.com/mrpiracy94/MrStore/issues/new?template=zimaos-device-test.yml)
+   e descrever a aplicação, CPU, versão ZimaOS, função exercitada, persistência
+   e respetiva evidência **anonimizada**. Não publicar dados pessoais, IPs,
+   passwords nem logs com segredos.
+2. Calcular a impressão SHA-256 do `Apps/NOME/docker-compose.yml` **exatamente
+   como foi testado** (por exemplo `sha256sum Apps/NOME/docker-compose.yml`).
+   A impressão não é o SHA do commit Git nem o digest Docker.
+3. Adicionar um objeto a `tests` em `data/zimaos-device-tests.json` através
+   de PR. Preencher `app`, `architecture` (amd64 ou arm64), `zimaos_version`,
+   `tested_at` (AAAA-MM-DD), `compose_sha256`, `image_ref` (referência da
+   imagem observada no teste), `level` (C2, C3 ou C4), `evidence_url` (issue
+   ou PR do próprio MrStore) e os nove `checks` booleanos.
+4. Para C2 são obrigatórios `runtime_observed` e `ui_or_service_checked`.
+   Para C3 acrescem `installed_from_mrstore`, `core_function_checked` e
+   `restart_persistence_checked`. C4 exige também `backup_checked`,
+   `upgrade_checked`, `restore_checked` e `rollback_checked`.
+   Os campos não executados devem permanecer `false`.
+5. A CI rejeita campos incompletos, arquiteturas não declaradas e níveis
+   superiores sem as checklists correspondentes. **Não confirma a veracidade
+   da evidência humana**: os registos continuam a ser relatórios de testes,
+   não certificados independentes.
+
+Exemplo de registo **fictício — não adicionar como prova real**:
+
+```json
+{
+  "app": "actual-budget",
+  "architecture": "amd64",
+  "zimaos_version": "VERSAO_REAL",
+  "tested_at": "AAAA-MM-DD",
+  "compose_sha256": "SHA256_REAL_DO_COMPOSE",
+  "image_ref": "IMAGEM_REAL_COM_TAG_OU_DIGEST",
+  "level": "C3",
+  "evidence_url": "https://github.com/mrpiracy94/MrStore/issues/NUMERO",
+  "checks": {
+    "runtime_observed": true,
+    "ui_or_service_checked": true,
+    "installed_from_mrstore": true,
+    "core_function_checked": true,
+    "restart_persistence_checked": true,
+    "backup_checked": false,
+    "upgrade_checked": false,
+    "restore_checked": false,
+    "rollback_checked": false
+  }
+}
+```
+
+**Revalidação automática do manifesto:** se o conteúdo do Compose mudar, o
+registo anterior mantém-se historicamente, mas deixa de contar como cobertura
+atual. Cada arquitetura declarada precisa de evidência própria para atingir
+C3 completo no catálogo. Mudanças na versão ZimaOS ou no digest da imagem
+também exigem reavaliação **humana** — não são observáveis apenas a partir do
+manifesto. Um C3 de uma versão anterior não deve ser interpretado como
+certificação da última imagem instalada.
