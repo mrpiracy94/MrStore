@@ -143,6 +143,18 @@ jobs:
           pattern: mrstore-release-security-shard-*
           path: out/release-evidence
           merge-multiple: false
+      - name: Group dual-architecture CVEs by vulnerable package and affected application
+        if: always()
+        run: python scripts/group_trivy_findings.py --reports out/release-evidence --json out/dualarch-groups.json --md out/dualarch-groups.md
+      - name: Preserve cross-application CVE grouping reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-dualarch-cve-groups
+          path: |
+            out/dualarch-groups.json
+            out/dualarch-groups.md
+          if-no-files-found: warn
       - name: Generate isolated approved release catalog; quarantine everything else
         id: release
         run: |
