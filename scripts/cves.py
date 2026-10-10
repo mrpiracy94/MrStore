@@ -53,11 +53,22 @@ def scan(image: str, binary: str = 'trivy', platform: str | None = None) -> tupl
                     return [], 'Invalid Trivy JSON output'
                 if not isinstance(report, dict) or not isinstance(report.get('Results'), list):
                     return [], 'Incomplete Trivy report (missing Results)'
+                # A successful Trivy process with zero scanned targets is not
+                # evidence of a clean image. Reject malformed target payloads
+                # instead of silently skipping them and returning zero CVEs.
+                if not report['Results']:
+                    return [], 'Incomplete Trivy report (no scanned targets)'
+                for result in report['Results']:
+                    if not isinstance(result, dict) or not isinstance(result.get('Target'), str) or not result['Target'].strip():
+                        return [], 'Incomplete Trivy report (invalid scan target)'
+                    vulnerabilities = result.get('Vulnerabilities')
+                    if vulnerabilities is not None and (
+                            not isinstance(vulnerabilities, list) or
+                            any(not isinstance(v, dict) for v in vulnerabilities)):
+                        return [], 'Incomplete Trivy report (invalid vulnerabilities)'
                 hits = []
                 seen = set()
                 for result in report['Results']:
-                    if not isinstance(result, dict):
-                        continue
                     for item in result.get('Vulnerabilities') or []:
                         if item.get('Severity') not in ('HIGH', 'CRITICAL'):
                             continue
