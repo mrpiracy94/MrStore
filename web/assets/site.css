@@ -441,7 +441,7 @@ body{background:#10151d;overflow-x:hidden}
   .showcase-window{min-height:300px}
 }
 @media(max-width:750px){
-  .shell{width:min(100% - 40px,1370px)}
+  .shell{width:min(calc(100% - 40px),1370px)}
   .platform-heading-new,.benefits-heading,.final-cta-inner{grid-template-columns:1fr;gap:15px}
   .platform-heading-new p,.benefits-heading p{justify-self:start}
   .platform-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
