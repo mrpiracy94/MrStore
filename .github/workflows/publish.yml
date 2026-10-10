@@ -1,7 +1,7 @@
 name: Build and publish MrStore v2
 on:
   push:
-    branches: [main, docs/public-copy-ptpt-20261010]
+    branches: [main]
     paths:
       - 'Apps/**'
       - 'web/**'
@@ -23,6 +23,9 @@ on:
       - '.github/workflows/publish.yml'
   pull_request:
     paths:
+      - 'web/**'
+      - 'assets/branding/**'
+      - 'scripts/test_storefront_browser.py'
       - 'Apps/**'
       - 'scripts/catalog.py'
       - 'scripts/cves.py'
@@ -74,7 +77,6 @@ jobs:
           python scripts/privilege_policy.py --base "$BASE_SHA"
   web_smoke:
     if: github.event_name == 'pull_request'
-    needs: preflight
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
