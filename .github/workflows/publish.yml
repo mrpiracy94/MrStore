@@ -103,7 +103,7 @@ jobs:
         id: release
         run: |
           python scripts/publish_editorial.py --featured data/featured-apps.json --stage release-source --report out/release-selection.json
-          echo "approved=96" >> "$GITHUB_OUTPUT"
+          echo "approved=112" >> "$GITHUB_OUTPUT"
       - name: Validate staged Compose manifests with official Docker Compose parser
         run: >-
           python scripts/compose_preflight.py --root release-source
@@ -138,7 +138,7 @@ jobs:
           index = json.loads(Path("dist/index.json").read_text())
           actual = {entry["id"] for entry in index["apps"]}
           expected = {"io.github.mrpiracy94." + slug for slug in report["approved"]}
-          assert len(actual) == len(index["apps"]) == 96 and actual == expected
+          assert len(actual) == len(index["apps"]) == 112 and actual == expected
           PY
       - name: Verify PT subtitles of approved apps
         run: >-
