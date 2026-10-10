@@ -64,6 +64,19 @@ class ImmichPostgresGuardTests(unittest.TestCase):
                 self.assertTrue(immich_major_upgrade_hazards(
                     self.original, changed, "immich"))
 
+    def test_removed_or_renamed_database_service_cannot_bypass_migration_guard(self):
+        for replacement in (None, "postgres16", "immich-db-new"):
+            with self.subTest(replacement=replacement):
+                candidate = copy.deepcopy(self.original)
+                service = candidate["services"].pop("immich-database")
+                if replacement is not None:
+                    service["image"] = "ghcr.io/immich-app/postgres:16-vectorchord0.4.3"
+                    candidate["services"][replacement] = service
+                warnings = immich_major_upgrade_hazards(
+                    self.original, candidate, "immich")
+                self.assertEqual(len(warnings), 1, warnings)
+                self.assertIn("removed or renamed", warnings[0])
+
     def test_missing_data_mount_is_rejected(self):
         new = copy.deepcopy(self.original)
         db = new["services"]["immich-database"]
