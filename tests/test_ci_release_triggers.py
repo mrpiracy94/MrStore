@@ -32,6 +32,7 @@ class PublisherTriggerTests(unittest.TestCase):
             "scripts/cves.py",
             "scripts/release_scan.py",
             "scripts/release_catalog.py",
+            "scripts/image_freshness.py",
             "scripts/validate.py",
             "scripts/verify_dist.py",
             "scripts/privilege_policy.py",
