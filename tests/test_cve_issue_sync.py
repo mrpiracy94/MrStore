@@ -81,6 +81,64 @@ class IssueSyncTests(unittest.TestCase):
         self.assertEqual(calls[1], ["gh", "issue", "reopen", "15"])
         self.assertEqual(calls[2][:4], ["gh", "issue", "edit", "15"])
 
+    def test_32_shard_clean_issue_is_closed_when_image_evidence_complete(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            report = Path(tmp) / "cves.json"
+            summary = Path(tmp) / "cves.md"
+            report.write_text(json.dumps({
+                "shard": 31, "shards": 32, "critical": 0, "high": 0,
+                "failures": 0,
+                "coverage": {"images": {"complete": True,
+                    "expected": 8, "scanned": 8}},
+            }))
+            summary.write_text("# Sem alertas no grupo 31\\n")
+            calls = []
+            title = "MrStore CVE HIGH/CRITICAL — 32-shard 31"
+
+            def runner(args, **kwargs):
+                calls.append(args)
+                if args[:3] == ["gh", "issue", "list"]:
+                    return subprocess.CompletedProcess(args, 0, json.dumps([
+                        {"number": 51, "title": title, "state": "OPEN"},
+                        {"number": 15, "title":
+                         "MrStore CVE HIGH/CRITICAL — shard 7",
+                         "state": "OPEN"},
+                    ]), "")
+                return subprocess.CompletedProcess(args, 0, "", "")
+
+            outcome = sync(report, summary, runner=runner)
+            self.assertEqual(outcome["action"], "closed")
+            self.assertTrue(any(cmd[:3] == ["gh", "issue", "close"]
+                                and cmd[-1] == "51" for cmd in calls))
+            self.assertFalse(any(cmd[:3] == ["gh", "issue", "close"]
+                                 and cmd[-1] == "15" for cmd in calls))
+
+    def test_32_shard_incomplete_evidence_keeps_cve_issue_open(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            report = Path(tmp) / "cves.json"
+            summary = Path(tmp) / "cves.md"
+            report.write_text(json.dumps({
+                "shard": 0, "shards": 32, "critical": 0, "high": 0,
+                "failures": 1,
+                "coverage": {"images": {"complete": False,
+                    "expected": 8, "scanned": 7}},
+            }))
+            summary.write_text("# Inconclusivo\\n")
+            calls = []
+
+            def runner(args, **kwargs):
+                calls.append(args)
+                if args[:3] == ["gh", "issue", "list"]:
+                    return subprocess.CompletedProcess(args, 0, json.dumps([
+                        {"number": 52, "title":
+                         "MrStore CVE HIGH/CRITICAL — 32-shard 0",
+                         "state": "OPEN"},
+                    ]), "")
+                return subprocess.CompletedProcess(args, 0, "", "")
+            outcome = sync(report, summary, runner=runner)
+            self.assertEqual(outcome["action"], "scan_incomplete")
+            self.assertEqual(len(calls), 1)
+
     def test_workflow_keeps_failing_when_vulnerabilities_remain(self):
         workflow = (ROOT / ".github/workflows/cve-scan.yml").read_text(encoding="utf-8")
         self.assertIn("run: python scripts/sync_cve_issues.py", workflow)
