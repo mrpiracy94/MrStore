@@ -105,9 +105,11 @@ def immich_major_upgrade_hazards(old: dict | None, new: dict, folder: str) -> li
     # /DATA/AppData/immich/postgres/. must never bypass the PG major gate.
     # Symlink resolution cannot be proven offline and needs device review.
     if old_volume:
-        old_volume = posixpath.normpath(old_volume)
+        old_volume = ("/" + posixpath.normpath(old_volume).lstrip("/")
+                      if old_volume.startswith("/") else None)
     if new_volume:
-        new_volume = posixpath.normpath(new_volume)
+        new_volume = ("/" + posixpath.normpath(new_volume).lstrip("/")
+                      if new_volume.startswith("/") else None)
     if not old_volume or not new_volume or old_volume == new_volume:
         return [
             f"Immich PostgreSQL {former}->{future or 'unknown'}: direct major/unknown image change "
