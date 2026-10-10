@@ -106,5 +106,36 @@ class TrivyEvidenceTargetTests(unittest.TestCase):
         self.assertIn("no scan targets", result["scans"]["amd64"]["error"])
 
 
+    def test_release_audit_groups_shared_packages_without_hiding_findings(self):
+        from catalog import App
+        def item(folder):
+            return App(folder, ROOT / "Apps" / folder / "docker-compose.yml",
+                {"services": {"app": {"image": "example.test/shared:1"}}},
+                {"main": "app", "architectures": ["amd64", "arm64"]})
+
+        called = []
+        def scanner(image, platform):
+            called.append((image, platform))
+            return ([{"cve": "CVE-2026-TEST", "severity": "HIGH",
+                      "package": "urllib3", "installed": "2.7.0",
+                      "fixed": "2.8.0", "target": "/app", "url": None}], None)
+
+        report = audit_shard([item("alpha"), item("beta")], 0, 1,
+            resolver=lambda image: (image + "@sha256:" + "a" * 64, None),
+            scanner=scanner)
+        self.assertEqual(len(called), 2)
+        self.assertEqual({arch for _image, arch in called}, {"amd64", "arm64"})
+        self.assertEqual(report["results"][0]["status"], "vulnerable")
+        self.assertEqual(report["results"][0]["scans"]["amd64"]["high"], 1)
+        self.assertEqual(report["results"][0]["scans"]["arm64"]["high"], 1)
+        group = report["package_groups"][0]
+        self.assertEqual(group["package"], "urllib3")
+        self.assertEqual(group["high"], 2)
+        self.assertEqual(group["images"], ["example.test/shared:1"])
+        self.assertEqual(group["applications"], ["alpha/app", "beta/app"])
+        self.assertEqual(group["architectures"], ["amd64", "arm64"])
+        self.assertEqual(group["cves"], ["CVE-2026-TEST"])
+
+
 if __name__ == "__main__":
     unittest.main()
