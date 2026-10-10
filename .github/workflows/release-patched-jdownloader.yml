@@ -108,7 +108,9 @@ jobs:
             done
             docker logs --tail 50 "$name" || true
             docker rm -f "$name" || true
-            rm -rf "$scratch"
+            # Container-created config files use the image UID, not the runner UID.
+            # This cleanup touches only the private mktemp test directory.
+            sudo rm -rf -- "$scratch"
             if [ "$ok" -ne 1 ]; then
               echo "::error::JDownloader HTTP GUI failed on $arch"
               exit 1
