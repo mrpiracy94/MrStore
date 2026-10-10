@@ -23,9 +23,12 @@ SHA256 = re.compile(r"^sha256:[0-9a-f]{64}$")
 
 
 def is_latest(image: str) -> bool:
-    """Detect the ZimaOS :latest comparison branch even for digest-pinned refs."""
+    """Find floating latest tags, including Docker's default for untagged refs.
+
+    A digest-only reference has no floating tag; it is intentionally immutable.
+    """
     tagged = image.split("@", 1)[0].rsplit("/", 1)[-1]
-    return tagged.endswith(":latest")
+    return tagged.endswith(":latest") or (":" not in tagged and "@" not in image)
 
 
 def catalog_item(app) -> dict:
