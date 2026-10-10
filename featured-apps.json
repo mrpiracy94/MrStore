@@ -1,0 +1,38 @@
+[
+  {
+    "appid": "jellyfin"
+  },
+  {
+    "appid": "immich"
+  },
+  {
+    "appid": "homeassistant"
+  },
+  {
+    "appid": "nextcloud"
+  },
+  {
+    "appid": "paperless-ngx"
+  },
+  {
+    "appid": "vaultwarden"
+  },
+  {
+    "appid": "uptime-kuma"
+  },
+  {
+    "appid": "ollama"
+  },
+  {
+    "appid": "syncthing"
+  },
+  {
+    "appid": "actual-budget"
+  },
+  {
+    "appid": "qbittorrent"
+  },
+  {
+    "appid": "gitea"
+  }
+]
