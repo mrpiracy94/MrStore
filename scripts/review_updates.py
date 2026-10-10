@@ -56,7 +56,7 @@ def classify(old: dict | None, new: dict, folder: str) -> dict:
             "reasons": sorted(set(reasons))}
 
 
-IMMICH_POSTGRES = re.compile(r"(?:^|/)immich-app/postgres:(\\d+)-")
+IMMICH_POSTGRES = re.compile(r"(?:^|/)immich-app/postgres:(\d+)-")
 
 
 def _pg_major(image: object) -> int | None:
