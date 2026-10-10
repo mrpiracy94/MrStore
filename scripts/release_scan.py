@@ -5,6 +5,7 @@ Scan failures and detected HIGH/CRITICAL findings are quarantined, never clean.
 """
 from __future__ import annotations
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import argparse
 import json
 from pathlib import Path
@@ -100,13 +101,24 @@ def shared_package_groups(results: list[dict], usage: dict[str, list[str]]) -> l
     ]
 
 
-def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner=scan) -> dict:
+def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner=scan,
+                workers: int = 1) -> dict:
+    """Audit unique image digests concurrently; every declared platform is checked.
+
+    Each image is processed by one worker, so its amd64/arm64 scans remain
+    together. Failed digest lookups, scans and findings keep their own evidence.
+    """
+    if not 1 <= workers <= 4:
+        raise ValueError("workers must be between 1 and 4")
     usage = image_usage(items)
     platforms = image_platforms(items)
     chosen = shard_images(usage, shard, shards)
-    results = []
-    for image in chosen:
-        pinned, error = resolver(image)
+
+    def inspect(image: str) -> dict:
+        try:
+            pinned, error = resolver(image)
+        except Exception as exc:
+            pinned, error = None, "digest resolver exception: " + str(exc)
         scans = {}
         if pinned and not error:
             for platform in platforms[image]:
@@ -119,8 +131,6 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
                     "error": failure,
                     "critical": sum(v.get("severity") == "CRITICAL" for v in findings),
                     "high": sum(v.get("severity") == "HIGH" for v in findings),
-                    # Keep package-level findings: these permit root-cause
-                    # grouping and independently verifiable CVE remediation.
                     "findings": findings,
                 }
         if error or not pinned or len(scans) != len(platforms[image]):
@@ -131,24 +141,36 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
             status = "vulnerable"
         else:
             status = "clean"
-        results.append({
-            "image": image, "pinned": pinned, "status": status,
-            "error": error, "platforms": platforms[image], "scans": scans,
-        })
-        print(f"[{len(results)}/{len(chosen)}] {image}: {status}", flush=True)
+        return {"image": image, "pinned": pinned, "status": status,
+                "error": error, "platforms": platforms[image], "scans": scans}
+
+    results = [None] * len(chosen)
+    if workers == 1:
+        for i, image in enumerate(chosen):
+            results[i] = inspect(image)
+            print(f"[{i + 1}/{len(chosen)}] {image}: {results[i]['status']}", flush=True)
+    else:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            pending = {pool.submit(inspect, image): i for i, image in enumerate(chosen)}
+            for done_count, future in enumerate(as_completed(pending), 1):
+                i = pending[future]
+                results[i] = future.result()
+                print(f"[{done_count}/{len(chosen)}] {chosen[i]}: "
+                      f"{results[i]['status']}", flush=True)
     return {"shard": shard, "shards": shards, "images_total": len(usage),
             "images_checked": len(results),
             "package_groups": shared_package_groups(results, usage),
             "results": results}
 
-
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--shard", type=int, required=True)
     p.add_argument("--shards", type=int, default=8)
+    p.add_argument("--workers", type=int, default=1,
+                   help="Simultaneous image audits per runner (1-4)")
     p.add_argument("--output-dir", type=Path, default=ROOT / "out")
     o = p.parse_args()
-    report = audit_shard(apps(), o.shard, o.shards)
+    report = audit_shard(apps(), o.shard, o.shards, workers=o.workers)
     o.output_dir.mkdir(parents=True, exist_ok=True)
     dest = o.output_dir / f"release-cves-shard-{o.shard}.json"
     dest.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
