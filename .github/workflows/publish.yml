@@ -172,10 +172,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - name: Validate complete source catalog (254 apps) and regression tests
-        run: |
-          python scripts/validate.py
-          python -m unittest discover -s tests -v
+      - name: Validate original source catalog before staging
+        # Full unit tests already ran successfully in preflight for this same SHA.
+        # Do not repeat the 200-test suite after the expensive image audit.
+        run: python scripts/validate.py
       - name: Fetch 32 mandatory security evidence reports
         uses: actions/download-artifact@v8
         with:
