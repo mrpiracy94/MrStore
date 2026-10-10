@@ -1,0 +1,23 @@
+name: webgrabplus
+services:
+  webgrabplus:
+    image: lscr.io/linuxserver/webgrabplus:latest@sha256:f228c00bab332c13238430fe64a760847ff688dbf730b07297df3b66d5b11f04
+    container_name: webgrabplus
+    restart: unless-stopped
+    environment:
+      - "PUID=1000"
+      - "PGID=1000"
+      - "TZ=Europe/Lisbon"
+    volumes:
+      - type: bind
+        source: /DATA/AppData/webgrabplus/config
+        target: /config
+x-casaos:
+  id: io.github.mrpiracy94.webgrabplus
+  version: "1.0.1"
+  main: webgrabplus
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.webgrabplus/assets/icon.png
+  title:
+    en_US: "WebGrab+Plus"
+  port_map: "0"
+  index: /

@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "updated_at": "2026-10-10T14:46:29Z",
-  "app_count": 233,
+  "updated_at": "2026-10-10T14:48:24Z",
+  "app_count": 253,
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "apps": [
     {
@@ -4802,6 +4802,215 @@
       "version": "1.0.1"
     },
     {
+      "id": "io.github.mrpiracy94.vlc",
+      "title": "VLC",
+      "tagline": "Reproduz ficheiros de áudio e vídeo",
+      "category": "Media",
+      "categories": [
+        "media"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.vlc/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.vlc/assets/vlc-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.vlc/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.vlc/meta.json",
+      "content_hash": "16659ee2",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.vscode",
+      "title": "VS Code",
+      "tagline": "Editor Visual Studio Code no navegador",
+      "category": "Developer",
+      "categories": [
+        "developer"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.vscode/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.vscode/assets/vscode.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.vscode/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.vscode/meta.json",
+      "content_hash": "73a86c35",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.vscodium",
+      "title": "VSCodium",
+      "tagline": "Editor de código VSCodium",
+      "category": "Developer",
+      "categories": [
+        "developer"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.vscodium/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.vscodium/assets/vscodium.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.vscodium/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.vscodium/meta.json",
+      "content_hash": "30d57926",
+      "version": "1.0.2"
+    },
+    {
+      "id": "io.github.mrpiracy94.vscodium-web",
+      "title": "VSCodium Web",
+      "tagline": "Editor VSCodium acessível na web",
+      "category": "Developer",
+      "categories": [
+        "developer"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.vscodium-web/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.vscodium-web/assets/vscodium.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.vscodium-web/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.vscodium-web/meta.json",
+      "content_hash": "adc8bb90",
+      "version": "1.0.2"
+    },
+    {
+      "id": "io.github.mrpiracy94.webcord",
+      "title": "WebCord",
+      "tagline": "Cliente de Discord para ambiente de trabalho",
+      "category": "Social",
+      "categories": [
+        "social"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.webcord/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.webcord/assets/webcord-icon.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.webcord/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.webcord/meta.json",
+      "content_hash": "214aab14",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.webgrabplus",
+      "title": "WebGrab+Plus",
+      "tagline": "Recolhe guias de programação televisiva",
+      "category": "Media",
+      "categories": [
+        "media"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.webgrabplus/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.webgrabplus/assets/webgrabplus-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.webgrabplus/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.webgrabplus/meta.json",
+      "content_hash": "0fae8d27",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.webstation",
+      "title": "Webstation",
+      "tagline": "Ambiente de trabalho Linux acessível na web",
+      "category": "Others",
+      "categories": [
+        "others"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.webstation/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.webstation/assets/webstation-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.webstation/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.webstation/meta.json",
+      "content_hash": "1a8eba2c",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.webtop",
+      "title": "Webtop",
+      "tagline": "Ambiente de trabalho Linux no navegador",
+      "category": "Others",
+      "categories": [
+        "others"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.webtop/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.webtop/assets/webtop.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.webtop/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.webtop/meta.json",
+      "content_hash": "d2b35ef1",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.weixin",
+      "title": "Weixin",
+      "tagline": "Mensagens e conversas no Weixin",
+      "category": "Social",
+      "categories": [
+        "social"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.weixin/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.weixin/assets/weixin-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.weixin/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.weixin/meta.json",
+      "content_hash": "7ac1afe3",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.whisparr",
+      "title": "Whisparr",
+      "tagline": "Organiza e acompanha conteúdos multimédia",
+      "category": "Media",
+      "categories": [
+        "media"
+      ],
+      "author": "MrStore",
+      "developer": "hotio",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.whisparr/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.whisparr/assets/whisparr.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.whisparr/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.whisparr/meta.json",
+      "content_hash": "02e1da9c",
+      "version": "1.0.1"
+    },
+    {
       "id": "io.github.mrpiracy94.wikijs",
       "title": "Wiki.js",
       "tagline": "Wiki moderna para documentação de equipas",
@@ -4820,6 +5029,26 @@
       "compose_url": "/apps/io.github.mrpiracy94.wikijs/docker-compose.yml",
       "meta_url": "/apps/io.github.mrpiracy94.wikijs/meta.json",
       "content_hash": "1cf2704e",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.winegui",
+      "title": "WineGUI",
+      "tagline": "Executa aplicações Windows através de Wine",
+      "category": "Others",
+      "categories": [
+        "others"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.winegui/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.winegui/assets/winegui-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.winegui/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.winegui/meta.json",
+      "content_hash": "ca65b71c",
       "version": "1.0.1"
     },
     {
@@ -4844,6 +5073,27 @@
       "version": "1.0.1"
     },
     {
+      "id": "io.github.mrpiracy94.wireshark",
+      "title": "Wireshark",
+      "tagline": "Analisa e inspeciona tráfego de rede",
+      "category": "Networking",
+      "categories": [
+        "networking"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.wireshark/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.wireshark/assets/wireshark.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.wireshark/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.wireshark/meta.json",
+      "content_hash": "c9227ba4",
+      "version": "1.0.1"
+    },
+    {
       "id": "io.github.mrpiracy94.wizarr",
       "title": "Wizarr",
       "tagline": "Convites para servidores Plex, Jellyfin e Emby",
@@ -4862,6 +5112,172 @@
       "compose_url": "/apps/io.github.mrpiracy94.wizarr/docker-compose.yml",
       "meta_url": "/apps/io.github.mrpiracy94.wizarr/meta.json",
       "content_hash": "0343cac2",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.wps-office",
+      "title": "WPS Office",
+      "tagline": "Suite de escritório para documentos e apresentações",
+      "category": "Productivity",
+      "categories": [
+        "productivity"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.wps-office/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.wps-office/assets/wps-office-icon.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.wps-office/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.wps-office/meta.json",
+      "content_hash": "f65c9721",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.xbackbone",
+      "title": "XBackBone",
+      "tagline": "Partilha ficheiros e capturas de ecrã",
+      "category": "Productivity",
+      "categories": [
+        "productivity"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.xbackbone/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.xbackbone/assets/xbackbone.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.xbackbone/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.xbackbone/meta.json",
+      "content_hash": "996e6c80",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.xemu",
+      "title": "xemu",
+      "tagline": "Emulador da consola Xbox original",
+      "category": "Others",
+      "categories": [
+        "others"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.xemu/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.xemu/assets/xemu-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.xemu/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.xemu/meta.json",
+      "content_hash": "340e805c",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.yaak",
+      "title": "Yaak",
+      "tagline": "Cliente de API para testar pedidos HTTP",
+      "category": "Developer",
+      "categories": [
+        "developer"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.yaak/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.yaak/assets/yaak-logo.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.yaak/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.yaak/meta.json",
+      "content_hash": "96b1f5e8",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.your_spotify",
+      "title": "Your Spotify",
+      "tagline": "Estatísticas pessoais de música no Spotify",
+      "category": "Media",
+      "categories": [
+        "media"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.your_spotify/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.your_spotify/assets/your-spotify.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.your_spotify/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.your_spotify/meta.json",
+      "content_hash": "dd0bafb2",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.zen",
+      "title": "Zen Browser",
+      "tagline": "Navegador Zen com foco em produtividade",
+      "category": "Productivity",
+      "categories": [
+        "productivity"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.zen/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.zen/assets/zen-browser.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.zen/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.zen/meta.json",
+      "content_hash": "715bae8a",
+      "version": "1.0.2"
+    },
+    {
+      "id": "io.github.mrpiracy94.znc",
+      "title": "ZNC",
+      "tagline": "Bouncer IRC para manter sessões ligadas",
+      "category": "Social",
+      "categories": [
+        "social"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64",
+        "arm64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.znc/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.znc/assets/znc.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.znc/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.znc/meta.json",
+      "content_hash": "c9399d20",
+      "version": "1.0.1"
+    },
+    {
+      "id": "io.github.mrpiracy94.zotero",
+      "title": "Zotero",
+      "tagline": "Organiza referências e bibliografias",
+      "category": "Productivity",
+      "categories": [
+        "productivity"
+      ],
+      "author": "MrStore",
+      "developer": "LinuxServer.io",
+      "architectures": [
+        "amd64"
+      ],
+      "icon": "/apps/io.github.mrpiracy94.zotero/assets/icon.png",
+      "thumbnail": "/apps/io.github.mrpiracy94.zotero/assets/zotero.webp",
+      "compose_url": "/apps/io.github.mrpiracy94.zotero/docker-compose.yml",
+      "meta_url": "/apps/io.github.mrpiracy94.zotero/meta.json",
+      "content_hash": "53dfb706",
       "version": "1.0.1"
     }
   ]
