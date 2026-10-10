@@ -1,7 +1,7 @@
 name: it-tools
 services:
   it-tools:
-    image: ghcr.io/mrpiracy94/mrstore-it-tools:static-nginx-alpine-secfix-20261010@sha256:36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073
+    image: ghcr.io/mrpiracy94/mrstore-it-tools:static-nginx-alpine-secfix-20261010@sha256:a1717fc6318c5499924af9f30ad204bad6dc8031e9ef3256c8f2c6d1f7c8e4c2
     container_name: it-tools
     restart: unless-stopped
     ports:
