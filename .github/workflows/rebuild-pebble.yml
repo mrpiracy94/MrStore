@@ -1,0 +1,191 @@
+name: Fix shared Pebble Go CVEs in Jellyfin Plex FFmpeg
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'security/images/pebble/**'
+      - '.github/workflows/rebuild-pebble.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+concurrency:
+  group: mrstore-pebble-${{ github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    name: ${{ matrix.app }} / ${{ matrix.arch }}
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    timeout-minutes: 95
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        app: [ffmpeg, jellyfin, plex]
+        arch: [amd64, arm64]
+    env:
+      APP: ${{ matrix.app }}
+      ARCH: ${{ matrix.arch }}
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-pebble-${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Check actual native CPU
+        run: |
+          case "$ARCH" in
+            amd64) test "$(uname -m)" = x86_64 ;;
+            arm64) test "$(uname -m)" = aarch64 ;;
+            *) exit 2 ;;
+          esac
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Build official image with same Pebble version and patched Go
+        run: |
+          docker buildx build --pull --platform "linux/$ARCH" --load \
+            --build-arg "APP=$APP" -f security/images/pebble/Dockerfile \
+            -t "mrstore-pebble:$APP-$ARCH" .
+      - name: Scan OS and application libraries without ignores
+        run: |
+          mkdir -p out
+          trivy image --quiet --image-src docker --platform "linux/$ARCH" \
+            --scanners vuln --severity HIGH,CRITICAL --timeout 15m \
+            --format json --output "out/$APP-$ARCH.json" "mrstore-pebble:$APP-$ARCH"
+      - name: Require complete evidence and 0 HIGH and CRITICAL
+        run: |
+          python - <<'PY'
+          import json,os
+          app,arch=os.environ['APP'],os.environ['ARCH']
+          with open(f'out/{app}-{arch}.json',encoding='utf8') as f:
+              result=json.load(f)
+          rows=result.get('Results')
+          if not isinstance(rows,list) or not rows:
+              raise SystemExit('Missing Trivy targets')
+          found=[]
+          for row in rows:
+              if not isinstance(row,dict) or not row.get('Target'):
+                  raise SystemExit('Incomplete Trivy target')
+              found.extend(v for v in row.get('Vulnerabilities') or []
+                           if v.get('Severity') in ('CRITICAL','HIGH'))
+          c=sum(v['Severity']=='CRITICAL' for v in found)
+          h=sum(v['Severity']=='HIGH' for v in found)
+          print(f'{app}/{arch}: {c} CRITICAL / {h} HIGH')
+          for v in found[:25]:
+              print(v.get('PkgName'),v.get('InstalledVersion'),v.get('FixedVersion'),v.get('VulnerabilityID'))
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
+              f.write(f'## {app}/{arch}: {c} CRITICAL / {h} HIGH\n')
+          if found:
+              raise SystemExit('Refusing vulnerable candidate')
+          PY
+      - name: Run real Pebble and application smoke test with isolated volumes
+        run: bash security/images/pebble/smoke.sh "$APP" "$ARCH"
+      - name: Save complete unsuppressed scan
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pebble-${{ matrix.app }}-${{ matrix.arch }}
+          path: out/*.json
+          if-no-files-found: warn
+      - name: Authenticate after both security and runtime tests pass
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push exactly the tested CPU image
+        run: |
+          set -euo pipefail
+          tag="$IMAGE:secfix-$GITHUB_SHA-$ARCH"
+          docker tag "mrstore-pebble:$APP-$ARCH" "$tag"
+          docker push "$tag"
+
+  publish_and_promote:
+    name: Publish public multiarch and integrate verified digests
+    needs: verify
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      packages: write
+    env:
+      REGISTRY: ghcr.io/${{ github.repository_owner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: docker/setup-buildx-action@v3
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish and verify only tested AMD64 and ARM64 pairs
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          : > out/approved.txt
+          for app in ffmpeg jellyfin plex; do
+            image="$REGISTRY/mrstore-pebble-$app"
+            a="$image:secfix-$GITHUB_SHA-amd64"
+            b="$image:secfix-$GITHUB_SHA-arm64"
+            if ! docker buildx imagetools inspect "$a" >/dev/null 2>&1 ||
+               ! docker buildx imagetools inspect "$b" >/dev/null 2>&1; then
+              echo "SKIP $app: missing validated platform image" | tee -a "$GITHUB_STEP_SUMMARY"
+              continue
+            fi
+            tag="$image:secfix-$GITHUB_SHA"
+            docker buildx imagetools create -t "$tag" "$a" "$b"
+            docker buildx imagetools inspect "$tag" > out/manifest.txt
+            grep -q 'linux/amd64' out/manifest.txt
+            grep -q 'linux/arm64' out/manifest.txt
+            digest="$(awk '$1=="Digest:" {print $2;exit}' out/manifest.txt)"
+            [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]]
+            anonymous="$(mktemp -d)"
+            if ! DOCKER_CONFIG="$anonymous" docker buildx imagetools inspect "$tag" >/dev/null 2>&1; then
+              echo "SKIP $app: published image is not public" | tee -a "$GITHUB_STEP_SUMMARY"
+              rm -rf "$anonymous"
+              continue
+            fi
+            rm -rf "$anonymous"
+            echo "$app|$image@$digest" >> out/approved.txt
+            echo "VERIFIED $app $image@$digest" | tee -a "$GITHUB_STEP_SUMMARY"
+          done
+      - name: Promote only approved immutable digests in a single validated commit
+        run: |
+          set -euo pipefail
+          test -s out/approved.txt || { echo 'No verified new images'; exit 0; }
+          git fetch origin main
+          git checkout -B mrstore-pebble-promotion origin/main
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          for line in Path('out/approved.txt').read_text().splitlines():
+              app,image=line.split('|',1)
+              if app not in ('jellyfin','plex','ffmpeg') or not re.fullmatch(r'ghcr\.io/[a-z0-9-]+/mrstore-pebble-[a-z0-9-]+@sha256:[a-f0-9]{64}',image):
+                  raise SystemExit('Unexpected app or invalid digest')
+              p=Path('Apps')/app/'docker-compose.yml'
+              text=p.read_text(encoding='utf-8')
+              original=f'    image: lscr.io/linuxserver/{app}:latest'
+              if text.count(original)!=1:
+                  print('SKIP changed or already replaced app:',app)
+                  continue
+              text=text.replace(original,'    image: '+image,1)
+              text=text.replace('  version: "1.0.0"','  version: "1.0.1"',1)
+              text=text.replace('  update_at: "2026-10-09"','  update_at: "2026-10-10"',1)
+              p.write_text(text,encoding='utf-8')
+              print('PROMOTED',app)
+          PY
+          if git diff --quiet -- Apps; then echo 'No catalog changes'; exit 0; fi
+          python -m pip install -r requirements.txt
+          python scripts/validate.py
+          python -m unittest discover -s tests -q
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add Apps/ffmpeg/docker-compose.yml Apps/jellyfin/docker-compose.yml Apps/plex/docker-compose.yml
+          git commit -m 'fix(batch): deploy zero-HIGH Pebble Go images by immutable digest'
+          git push origin HEAD:main
