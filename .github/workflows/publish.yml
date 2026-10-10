@@ -16,6 +16,9 @@ on:
       - 'scripts/verify_dist.py'
       - 'data/taglines-pt.json'
       - 'store-config.json'
+      - 'web/**'
+      - 'scripts/stage_storefront.py'
+      - 'tests/test_storefront.py'
       - 'category-list.json'
       - 'recommend-list.json'
       - 'supported-languages.json'
@@ -36,6 +39,9 @@ on:
       - 'scripts/compose_preflight.py'
       - 'data/taglines-pt.json'
       - 'store-config.json'
+      - 'web/**'
+      - 'scripts/stage_storefront.py'
+      - 'tests/test_storefront.py'
       - 'category-list.json'
       - 'recommend-list.json'
       - 'supported-languages.json'
@@ -183,6 +189,8 @@ jobs:
         run: |
           cp out/release-selection.json dist/release-status.json
           touch dist/.nojekyll
+      - name: Stage responsive GitHub Pages storefront over verified release only
+        run: python scripts/stage_storefront.py --source web --dist dist
       - name: Upload publication/quarantine diagnostics
         if: always()
         uses: actions/upload-artifact@v4
