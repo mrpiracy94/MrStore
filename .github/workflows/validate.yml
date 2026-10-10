@@ -92,6 +92,10 @@ jobs:
           else
             python scripts/asset_audit_online.py --strict
           fi
+      - name: Verify pinned official screenshots before publication
+        run: >-
+          python scripts/official_screenshots.py --verify-only
+          --report out/screenshot-provenance.json
       - name: Show online audit summary
         if: always()
         run: test ! -f out/asset-audit-online.md || cat out/asset-audit-online.md >> "$GITHUB_STEP_SUMMARY"
@@ -100,5 +104,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mrstore-online-artwork-audit
-          path: out/asset-audit-online.*
+          path: |
+            out/asset-audit-online.*
+            out/screenshot-provenance.json
           if-no-files-found: warn
