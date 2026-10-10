@@ -6,6 +6,10 @@ on:
       - 'Apps/**'
       - 'scripts/**'
       - 'data/taglines-pt.json'
+      - 'category-list.json'
+      - 'recommend-list.json'
+      - 'featured-apps.json'
+      - 'branding/**'
       - 'tests/**'
       - 'store-config.json'
       - 'supported-languages.json'
@@ -33,6 +37,18 @@ jobs:
         run: python scripts/curate_taglines.py --check
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
+      - name: Build searchable source catalog and check category/recommendation integrity
+        run: python scripts/catalog_index.py
+      - name: Catalog organization summary
+        if: always()
+        run: test ! -f out/catalog-index.md || head -n 30 out/catalog-index.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve navigable source catalog (not a security-approved release)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-catalog-navigation
+          path: out/catalog-index.*
+          if-no-files-found: warn
       - name: Inventory ZimaOS launcher compatibility (offline, not runtime proof)
         run: python scripts/compatibility.py
       - name: Compatibility summary
