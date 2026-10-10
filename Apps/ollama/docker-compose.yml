@@ -39,12 +39,10 @@ x-casaos:
   title:
     en_US: "Ollama"
     pt_PT: "Ollama"
-    pt_PT: "Ollama"
   tagline:
     en_US: "Modelos de IA locais (CPU por omissão)"
   description:
     en_US: "Modelos de IA locais (CPU por omissão). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
-    pt_PT: "Executa modelos de inteligência artificial no teu próprio servidor. Verifica os recursos de CPU, RAM e GPU e o espaço necessário para os modelos."
     pt_PT: "Executa modelos de inteligência artificial no teu próprio servidor. Verifica os recursos de CPU, RAM e GPU e o espaço necessário para os modelos."
   port_map: "11434"
   index: /
