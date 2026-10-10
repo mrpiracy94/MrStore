@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">MrStore</title>
+  <desc id="desc">Bolsa de aplicações preta e laranja com a letra M</desc>
+  <defs>
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ffca35"/>
+      <stop offset=".45" stop-color="#ff8b05"/>
+      <stop offset="1" stop-color="#ed4500"/>
+    </linearGradient>
+    <linearGradient id="dark" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#313139"/>
+      <stop offset="1" stop-color="#111115"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="7" stdDeviation="8" flood-opacity=".28"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M76 94V65c0-30 22-50 52-50s52 20 52 50v29h-22V65c0-18-11-28-30-28S98 47 98 65v29Z" fill="url(#orange)" stroke="#ff9b11" stroke-width="3"/>
+    <path d="M37 82h182c10 0 18 8 18 18v123c0 13-10 23-23 23H42c-13 0-23-10-23-23V100c0-10 8-18 18-18Z" fill="url(#dark)" stroke="#ff9510" stroke-width="5"/>
+    <path d="M35 98l39-17 54 57 54-57 39 17-93 94Z" fill="url(#orange)" stroke="#ffbd2b" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M35 98v130h37V135L35 98ZM221 98v130h-37v-93l37-37Z" fill="url(#orange)"/>
+    <g fill="#ff8d06">
+      <rect x="95" y="197" width="28" height="18" rx="5"/>
+      <rect x="133" y="197" width="28" height="18" rx="5"/>
+      <rect x="95" y="220" width="28" height="16" rx="5"/>
+      <rect x="133" y="220" width="28" height="16" rx="5"/>
+    </g>
+  </g>
+</svg>
