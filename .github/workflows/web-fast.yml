@@ -1,0 +1,48 @@
+name: MrStore Web — Fast Checks
+on:
+  push:
+    branches:
+      - docs/public-copy-ptpt-20261010
+    paths:
+      - 'web/**'
+      - 'assets/branding/**'
+      - 'scripts/quick_web_check.py'
+      - '.github/workflows/web-fast.yml'
+  pull_request:
+    paths:
+      - 'web/**'
+      - 'assets/branding/**'
+      - 'scripts/quick_web_check.py'
+      - '.github/workflows/web-fast.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mrstore-web-fast-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    name: Fast UI diagnostics (desktop + mobile)
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser tooling
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Validate and capture the storefront
+        run: python scripts/quick_web_check.py
+      - name: Upload diagnostic screenshots and JSON
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-web-fast-report
+          path: out/web-fast/
+          if-no-files-found: warn
