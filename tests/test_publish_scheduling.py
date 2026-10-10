@@ -1,7 +1,6 @@
-"""Prevent 8 expensive Trivy shards on PRs without relaxing release security.
+"""PRs affecting releases MUST run all eight shards; tests-only PRs use Validate.
 
-The ordinary Validate MrStore and privilege/migration gates still run for PRs.
-Full digest-locked Trivy scanning is mandatory for push/dispatch publication.
+A green audited-release run cannot be preflight-only. Production deploy stays on main.
 """
 from pathlib import Path
 import sys
@@ -18,7 +17,7 @@ class PublishSchedulingTests(unittest.TestCase):
         cls.workflow = yaml.safe_load(path.read_text(encoding="utf-8"))
         cls.source = path.read_text(encoding="utf-8")
 
-    def test_prs_still_get_preflight_but_never_launch_full_scan(self):
+    def test_release_affecting_prs_get_preflight_and_full_scan(self):
         jobs = self.workflow["jobs"]
         self.assertIn("preflight", jobs)
         # GitHub Actions YAML 'on' is boolean True under PyYAML YAML 1.1.
@@ -28,7 +27,7 @@ class PublishSchedulingTests(unittest.TestCase):
         self.assertIn("workflow_dispatch", triggers)
         self.assertNotIn("if", jobs["preflight"])
         scan = jobs["security_audit"]
-        self.assertEqual(scan["if"], "github.event_name != 'pull_request'")
+        self.assertNotIn("if", scan)
         self.assertEqual(scan["needs"], "preflight")
 
     def test_release_remains_fail_closed_on_eight_full_shards(self):
