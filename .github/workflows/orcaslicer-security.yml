@@ -1,0 +1,57 @@
+name: OrcaSlicer candidate security gate
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - security/orcaslicer-multiarch-gate-20261010
+    paths:
+      - '.github/workflows/orcaslicer-security.yml'
+permissions:
+  contents: read
+jobs:
+  scan:
+    name: OrcaSlicer Trivy ${{ matrix.arch }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan image and save full findings
+        id: scan
+        env:
+          IMAGE: lscr.io/linuxserver/orcaslicer:latest
+          ARCH: ${{ matrix.arch }}
+        run: |
+          mkdir -p out
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --image-src remote --platform "linux/$ARCH" --format json --timeout 30m --output "out/orcaslicer-$ARCH.json" "$IMAGE"
+      - name: Enforce complete evidence and zero HIGH/CRITICAL
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          path=pathlib.Path('out/orcaslicer-'+os.environ['ARCH']+'.json')
+          data=json.loads(path.read_text())
+          results=data.get('Results')
+          if not isinstance(results,list) or not results or any(not isinstance(r,dict) or not r.get('Target') for r in results):
+              raise SystemExit('FAIL: missing or incomplete Trivy results')
+          findings=[v for r in results for v in (r.get('Vulnerabilities') or []) if v.get('Severity') in ('HIGH','CRITICAL')]
+          high=sum(v['Severity']=='HIGH' for v in findings)
+          critical=sum(v['Severity']=='CRITICAL' for v in findings)
+          print(f"{os.environ['ARCH']}: {critical} CRITICAL, {high} HIGH")
+          if findings:
+              raise SystemExit('FAIL: OrcaSlicer must remain quarantined')
+          PY
+      - name: Preserve security evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orcaslicer-security-${{ matrix.arch }}
+          path: out/orcaslicer-${{ matrix.arch }}.json
+          if-no-files-found: warn
