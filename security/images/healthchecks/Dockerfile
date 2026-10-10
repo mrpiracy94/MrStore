@@ -1,6 +1,7 @@
 # Preserve the complete LinuxServer Healthchecks image, s6, /config and port 8000.
+# Official Docker Hub LinuxServer mirror avoids lscr.io registry 429 in CI.
 # The last vulnerability evidence showed ten findings in exactly these packages.
-FROM lscr.io/linuxserver/healthchecks:latest
+FROM docker.io/linuxserver/healthchecks:latest
 USER root
 RUN test -x /lsiopy/bin/python \
  && /lsiopy/bin/python -m pip install --no-cache-dir --upgrade \
