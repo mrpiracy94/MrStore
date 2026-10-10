@@ -98,9 +98,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/paperless-ngx.png
   title:
     en_US: "Paperless-ngx"
+    pt_PT: "Paperless-ngx"
   tagline:
     en_US: "Arquivo de documentos com OCR"
   description:
     en_US: "Arquivo de documentos com OCR. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto. O LinuxServer.io deixou de manter paperless-ngx; esta é a imagem oficial do projeto. Broker Redis usa Alpine 8.10.1 com o mesmo volume /DATA/AppData/paperless/redis; faz backup antes de atualizar uma instalação real."
+    pt_PT: "Arquivo digital de documentos com organização, pesquisa e OCR. Revê as variáveis de configuração, permissões dos volumes, segredos e backups antes de instalar."
   port_map: "30020"
   index: /
