@@ -183,6 +183,7 @@ def stage(source: Path, evidence: dict, destination: Path, summaries: dict,
         "approved": sorted(approved), "quarantined": quarantine,
         "deferred": sorted(deferred),
         "policy": "editorial shortlist AND all image platforms scanned clean, digest pinned, safe static defaults",
+        "certification": "security_scanned",  # Automated CVE/static gates only; no real-device install certification.
     }
     if not approved:
         return result
