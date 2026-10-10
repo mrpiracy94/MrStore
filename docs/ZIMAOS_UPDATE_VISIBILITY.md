@@ -47,7 +47,14 @@ python scripts/zimaos_update_visibility.py --runtime --app sonarr
 ```
 
 Esta opção usa apenas consultas de leitura (`docker ps -a`,
-`docker container inspect` e `docker image inspect`). Compara o digest da
+`docker container inspect` e `docker image inspect`). Primeiro procura o
+contentor através das etiquetas Docker Compose
+`com.docker.compose.project` + `com.docker.compose.service`, e só depois
+recorre ao nome configurado como alternativa **não confirmada pelas labels**.
+A existência de várias réplicas é reportada como ambígua, sem adivinhar uma
+imagem a comparar. Uma instalação anterior com nome de projeto diferente
+pode continuar a exigir diagnóstico manual.
+Compara o digest da
 **imagem efetivamente usada pelo contentor** através do seu ID imutável
 (`docker container inspect ... --format '{{.Image}}'`) — não a tag
 `:latest`, que pode ter mudado após um `docker pull` sem recriar o
@@ -84,6 +91,8 @@ ZimaOS.
 | `main_container_name_not_explicit` | Nome gerado pelo Compose pode ser diferente do serviço | Validar como o ZimaOS resolve a app instalada |
 | `latest_requires_usable_local_repodigest` | Possível bug #591 **se** faltar o digest no Docker local | Inspecionar `RepoDigests`; não presumir update |
 | `unknown_missing_repodigests` | Não há prova local suficiente para comparar digests | Falha de deteção possível; confirmar registos do App Management |
+| `unknown_ambiguous_main_containers` | Várias réplicas partilham o serviço principal | Não escolher um contentor aleatório; comparar todas as réplicas num teste dedicado |
+| `container_resolution=expected_name_unverified` | Contentor encontrado pelo nome mas não pelas labels de projeto e serviço esperadas | Confirmar o nome do projeto e identidade da instalação |
 | `digest_differs_review_required` | Hash remoto e local diferem; requer revisão da plataforma/imagem | Não atualizar sem confirmar segurança e compatibilidade |
 | `listed_as_upgradable` | API nativa devolve entrada correspondente | Confirmar também que a UI reflete esse resultado |
 | `not_listed_not_proof_of_current` | App ausente da listagem da API | **Não é** prova de que esteja na versão mais recente |
