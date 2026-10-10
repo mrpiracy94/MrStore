@@ -1,1 +1,82 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc"><title id="title">MrStore — a tua loja de aplicações para ZimaOS</title><desc id="desc">Banner azul e escuro inspirado no design panorâmico original, com logótipo em cubo e uma montra de aplicações.</desc><defs><linearGradient id="night" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#03101e"/><stop offset=".65" stop-color="#112c53"/><stop offset="1" stop-color="#06101d"/></linearGradient><linearGradient id="sea" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#19395c"/><stop offset="1" stop-color="#05121e"/></linearGradient><linearGradient id="blue" x1="0" x2="1"><stop stop-color="#3e9fff"/><stop offset="1" stop-color="#0867e7"/></linearGradient></defs><rect width="1200" height="300" rx="22" fill="url(#night)"/><path d="M460 205 585 105l66 68 94-84 109 116 90-56 102 69 154-75v157H460Z" fill="#0a203d" opacity=".7"/><path d="M400 218 505 159l83 48 80-85 136 101 103-67 140 89 153-80v135H400Z" fill="#071727"/><path d="M0 260 Q350 235 680 266T1200 244V300H0Z" fill="url(#sea)" opacity=".95"/><rect x="821" y="32" width="326" height="232" rx="16" fill="#050e1b" stroke="#244669" stroke-width="3"/><text x="842" y="57" font-family="Arial,sans-serif" font-size="16" font-weight="bold" fill="#e3efff">ZimaOS</text><rect x="838" y="70" width="84" height="176" rx="10" fill="#0b1e35"/><rect x="847" y="96" width="66" height="23" rx="5" fill="#1a4b83"/><text x="855" y="111" font-family="Arial,sans-serif" font-size="11" fill="#b6dcff">Aplicações</text><text x="939" y="91" font-family="Arial,sans-serif" font-size="13" fill="#e6f0fb">Descobre aplicações</text><g fill="#142a47"><rect x="939" y="102" width="61" height="60" rx="9"/><rect x="1009" y="102" width="61" height="60" rx="9"/><rect x="1079" y="102" width="61" height="60" rx="9"/><rect x="939" y="171" width="61" height="60" rx="9"/><rect x="1009" y="171" width="61" height="60" rx="9"/><rect x="1079" y="171" width="61" height="60" rx="9"/></g><g font-family="Arial,sans-serif" font-weight="bold" font-size="30" text-anchor="middle"><text x="970" y="144" fill="#f6ad45">▶</text><text x="1040" y="144" fill="#64b1ff">◎</text><text x="1110" y="144" fill="#2583ff">☁</text><text x="970" y="214" fill="#57a4ff">◈</text><text x="1040" y="214" fill="#ffffff">▣</text><text x="1110" y="214" fill="#52c8e5">⌘</text></g><path d="M74 63 101 50q7-4 14 0l29 14q7 5 0 9l-29 15q-7 4-14 0L74 75q-7-5 0-12" fill="#354f79"/><path d="M72 85q0-6 6-3l29 16q5 3 5 9v30q0 7-6 4l-29-16q-5-3-5-8Z" fill="#f4f8ff"/><path d="M116 107q0-5 5-8l25-13q6-3 6 3v30q0 5-5 9l-26 13q-5 3-5-4Z" fill="url(#blue)"/><text x="173" y="132" fill="#ffffff" font-family="Arial,sans-serif" font-size="92" font-weight="bold" letter-spacing="-3">Mr<tspan fill="url(#blue)">Store</tspan></text><text x="76" y="189" fill="#f5f8ff" font-family="Arial,sans-serif" font-size="28" font-weight="bold">A tua loja de aplicações para ZimaOS</text><text x="77" y="231" fill="#b7cfe7" font-family="Arial,sans-serif" font-size="18">Descobre, pesquisa e organiza as aplicações do teu servidor.</text><path d="M77 250h490" stroke="#3f9eff" stroke-width="4" stroke-linecap="round"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 330" role="img" aria-labelledby="title desc">
+<title id="title">MrStore — O teu homelab. As tuas apps. Uma só loja.</title>
+<desc id="desc">Identidade MrStore em laranja e grafite, com símbolo de caixa e uma montra ilustrativa de aplicações self-hosted. A integração atual é com ZimaOS v2.</desc>
+<defs>
+<linearGradient id="back" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#11151D"/><stop offset=".62" stop-color="#0C1018"/><stop offset="1" stop-color="#18131A"/></linearGradient>
+<radialGradient id="aura"><stop stop-color="#FF831F" stop-opacity=".37"/><stop offset="1" stop-color="#FF831F" stop-opacity="0"/></radialGradient>
+<linearGradient id="fire" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFBE72"/><stop offset=".55" stop-color="#FF901F"/><stop offset="1" stop-color="#FA5A1C"/></linearGradient>
+<linearGradient id="light" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#FFFFFF"/><stop offset="1" stop-color="#D2D5E0"/></linearGradient>
+<linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22242D"/><stop offset="1" stop-color="#161A23"/></linearGradient>
+<pattern id="grid" width="35" height="35" patternUnits="userSpaceOnUse"><path d="M35 0H0V35" fill="none" stroke="#FFFFFF" stroke-opacity=".045"/></pattern>
+<filter id="shadow" x="-35%" y="-35%" width="170%" height="190%"><feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity=".48"/></filter>
+<clipPath id="clip"><rect width="1200" height="330" rx="24"/></clipPath>
+</defs>
+<g clip-path="url(#clip)">
+<rect width="1200" height="330" fill="url(#back)"/>
+<rect width="1200" height="330" fill="url(#grid)"/>
+<circle cx="984" cy="175" r="330" fill="url(#aura)"/>
+<circle cx="1015" cy="160" r="272" fill="none" stroke="#FF9A3E" stroke-opacity=".14"/>
+<circle cx="1015" cy="160" r="215" fill="none" stroke="#FF9A3E" stroke-opacity=".12" stroke-dasharray="6 13"/>
+<path d="M0 329h1200" stroke="#FF831F" stroke-opacity=".55" stroke-width="3"/>
+<g transform="translate(70 45)">
+<rect width="217" height="27" rx="13.5" fill="#2B211E" stroke="#6D4730" stroke-width="1"/>
+<circle cx="16" cy="13.5" r="4" fill="#FF932B"/>
+<text x="28" y="17.6" fill="#FFBE87" font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="800" letter-spacing="1.3">SELF-HOSTED APP HUB</text>
+</g>
+<g transform="translate(70 95)">
+<rect width="73" height="73" rx="18" fill="#222027" stroke="#6D4630"/>
+<path d="M36.5 11 60 23.7 36.5 36.7 13 23.7Z" fill="url(#fire)"/>
+<path d="M13 29 33 39.9V62L16.2 52.4Q13 50.7 13 47Z" fill="url(#light)"/>
+<path d="M40 39.9 60 29V47Q60 50.7 56.8 52.4L40 62Z" fill="#FF7A22"/>
+<path d="M36.5 40V63" stroke="#FFB875" stroke-opacity=".5" stroke-width="1.4"/>
+</g>
+<text x="165" y="153" fill="#F8F8FA" font-family="Inter,Arial,sans-serif" font-size="71" font-weight="850" letter-spacing="-4.6">Mr<tspan fill="url(#fire)">Store</tspan></text>
+<text x="72" y="211" fill="#F7F7F8" font-family="Inter,Arial,sans-serif" font-size="28" font-weight="760" letter-spacing="-.75">O teu homelab. As tuas apps.</text>
+<text x="72" y="242" fill="#ADB0BB" font-family="Inter,Arial,sans-serif" font-size="15.4">Descobre e explora o universo self-hosted num só lugar.</text>
+<g font-family="Inter,Arial,sans-serif" font-size="10.5" font-weight="750" letter-spacing=".85">
+<rect x="72" y="270" width="117" height="29" rx="14.5" fill="#30231C" stroke="#8B502D" stroke-opacity=".8"/>
+<circle cx="88" cy="284.5" r="3.3" fill="#FF942F"/><text x="99" y="288.5" fill="#FFC391">DOCKER</text>
+<rect x="199" y="270" width="130" height="29" rx="14.5" fill="#242730" stroke="#474957"/>
+<text x="216" y="288.5" fill="#CFD2D9">OPEN SOURCE</text>
+<rect x="339" y="270" width="145" height="29" rx="14.5" fill="#242730" stroke="#474957"/>
+<text x="356" y="288.5" fill="#CFD2D9">HOMELAB FIRST</text>
+</g>
+<g filter="url(#shadow)" transform="translate(746 37)">
+<rect width="382" height="257" rx="19" fill="#191B23" stroke="#63606A" stroke-width="1.4"/>
+<path d="M0 19Q0 0 19 0H363Q382 0 382 19V40H0Z" fill="#292832"/>
+<circle cx="20" cy="21" r="4" fill="#FA7065"/><circle cx="35" cy="21" r="4" fill="#F9BF5F"/><circle cx="50" cy="21" r="4" fill="#65CD9F"/>
+<rect x="118" y="10" width="146" height="20" rx="8" fill="#181B24" stroke="#4A454E"/>
+<text x="191" y="23.6" text-anchor="middle" fill="#B9BBC6" font-family="Inter,Arial,sans-serif" font-size="9.7" font-weight="650">MrStore / Discover</text>
+<text x="23" y="70" fill="#F8F7F9" font-family="Inter,Arial,sans-serif" font-size="21" font-weight="780">Discover apps<tspan fill="#FF9A37">.</tspan></text>
+<text x="23" y="88" fill="#9498A5" font-family="Inter,Arial,sans-serif" font-size="10.6">A tua próxima aplicação está aqui.</text>
+<rect x="22" y="103" width="337" height="32" rx="9" fill="#272A34" stroke="#46434E"/>
+<circle cx="39" cy="119" r="5.7" fill="none" stroke="#9DA0AA" stroke-width="1.5"/><path d="m43 123 4 4" stroke="#9DA0AA" stroke-width="1.5" stroke-linecap="round"/>
+<text x="58" y="122.5" fill="#9497A4" font-family="Inter,Arial,sans-serif" font-size="10.5">Pesquisar aplicações...</text>
+<g transform="translate(22 149)">
+<rect width="161" height="65" rx="11" fill="url(#card)" stroke="#3B3B47"/>
+<rect x="10" y="11" width="39" height="39" rx="11" fill="#4E311F"/>
+<path d="M21 35h16l-8-13Z" fill="#FFAA59"/><circle cx="29" cy="39" r="3.8" fill="#FFAA59"/>
+<text x="59" y="29" font-family="Inter,Arial,sans-serif" font-size="11.4" font-weight="750" fill="#F1F2F4">Multimédia</text><text x="59" y="45" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#9499A6">Explorar apps</text>
+</g>
+<g transform="translate(198 149)">
+<rect width="161" height="65" rx="11" fill="url(#card)" stroke="#3B3B47"/>
+<rect x="10" y="11" width="39" height="39" rx="11" fill="#213F38"/>
+<path d="M30 19v23M18.5 30.5h23" stroke="#77E6B3" stroke-width="3.5" stroke-linecap="round"/>
+<text x="59" y="29" font-family="Inter,Arial,sans-serif" font-size="11.4" font-weight="750" fill="#F1F2F4">Servidores</text><text x="59" y="45" font-family="Inter,Arial,sans-serif" font-size="9.5" fill="#9499A6">Explorar apps</text>
+</g>
+<path d="M0 229H382" stroke="#383A44"/>
+<circle cx="26" cy="243.5" r="4" fill="#76DBA3"/>
+<text x="40" y="247.5" font-family="Inter,Arial,sans-serif" font-size="10" fill="#C6C7CD">Catálogo comunitário</text>
+<rect x="263" y="235" width="96" height="18" rx="9" fill="#35251E"/>
+<text x="311" y="247.4" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="9" font-weight="750" fill="#FFB77A">ZimaOS v2</text>
+</g>
+<g transform="translate(689 231) rotate(-7)">
+<rect width="126" height="45" rx="12" fill="#29242A" stroke="#6E4C3B"/>
+<circle cx="20" cy="22" r="8" fill="#FF9D3D"/>
+<path d="m16.4 22.2 2.9 2.9 5.4-6.4" fill="none" stroke="#191920" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="37" y="19" font-family="Inter,Arial,sans-serif" font-size="9.5" font-weight="780" fill="#FBFBFC">SELF-HOSTED</text>
+<text x="37" y="31" font-family="Inter,Arial,sans-serif" font-size="8.7" fill="#B5AFB6">Community driven</text>
+</g>
+<path d="M1184 18h-14m14 0v14" stroke="#FFAA60" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/>
+</g>
+</svg>

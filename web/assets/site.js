@@ -156,6 +156,7 @@
     if (!state.filtered.length) {
       $("catalog-state").textContent = "Não encontrámos aplicações com estes filtros. Experimenta outra pesquisa ou categoria.";
     }
+    $("clear-filters").disabled = !(state.category || state.arch || state.query.trim() || state.favoritesOnly);
     const more = $("load-more"); more.hidden = shown >= state.filtered.length;
     if (!more.hidden) more.textContent = "Mostrar mais aplicações (" + (state.filtered.length - shown) + " restantes) ↓";
   }
@@ -253,6 +254,15 @@
     state.favoritesOnly = !state.favoritesOnly;
     $("favorites-toggle").setAttribute("aria-pressed", String(state.favoritesOnly));
     state.limit = BATCH_SIZE; render();
+  });
+  $("clear-filters").addEventListener("click", function () {
+    state.category = ""; state.arch = ""; state.query = ""; state.favoritesOnly = false;
+    state.limit = BATCH_SIZE;
+    $("search").value = "";
+    $("architecture").value = "";
+    $("favorites-toggle").setAttribute("aria-pressed", "false");
+    categoryList(); render();
+    $("search").focus();
   });
   $("load-more").addEventListener("click", function () { state.limit += BATCH_SIZE; render(); });
   $("details-close").addEventListener("click", function () { $("details").close(); });

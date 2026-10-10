@@ -1,9 +1,9 @@
 <div align="center">
-  <img src="web/assets/readme-banner.svg" alt="MrStore — a tua loja para ZimaOS" width="100%">
+  <img src="web/assets/readme-banner.svg" alt="MrStore — O teu homelab. As tuas apps. Uma só loja." width="100%">
 
-  <h1>MrStore · ZimaOS App Store</h1>
+  <h1>MrStore · Your Homelab App Hub</h1>
 
-  <p><strong>A loja comunitária de aplicações self-hosted para o teu ZimaOS.</strong><br>Descobre, pesquisa e organiza as aplicações do homelab num só lugar.</p>
+  <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Explora o universo self-hosted num catálogo comunitário. Integração ZimaOS v2 disponível; expansão multiplataforma em desenvolvimento.</p>
 
   <p>
     <a href="https://mrpiracy94.github.io/MrStore/"><strong>🌐 Explorar a loja</strong></a>
@@ -29,6 +29,12 @@ A **MrStore** organiza **254 definições de aplicações** em Docker Compose, p
 **[Abrir a montra da MrStore →](https://mrpiracy94.github.io/MrStore/)**
 
 > **Nota:** a montra em GitHub Pages é uma interface informativa. Não instala aplicações automaticamente. A nova interface só fica disponível publicamente após uma publicação segura e bem-sucedida na branch `gh-pages`. Se estiver publicada uma edição anterior, consulta os avisos e relatórios antes de instalar.
+
+## 🌍 Uma marca para todo o homelab
+
+A **MrStore** pretende ser um ponto de descoberta de aplicações self-hosted para diferentes ambientes. O objetivo futuro abrange **UmbrelOS, Homeio, CasaOS, ZimaOS, Cosmos, Portainer, HomeDock OS, Olares, Dockge, Runtipi e Docker/Linux**.
+
+> **Estado de compatibilidade:** estes nomes representam **plataformas-alvo**, não integrações já concluídas. Atualmente, o formato de catálogo e as instruções de instalação disponibilizadas neste repositório são específicos do **ZimaOS App Store v2**. Não assumas que o URL da loja funciona diretamente nos restantes sistemas.
 
 ## 🚀 Adicionar ao ZimaOS
 
