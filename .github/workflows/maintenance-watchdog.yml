@@ -2,7 +2,7 @@ name: MrStore automated maintenance watchdog
 on:
   # Does not require commits or open PRs: audits continue while the repo is idle.
   schedule:
-    - cron: '47 8 * * *'
+    - cron: '47 * * * *'
   workflow_dispatch:
 
 permissions:
