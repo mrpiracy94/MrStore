@@ -213,7 +213,6 @@
     "lscr.io/linuxserver/spotube:latest": "sha256:6208861b02289a8e19c49754595e70c06df09db50cf27458fb4f0ac5b0d171a7",
     "lscr.io/linuxserver/sqlitebrowser:latest": "sha256:b96da9fe6e7f24a32a206aeefa93272ada4bf3c4c8c336998c3bbd95fef5d26b",
     "lscr.io/linuxserver/steam:latest": "sha256:70daa8991f7e20bee8d93c818897b79828790f9eb7a7ef52f2060564cff71bc8",
-    "lscr.io/linuxserver/steamos:latest": "sha256:eb37f58646a901dc7727cf448cae36daaefaba79de33b5058dab79aa4c04aefb",
     "lscr.io/linuxserver/swag:latest": "sha256:2fc60133a4c153a7182fdf7700ae72c6a31447fe263baf02851466c33a5111f0",
     "lscr.io/linuxserver/synclounge:latest": "sha256:0d21be07263d4b0187a290649d949ecb899bc8fa9994b3d1648546ca7e054ce7",
     "lscr.io/linuxserver/syncthing:latest": "sha256:8a381a5a11225475cc4a14ad4fee7c627fdc4fa5804fe3a34febe3aeda9f4e23",

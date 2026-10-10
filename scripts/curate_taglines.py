@@ -68,7 +68,7 @@ def prepare(*, check_only: bool) -> int:
     files = sorted((ROOT / "Apps").glob("*/docker-compose.yml"))
     actual = {p.parent.name for p in files}
     expected = set(summaries)
-    if actual != expected or len(files) != 254:
+    if actual != expected:
         raise ValueError(
             f"Catalog/subtitle mismatch: {len(files)} Compose, "
             f"missing={sorted(actual - expected)}, extra={sorted(expected - actual)}"

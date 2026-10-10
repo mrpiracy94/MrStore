@@ -1,10 +1,33 @@
-# SteamOS descontinuado — bloqueio de publicação segura
+# SteamOS retirada temporariamente da MrStore
 
-A imagem `lscr.io/linuxserver/steamos:latest` foi formalmente descontinuada pelo LinuxServer.io e a auditoria AMD64 identificou falta de plataforma disponível. Fonte: https://info.linuxserver.io/issues/2025-12-13-steamosdep/
+Em 10/10/2026, a aplicação SteamOS foi retirada do **catálogo de origem**
+(`Apps/steamos/docker-compose.yml`) a pedido do mantenedor. O histórico do
+GitHub preserva o manifesto antigo; remover a definição **não elimina**
+nenhum volume, instalação ou dados de utilizadores já existentes.
 
-Esta imagem permanece na **origem** do catálogo MrStore para não eliminar dados nem disfarçar a pendência de manutenção. Contudo, `scripts/release_catalog.py` deve sempre manter a app em **quarentena**, independentemente de algum scanner devolver zero vulnerabilidades. Um resultado Trivy limpo não prova que software abandonado seja seguro ou instalável.
+## Motivo da retirada
 
-- O bloqueio é específico à referência descontinuada, em vez de negar todas as apps antigas.
-- O `release-status.json` indica os motivos concretos da quarentena; nada é silenciosamente excluído.
-- Uma futura alternativa à imagem requer validação real de compatibilidade, funcionalidades e arquitetura, e testes CVE em AMD64/ARM64 com imagem fixada por digest.
-- Não equivale a remediação das outras imagens do [issue #64](https://github.com/mrpiracy94/MrStore/issues/64), nem a instalação comprovada no ZimaOS.
+A imagem `lscr.io/linuxserver/steamos:latest` foi descontinuada oficialmente
+pelo LinuxServer.io e não disponibilizava as plataformas AMD64/ARM64 exigidas
+pelas análises recentes.
+
+Fonte: https://info.linuxserver.io/issues/2025-12-13-steamosdep/
+
+## Alterações na origem
+
+- Removido o manifesto da aplicação (a aplicação `steam` é independente e mantém-se).
+- Removida a imagem da lista **ativa** de repetição de scans inconclusivos.
+- Removido o digest da fotografia ativa e o texto de apresentação PT-PT.
+- Preservado o histórico de auditorias e a lista arquivada
+  `data/cve-inconclusive-original-20261009.json`.
+- A tabela `RETIRED_UPSTREAM` mantém o aviso sobre esta referência, para
+  impedir que uma reintrodução seja confundida com imagem suportada.
+
+**Nota de publicação:** a loja GitHub Pages pode continuar a exibir uma versão
+antiga enquanto a workflow de publicação segura não concluir. Esta remoção
+da origem **não** é autorização para contornar as verificações CVE nem
+justificação para eliminar manualmente índices ou prova de segurança.
+
+Uma futura reintrodução depende de uma imagem mantida, arquiteturas
+disponíveis, zero HIGH/CRITICAL conhecidos nas análises completas,
+compatibilidade de Compose e testes funcionais adequados.
