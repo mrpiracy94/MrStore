@@ -8,6 +8,8 @@ on:
       - 'scripts/cves.py'
       - 'scripts/release_scan.py'
       - 'scripts/release_catalog.py'
+      - 'scripts/release_versions.py'
+      - 'scripts/verify_update_signals.py'
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
@@ -25,6 +27,8 @@ on:
       - 'scripts/cves.py'
       - 'scripts/release_scan.py'
       - 'scripts/release_catalog.py'
+      - 'scripts/release_versions.py'
+      - 'scripts/verify_update_signals.py'
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
@@ -149,6 +153,22 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"], "a") as file:
               file.write(f"approved={selected['approved_count']}\n")
           PY
+      - name: Checkout previous published ZimaOS catalog (version ledger)
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: previous-published
+          persist-credentials: false
+      - name: Preserve and advance approved package revisions
+        run: |
+          python scripts/release_versions.py --stage release-source --previous previous-published --output out/release-versions.json --state-output out/release-versions-state.json
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          r=json.loads(Path('out/release-versions.json').read_text())
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as f:
+              f.write(f"ZimaOS package revisions: approved-image-updates={r['image_updates']}, baselines={r['baseline_pins']}, retained={r['carried_forward']}\n")
+          PY
       - name: Validate staged Compose manifests with official Docker Compose parser
         run: >-
           python scripts/compose_preflight.py --root release-source
@@ -164,6 +184,10 @@ jobs:
           report-json: out/build-report.json
       - name: Verify exact approved count and generated v2 files
         run: python scripts/verify_dist.py --expected ${{ steps.release.outputs.approved }}
+      - name: Reject incorrect ZimaOS version/content-hash update signals
+        run: >-
+          python scripts/verify_update_signals.py --previous previous-published
+          --dist dist --report out/release-versions.json
       - name: Verify published app set and every image digest was retained
         run: |
           python - <<'PY'
@@ -180,6 +204,17 @@ jobs:
       - name: Publish transparent quarantine details alongside the catalog
         run: |
           cp out/release-selection.json dist/release-status.json
+          cp out/release-versions-state.json dist/release-versions-state.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          idx=json.loads(Path('dist/index.json').read_text())
+          state=json.loads(Path('dist/release-versions-state.json').read_text())
+          for app in idx['apps']:
+              record=state['apps'].get(app['id'])
+              if not record or record['version']!=app['version']:
+                  raise SystemExit(f"Version ledger inconsistent for {app['id']}")
+          PY
           touch dist/.nojekyll
       - name: Upload publication/quarantine diagnostics
         if: always()
@@ -190,11 +225,14 @@ jobs:
             out/audit.json
             out/build-report.json
             out/release-selection.json
+            out/release-versions.json
+            out/release-versions-state.json
             out/release-compose.json
             out/release-compose.md
             dist/store.json
             dist/index.json
             dist/release-status.json
+            dist/release-versions-state.json
           if-no-files-found: warn
       - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
         uses: actions/upload-artifact@v4

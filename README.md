@@ -89,3 +89,8 @@ Os relatórios são escritos em `out/` e carregados como artefactos no GitHub Ac
 - [Renovate](https://github.com/renovatebot/renovate)
 
 MrStore não é uma loja oficial IceWhaleTech. Os projetos originais continuam a pertencer aos respetivos desenvolvedores; o catálogo não garante disponibilidade, manutenção ou segurança de cada imagem.
+
+
+## Deteção de atualizações do ZimaOS (ramo de integração)
+
+A auditoria de imagens instaladas, o verificador de digests OCI por arquitetura, o versionamento monotónico dos pacotes aprovados e o bloqueio de `content_hash` sem alteração estão documentados em [ZimaOS OCI](docs/ZIMAOS_OCI_UPDATE_CHECK.md), [visibilidade de atualizações](docs/ZIMAOS_UPDATE_VISIBILITY.md) e [proposta nativa](docs/ZIMAOS_NATIVE_UPDATE_PATCH_PROPOSAL.md). Estas ferramentas **não alteram o NAS nem corrigem o gestor nativo do ZimaOS**. Todos os mecanismos de publicação permanecem subordinados à quarentena de segurança.

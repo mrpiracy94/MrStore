@@ -35,6 +35,15 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Inventory ZimaOS launcher compatibility (offline, not runtime proof)
         run: python scripts/compatibility.py
+      - name: Guard against ZimaOS installed main-container lookup regression
+        run: python scripts/zimaos_update_visibility.py --strict-main-name
+      - name: Save ZimaOS update visibility report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zimaos-update-visibility
+          path: out/zimaos-update-visibility.*
+          if-no-files-found: warn
       - name: Compatibility summary
         if: always()
         run: test ! -f out/compatibility.md || cat out/compatibility.md >> "$GITHUB_STEP_SUMMARY"

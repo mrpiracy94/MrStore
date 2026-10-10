@@ -194,6 +194,7 @@ def verify_published(dist: Path, selected: dict, staged: Path | None = None) -> 
     actual = {item["id"] for item in published}
     if actual != want or len(actual) != len(published):
         raise ValueError("Unsafe/omitted/duplicate application in published index")
+    indexed = {item["id"]: item for item in published}
     for app_id in actual:
         compose = dist / "apps" / app_id / "docker-compose.yml"
         content = yaml.safe_load(compose.read_text(encoding="utf-8"))
@@ -206,6 +207,10 @@ def verify_published(dist: Path, selected: dict, staged: Path | None = None) -> 
             intended = yaml.safe_load((staged / "Apps" / folder /
                                       "docker-compose.yml").read_text(encoding="utf-8"))
             expected_images = {name: spec["image"] for name, spec in intended["services"].items()}
+            expected_version = intended["x-casaos"]["version"]
+            metadata = json.loads((dist / "apps" / app_id / "meta.json").read_text(encoding="utf-8"))
+            if indexed[app_id].get("version") != expected_version or metadata.get("version") != expected_version:
+                raise ValueError(f"{app_id}: published version differs from approved stage")
             if images != expected_images:
                 raise ValueError(f"{app_id}: published images differ from approved scanned digests")
 
