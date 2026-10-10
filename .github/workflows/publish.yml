@@ -8,6 +8,9 @@ on:
       - 'scripts/cves.py'
       - 'scripts/release_scan.py'
       - 'scripts/release_catalog.py'
+      - 'scripts/image_freshness.py'
+      - 'scripts/privilege_policy.py'
+      - 'scripts/compose_preflight.py'
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
@@ -25,12 +28,12 @@ on:
       - 'scripts/cves.py'
       - 'scripts/release_scan.py'
       - 'scripts/release_catalog.py'
+      - 'scripts/image_freshness.py'
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
       - 'scripts/privilege_policy.py'
       - 'scripts/compose_preflight.py'
-      - 'tests/**'
       - 'data/taglines-pt.json'
       - 'store-config.json'
       - 'category-list.json'
@@ -70,8 +73,7 @@ jobs:
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
   security_audit:
-    # PRs use their fast validation, privilege and migration gates. Only
-    # main/manual releases launch 8 full multi-platform registry scans.
+    # Run full eight-shard audits only on main/manual releases; PRs get preflight.
     if: github.event_name != 'pull_request'
     needs: preflight
     name: Scan release images and platforms (shard ${{ matrix.shard }})

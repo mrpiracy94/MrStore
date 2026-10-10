@@ -16,10 +16,16 @@ from catalog import ROOT, apps, image_usage
 from cves import shard_images
 from curate_taglines import load_summaries, render_manifest
 from release_scan import image_platforms
+from privilege_policy import risky_settings
 from image_freshness import RETIRED_UPSTREAM
 
 HEX = re.compile(r"^[a-f0-9]{64}$")
-DANGEROUS_SOURCE = {"/", "/etc", "/root", "/var/run/docker.sock", "/run/docker.sock"}
+# Required Compose interpolation is resolved before ZimaOS can show service
+# x-casaos.envs: the official store v2 builder strips that service metadata.
+# Do not mistake an unresolved secret for a usable or safe install.
+REQUIRED_COMPOSE_VARIABLE = re.compile(
+    r"\$\{[A-Za-z_][A-Za-z0-9_]*(?::\?|\?)[^}]*\}"
+)
 
 
 def read_evidence(source_apps, report_dir: Path, shards: int = 8) -> dict:
@@ -93,32 +99,44 @@ def read_evidence(source_apps, report_dir: Path, shards: int = 8) -> dict:
 
 def insecure_defaults(app) -> list[str]:
     """Conservative rule: unresolved dangerous defaults are never released."""
-    flags = []
+    # The final release selector applies the same privilege policy as PR review,
+    # even to legacy configurations that predate the regression baseline.
+    flags = [f"{service}: dangerous {code}={detail}"
+             for service, code, detail in sorted(risky_settings(app.source))]
+    # Docker Compose also interpolates top-level network/volume/config values.
+    # Exclude service definitions checked below and descriptive x-* metadata.
+    root_runtime = {key: value for key, value in app.source.items()
+                    if key != "services" and not str(key).startswith("x-")}
+    root_json = json.dumps(root_runtime)
+    if "CHANGE_ME" in root_json:
+        flags.append("compose: default credentials not configured")
+    if REQUIRED_COMPOSE_VARIABLE.search(root_json):
+        flags.append("compose: required Compose installation variables unsupported by verified ZimaOS v2 installer")
     for service, spec in (app.source.get("services") or {}).items():
         if not isinstance(spec, dict):
             flags.append(f"{service}: invalid service spec")
             continue
-        for setting in ("privileged", "network_mode", "pid", "ipc", "userns"):
-            value = spec.get(setting)
-            if value is True and setting == "privileged" or value == "host":
-                flags.append(f"{service}: unsafe {setting}")
-        # An officially discontinued/unavailable upstream must never be published
-        # just because a vulnerability scanner finds no known issues.
+        if spec.get("userns") == "host":
+            flags.append(f"{service}: unsafe userns=host")
+        # Retain the independent upstream-retirement gate merged via PR #70.
+        # No amount of successful Trivy evidence makes a retired image viable.
         image_ref = spec.get("image")
         if image_ref in RETIRED_UPSTREAM:
             flags.append(f"{service}: discontinued upstream image {image_ref}; "
                          f"see {RETIRED_UPSTREAM[image_ref]}")
-        if spec.get("cap_add") or spec.get("devices"):
-            flags.append(f"{service}: privileged devices/capabilities require manual approval")
-        if any("seccomp:unconfined" in str(x) for x in (spec.get("security_opt") or [])):
-            flags.append(f"{service}: seccomp unconfined")
-        for v in spec.get("volumes") or []:
-            source = v.get("source", "") if isinstance(v, dict) else str(v).split(":", 1)[0]
-            if source in DANGEROUS_SOURCE:
-                flags.append(f"{service}: sensitive host volume {source}")
         env = spec.get("environment") or []
-        if "CHANGE_ME" in json.dumps(env):
+        # Detect unsafe placeholders across actual Compose service fields,
+        # while ignoring purely descriptive x-casaos installer metadata.
+        runtime_spec = {key: value for key, value in spec.items()
+                        if not str(key).startswith("x-")}
+        runtime_json = json.dumps(runtime_spec)
+        if "CHANGE_ME" in runtime_json:
             flags.append(f"{service}: default credentials not configured")
+        # ${VAR:?message} and ${VAR?message} both require host-side values;
+        # the verified ZimaOS v2 installer does not expose a reliable prompt.
+        # Never publish a service that would fail Compose interpolation.
+        if REQUIRED_COMPOSE_VARIABLE.search(runtime_json):
+            flags.append(f"{service}: required Compose installation variables unsupported by verified ZimaOS v2 installer")
         pairs = (env.items() if isinstance(env, dict) else
                  (value.split("=", 1) for value in env
                   if isinstance(value, str) and "=" in value))
