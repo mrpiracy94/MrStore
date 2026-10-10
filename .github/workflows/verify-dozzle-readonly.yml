@@ -15,7 +15,16 @@ jobs:
       - name: Start real Dozzle and Docker socket proxy
         run: |
           set -euo pipefail
-          docker compose -p mrstore-dozzle-check -f Apps/dozzle/docker-compose.yml up -d
+          # Retry registry throttling, but fail if images cannot be downloaded.
+          for attempt in 1 2 3 4 5; do
+            if docker compose -p mrstore-dozzle-check -f Apps/dozzle/docker-compose.yml pull; then break; fi
+            if [ "$attempt" -eq 5 ]; then
+              echo "::error::Dozzle/proxy image pull still failed after retries"
+              exit 1
+            fi
+            sleep $((attempt * 15))
+          done
+          docker compose -p mrstore-dozzle-check -f Apps/dozzle/docker-compose.yml up -d --pull never
       - name: Verify GET and Dozzle UI succeed but Docker POST is denied
         run: |
           set -euo pipefail
