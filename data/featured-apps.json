@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Seleção editorial de 96 aplicações existentes no repositório; publicação não equivale a certificação de segurança.",
+  "description": "Seleção editorial de 112 aplicações existentes no repositório; publicação não equivale a certificação de segurança.",
   "apps": [
     "jellyfin",
     "plex",
@@ -97,6 +97,22 @@
     "resilio-sync",
     "smokeping",
     "swag",
-    "unpackerr"
+    "unpackerr",
+    "mstream",
+    "mylar3",
+    "netbootxyz",
+    "notifiarr",
+    "openssh-server",
+    "projectsend",
+    "pyload-ng",
+    "qui",
+    "radarr-4k",
+    "sonarr-4k",
+    "rsnapshot",
+    "rutorrent",
+    "socket-proxy",
+    "synclounge",
+    "tvheadend",
+    "wizarr"
   ]
 }
