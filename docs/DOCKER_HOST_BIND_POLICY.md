@@ -20,6 +20,13 @@ apenas por adicionar esta verificação.
 
 A revisão regressiva compara o estado atual com a base Git, bloqueando
 **novas** exposições sem remover silenciosamente funcionalidades.
+O seletor de publicação `scripts/release_catalog.py` reutiliza **a mesma
+política de caminhos**. Isto é independente da comparação com a branch base:
+mesmo um bind perigoso antigo, ou montado `:ro`, mantém a aplicação em
+quarentena. As montagens nomeadas (`type: volume`), `/etc/localtime` e
+`/DATA/AppData/...` não são indevidamente bloqueadas por esta regra.
+O bloqueio é por aplicação e não elimina nenhum manifesto de origem.
+
 Os PRs #69 (Socket Proxy) e #75 (Dozzle) tratam correções concretas
 dos serviços, separadamente deste bloqueio geral. Kasm e Dockge
 continuam a exigir isolamento de host e testes funcionais ZimaOS.
