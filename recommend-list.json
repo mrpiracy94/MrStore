@@ -1,52 +1,122 @@
 [
   {
     "id": 1,
-    "name": "qbittorrent",
-    "title": "qBittorrent"
-  },
-  {
-    "id": 2,
-    "name": "sonarr",
-    "title": "Sonarr"
-  },
-  {
-    "id": 3,
-    "name": "radarr",
-    "title": "Radarr"
-  },
-  {
-    "id": 4,
-    "name": "prowlarr",
-    "title": "Prowlarr"
-  },
-  {
-    "id": 5,
-    "name": "seerr",
-    "title": "Seerr"
-  },
-  {
-    "id": 6,
-    "name": "immich",
-    "title": "Immich"
-  },
-  {
-    "id": 7,
-    "name": "plex",
-    "title": "Plex"
-  },
-  {
-    "id": 8,
     "name": "jellyfin",
     "title": "Jellyfin"
   },
   {
+    "id": 2,
+    "name": "immich",
+    "title": "Immich"
+  },
+  {
+    "id": 3,
+    "name": "homeassistant",
+    "title": "Home Assistant"
+  },
+  {
+    "id": 4,
+    "name": "nextcloud",
+    "title": "Nextcloud"
+  },
+  {
+    "id": 5,
+    "name": "syncthing",
+    "title": "Syncthing"
+  },
+  {
+    "id": 6,
+    "name": "paperless-ngx",
+    "title": "Paperless-ngx"
+  },
+  {
+    "id": 7,
+    "name": "vaultwarden",
+    "title": "Vaultwarden"
+  },
+  {
+    "id": 8,
+    "name": "uptime-kuma",
+    "title": "Uptime Kuma"
+  },
+  {
     "id": 9,
-    "name": "autobrr",
-    "title": "Autobrr"
+    "name": "actual-budget",
+    "title": "Actual Budget"
   },
   {
     "id": 10,
-    "name": "vaultwarden",
-    "title": "Vaultwarden"
+    "name": "mealie",
+    "title": "Mealie"
+  },
+  {
+    "id": 11,
+    "name": "qbittorrent",
+    "title": "qBittorrent"
+  },
+  {
+    "id": 12,
+    "name": "sonarr",
+    "title": "Sonarr"
+  },
+  {
+    "id": 13,
+    "name": "radarr",
+    "title": "Radarr"
+  },
+  {
+    "id": 14,
+    "name": "prowlarr",
+    "title": "Prowlarr"
+  },
+  {
+    "id": 15,
+    "name": "seerr",
+    "title": "Seerr"
+  },
+  {
+    "id": 16,
+    "name": "plex",
+    "title": "Plex"
+  },
+  {
+    "id": 17,
+    "name": "ollama",
+    "title": "Ollama"
+  },
+  {
+    "id": 18,
+    "name": "open-webui",
+    "title": "Open WebUI"
+  },
+  {
+    "id": 19,
+    "name": "beszel",
+    "title": "Beszel"
+  },
+  {
+    "id": 20,
+    "name": "audiobookshelf",
+    "title": "Audiobookshelf"
+  },
+  {
+    "id": 21,
+    "name": "navidrome",
+    "title": "Navidrome"
+  },
+  {
+    "id": 22,
+    "name": "gitea",
+    "title": "Gitea"
+  },
+  {
+    "id": 23,
+    "name": "nginx-proxy-manager",
+    "title": "Nginx Proxy Manager"
+  },
+  {
+    "id": 24,
+    "name": "tailscale",
+    "title": "Tailscale"
   }
 ]
