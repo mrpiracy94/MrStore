@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Seleção editorial de 233 aplicações para a montra pública. As outras 20 ficam preservadas. Não é certificação CVE.",
+  "description": "Full 253-application editorial catalog; listings are not security certifications.",
   "apps": [
     "homeassistant",
     "immich",
@@ -234,6 +234,26 @@
     "thunderbird",
     "ubooquity",
     "ungoogled-chromium",
-    "vivaldi"
+    "vivaldi",
+    "vlc",
+    "vscode",
+    "vscodium-web",
+    "vscodium",
+    "webcord",
+    "webgrabplus",
+    "webstation",
+    "webtop",
+    "weixin",
+    "whisparr",
+    "winegui",
+    "wireshark",
+    "wps-office",
+    "xbackbone",
+    "xemu",
+    "yaak",
+    "your_spotify",
+    "zen",
+    "znc",
+    "zotero"
   ]
 }
