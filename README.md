@@ -1,11 +1,34 @@
-# MrStore — ZimaOS v2
+# MrStore — A tua loja de aplicações para ZimaOS
 
-Loja comunitária não oficial, reconstruída em 09-10-2026 a partir das **254 definições Docker Compose** da Minha Loja original. O código da automação foi refeito: os manifests são tratados exclusivamente como dados, nunca executados nos runners. O catálogo contém **260 serviços** e **258 referências únicas de imagens**.
+**Descobre aplicações para organizar os teus ficheiros, guardar fotografias, ver filmes, fazer cópias de segurança e muito mais.**
 
-**GitHub:** https://github.com/mrpiracy94/MrStore  
-**URL após publicar em Pages:** https://mrpiracy94.github.io/MrStore
+A MrStore é uma loja comunitária e não oficial para ZimaOS v2. Reúne 254 aplicações no catálogo de origem, mas **nem todas estão necessariamente disponíveis para instalar**: cada publicação depende de verificações de segurança e compatibilidade.
 
-## Como adicionar ao ZimaOS
+**[Ver o projeto no GitHub](https://github.com/mrpiracy94/MrStore)** · **[Abrir o endereço da loja](https://mrpiracy94.github.io/MrStore)**
+
+## Para que serve?
+
+- **Encontrar aplicações:** explora ferramentas para multimédia, fotografias, ficheiros e outros usos.
+- **Perceber o que fazem:** consulta as descrições antes de escolher.
+- **Instalar com mais confiança:** as aplicações com alertas graves ou verificações inconclusivas ficam de fora das publicações seguras.
+- **Acompanhar melhorias:** as verificações automáticas procuram problemas, mas não substituem testes num ZimaOS real.
+
+## Como adicionar a loja ao ZimaOS
+
+A loja só deve ser adicionada depois de a publicação estar concluída e os ficheiros estarem disponíveis.
+
+1. Abre o endereço da loja e confirma que está acessível.
+2. No ZimaOS, procura a opção para adicionar uma loja externa compatível com o protocolo v2.
+3. Introduz o endereço `https://mrpiracy94.github.io/MrStore`.
+4. Se a loja não carregar, consulta as instruções técnicas abaixo antes de tentar novamente.
+
+**Atenção:** ainda não foi comprovada uma instalação completa num equipamento ZimaOS real. Algumas aplicações podem exigir configuração adicional.
+
+---
+
+## Informação técnica e segurança
+
+### Preparar a publicação no GitHub
 
 1. Abra `Actions → Build and publish MrStore v2` e confirme que o build publicou todas as 254 apps sem erros.
 2. Em `Settings → Pages`, selecione `Deploy from a branch`, a branch **gh-pages** e a pasta **/(root)**; não selecione `main`.
