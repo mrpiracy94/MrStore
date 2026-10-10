@@ -72,6 +72,31 @@ jobs:
         run: |
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
+  web_smoke:
+    if: github.event_name == 'pull_request'
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test runner
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Test interactive storefront in desktop and mobile Chromium
+        run: python scripts/test_storefront_browser.py --fixture
+      - name: Upload PR browser screenshots (test fixtures, not real catalog)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-web-pr-fixture-screenshots
+          path: storefront-fixture-*.png
+          if-no-files-found: warn
   security_audit:
     # PRs use their fast validation, privilege and migration gates. Only
     # main/manual releases launch 8 full multi-platform registry scans.
