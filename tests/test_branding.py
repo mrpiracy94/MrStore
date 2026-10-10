@@ -17,10 +17,9 @@ class BrandingTests(unittest.TestCase):
         data = audit(ROOT)
         self.assertGreaterEqual(data["descriptions_pt_PT"], 15)
 
-    def test_no_fabricated_screenshots_are_required(self):
-        # Zero screenshots is an honest report, not a false compatibility claim.
+    def test_authentic_upstream_screenshots_are_present(self):
         data = audit(ROOT)
-        self.assertGreaterEqual(data["local_screenshots"], 0)
+        self.assertGreaterEqual(data["local_screenshots"], 3)
 
 
 if __name__ == "__main__":
