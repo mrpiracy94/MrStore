@@ -5,6 +5,7 @@ visible in the static audit but are not silently removed or normalized.
 """
 import argparse
 import json
+import posixpath
 from pathlib import Path
 import subprocess
 import yaml
@@ -15,7 +16,31 @@ from catalog import ROOT, apps
 SENSITIVE_MOUNTS = frozenset({
     "/", "/etc", "/root", "/proc", "/sys", "/dev",
     "/var/run/docker.sock", "/run/docker.sock",
+    "/run/containerd/containerd.sock", "/var/lib/docker", "/var/lib/containerd",
 })
+
+
+def sensitive_host_bind(source):
+    """Detect mounted sensitive objects, ancestors and canonical path aliases.
+
+    A bind of /var/run or /var can expose docker.sock even when its name is
+    absent from Compose. Descendants of private runtime dirs are sensitive
+    too; /etc/localtime and ordinary /DATA volumes remain allowed.
+    """
+    if not isinstance(source, str) or not source.startswith("/"):
+        return False
+    normalized = "/" + posixpath.normpath(source).lstrip("/")
+    if normalized == "/":
+        return True
+    if any(normalized == path or path.startswith(normalized.rstrip("/") + "/")
+           for path in SENSITIVE_MOUNTS):
+        return True
+    private_subtrees = (
+        "/root", "/proc", "/sys", "/dev",
+        "/var/lib/docker", "/var/lib/containerd",
+    )
+    return any(normalized.startswith(path + "/") for path in private_subtrees)
+
 
 
 def risky_settings(doc):
@@ -50,7 +75,7 @@ def risky_settings(doc):
                 source = mount.get("source") if mount.get("type", "bind") == "bind" else None
             else:
                 source = str(mount).split(":", 1)[0]
-            if source in SENSITIVE_MOUNTS:
+            if sensitive_host_bind(source):
                 findings.add((prefix, "sensitive_mount", str(source)))
         for device in spec.get("devices") or []:
             findings.add((prefix, "device", json.dumps(device, sort_keys=True)))
