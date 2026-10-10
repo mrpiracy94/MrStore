@@ -1,7 +1,7 @@
 name: netbootxyz
 services:
   netbootxyz:
-    image: ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527
+    image: ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:f8aa58f1531d736fc9f0ec75a949e4461dc7620f6e70bfca8cc23f4017a0319d
     container_name: netbootxyz
     restart: unless-stopped
     environment:
