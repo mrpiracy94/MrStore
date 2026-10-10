@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Editorial shortlist of 233 homelab applications introduced in 12-app increments. CVE certification is not implied.",
+  "description": "Full editorial catalog of 253 repository applications. Listing does not imply installation or security certification.",
   "apps": [
     "homeassistant",
     "immich",
@@ -234,6 +234,26 @@
     "thunderbird",
     "ubooquity",
     "ungoogled-chromium",
-    "vivaldi"
+    "vivaldi",
+    "vlc",
+    "vscode",
+    "vscodium-web",
+    "vscodium",
+    "webcord",
+    "webgrabplus",
+    "webstation",
+    "webtop",
+    "weixin",
+    "whisparr",
+    "winegui",
+    "wireshark",
+    "wps-office",
+    "xbackbone",
+    "xemu",
+    "yaak",
+    "your_spotify",
+    "zen",
+    "znc",
+    "zotero"
   ]
 }
