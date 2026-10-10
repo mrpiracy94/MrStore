@@ -118,9 +118,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/plex.png
   title:
     en_US: "Plex"
+    pt_PT: "Plex"
   tagline:
     en_US: "Plex (LinuxServer.io)"
   description:
     en_US: "Plex — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/plex:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-plex/"
+    pt_PT: "Servidor multimédia para organizar bibliotecas e reproduzir conteúdos em vários dispositivos. Revê os volumes montados, a configuração de rede e as opções de acesso remoto."
   port_map: "32400"
   index: /
