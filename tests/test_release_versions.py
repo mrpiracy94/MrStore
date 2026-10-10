@@ -50,7 +50,8 @@ class ReleaseVersionTests(unittest.TestCase):
         }))
 
     def test_image_change_advances_published_version_and_records_reason(self):
-        self.prepare(new_image="example/demo:latest@sha256:" + "a" * 64)
+        self.prepare(old_image="example/demo:latest@sha256:" + "a" * 64,
+                     new_image="example/demo:latest@sha256:" + "b" * 64)
         result = promote(self.stage, self.previous, today=date(2026, 10, 10))
         current = yaml.safe_load(self.staged_file.read_text())["x-casaos"]
         self.assertEqual(current["version"], "1.0.8")
@@ -72,7 +73,29 @@ class ReleaseVersionTests(unittest.TestCase):
         self.prepare(new_version="1.2.0", new_image="example/demo:latest@sha256:" + "b" * 64)
         report = promote(self.stage, self.previous, today=date(2026, 10, 10))
         self.assertEqual(yaml.safe_load(self.staged_file.read_text())["x-casaos"]["version"], "1.2.0")
-        self.assertEqual(report["image_updates"], 1)
+        self.assertEqual(report["image_updates"], 0)
+        self.assertEqual(report["explicit_updates"], 1)
+
+    def test_first_digest_pin_is_not_a_fictitious_update(self):
+        self.prepare(old_version="1.0.7", old_image="example/demo:latest",
+                     new_version="1.0.0",
+                     new_image="example/demo:latest@sha256:" + "a" * 64)
+        report = promote(self.stage, self.previous, today=date(2026, 10, 10))
+        current = yaml.safe_load(self.staged_file.read_text())["x-casaos"]
+        self.assertEqual(current["version"], "1.0.7")
+        self.assertEqual(current["update_at"], "2026-09-15")
+        self.assertEqual(report["image_updates"], 0)
+        self.assertEqual(report["baseline_pins"], 1)
+        self.assertEqual(report["apps"][0]["changed_services"], [])
+        self.assertEqual(report["apps"][0]["baseline_services"], ["demo"])
+        self.assertEqual(report["state"]["apps"]["io.github.mrpiracy94.demo"]["images"]["demo"],
+                         "example/demo:latest@sha256:" + "a" * 64)
+
+    def test_reject_loss_of_immutable_reference(self):
+        self.prepare(old_image="example/demo:latest@sha256:" + "a" * 64,
+                     new_image="example/demo:latest")
+        with self.assertRaisesRegex(ValueError, "refusing to downgrade immutable"):
+            promote(self.stage, self.previous, today=date(2026, 10, 10))
 
     def test_newly_published_app_keeps_original_version(self):
         self.staged_file.write_text(yaml.safe_dump(sample("1.0.0", "example/demo:1")))
