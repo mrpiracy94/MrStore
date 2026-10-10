@@ -13,6 +13,8 @@ import json
 from pathlib import Path
 import re
 
+import yaml
+
 PLATFORMS = (
     "umbrelos", "homeio", "casaos", "zimaos", "cosmos", "portainer",
     "homedock", "olares", "dockge", "runtipi", "docker-linux",
@@ -67,7 +69,15 @@ def inventory(root: Path, source: Path | None = None) -> dict:
         if not app.is_dir() or not path.is_file() or path.is_symlink():
             continue
         # This SHA is content-addressed. Any manifest change invalidates evidence.
-        catalog[app.name] = hashlib.sha256(path.read_bytes()).hexdigest()
+        info = yaml.safe_load(path.read_text(encoding="utf-8"))
+        architectures = (info.get("x-casaos", {}).get("architectures", [])
+                         if isinstance(info, dict) else [])
+        if not isinstance(architectures, list):
+            raise ValueError(f"{app.name}: invalid declared architectures")
+        catalog[app.name] = {
+            "sha": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "architectures": set(arch for arch in architectures if arch in ("amd64", "arm64")),
+        }
     by_target = {name: {"C2": set(), "C3": set(), "C4": set()} for name in PLATFORMS}
     stale = 0
     valid = 0
@@ -104,7 +114,7 @@ def inventory(root: Path, source: Path | None = None) -> dict:
         if key in indexed:
             raise ValueError(f"{where}: duplicated device evidence record")
         indexed.add(key)
-        if item["compose_sha256"] != catalog[item["app"]]:
+        if item["compose_sha256"] != catalog[item["app"]]["sha"] or item["architecture"] not in catalog[item["app"]]["architectures"]:
             stale += 1
             continue
         valid += 1
@@ -113,6 +123,10 @@ def inventory(root: Path, source: Path | None = None) -> dict:
             levels = {"C2": ("C2",), "C3": ("C2", "C3"), "C4": ("C2", "C3", "C4")}[level]
             for v in levels:
                 by_target[item["platform"]][v].add((item["app"], item["architecture"]))
+    required = {(app, arch) for app, meta in catalog.items()
+                for arch in meta["architectures"]}
+    full_coverage = bool(required) and all(
+        required.issubset(by_target[name]["C4"]) for name in PLATFORMS)
     return {
         "schema": 1,
         "method": "community_reviewed_device_reports_not_vendor_certification",
@@ -132,7 +146,8 @@ def inventory(root: Path, source: Path | None = None) -> dict:
             for name in PLATFORMS
         ],
         "all_eleven_have_c4_evidence": all(by_target[name]["C4"] for name in PLATFORMS),
-        "all_254_apps_certified_everywhere": False,
+        "all_254_apps_certified_everywhere": len(catalog) == 254 and full_coverage,
+        "all_declared_architectures_c4_everywhere": full_coverage,
     }
 
 
