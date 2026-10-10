@@ -20,6 +20,9 @@ MAX_IMAGE_BYTES = 3 * 1024 * 1024
 
 # app folder, source folder, screenshot filename, immutable Git blob SHA-1
 SOURCES = (
+    ("immich", "Immich", "screenshot-1.png", "26f780de3571c30ebcb50e0139d7c251ea9449dc"),
+    ("nextcloud", "Nextcloud", "screenshot-1.png", "6a877c9a6a92bd405cb01b319aeb0815731d9616"),
+    ("vaultwarden", "Vaultwarden", "screenshot-1.png", "4acd467841c85edb8ca989ece6735efd7c31a0d6"),
     ("gitea", "Gitea", "screenshot-1.png", "836b11f808d50b2a976e5aa13c62b24994ca8b89"),
     ("homeassistant", "HomeAssistant", "screenshot-1.jpg", "cea9470e2c46fd08e5bbb99660db63aef3291e3d"),
     ("jellyfin", "Jellyfin", "screenshot-1.png", "2951abbbf43112fdcb56cce480b8059a9c6bd9c9"),
