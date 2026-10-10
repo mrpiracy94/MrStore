@@ -44,6 +44,91 @@ def _label(value, fallback):
     return fallback
 
 
+def portainer_template(slug: str, document: dict) -> dict | None:
+    """Export only safely representable, audited single-service Portainer v2 templates."""
+    import re
+    services = document.get("services", {})
+    if not isinstance(services, dict) or len(services) != 1:
+        return None
+    service = next(iter(services.values()))
+    allowed = {"image", "container_name", "restart", "environment",
+               "ports", "volumes", "x-casaos"}
+    if not isinstance(service, dict) or set(service) - allowed:
+        return None
+    meta = document["x-casaos"]
+    image = service.get("image")
+    if not isinstance(image, str) or "@sha256:" not in image:
+        return None
+    env = service.get("environment") or []
+    if isinstance(env, list):
+        if any(not isinstance(item, str) or "=" not in item for item in env):
+            return None
+        values = dict(item.split("=", 1) for item in env)
+    elif isinstance(env, dict):
+        values = env
+    else:
+        return None
+    if any(not isinstance(k, str) or not isinstance(v, (str, int))
+           or "$" + "{" in str(v) or "CHANGE_ME" in str(v)
+           or any(word in k.upper() for word in ("PASSWORD", "SECRET", "TOKEN", "API_KEY"))
+           for k, v in values.items()):
+        return None
+    ports = []
+    for item in service.get("ports") or []:
+        if isinstance(item, dict):
+            pub, target = item.get("published"), item.get("target")
+            protocol = item.get("protocol", "tcp")
+            if pub is None or target is None or protocol not in ("tcp", "udp"):
+                return None
+            text = f"{pub}:{target}/{protocol}"
+        elif isinstance(item, str):
+            text = item if "/" in item else item + "/tcp"
+        else:
+            return None
+        if not re.fullmatch(r"[0-9]+:[0-9]+/(tcp|udp)", text):
+            return None
+        ports.append(text)
+    volumes = []
+    for item in service.get("volumes") or []:
+        if isinstance(item, dict):
+            if item.get("type") != "bind" or not isinstance(item.get("source"), str):
+                return None
+            target = item.get("target")
+            if not isinstance(target, str) or not target.startswith("/"):
+                return None
+            volume = {"container": target, "bind": item["source"]}
+            if item.get("read_only"):
+                volume["readonly"] = True
+        elif isinstance(item, str):
+            parts = item.split(":")
+            if len(parts) < 2 or len(parts) > 3:
+                return None
+            if not parts[0].startswith("/") or not parts[1].startswith("/"):
+                return None
+            volume = {"container": parts[1], "bind": parts[0]}
+            if len(parts) == 3 and parts[2] == "ro":
+                volume["readonly"] = True
+            elif len(parts) == 3 and parts[2] != "rw":
+                return None
+        else:
+            return None
+        volumes.append(volume)
+    restart = service.get("restart", "unless-stopped")
+    if restart not in ("always", "no", "on-failure", "unless-stopped"):
+        return None
+    return {
+        "type": 1, "title": _label(meta.get("title"), slug),
+        "description": _label(meta.get("tagline"), slug),
+        "image": image, "name": slug,
+        "categories": [meta.get("category", "Others")],
+        "platform": "linux", "restart_policy": restart,
+        "note": "MrStore: rever volumes, portas e backups antes de instalar.",
+        "ports": ports, "volumes": volumes,
+        "env": [{"name": key, "label": key, "default": str(value)}
+                for key, value in sorted(values.items())]
+    }
+
+
 def build(source: Path, selection: Path, dist: Path) -> dict:
     """Atomic fail-closed portable release; does not touch ZimaOS builder output."""
     entries = archive_entries(source, selection)
@@ -55,6 +140,7 @@ def build(source: Path, selection: Path, dist: Path) -> dict:
         raise ValueError("Refusing to overwrite universal release")
     dist.mkdir(parents=True, exist_ok=True)
     apps = []
+    portainer = []
     with tempfile.TemporaryDirectory(prefix=".mrstore-universal-", dir=dist) as tmp:
         work = Path(tmp) / "universal"
         (work / "compose").mkdir(parents=True)
@@ -62,6 +148,9 @@ def build(source: Path, selection: Path, dist: Path) -> dict:
             content = entries[f"Apps/{slug}/docker-compose.yml"]
             data = yaml.safe_load(content)
             meta = data["x-casaos"]
+            template = portainer_template(slug, data)
+            if template is not None:
+                portainer.append(template)
             file_name = f"compose/{slug}.yml"
             (work / file_name).write_bytes(content)
             apps.append({
@@ -78,7 +167,11 @@ def build(source: Path, selection: Path, dist: Path) -> dict:
             for ident, name, method, guide, url in PLATFORMS
         ]
         catalog = {"version": 1, "security_source": "release-selection.json",
-                   "approved_count": len(apps), "platforms": platforms, "apps": apps}
+                   "approved_count": len(apps), "portainer_template_count": len(portainer),
+                   "platforms": platforms, "apps": apps}
+        (work / "portainer-templates.json").write_text(json.dumps(
+            {"version": "2", "templates": portainer}, ensure_ascii=False, indent=2)
+            + "\n", encoding="utf-8")
         (work / "catalog.json").write_text(json.dumps(
             catalog, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         os.replace(work, dist / "universal")
