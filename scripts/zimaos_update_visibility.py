@@ -200,6 +200,37 @@ def native_upgradable(api_base: str, app_id: str, folder: str, opener=urlopen) -
     return "not_listed_not_proof_of_current"
 
 
+def classify_native_visibility(observation: dict) -> str:
+    """Classify corroborated evidence without inventing a native update verdict.
+
+    An image digest difference is only an upgrade *candidate*; the catalog's
+    approved digest and registry platform selection must still be reviewed.
+    """
+    native = observation.get("native_update_api")
+    evidence = observation.get("update_evidence")
+    if native is None:
+        return "native_api_not_queried"
+    if native in ("unavailable_or_auth_required", "unrecognized_response"):
+        return "native_api_unavailable_or_unknown"
+    if evidence == "unknown_ambiguous_main_containers":
+        return "unknown_ambiguous_compose_replicas"
+    if (observation.get("container_resolution") == "compose_project_and_service_labels"
+            and observation.get("zimaos_service_name_resolves") is False
+            and native == "not_listed_not_proof_of_current"):
+        return "possible_main_service_lookup_bug_592"
+    if native == "not_listed_not_proof_of_current":
+        if evidence == "digest_differs_review_required":
+            return "candidate_native_false_negative_review_required"
+        if evidence in ("unknown_missing_repodigests", "unknown_missing_usable_repodigest"):
+            return "possible_missing_repodigests_bug_591"
+        return "not_listed_with_no_proof_of_current"
+    if native == "listed_as_upgradable":
+        if evidence == "digest_matches":
+            return "possible_native_false_positive_review_required"
+        return "listed_as_upgradable_approval_still_required"
+    return "unknown_native_update_status"
+
+
 def runtime_check(item: dict, *, check_registry: bool = False,
                   api_base: str | None = None, runner=subprocess.run, opener=urlopen) -> dict:
     """Inspect only one explicitly selected app; never modify the NAS."""
@@ -266,6 +297,7 @@ def runtime_check(item: dict, *, check_registry: bool = False,
     if api_base is not None:
         outcome["native_update_api"] = native_upgradable(
             api_base, item["app_id"], item["app"], opener=opener)
+    outcome["native_visibility_assessment"] = classify_native_visibility(outcome)
     return outcome
 
 
@@ -294,8 +326,10 @@ def markdown(report: dict) -> str:
                   f"- app: {r['app']}",
                   f"- container identification: {r.get('installed', 'unknown')}",
                   f"- ZimaOS main-service lookup resolves: {r.get('zimaos_service_name_resolves', 'unknown')}",
+                  f"- container resolution: {r.get('container_resolution', 'unknown')}",
                   f"- registry evidence: {r.get('update_evidence', 'unknown')}",
-                  f"- native App Management verdict: {r.get('native_update_api', 'not_queried')}", ""]
+                  f"- native App Management verdict: {r.get('native_update_api', 'not_queried')}",
+                  f"- assessment (not a confirmed UI bug): {r.get('native_visibility_assessment', 'unknown')}", ""]
     lines += ["", "Upstream bugs: https://github.com/IceWhaleTech/ZimaOS/issues/591 "
               "and https://github.com/IceWhaleTech/ZimaOS/issues/592.", ""]
     return "\n".join(lines)
