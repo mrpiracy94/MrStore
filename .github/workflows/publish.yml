@@ -177,6 +177,16 @@ jobs:
         run: >-
           python -S scripts/curate_taglines.py --verify-dist dist/index.json
           --approved-file out/release-selection.json
+      - name: Add public storefront without changing the approved ZimaOS catalog
+        run: |
+          test -s dist/index.json
+          test -s dist/store.json
+          mkdir -p dist/web dist/assets/branding
+          cp web/index.html dist/index.html
+          cp web/style.css dist/web/style.css
+          cp web/app.js dist/web/app.js
+          cp assets/branding/mrstore-icon.svg dist/assets/branding/mrstore-icon.svg
+          cp assets/branding/mrstore-banner.svg dist/assets/branding/mrstore-banner.svg
       - name: Publish transparent quarantine details alongside the catalog
         run: |
           cp out/release-selection.json dist/release-status.json
