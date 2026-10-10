@@ -22,7 +22,7 @@ def shard_images(images: dict | list, shard: int, shards: int) -> list[str]:
 # Limit transient registry requests instead of mistaking them for safe images.
 # The remote-only source avoids false containerd socket errors in Actions.
 RETRYABLE = re.compile(
-    r'TOOMANYREQUESTS|429\\b|rate.?limit|retry.after|timeout|timed out|'
+    r'TOOMANYREQUESTS|429\b|rate.?limit|retry.after|timeout|timed out|'
     r'connection reset|unexpected EOF|TLS handshake|context deadline|'
     r'temporar(?:y|ily) unavailable|connection refused|502 Bad Gateway|'
     r'503 Service Unavailable|504 Gateway Timeout',
@@ -53,11 +53,26 @@ def scan(image: str, binary: str = 'trivy', platform: str | None = None) -> tupl
                     return [], 'Invalid Trivy JSON output'
                 if not isinstance(report, dict) or not isinstance(report.get('Results'), list):
                     return [], 'Incomplete Trivy report (missing Results)'
+                # A successful Trivy exit with zero analysed targets cannot
+                # certify an image as free from HIGH/CRITICAL vulnerabilities.
+                if not report['Results']:
+                    return [], 'Incomplete Trivy report (no scan targets)'
+                if any(not isinstance(result, dict) or
+                       not isinstance(result.get('Target'), str) or
+                       not result['Target'].strip()
+                       for result in report['Results']):
+                    return [], 'Incomplete Trivy report (invalid scan target)'
+                # Validate all vulnerability records before interpreting any
+                # report as clean. Malformed records are not zero CVEs.
+                for result in report['Results']:
+                    vulnerabilities = result.get('Vulnerabilities')
+                    if vulnerabilities is not None and (
+                            not isinstance(vulnerabilities, list) or
+                            any(not isinstance(item, dict) for item in vulnerabilities)):
+                        return [], 'Incomplete Trivy report (invalid vulnerabilities)'
                 hits = []
                 seen = set()
                 for result in report['Results']:
-                    if not isinstance(result, dict):
-                        continue
                     for item in result.get('Vulnerabilities') or []:
                         if item.get('Severity') not in ('HIGH', 'CRITICAL'):
                             continue
