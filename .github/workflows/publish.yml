@@ -30,7 +30,6 @@ on:
       - 'scripts/verify_dist.py'
       - 'scripts/privilege_policy.py'
       - 'scripts/compose_preflight.py'
-      - 'tests/**'
       - 'data/taglines-pt.json'
       - 'store-config.json'
       - 'category-list.json'
