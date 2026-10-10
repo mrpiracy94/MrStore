@@ -241,7 +241,10 @@
     });
   }
   function verifyRelease(release, appList) {
-    if (!release || release.certification !== "verified" || !Array.isArray(release.approved) ||
+    // Never classify editorial-only entries as security-scanned or device-certified.
+    if (!release || release.certification !== "security_scanned" ||
+        release.policy !== "editorial shortlist AND all image platforms scanned clean, digest pinned, safe static defaults" ||
+        !Array.isArray(release.approved) ||
         !Number.isInteger(release.approved_count) ||
         release.approved_count !== release.approved.length ||
         release.approved_count !== appList.length) return false;
@@ -268,9 +271,9 @@
       state.validated = verifyRelease(await reply.json(), state.apps);
     } catch (_) { state.validated = false; }
     if (state.validated) {
-      setNotice("Catálogo publicado a partir da seleção aprovada pelo processo automático de verificação do MrStore. Um scan sem alertas conhecidos não garante ausência absoluta de vulnerabilidades; confirma os requisitos antes de instalar.", false);
+      setNotice("As imagens desta edição passaram as verificações automáticas de CVEs e configuração e foram fixadas por digest. Isto NÃO equivale a testes de instalação, atualização e recuperação em dispositivos reais.", false);
     } else {
-      setNotice("Esta edição pública não inclui evidência completa de quarentena, ou existe uma divergência entre o índice e os relatórios. Podes consultar as fichas, mas NÃO interpretes estas aplicações como aprovadas pelos scanners atuais. Verifica os relatórios no GitHub antes de instalar.", true);
+      setNotice("Esta é uma listagem editorial sem certificação de segurança e compatibilidade demonstrada, ou sem relatório de auditoria correspondente. Podes pesquisar as apps, mas NÃO as interpretes como aprovadas para instalação. Consulta os relatórios no GitHub.", true);
     }
     categoryList(); render(); renderShowcasePreview();
   }
