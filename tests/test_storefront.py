@@ -94,6 +94,13 @@ class StorefrontTests(unittest.TestCase):
         self.assertIn("preview.replaceChildren()", js)
         self.assertIn('screenshot.addEventListener("error"', js)
         self.assertIn("#details-icon>.detail-icon-inner img", css)
+        self.assertIn('const CATEGORY_SYMBOLS =', js)
+        self.assertIn('const cover = element("div", "app-card-cover")', js)
+        self.assertIn("shot.addEventListener(\"error\", coverFallback", js)
+        self.assertIn("--orange:#208bff", css)  # Blue accent of the approved UI.
+        self.assertIn("grid-template-columns:repeat(8,minmax(0,1fr))", css)
+        for asset in ("mark.svg", "readme-banner.svg"):
+            self.assertIn("MrStore", (self.source / "assets" / asset).read_text(encoding="utf-8"))
         for bad in ("https://cdn.", "https://fonts.googleapis.com", "unpkg.com"):
             self.assertNotIn(bad, html)
 
