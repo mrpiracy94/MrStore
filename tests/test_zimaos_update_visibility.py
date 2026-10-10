@@ -44,6 +44,9 @@ def fake_run_for(values):
 class UpdateVisibilityTests(unittest.TestCase):
     def test_latest_detected_on_pinned_tag(self):
         self.assertTrue(is_latest("linuxserver/sonarr:latest@sha256:" + "a" * 64))
+        self.assertTrue(is_latest("registry.example:5000/team/sonarr"))
+        self.assertTrue(is_latest("sonarr"))
+        self.assertFalse(is_latest("registry.example:5000/team/sonarr:v1.2.3"))
         self.assertFalse(is_latest("ghcr.io/immich/server:release"))
         self.assertFalse(is_latest("repo/foo@sha256:" + "a" * 64))
 
