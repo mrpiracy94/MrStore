@@ -57,7 +57,7 @@ jobs:
           for attempt in 1 2 3 4; do
             # Rebase by reconstructing from the latest gh-pages branch each time.
             # This avoids overwriting changes by the independent audited release.
-            git fetch origin gh-pages --no-tags
+            git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
             git checkout -B static-site-deploy origin/gh-pages
             if [ ! -s index.json ] || [ ! -s store.json ]; then
               echo 'Refusing to publish website without existing catalog files.'
