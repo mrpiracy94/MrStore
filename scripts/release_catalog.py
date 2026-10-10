@@ -17,6 +17,7 @@ from cves import shard_images
 from curate_taglines import load_summaries, render_manifest
 from release_scan import image_platforms
 from image_freshness import RETIRED_UPSTREAM
+from description_locale import enrich as enrich_portuguese_description
 
 HEX = re.compile(r"^[a-f0-9]{64}$")
 DANGEROUS_SOURCE = {"/", "/etc", "/root", "/var/run/docker.sock", "/run/docker.sock"}
@@ -182,6 +183,8 @@ def stage(source: Path, evidence: dict, destination: Path, summaries: dict) -> d
         # Curate before changing images: its checker proves no service edits.
         text = render_manifest(app.path.read_text(encoding="utf-8"), folder, summaries[folder])
         manifest = yaml.safe_load(text)
+        # Only approved apps reach staging; do not change their Docker service settings.
+        enrich_portuguese_description(manifest["x-casaos"], summaries[folder])
         for service, image in locked.items():
             manifest["services"][service]["image"] = image
         (target / "docker-compose.yml").write_text(
