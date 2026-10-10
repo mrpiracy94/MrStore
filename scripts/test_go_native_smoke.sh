@@ -30,7 +30,9 @@ wait_for_http() {
   local url="$1" attempts="$2"
   local n
   for ((n=0; n<attempts; n++)); do
-    if curl -fsS --max-time 3 "$url" -o /dev/null 2>/dev/null; then return 0; fi
+    # Hosted runners may set an HTTP proxy; localhost Docker published ports
+    # must be reached directly, not through the proxy.
+    if curl --noproxy "*" -fsS --max-time 3 "$url" -o /dev/null 2>/dev/null; then return 0; fi
     if [[ "$(docker inspect --format '{{.State.Running}}' "$cid")" != true ]]; then
       echo "::error::Container stopped before HTTP readiness: $url" >&2
       return 1
@@ -38,6 +40,8 @@ wait_for_http() {
     sleep 2
   done
   echo "::error::Timed out waiting for HTTP readiness: $url" >&2
+  curl --noproxy "*" -v --max-time 5 "$url" -o /dev/null 2>&1 || true
+  docker port "$cid" >&2 || true
   return 1
 }
 mkdir -p "$work/data"
