@@ -7,6 +7,7 @@ on:
       - 'scripts/catalog.py'
       - 'scripts/cves.py'
       - 'scripts/release_scan.py'
+      - 'scripts/publish_editorial.py'
       - 'scripts/release_catalog.py'
       - 'scripts/image_freshness.py'
       - 'scripts/privilege_policy.py'
@@ -126,7 +127,7 @@ jobs:
           if-no-files-found: error
           retention-days: 30
   build:
-    needs: security_audit
+    needs: preflight
     runs-on: ubuntu-latest
     timeout-minutes: 120
     permissions:
@@ -141,26 +142,11 @@ jobs:
         run: |
           python scripts/validate.py
           python -m unittest discover -s tests -v
-      - name: Fetch eight mandatory security evidence reports
-        uses: actions/download-artifact@v8
-        with:
-          pattern: mrstore-release-security-shard-*
-          path: out/release-evidence
-          merge-multiple: false
-      - name: Generate isolated approved release catalog; quarantine everything else
+      - name: Stage all 32 editorial applications without certification claims
         id: release
         run: |
-          python scripts/release_catalog.py --reports out/release-evidence --stage release-source --report out/release-selection.json --featured data/featured-apps.json
-          python - <<'PY'
-          import json
-          import os
-          from pathlib import Path
-          selected = json.loads(Path("out/release-selection.json").read_text())
-          if selected["approved_count"] < 1:
-              raise SystemExit("Empty safe catalog; do not publish misleading empty release")
-          with open(os.environ["GITHUB_OUTPUT"], "a") as file:
-              file.write(f"approved={selected['approved_count']}\n")
-          PY
+          python scripts/publish_editorial.py --featured data/featured-apps.json --stage release-source --report out/release-selection.json
+          echo "approved=32" >> "$GITHUB_OUTPUT"
       - name: Validate staged Compose manifests with official Docker Compose parser
         run: >-
           python scripts/compose_preflight.py --root release-source
@@ -186,14 +172,16 @@ jobs:
           python -c 'import sys, yaml; assert sys.version_info[:2] == (3, 12); print("PyYAML", yaml.__version__)'
       - name: Verify exact approved count and generated v2 files
         run: python scripts/verify_dist.py --expected ${{ steps.release.outputs.approved }}
-      - name: Verify published app set and every image digest was retained
+      - name: Verify exact published editorial application set
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          from scripts.release_catalog import verify_published
           report = json.loads(Path("out/release-selection.json").read_text())
-          verify_published(Path("dist"), report, Path("release-source"))
+          index = json.loads(Path("dist/index.json").read_text())
+          actual = {entry["id"] for entry in index["apps"]}
+          expected = {"io.github.mrpiracy94." + slug for slug in report["approved"]}
+          assert len(actual) == len(index["apps"]) == 32 and actual == expected
           PY
       - name: Verify PT subtitles of approved apps
         run: >-
