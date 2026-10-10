@@ -51,8 +51,11 @@ def evaluate_run(filename: str, runs: list[dict], now: datetime,
     link = f"https://github.com/{repo}/actions/workflows/{filename}"
     if not runs:
         if workflow_created_at:
-            started = timestamp(workflow_created_at)
-            age = (now - started).total_seconds() / 3600
+            try:
+                started = timestamp(workflow_created_at)
+                age = (now - started).total_seconds() / 3600
+            except (TypeError, ValueError, OverflowError):
+                age = -1  # Corrupt timestamp is never evidence of health.
             if 0 <= age <= max_hours:
                 return (f"A aguardar primeira execução agendada (criado há {age:.0f} h)", None)
         return ("Sem execução agendada confirmada",
@@ -170,6 +173,18 @@ def github_review(repo: str, now: datetime) -> tuple[list[dict], list[str], dict
         # Use it only to avoid premature "missing schedule" alerts, never to
         # mask an actually failed/overdue run.
         metadata = api(f"/repos/{escaped_repo}/actions/workflows/{wf}")
+        # A workflow explicitly disabled in GitHub Actions cannot fulfill its
+        # schedule, even if it was created recently. Missing state is also not
+        # proof of an active monitor.
+        if metadata.get("state") != "active":
+            status = f"Workflow inativo ou estado não verificável ({metadata.get('state') or 'desconhecido'})"
+            problems.append(finding(
+                "workflow", f"inactive:{filename}",
+                f"**{filename}**: {status}; reativar/confirmar a configuração do GitHub Actions.",
+                f"https://github.com/{repo}/actions/workflows/{filename}"))
+            outcomes["workflows"][filename] = status
+            notes.append(f"- ⚠️ {filename}: {status}")
+            continue
         data = api(f"/repos/{escaped_repo}/actions/workflows/{wf}/runs"
                    "?event=schedule&per_page=10")
         label, problem = evaluate_run(filename, data.get("workflow_runs", []),
