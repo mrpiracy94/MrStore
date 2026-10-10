@@ -86,6 +86,20 @@ class FastAppAuditTests(unittest.TestCase):
         self.assertEqual(status["critical"], 1)
         self.assertFalse(status["complete"])
 
+    def test_daily_scan_is_configured_for_32_simultaneous_images(self):
+        import yaml
+        workflow = yaml.load(
+            (ROOT / ".github/workflows/cve-scan.yml").read_text(encoding="utf-8"),
+            Loader=yaml.BaseLoader,
+        )
+        job = workflow["jobs"]["trivy"]
+        self.assertEqual(job["strategy"]["max-parallel"], "8")
+        self.assertIn("[0,1,2,3,4,5,6,7]", job["strategy"]["matrix"]["shard"])
+        command = next(step["run"] for step in job["steps"]
+                       if step.get("name") == "Scan image shard for critical CVEs")
+        self.assertIn('--shards 8 --shard "$SHARD" --workers 4', command)
+        self.assertEqual(int(job["strategy"]["max-parallel"]) * 4, 32)
+
     def test_parallel_trivy_uses_memory_cache_only_when_db_is_prepared(self):
         done = subprocess.CompletedProcess(["trivy"], 0, json.dumps(
             {"Results": [{"Target": "example/app:1", "Vulnerabilities": []}]}), "")
