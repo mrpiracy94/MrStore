@@ -1,14 +1,14 @@
 <div align="center">
-  <img src="web/assets/readme-banner.svg?brand=2026-orange-v2" alt="MrStore — O teu homelab. As tuas apps. Uma só loja." width="100%">
+  <img src="web/assets/readme-banner.svg?brand=2026-universal-v3" alt="MrStore — O teu homelab. As tuas apps. Uma só loja." width="100%">
 
   <h1>MrStore · Your Homelab App Hub</h1>
 
-  <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Explora o universo self-hosted num catálogo comunitário. Integração ZimaOS v2 disponível; expansão multiplataforma em desenvolvimento.</p>
+  <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Descobre aplicações self-hosted num catálogo comunitário pensado para unir sistemas, servidores e plataformas. Uma identidade independente do teu sistema operativo.</p>
 
   <p>
     <a href="https://mrpiracy94.github.io/MrStore/"><strong>🌐 Explorar a loja</strong></a>
     &nbsp; · &nbsp;
-    <a href="#-adicionar-ao-zimaos"><strong>🚀 Como instalar</strong></a>
+    <a href="#-uma-marca-para-todo-o-homelab"><strong>🌍 Ecossistema</strong></a>
     &nbsp; · &nbsp;
     <a href="#-segurança-e-transparência"><strong>🛡️ Segurança</strong></a>
     &nbsp; · &nbsp;
@@ -20,7 +20,9 @@
 
 ## ✨ O que é a MrStore?
 
-A **MrStore** organiza **254 definições de aplicações** em Docker Compose, preparadas para o formato **ZimaOS App Store v2**. A edição pública pode conter **menos aplicações**, porque o nosso sistema de publicação exclui as que não passaram os controlos obrigatórios de segurança.
+A **MrStore** é uma montra comunitária de aplicações **self-hosted** concebida para o universo homelab — independentemente da marca do NAS, servidor ou plataforma. Organiza **254 definições de aplicações** baseadas em Docker Compose. O catálogo público pode disponibilizar **menos aplicações**, porque a publicação exclui as que não passaram os controlos de segurança.
+
+**Estado técnico atual:** o adaptador de loja disponível neste repositório utiliza o protocolo **ZimaOS App Store v2**. O suporte de instalação nativa noutros sistemas faz parte do desenvolvimento futuro.
 
 | 🔍 Exploração fácil | 📦 Aplicações self-hosted | 🛡️ Segurança por aplicação |
 |:---|:---|:---|
