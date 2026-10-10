@@ -18,6 +18,8 @@ class SensitiveHostBindTests(unittest.TestCase):
             "/var/lib/docker/containers", "/run/containerd/containerd.sock",
             "/run/user/1000/docker.sock", "/root/.ssh",
             "/proc/1/root", "/sys/kernel", "/dev/kmsg",
+            "/etc/shadow", "/etc/gshadow", "/etc/sudoers",
+            "/etc/ssh/ssh_host_rsa_key", "/etc/docker/daemon.json",
         ]
         for source in exposed:
             with self.subTest(source=source):
