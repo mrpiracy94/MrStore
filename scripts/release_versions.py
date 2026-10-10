@@ -160,10 +160,8 @@ def promote(stage: Path, previous: Path, today: date | None = None) -> dict:
                 reason = "approved-image-change"
             elif newer_version > old_version:
                 reason = "explicit-source-version"
-            elif newly_pinned_services:
-                reason = "initial-immutable-baseline"
             else:
-                reason = "retained"
+                reason = "initial-immutable-baseline" if newly_pinned_services else "retained"
                 if isinstance(before.get("update_at"), str):
                     meta["update_at"] = before["update_at"]
                 if isinstance(before.get("release_note"), str) and before["release_note"]:
