@@ -20,8 +20,9 @@ class DeviceCoverageTests(unittest.TestCase):
         cls.catalog = {app.folder: app for app in apps()}
         cls.example = cls.catalog["actual-budget"]
 
-    def test_registry_is_empty_until_human_evidence_is_recorded(self):
-        report = inventory()
+    def test_empty_registry_never_implies_device_evidence(self):
+        # This must remain valid after genuine records are added to the repository.
+        report = self.load_with()
         self.assertEqual(report["total_apps"], len(self.catalog))
         self.assertEqual(report["recorded_tests"], 0)
         self.assertEqual(report["apps_without_current_device_evidence"], len(self.catalog))
