@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from catalog import App
 from privilege_policy import risky_settings, regressions, sensitive_host_bind
+from release_catalog import insecure_defaults
 
 
 class SensitiveHostBindTests(unittest.TestCase):
@@ -33,6 +34,32 @@ class SensitiveHostBindTests(unittest.TestCase):
         for source in benign:
             with self.subTest(source=source):
                 self.assertFalse(sensitive_host_bind(source))
+
+    def test_final_release_quarantines_ancestor_and_aliased_socket_binds(self):
+        # The merge-time diff gate does not protect against legacy mounts
+        # already in main. Publication must independently reject them.
+        from types import SimpleNamespace
+        for source in ("/var/run", "/run", "/var/lib/docker/containers",
+                       "//var/run/docker.sock", "/run/user/1000/docker.sock"):
+            for mount in (source + ":/host:ro",
+                          {"type": "bind", "source": source,
+                           "target": "/host", "read_only": True}):
+                with self.subTest(source=source, mount=mount):
+                    app = SimpleNamespace(source={"services": {"web": {
+                        "image": "example/web:1", "volumes": [mount]}}})
+                    flags = insecure_defaults(app)
+                    self.assertTrue(any("sensitive host volume" in item
+                                        for item in flags), flags)
+
+    def test_final_release_preserves_legitimate_persistent_mounts(self):
+        from types import SimpleNamespace
+        app = SimpleNamespace(source={"services": {"web": {
+            "image": "example/web:1", "volumes": [
+                "/DATA/AppData/web:/config", "/etc/localtime:/etc/localtime:ro",
+                {"type": "volume", "source": "web-data", "target": "/data"},
+            ]}}})
+        self.assertFalse(any("sensitive host volume" in item
+                             for item in insecure_defaults(app)))
 
     def test_short_and_long_form_binds_blocked(self):
         document = {"services": {
