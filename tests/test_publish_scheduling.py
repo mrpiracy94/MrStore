@@ -55,6 +55,13 @@ class PublishSchedulingTests(unittest.TestCase):
                              for step in scan["steps"] if isinstance(step, dict)))
         self.assertIn("if: success()", self.source)
 
+    def test_release_verifier_can_resolve_sibling_python_modules(self):
+        # scripts.release_catalog imports catalog as a top-level Python module.
+        # The inline verifier must expose scripts/ to Python's import path.
+        self.assertIn("PYTHONPATH=scripts python - <<'PY'", self.source)
+        self.assertIn("from scripts.release_catalog import verify_published",
+                      self.source)
+
     def test_validation_remains_unconditional_on_pr(self):
         validate = yaml.safe_load(
             (ROOT / ".github" / "workflows" / "validate.yml").read_text(encoding="utf-8")
