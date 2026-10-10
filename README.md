@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="web/assets/readme-banner.svg?brand=2026-universal-v3" alt="MrStore — O teu homelab. As tuas apps. Uma só loja." width="100%">
+  <img src="web/assets/mrstore-hero.webp" alt="MrStore — O teu homelab. As tuas apps. Uma só loja. Um ecossistema, múltiplas plataformas." width="100%">
 
   <h1>MrStore · Your Homelab App Hub</h1>
 
