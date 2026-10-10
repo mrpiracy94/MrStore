@@ -104,7 +104,8 @@ jobs:
               print('All registry image lookups succeeded.')
           PY
       - name: Save successful digest baseline (never changes apps)
-        if: always() && steps.compare.outcome != 'skipped'
+        # A partial scan must not overwrite the previous complete baseline.
+        if: steps.compare.outcome == 'success'
         run: |
           if ! git diff --quiet -- data/image-digests.json; then
             git config user.name 'github-actions[bot]'
