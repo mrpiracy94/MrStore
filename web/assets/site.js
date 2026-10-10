@@ -150,6 +150,21 @@
     $("details-arches").textContent = (app.architectures || []).map(function (x) { return x.toUpperCase(); }).join(" / ") || "Não indicado";
     $("details-version").textContent = app.version || "Não indicada";
     $("details-developer").textContent = app.developer || "Não indicado";
+    // Preview a real screenshot from the verified local catalog, never a remote URL.
+    const preview = $("details-preview");
+    preview.replaceChildren();
+    preview.hidden = true;
+    const thumbnail = safePath(app.thumbnail);
+    if (thumbnail && /\.(?:png|jpe?g|webp|avif)$/i.test(new URL(thumbnail).pathname)) {
+      const screenshot = document.createElement("img");
+      screenshot.alt = "Pré-visualização de " + appTitle(app);
+      screenshot.loading = "lazy";
+      screenshot.decoding = "async";
+      screenshot.addEventListener("load", function () { preview.hidden = false; }, { once: true });
+      screenshot.addEventListener("error", function () { preview.hidden = true; screenshot.remove(); }, { once: true });
+      screenshot.src = thumbnail;
+      preview.appendChild(screenshot);
+    }
     const compose = $("details-compose"), url = safePath(app.compose_url, ".yml");
     compose.hidden = !url; if (url) compose.href = url;
     const slug = app.id.slice(PREFIX.length);
