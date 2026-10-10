@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from zimaos_update_visibility import (
-    catalog_item, compare_digests, docker_compose_names, docker_repo_digests, is_latest,
+    catalog_item, classify_native_visibility, compare_digests, docker_compose_names, docker_repo_digests, is_latest,
     native_upgradable, runtime_check, scan_catalog, validate_api_base,
 )
 from catalog import App
@@ -207,6 +207,30 @@ class UpdateVisibilityTests(unittest.TestCase):
         outcome = runtime_check(item, runner=runner)
         self.assertEqual(outcome["installed"], "ambiguous_multiple_main_containers")
         self.assertEqual(outcome["update_evidence"], "unknown_ambiguous_main_containers")
+
+    def test_native_false_negative_is_only_candidate_not_approved_update(self):
+        item = {"native_update_api": "not_listed_not_proof_of_current",
+                "update_evidence": "digest_differs_review_required"}
+        self.assertEqual(classify_native_visibility(item),
+                         "candidate_native_false_negative_review_required")
+
+    def test_native_digest_missing_evidence_does_not_claim_update(self):
+        item = {"native_update_api": "not_listed_not_proof_of_current",
+                "update_evidence": "unknown_missing_repodigests"}
+        self.assertEqual(classify_native_visibility(item),
+                         "possible_missing_repodigests_bug_591")
+
+    def test_native_service_lookup_mismatch_flags_592_without_claiming_fix(self):
+        item = {"native_update_api": "not_listed_not_proof_of_current",
+                "update_evidence": "unknown_missing_repodigests",
+                "container_resolution": "compose_project_and_service_labels",
+                "zimaos_service_name_resolves": False}
+        self.assertEqual(classify_native_visibility(item),
+                         "possible_main_service_lookup_bug_592")
+
+    def test_native_api_not_queried_must_not_count_as_verified(self):
+        self.assertEqual(classify_native_visibility({"update_evidence": "digest_matches"}),
+                         "native_api_not_queried")
 
     def test_label_lookup_fails_closed_on_missing_project(self):
         names, err = docker_compose_names("", "app")
