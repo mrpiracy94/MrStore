@@ -1,0 +1,83 @@
+name: MrStore Copilot agent queue
+on:
+  schedule:
+    - cron: '13 8 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'audit = report only; assign = delegate with configured user token'
+        type: choice
+        options: [audit, assign]
+        default: audit
+      issue:
+        description: 'Optional issue number (0 = all eligible)'
+        type: number
+        default: 0
+  pull_request:
+    paths:
+      - 'scripts/copilot_agent_queue.py'
+      - 'tests/test_copilot_agent_queue.py'
+      - '.github/workflows/copilot-agent-queue.yml'
+      - '.github/agents/**'
+      - '.github/copilot-instructions.md'
+permissions:
+  contents: read
+  issues: write
+  pull-requests: read
+concurrency:
+  group: mrstore-copilot-agent-queue
+  cancel-in-progress: false
+jobs:
+  queue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Test safe and idempotent routing
+        run: python -m unittest discover -s tests -p 'test_copilot_agent_queue.py' -v
+      - name: Ensure idempotency label when delegation is enabled
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COPILOT_ASSIGN_TOKEN: ${{ secrets.COPILOT_ASSIGN_TOKEN }}
+          INPUT_MODE: ${{ inputs.mode }}
+        run: |
+          if [[ -n "$COPILOT_ASSIGN_TOKEN" ]] && \
+             { [[ "$GITHUB_EVENT_NAME" == "schedule" ]] || [[ "$INPUT_MODE" == "assign" ]]; }; then
+            gh label create 'agent:delegated' --repo "$GITHUB_REPOSITORY" \
+              --color '6F42C1' --description 'Copilot agent already received this task' --force
+          fi
+      - name: Audit and optionally delegate queued work
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COPILOT_ASSIGN_TOKEN: ${{ secrets.COPILOT_ASSIGN_TOKEN }}
+          INPUT_MODE: ${{ inputs.mode }}
+          INPUT_ISSUE: ${{ inputs.issue }}
+        run: |
+          MODE=audit
+          if [[ "$GITHUB_EVENT_NAME" == "schedule" ]]; then MODE=auto; fi
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then MODE="${INPUT_MODE:-audit}"; fi
+          ISSUE="${INPUT_ISSUE:-0}"
+          [[ "$ISSUE" =~ ^[0-9]+$ ]] || exit 2
+          python scripts/copilot_agent_queue.py --mode "$MODE" --issue "$ISSUE" \
+            --max-assignments 2
+      - name: Publish queue summary
+        if: always()
+        run: |
+          if [ -f out/copilot-queue.md ]; then
+            cat out/copilot-queue.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Agent queue failed before a report was produced; no success claim.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mrstore-copilot-agent-queue
+          path: out/copilot-queue.*
+          if-no-files-found: warn
+          retention-days: 21
