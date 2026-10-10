@@ -96,7 +96,9 @@ público da imagem da loja e os demais recursos locais.
 
 ## Mais screenshots genuínos na publicação
 
-Além das 3 capturas já presentes no Git, a publicação agora procura **10
+As 3 capturas já presentes no Git têm hashes de blob iguais aos da App Store oficial
+(Immich, Nextcloud e Vaultwarden); a pipeline passa também a reverificá-las
+antes da publicação. Além destas, a publicação agora procura **10
 capturas adicionais** na
 [CasaOS AppStore oficial](https://github.com/IceWhaleTech/CasaOS-AppStore/tree/0909364b800950030e71ea82355a5969a1c08b39/Apps):
 Gitea, Home Assistant, Jellyfin, Ollama, Plex, qBittorrent, Syncthing
