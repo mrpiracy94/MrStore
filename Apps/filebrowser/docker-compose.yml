@@ -40,8 +40,8 @@ x-casaos:
   author: MrStore
   developer: File Browser
   category: Productivity
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/filebrowser.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/filebrowser.png
+  icon: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/filebrowser.png
+  thumbnail: https://raw.githubusercontent.com/homarr-labs/dashboard-icons/main/png/filebrowser.png
   title:
     en_US: File Browser
   tagline:
