@@ -191,7 +191,9 @@ def github_review(repo: str, now: datetime) -> tuple[list[dict], list[str], dict
                                       now, max_hours, repo,
                                       metadata.get("created_at"))
         outcomes["workflows"][filename] = label
-        notes.append(f"- {'⚠️' if problem else '✅'} {filename}: {label}")
+        # Initial grace is not an actual successful scheduled scan.
+        marker = "⚠️" if problem else ("⏳" if label.startswith("A aguardar") else "✅")
+        notes.append(f"- {marker} {filename}: {label}")
         if problem:
             problems.append(problem)
     prs = api_pages(f"/repos/{escaped_repo}/pulls?state=open", limit=10)
