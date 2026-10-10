@@ -1,0 +1,37 @@
+name: Validate Lovable storefront in Chromium
+on:
+  pull_request:
+    paths:
+      - 'web/**'
+      - 'scripts/stage_storefront.py'
+      - 'scripts/test_lovable_browser.py'
+      - 'tests/test_storefront.py'
+      - '.github/workflows/lovable-ui.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual-and-functional:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run storefront release-contract unit tests
+        run: python -m unittest discover -s tests -p 'test_storefront.py' -v
+      - name: Install isolated Playwright Chromium
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Render desktop and mobile with real Chromium; exercise filters and dialog
+        run: python scripts/test_lovable_browser.py
+      - name: Upload explicitly labelled synthetic-fixture screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-lovable-ui-fixture-screenshots
+          path: ui-screenshots/*.png
+          if-no-files-found: warn
+          retention-days: 14
