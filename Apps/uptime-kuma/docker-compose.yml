@@ -43,9 +43,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/uptime-kuma.png
   title:
     en_US: "Uptime Kuma"
+    pt_PT: "Uptime Kuma"
   tagline:
     en_US: "Monitorização de serviços"
   description:
     en_US: "Monitorização de serviços. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+    pt_PT: "Monitoriza a disponibilidade de sites, serviços e dispositivos, com histórico e alertas. Protege a interface administrativa e define notificações segundo as tuas necessidades."
   port_map: "30004"
   index: /
