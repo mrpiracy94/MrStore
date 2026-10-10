@@ -49,6 +49,15 @@ A identidade *multiplataforma* traduz a visão do projeto, **não uma certifica�
 
 📖 [Guia técnico de instalação da integração disponível](docs/ZIMAOS_INSTALLATION.md) · [Relatórios e ensaios em equipamento](docs/ZIMAOS_COMPATIBILITY.md)
 
+## ⭐ Seleção inicial — 32 apps
+
+Para já, a MrStore tem **32 aplicações candidatas** escolhidas para o catálogo
+público, em vez de publicar tudo indiscriminadamente. Só aparecem as que passarem
+a auditoria CVE e os controlos de permissões. As **outras 221** continuam no
+repositório, disponíveis para expansão gradual — não foram apagadas.
+
+📖 [Consultar e aumentar a seleção inicial](docs/CURATED_STORE.md)
+
 ## 🧭 Descobrir aplicações
 
 A montra web foi concebida para facilitar o uso:
