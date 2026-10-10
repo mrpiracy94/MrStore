@@ -1,7 +1,7 @@
 name: ngircd
 services:
   ngircd:
-    image: lscr.io/linuxserver/ngircd:latest
+    image: ghcr.io/mrpiracy94/mrstore-lowcve-ngircd:secfix-38353c004df31ee7ac721591496f8937b9013dc9@sha256:8ec35cbc9b8cfbc0ba5645a2a7274662e48b3d706d2447a5f2781195847cc40a
     container_name: ngircd
     restart: unless-stopped
     environment:
@@ -32,8 +32,8 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.ngircd
-  version: "1.0.0"
-  update_at: "2026-10-09"
+  version: "1.0.1"
+  update_at: "2026-10-10"
   architectures:
     - amd64
     - arm64
@@ -48,6 +48,6 @@ x-casaos:
   tagline:
     en_US: "ngIRCd (LinuxServer.io)"
   description:
-    en_US: "ngIRCd — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/ngircd:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-ngircd/"
+    en_US: "ngIRCd — imagem LinuxServer recompilada com atualizações de segurança, fixada por digest imutável. Trivy 0 HIGH e 0 CRITICAL em AMD64/ARM64, TCP 6667 e persistência /config verificados em CI. Confirma compatibilidade na tua instalação ZimaOS antes de atualizar; mantém backup de /DATA/AppData/ngircd/config. Docs: https://docs.linuxserver.io/images/docker-ngircd/"
   port_map: "6667"
   index: /
