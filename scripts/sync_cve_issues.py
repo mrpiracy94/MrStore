@@ -40,6 +40,16 @@ def sync(report_path: Path, summary_path: Path, runner=subprocess.run) -> dict:
     current = (opened or matches or [None])[0]
     duplicates = [item for item in matches if item is not current]
 
+    coverage = report.get("coverage")
+    complete = isinstance(coverage, dict) and all(
+        isinstance(coverage.get(arch), dict)
+        and coverage[arch].get("complete") is True
+        and type(coverage[arch].get("scanned")) is int
+        and type(coverage[arch].get("expected")) is int
+        and coverage[arch]["expected"] > 0
+        and coverage[arch]["scanned"] == coverage[arch]["expected"]
+        for arch in ("amd64", "arm64")
+    )
     findings = report["critical"] or report["high"]
     failures = report["failures"]
     if findings:
@@ -53,7 +63,7 @@ def sync(report_path: Path, summary_path: Path, runner=subprocess.run) -> dict:
         runner(["gh", "issue", "edit", number, "--title", title,
                 "--body-file", str(summary_path)], check=True)
         action = "updated"
-    elif failures:
+    elif failures or not complete:
         # Scanner/network failures are never evidence that vulnerabilities cleared.
         return {"action": "scan_incomplete", "duplicates_closed": 0}
     else:
