@@ -18,14 +18,19 @@ def sync(report_path: Path, summary_path: Path, runner=subprocess.run) -> dict:
 
     report = json.loads(report_path.read_text(encoding="utf-8"))
     shard = report["shard"]
-    if type(shard) is not int or not 0 <= shard < 8:
+    shards = report.get('shards', 8)
+    if type(shards) is not int or shards < 1 or type(shard) is not int or not 0 <= shard < shards:
         raise ValueError("Invalid CVE shard")
     for key in ("critical", "high", "failures"):
         if type(report.get(key)) is not int or report[key] < 0:
             raise ValueError("Invalid CVE report count: " + key)
 
-    title = f"MrStore CVE HIGH/CRITICAL — shard {shard}"
-    old_title = f"MrStore CVE CRITICAL — shard {shard}"
+    # Include the partition scheme to avoid treating old 8-shard evidence
+    # as if it represented the same subset after switching to 32 shards.
+    title = (f"MrStore CVE HIGH/CRITICAL — {shards}-shard {shard}"
+             if shards != 8 else f"MrStore CVE HIGH/CRITICAL — shard {shard}")
+    old_title = (f"MrStore CVE CRITICAL — shard {shard}"
+                 if shards == 8 else None)
     proc = runner(
         ["gh", "issue", "list", "--state", "all", "--limit", "200",
          "--json", "title,number,state"],
@@ -41,7 +46,7 @@ def sync(report_path: Path, summary_path: Path, runner=subprocess.run) -> dict:
     duplicates = [item for item in matches if item is not current]
 
     coverage = report.get("coverage")
-    complete = isinstance(coverage, dict) and all(
+    full_architecture_coverage = isinstance(coverage, dict) and all(
         isinstance(coverage.get(arch), dict)
         and coverage[arch].get("complete") is True
         and type(coverage[arch].get("scanned")) is int
@@ -50,6 +55,14 @@ def sync(report_path: Path, summary_path: Path, runner=subprocess.run) -> dict:
         and coverage[arch]["scanned"] == coverage[arch]["expected"]
         for arch in ("amd64", "arm64")
     )
+    images = coverage.get("images") if isinstance(coverage, dict) else None
+    image_coverage = (isinstance(images, dict)
+                      and images.get('complete') is True
+                      and type(images.get('expected')) is int
+                      and images['expected'] > 0
+                      and type(images.get('scanned')) is int
+                      and images['scanned'] == images['expected'])
+    complete = full_architecture_coverage or image_coverage
     findings = report["critical"] or report["high"]
     failures = report["failures"]
     if findings:
