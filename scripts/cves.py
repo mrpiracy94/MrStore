@@ -299,6 +299,14 @@ def main() -> int:
                                      strict=False)
     chosen = shard_images(selected, opts.shard, opts.shards)
     report = evaluate(usage, chosen, workers=opts.workers)
+    # Scan completion is image-scoped. It is NOT proof of multi-platform
+    # safety: only the release gate certifies every declared architecture.
+    report['coverage'] = {'images': {
+        'complete': bool(chosen) and len(report['results']) == len(chosen)
+                    and report['failures'] == 0,
+        'expected': len(chosen),
+        'scanned': len(report['results']) - report['failures'],
+    }}
     report['scope'] = ('app' if opts.app else 'changed' if opts.changed_since else 'catalog')
     report['shard'] = opts.shard
     report['shards'] = opts.shards
