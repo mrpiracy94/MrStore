@@ -262,7 +262,11 @@ def runtime_check(item: dict, *, check_registry: bool = False,
         actual = None
     else:
         labeled = matching[0] if matching else None
-        actual = labeled if labeled in names else (expected if expected in names else None)
+        # Never substitute a same-named container when a scoped label query
+        # returned a different, now-missing container (possible Docker race).
+        actual = (labeled if labeled in names else None) if labeled else (
+            expected if expected in names else None
+        )
         outcome["installed"] = "found" if actual else "not_found_by_expected_name"
         outcome["container_resolution"] = (
             "compose_project_and_service_labels" if labeled and actual == labeled
