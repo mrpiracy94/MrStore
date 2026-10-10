@@ -7,6 +7,8 @@ from __future__ import annotations
 import argparse
 import base64
 import json
+import os
+import tempfile
 from pathlib import Path
 from zipfile import ZipFile, ZIP_DEFLATED
 
@@ -79,9 +81,19 @@ def package(source: Path, selection: Path, output: Path) -> dict:
     if output.exists():
         raise ValueError("Refusing to overwrite Runtipi preview")
     output.parent.mkdir(parents=True, exist_ok=True)
-    with ZipFile(output, "w", ZIP_DEFLATED) as archive:
-        for name, data in sorted(all_files.items()):
-            archive.writestr(name, data)
+    with tempfile.NamedTemporaryFile(prefix=".mrstore-preview-", suffix=".zip",
+                                     dir=output.parent, delete=False) as temp:
+        tmp = Path(temp.name)
+    try:
+        with ZipFile(tmp, "w", ZIP_DEFLATED) as archive:
+            for name, data in sorted(all_files.items()):
+                archive.writestr(name, data)
+        with ZipFile(tmp) as verified:
+            if verified.testzip() is not None:
+                raise ValueError("Runtipi preview ZIP failed integrity verification")
+        os.replace(tmp, output)
+    finally:
+        tmp.unlink(missing_ok=True)
     return {"approved_source": len(slugs), "draft_converted": len(slugs) - len(excluded),
             "excluded": excluded, "real_device_tested": False}
 
