@@ -2,7 +2,7 @@
 (function () {
   const STORE_URL = "https://mrpiracy94.github.io/MrStore";
   const PREFIX = "io.github.mrpiracy94.";
-  const BATCH_SIZE = 12;
+  const BATCH_SIZE = 8;
   const CATEGORY_LABELS = {
     Media: "Multimédia", Productivity: "Produtividade", Home: "Casa",
     Networking: "Redes", Network: "Redes", Cloud: "Cloud",
@@ -139,6 +139,31 @@
     footer.appendChild(details); card.appendChild(footer);
     return card;
   }
+  // Amostra ilustrativa composta apenas com apps existentes no índice público.
+  // Não é uma lista de apps certificadas nem pretende simular instalações.
+  function renderShowcasePreview() {
+    const grid = $("showcase-apps");
+    if (!grid) return;
+    const preference = ["jellyfin", "nextcloud", "immich", "homeassistant", "vaultwarden", "n8n", "plex", "adguardhome"];
+    const ranked = state.apps.slice().sort(function (a, b) {
+      const aRank = preference.indexOf(a.id.slice(PREFIX.length));
+      const bRank = preference.indexOf(b.id.slice(PREFIX.length));
+      return (aRank < 0 ? 999 : aRank) - (bRank < 0 ? 999 : bRank)
+        || appTitle(a).localeCompare(appTitle(b), "pt");
+    });
+    const fragment = document.createDocumentFragment();
+    ranked.slice(0, 8).forEach(function (app) {
+      const card = element("div", "preview-mini-card");
+      card.appendChild(iconNode(app, "preview-mini-icon"));
+      card.appendChild(element("strong", "", appTitle(app)));
+      card.appendChild(element("small", "", categoryLabel(app.category)));
+      fragment.appendChild(card);
+    });
+    if (!ranked.length) fragment.appendChild(
+      element("div", "screen-preview-placeholder", "Pré-visualização indisponível.")
+    );
+    grid.replaceChildren(fragment);
+  }
   function render() {
     const needle = fold(state.query.trim());
     state.filtered = state.apps.filter(function (app) {
@@ -206,7 +231,7 @@
     }
     // Display the original concept's examples first only when they genuinely
     // exist in the approved published index. Never inject extra app records.
-    const preferred = ["plex", "immich", "nextcloud", "jellyfin"];
+    const preferred = ["jellyfin", "nextcloud", "immich", "homeassistant", "vaultwarden", "n8n", "docker", "plex"];
     function rank(app) {
       const index = preferred.indexOf(app.id.slice(PREFIX.length));
       return index < 0 ? preferred.length : index;
@@ -233,7 +258,8 @@
     } catch (_) {
       setNotice("Não foi possível carregar o índice da MrStore. O catálogo público pode ainda estar a ser publicado. Consulta o GitHub Actions para o estado do release.", true);
       $("catalog-state").textContent = "Catálogo indisponível.";
-      $("results-summary").textContent = "Indisponível"; return;
+      $("results-summary").textContent = "Indisponível";
+      renderShowcasePreview(); return;
     }
     $("total-apps").textContent = String(state.apps.length);
     try {
@@ -246,7 +272,7 @@
     } else {
       setNotice("Esta edição pública não inclui evidência completa de quarentena, ou existe uma divergência entre o índice e os relatórios. Podes consultar as fichas, mas NÃO interpretes estas aplicações como aprovadas pelos scanners atuais. Verifica os relatórios no GitHub antes de instalar.", true);
     }
-    categoryList(); render();
+    categoryList(); render(); renderShowcasePreview();
   }
   $("search").addEventListener("input", function (event) { state.query = event.target.value; state.limit = BATCH_SIZE; render(); });
   $("architecture").addEventListener("change", function (event) { state.arch = event.target.value; state.limit = BATCH_SIZE; render(); });
