@@ -22,7 +22,7 @@ def shard_images(images: dict | list, shard: int, shards: int) -> list[str]:
 # Limit transient registry requests instead of mistaking them for safe images.
 # The remote-only source avoids false containerd socket errors in Actions.
 RETRYABLE = re.compile(
-    r'TOOMANYREQUESTS|429\\b|rate.?limit|retry.after|timeout|timed out|'
+    r'TOOMANYREQUESTS|429\b|rate.?limit|retry.after|timeout|timed out|'
     r'connection reset|unexpected EOF|TLS handshake|context deadline|'
     r'temporar(?:y|ily) unavailable|connection refused|502 Bad Gateway|'
     r'503 Service Unavailable|504 Gateway Timeout',
