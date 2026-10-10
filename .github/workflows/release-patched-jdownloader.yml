@@ -155,6 +155,10 @@ jobs:
       - name: Update existing ZimaOS entry only after all gates pass
         run: |
           set -euo pipefail
+          # Other approved fixes may reach main while this image is building.
+          # Start from the current main and refuse to overwrite an updated app.
+          git fetch origin main
+          git checkout -B jdownloader-secfix-release origin/main
           python - <<'PY'
           from pathlib import Path
           import os, re
