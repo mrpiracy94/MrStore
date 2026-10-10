@@ -91,7 +91,7 @@ def gh_api(path: str, *, token: str | None = None, payload: dict | None = None):
         # gh writes the useful HTTP error to stderr, but CalledProcessError
         # previously hid it and prevented writing a queue report.
         stderr = proc.stderr or ""
-        match = re.search(r"\\bHTTP\\s+([1-5]\\d{2})\\b", stderr, re.IGNORECASE)
+        match = re.search(r"\bHTTP\s+([1-5]\d{2})\b", stderr, re.IGNORECASE)
         code = match.group(1) if match else "unknown"
         detail = next((line.strip() for line in stderr.splitlines()
                        if line.strip().startswith("gh:")), "")
@@ -101,7 +101,7 @@ def gh_api(path: str, *, token: str | None = None, payload: dict | None = None):
         for secret in (token, env.get("GH_TOKEN"), env.get("GITHUB_TOKEN")):
             if secret:
                 detail = detail.replace(secret, "[REDACTED]")
-        detail = re.sub(r"(github_pat_|gh[pousr]_|Bearer\\s+)[A-Za-z0-9_\\.-]+",
+        detail = re.sub(r"(github_pat_|gh[pousr]_|Bearer\s+)[A-Za-z0-9_\.-]+",
                         "[REDACTED]", detail, flags=re.IGNORECASE)
         raise RuntimeError(
             f"GitHub API {cmd[-3] if payload is not None else path} "
