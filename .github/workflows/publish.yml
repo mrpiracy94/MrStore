@@ -194,10 +194,15 @@ jobs:
           verify_published(Path("dist"), report, Path("release-source"))
           PY
       - name: Export approved CasaOS/Homeio preview archive (no unscanned source apps)
+        id: universal_preview
+        continue-on-error: true
         run: >-
           python scripts/export_universal.py --source release-source
           --selection out/release-selection.json
           --output dist/store/casaos-homeio-preview.zip
+      - name: Report optional universal preview failures without blocking ZimaOS
+        if: steps.universal_preview.outcome == 'failure'
+        run: echo '::warning::CasaOS/Homeio preview was not built. ZimaOS release stays independent; review exporter logs.'
       - name: Verify PT subtitles of approved apps
         run: >-
           python -S scripts/curate_taglines.py --verify-dist dist/index.json
