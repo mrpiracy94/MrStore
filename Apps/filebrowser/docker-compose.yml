@@ -1,0 +1,52 @@
+name: filebrowser
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:v2.43.0
+    container_name: mrstore-filebrowser
+    restart: unless-stopped
+    user: "1000:1000"
+    ports:
+      - target: 80
+        published: "30154"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/filebrowser/database
+        target: /database
+      - type: bind
+        source: /DATA/AppData/filebrowser/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/filebrowser/files
+        target: /srv
+    x-casaos:
+      envs: []
+      ports:
+        - container: "80"
+          description:
+            en_US: File Browser web interface
+      volumes:
+        - container: /srv
+          description:
+            en_US: Files visible through the web interface
+x-casaos:
+  id: io.github.mrpiracy94.filebrowser
+  version: "2.43.0"
+  update_at: "2026-10-10"
+  architectures:
+    - amd64
+    - arm64
+  main: filebrowser
+  author: MrStore
+  developer: File Browser
+  category: Productivity
+  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/filebrowser.png
+  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/filebrowser.png
+  title:
+    en_US: File Browser
+  tagline:
+    en_US: File manager for your self-hosted server
+  description:
+    en_US: "Community-provided deployment candidate. Configure directory permissions and credentials prior to use. Not independently installation or CVE certified."
+  port_map: "30154"
+  index: /
