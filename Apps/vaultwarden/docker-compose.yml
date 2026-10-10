@@ -47,9 +47,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/vaultwarden.png
   title:
     en_US: "Vaultwarden"
+    pt_PT: "Vaultwarden"
   tagline:
     en_US: "Servidor compatível com Bitwarden"
   description:
     en_US: "Servidor compatível com Bitwarden. Variante Alpine oficial fixada na versão 1.37.4 para reduzir CVEs sem mudar a versão do Vaultwarden. Os dados continuam em /DATA/AppData/vaultwarden. Antes de atualizar: parar o contentor, fazer backup completo do diretório e testar login, cofres, anexos e sincronização após a atualização. Não expor sem HTTPS."
+    pt_PT: "Servidor de palavras-passe compatível com clientes Bitwarden. O registo de novas contas está desativado por predefinição. Protege os dados em /DATA/AppData/vaultwarden, faz backups e utiliza HTTPS antes de expor o serviço."
   port_map: "30003"
   index: /
