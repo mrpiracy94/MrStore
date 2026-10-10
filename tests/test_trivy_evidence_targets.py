@@ -41,6 +41,27 @@ class TrivyEvidenceTargetTests(unittest.TestCase):
                 self.assertEqual(findings, [])
                 self.assertIn("invalid scan target", error)
 
+    def test_malformed_vulnerability_records_cannot_mean_zero_cves(self):
+        invalid = (
+            {"Target": "image", "Vulnerabilities": {"records": []}},
+            {"Target": "image", "Vulnerabilities": "HIGH"},
+            {"Target": "image", "Vulnerabilities": [None]},
+            {"Target": "image", "Vulnerabilities": ["unknown"]},
+            {"Target": "image", "Vulnerabilities": [{"Severity": "HIGH"}, None]},
+        )
+        for target in invalid:
+            with self.subTest(target=target):
+                findings, error = self.scan_report({"Results": [target]})
+                self.assertEqual(findings, [])
+                self.assertIn("invalid vulnerabilities", error)
+
+    def test_valid_empty_vulnerability_array_is_allowed(self):
+        findings, error = self.scan_report({"Results": [
+            {"Target": "image (alpine)", "Vulnerabilities": []}
+        ]})
+        self.assertEqual(findings, [])
+        self.assertIsNone(error)
+
     def test_valid_zero_cve_target_is_not_blocked(self):
         findings, error = self.scan_report({"Results": [
             {"Target": "example.test/demo:1 (alpine 3.21)",
