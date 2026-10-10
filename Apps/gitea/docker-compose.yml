@@ -57,9 +57,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/gitea.png
   title:
     en_US: "Gitea"
+    pt_PT: "Gitea"
   tagline:
     en_US: "Servidor Git self-hosted"
   description:
     en_US: "Servidor Git self-hosted. Estado: verificado em out/2026 (v28.0.0, out/2026). Confirma portas e variáveis na documentação do projeto."
+    pt_PT: "Plataforma Git autoalojada para projetos, issues e colaboração. Antes de usar em produção, configura autenticação, backups, volumes persistentes e HTTPS."
   port_map: "30000"
   index: /
