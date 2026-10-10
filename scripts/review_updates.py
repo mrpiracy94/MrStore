@@ -90,13 +90,19 @@ def immich_major_upgrade_hazards(old: dict | None, new: dict, folder: str) -> li
         return []
     former = _pg_major(prev.get("image"))
     future = _pg_major(curr.get("image"))
-    if former is None or future is None or former == future:
+    if former is None:
+        return []
+    if former == future and future is not None:
+        return []
+    # Replacing the official Immich PostgreSQL image with an unrecognised
+    # image is equally unsafe on the old directory: its data format is unknown.
+    if future is None and prev.get("image") == curr.get("image"):
         return []
     old_volume = _postgres_data_source(prev)
     new_volume = _postgres_data_source(curr)
     if not old_volume or not new_volume or old_volume == new_volume:
         return [
-            f"Immich PostgreSQL {former}->{future}: direct major version change "
+            f"Immich PostgreSQL {former}->{future or 'unknown'}: direct major/unknown image change "
             "with the previous/missing data directory is forbidden. "
             "Keep the PG14 directory untouched and migrate/restore into "
             "a separate persistent directory with a tested backup, restore "
