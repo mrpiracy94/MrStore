@@ -1,7 +1,7 @@
 {
   "version": 2,
   "updated_at": "2026-10-09T22:26:57Z",
-  "app_count": 254,
+  "app_count": 253,
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "apps": [
     {
@@ -4379,27 +4379,6 @@
       "compose_url": "/apps/io.github.mrpiracy94.steam/docker-compose.yml",
       "meta_url": "/apps/io.github.mrpiracy94.steam/meta.json",
       "content_hash": "1398f5ec",
-      "version": "1.0.1"
-    },
-    {
-      "id": "io.github.mrpiracy94.steamos",
-      "title": "SteamOS",
-      "tagline": "Ambiente de jogos baseado em SteamOS",
-      "category": "Others",
-      "categories": [
-        "others"
-      ],
-      "author": "MrStore",
-      "developer": "LinuxServer.io",
-      "architectures": [
-        "amd64",
-        "arm64"
-      ],
-      "icon": "/apps/io.github.mrpiracy94.steamos/assets/icon.png",
-      "thumbnail": "/apps/io.github.mrpiracy94.steamos/assets/steamos-logo.webp",
-      "compose_url": "/apps/io.github.mrpiracy94.steamos/docker-compose.yml",
-      "meta_url": "/apps/io.github.mrpiracy94.steamos/meta.json",
-      "content_hash": "ad4fd5f9",
       "version": "1.0.1"
     },
     {
