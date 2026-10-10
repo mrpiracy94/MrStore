@@ -69,15 +69,15 @@ x-casaos:
     - arm64
   main: jellyfin
   author: MrStore
-  developer: LinuxServer.io
+  developer: Jellyfin Project
   category: Media
   icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png
   title:
     en_US: "Jellyfin"
   tagline:
-    en_US: "Jellyfin (LinuxServer.io)"
+    en_US: "Jellyfin — imagem de segurança MrStore"
   description:
-    en_US: "Jellyfin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/jellyfin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-jellyfin/"
+    en_US: "Jellyfin com imagem MrStore fixada por digest SHA-256. A verificação CVE não substitui testes reais de instalação, atualização e recuperação. Documentação: https://jellyfin.org/docs/"
   port_map: "8096"
   index: /
