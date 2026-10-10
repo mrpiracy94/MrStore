@@ -110,6 +110,23 @@ def installed_container_image(container: str, runner=subprocess.run) -> tuple[st
     return (value, None) if value and not error else (None, error or "missing_installed_image")
 
 
+def installed_container_image_id(container: str, runner=subprocess.run) -> tuple[str | None, str | None]:
+    """Return the immutable image ID held by the container, not its mutable tag.
+
+    A later `docker pull image:latest` can move that tag to a new image without
+    changing the image running in the existing container.
+    """
+    value, error = command(
+        ["docker", "container", "inspect", container, "--format", "{{.Image}}"],
+        runner=runner,
+    )
+    if error:
+        return None, error
+    if not value or not SHA256.fullmatch(value):
+        return None, "invalid_installed_image_id"
+    return value, None
+
+
 def registry_digest(image: str, runner=subprocess.run) -> tuple[str | None, str | None]:
     # Manifest inspection does not pull/install images. Must be explicitly requested.
     value, error = command(["crane", "digest", image], timeout=60, runner=runner)
@@ -192,7 +209,14 @@ def runtime_check(item: dict, *, check_registry: bool = False,
             outcome["update_evidence"] = "unknown_installed_image_unavailable"
         else:
             outcome["installed_image"] = local_ref
-            local, error = docker_repo_digests(local_ref, runner)
+            image_id, id_error = installed_container_image_id(actual, runner)
+            if id_error:
+                # Never fall back to inspecting a mutable tag; it can refer to
+                # an image which is NOT running in the selected container.
+                local, error = None, id_error
+            else:
+                outcome["installed_image_id"] = image_id
+                local, error = docker_repo_digests(image_id, runner)
             outcome["repodigests_present"] = bool(local) if local is not None else None
             if error:
                 outcome["docker_image_error"] = error
