@@ -6,6 +6,8 @@ Never auto-install or mark an untested package as compatible.
 from __future__ import annotations
 import argparse
 import json
+import os
+import tempfile
 from pathlib import Path
 import re
 from zipfile import ZipFile, ZIP_DEFLATED
@@ -118,9 +120,19 @@ def package(source: Path, selection: Path, output: Path) -> dict:
     if output.exists():
         raise ValueError("Refusing to overwrite Umbrel preview")
     output.parent.mkdir(parents=True, exist_ok=True)
-    with ZipFile(output, "w", ZIP_DEFLATED) as archive:
-        for path, text in sorted(content.items()):
-            archive.writestr(path, text.encode("utf-8"))
+    with tempfile.NamedTemporaryFile(prefix=".mrstore-preview-", suffix=".zip",
+                                     dir=output.parent, delete=False) as temp:
+        tmp = Path(temp.name)
+    try:
+        with ZipFile(tmp, "w", ZIP_DEFLATED) as archive:
+            for name, content_text in sorted(content.items()):
+                archive.writestr(name, content_text.encode("utf-8"))
+        with ZipFile(tmp) as verified:
+            if verified.testzip() is not None:
+                raise ValueError("Umbrel preview ZIP failed integrity verification")
+        os.replace(tmp, output)
+    finally:
+        tmp.unlink(missing_ok=True)
     return {"source_approved": len(slugs), "draft_converted": len(slugs) - len(excluded),
             "excluded": excluded, "real_device_tested": False}
 
