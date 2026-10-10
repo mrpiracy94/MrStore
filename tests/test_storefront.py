@@ -97,6 +97,15 @@ class StorefrontTests(unittest.TestCase):
         self.assertIn('portable.hidden = !downloadable;', js)
         self.assertNotIn("innerHTML", js)
 
+    def test_compatibility_counts_never_claim_real_installations(self):
+        js = (self.source / "assets/site.js").read_text(encoding="utf-8")
+        self.assertIn('fetch("./universal/support-report.json"', js)
+        self.assertIn('item.native_certified !== false', js)
+        self.assertIn('item.runtime_verified_count !== 0', js)
+        self.assertIn('item.upgrade_verified_count !== 0', js)
+        self.assertIn('data.security_selection_count !== state.apps.length', js)
+        self.assertIn('platformEligibility = new Map()', js)
+
     def test_ui_only_consumes_local_index_and_has_no_remote_dependencies(self):
         html = (self.source / "index.html").read_text(encoding="utf-8")
         js = (self.source / "assets/site.js").read_text(encoding="utf-8")
