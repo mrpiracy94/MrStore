@@ -10,7 +10,8 @@ from pathlib import Path
 import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
-ALLOWED = ("index.html", "assets/site.css", "assets/site.js",
+ALLOWED = ("index.html", "assets/site.css", "assets/lovable.css",
+           "assets/site.js", "assets/hero-scene.svg",
            "assets/mark.svg", "assets/readme-banner.svg")
 PREFIX = "io.github.mrpiracy94."
 
