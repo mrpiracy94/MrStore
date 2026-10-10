@@ -26,6 +26,7 @@ on:
       - 'scripts/export_homedock.py'
       - 'scripts/export_olares_preview.py'
       - 'scripts/platform_support_report.py'
+      - 'scripts/universal_device_coverage.py'
       - 'tests/test_platform_support_report.py'
       - 'tests/test_export_homedock.py'
       - 'tests/test_export_olares_preview.py'
@@ -40,6 +41,7 @@ on:
       - '.github/workflows/publish.yml'
   pull_request:
     paths:
+      - 'scripts/universal_device_coverage.py'
       - 'tests/test_publish_workflow_contract.py'
       - 'scripts/zimaos_coverage.py'
       - 'scripts/platform_support_report.py'
@@ -328,6 +330,13 @@ jobs:
       - name: Assert publication never happens on pull requests
         if: github.event_name == 'pull_request'
         run: echo "Full audit and catalog build ran. Deployment intentionally reserved for main."
+      - name: Bind published platform evidence to the current Compose registry
+        if: always()
+        run: |
+          python scripts/universal_device_coverage.py --output out/universal-device-coverage.json
+          if [ -f dist/universal/catalog.json ] && [ -f dist/universal/support-report.json ]; then
+            cp out/universal-device-coverage.json dist/universal/device-evidence.json
+          fi
       - name: Upload publication/quarantine diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -351,6 +360,7 @@ jobs:
             dist/olares/olares-oac-preview.zip
             dist/universal/catalog.json
             dist/universal/support-report.json
+            dist/universal/device-evidence.json
           if-no-files-found: warn
       - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
         uses: actions/upload-artifact@v4
