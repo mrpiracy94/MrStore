@@ -1,0 +1,131 @@
+# Restore exactly 233 editorial apps from the previously published 253-app
+# ZimaOS distribution. This is NOT CVE certification.
+name: Publish exactly 233 MrStore applications
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/restore-public-233.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mrstore-restore-233
+  cancel-in-progress: false
+jobs:
+  restore_public_catalog:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - name: Checkout source with history
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Confirm selection, and test rollout packaging
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p 'test_rollout_233.py' -v
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          source = {p.parent.name for p in Path("Apps").glob("*/docker-compose.yml")}
+          plan = json.loads(Path("data/rollout-233.json").read_text())["apps"]
+          featured = json.loads(Path("data/featured-apps.json").read_text())["apps"]
+          assert len(source) == 253 and len(plan) == len(set(plan)) == 233
+          assert plan == featured and set(plan) <= source
+          assert "steamos" not in source
+          print("Verified 253 source, exactly 233 featured, 20 deferred")
+          PY
+      - name: Reconstruct from historical official ZimaOS distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          snapshot="$RUNNER_TEMP/mrstore-snapshot-253"
+          git fetch --no-tags origin 4702d19a0340b39cece67b024c16f1ec963de367
+          git worktree add --detach "$snapshot" 4702d19a0340b39cece67b024c16f1ec963de367
+          python scripts/restore_public_233.py --snapshot "$snapshot" --root "$GITHUB_WORKSPACE" \
+            --output "$RUNNER_TEMP/mrstore-dist-233"
+      - name: Publish exact 233 while retaining newest website and requiring no false security claim
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+          target="$RUNNER_TEMP/mrstore-published-233"
+          source="$RUNNER_TEMP/mrstore-dist-233"
+          git worktree add --detach "$target" origin/gh-pages
+          for attempt in 1 2 3 4 5; do
+            git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+            git -C "$target" reset --hard origin/gh-pages
+            python - "$target" "$source" <<'PY'
+          import json, sys
+          from pathlib import Path
+          published, staged = (Path(v) for v in sys.argv[1:3])
+          current = json.loads((published/"index.json").read_text())
+          nxt = json.loads((staged/"index.json").read_text())
+          allowed = {6,18,30,42,54,66,78,90,102,114,126,138,150,162,174,186,198,210,222,233,253}
+          if current.get("app_count") not in allowed or nxt.get("app_count") != 233:
+              raise SystemExit("Unexpected published or staged catalog size")
+          attestation = published/"release-status.json"
+          if attestation.exists():
+              state = json.loads(attestation.read_text())
+              if state.get("certification") != "not_assessed":
+                  raise SystemExit("Refusing to overwrite a certified release")
+          print("Replacing editorial count", current["app_count"], "with 233")
+          PY
+            rsync -a --delete "$source/apps/" "$target/apps/"
+            cp "$source/index.json" "$source/index.pt_PT.json" \
+              "$source/metadata.tar.gz" "$source/metadata.sha256" "$target/"
+            if [[ -f "$target/release-status.json" ]]; then rm "$target/release-status.json"; fi
+            python - "$target" <<'PY'
+          import json, sys, hashlib
+          from pathlib import Path
+          site=Path(sys.argv[1])
+          ids={"io.github.mrpiracy94."+x for x in json.loads(Path("data/rollout-233.json").read_text())["apps"]}
+          base=json.loads((site/"index.json").read_text())
+          locale=json.loads((site/"index.pt_PT.json").read_text())
+          assert len(base["apps"])==base["app_count"]==233
+          assert ids=={x["id"] for x in base["apps"]}=={x["id"] for x in locale["apps"]}
+          assert ids=={x.name for x in (site/"apps").iterdir()}
+          assert hashlib.sha256((site/"metadata.tar.gz").read_bytes()).hexdigest()==(site/"metadata.sha256").read_text().split()[0]
+          assert not (site/"release-status.json").exists()
+          print("Verified exactly 233 app IDs and matching metadata")
+          PY
+            git -C "$target" add -A
+            while IFS= read -r changed; do
+              case "$changed" in
+                apps/*|index.json|index.pt_PT.json|metadata.tar.gz|metadata.sha256|release-status.json) ;;
+                *) echo "::error::Unexpected change $changed"; exit 4 ;;
+              esac
+            done < <(git -C "$target" diff --cached --name-only)
+            if git -C "$target" diff --cached --quiet; then
+              echo "Public 233-app catalog is already up to date."
+              break
+            fi
+            git -C "$target" commit -m 'deploy(catalog): publish exact 233 editorial apps'
+            if git -C "$target" push origin HEAD:gh-pages; then
+              echo "PUBLISHED 233 / 233 editorial apps"
+              break
+            fi
+            if [[ "$attempt" == 5 ]]; then exit 5; fi
+            sleep "$((attempt*3))"
+          done
+          curl --fail-with-body --silent --show-error --retry 3 --retry-delay 3 \
+            --request POST \
+            --header 'Accept: application/vnd.github+json' \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header 'X-GitHub-Api-Version: 2022-11-28' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/pages/builds"
+          echo "### 233 editorial apps published. Not certified against CVEs." >> "$GITHUB_STEP_SUMMARY"
