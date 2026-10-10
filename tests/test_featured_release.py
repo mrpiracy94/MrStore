@@ -45,7 +45,7 @@ class FeaturedCatalogTests(unittest.TestCase):
         workflow = (ROOT / ".github/workflows/publish.yml").read_text(encoding="utf-8")
         self.assertIn("--featured data/featured-apps.json", workflow)
         self.assertIn("scripts/release_catalog.py --reports", workflow)
-        self.assertIn("scripts/publish_editorial.py", workflow)
+        self.assertIn("scripts/publish_editorial.py", (ROOT / ".github/workflows/rollout-233.yml").read_text(encoding="utf-8"))
         self.assertIn("data/featured-apps.json", workflow)
         self.assertIn("scripts/featured.py", workflow)
         self.assertIn("scripts/verify_dist.py --expected", workflow)
