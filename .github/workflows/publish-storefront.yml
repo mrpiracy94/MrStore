@@ -1,0 +1,84 @@
+# Publish the informational website independently of lengthy release-image CVE scans.
+# This workflow NEVER modifies any catalog JSON, app manifests, or security evidence.
+# A separate audited release workflow still controls publication of the app catalog.
+name: Publish MrStore website
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/publish-storefront.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mrstore-static-site
+  cancel-in-progress: false
+
+jobs:
+  publish_site:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout verified website source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Check frontend safety, local assets and compatibility
+        run: python -m unittest discover -s tests -p 'test_storefront.py' -v
+      - name: Stage only the website files
+        shell: bash
+        run: |
+          set -euo pipefail
+          dest="$RUNNER_TEMP/mrstore-website"
+          mkdir -p "$dest/assets"
+          cp web/index.html "$dest/index.html"
+          cp web/assets/site.css web/assets/site.js web/assets/mark.svg \
+            web/assets/readme-banner.svg web/assets/mrstore-hero.webp "$dest/assets/"
+          test -s "$dest/index.html"
+          test -s "$dest/assets/site.js"
+          test -s "$dest/assets/site.css"
+          test -s "$dest/assets/mrstore-hero.webp"
+      - name: Publish website only, preserving current approved-release files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          for attempt in 1 2 3 4; do
+            # Rebase by reconstructing from the latest gh-pages branch each time.
+            # This avoids overwriting changes by the independent audited release.
+            git fetch origin gh-pages --no-tags
+            git checkout -B static-site-deploy origin/gh-pages
+            if [ ! -s index.json ] || [ ! -s store.json ]; then
+              echo 'Refusing to publish website without existing catalog files.'
+              exit 1
+            fi
+            mkdir -p assets
+            cp "$RUNNER_TEMP/mrstore-website/index.html" index.html
+            cp "$RUNNER_TEMP/mrstore-website/assets/"* assets/
+            git add -- index.html assets/site.css assets/site.js \
+              assets/mark.svg assets/readme-banner.svg assets/mrstore-hero.webp
+            if git diff --cached --quiet; then
+              echo 'The published website already matches main.'
+              exit 0
+            fi
+            git commit -m 'deploy(web): refresh MrStore static homepage'
+            if git push origin HEAD:gh-pages; then
+              echo 'Website updated without modifying catalog JSON or manifests.'
+              exit 0
+            fi
+            echo "Concurrent deployment detected; retrying ($attempt/4)"
+            sleep "$((attempt * 3))"
+          done
+          echo 'Website deployment did not succeed after retries.'
+          exit 1
