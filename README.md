@@ -20,13 +20,13 @@
 
 ## ✨ O que é a MrStore?
 
-A **MrStore** reúne aplicações **self-hosted** para servidores, NAS e projetos homelab, independentemente da marca ou sistema utilizado. O repositório organiza definições Docker Compose; a montra pública destaca uma seleção editorial reduzida, identificada como não certificada até existir um relatório de publicação aprovado.
+A **MrStore** reúne aplicações **self-hosted** para servidores, NAS e projetos homelab, independentemente da marca ou sistema utilizado. **Todas as 254 aplicações atuais** são apresentadas na montra pública e na loja técnica ZimaOS v2, a partir do mesmo inventário `Apps/`. A presença no catálogo é editorial: não prova ausência de CVEs nem compatibilidade de instalação.
 
 **A montra web é universal para descoberta, não para instalação automática.** A instalação nativa depende do adaptador e da validação de cada plataforma.
 
 | 🔍 Exploração fácil | 📦 Aplicações self-hosted | 🛡️ Segurança por aplicação |
 |:---|:---|:---|
-| Pesquisa por nome, categoria, arquitetura e favoritos na montra web. | Catálogo de origem organizado por categorias, com IDs estáveis. | Verificação das imagens Docker, digest imutável e quarentena de resultados vulneráveis ou inconclusivos. |
+| Pesquisa por nome, categoria, arquitetura e favoritos na montra web. | Inventário completo das apps em `Apps/`, com IDs estáveis. | Auditorias CVE e de configurações separadas da listagem editorial. |
 
 **[Abrir a montra da MrStore →](https://mrpiracy94.github.io/)**
 
@@ -49,16 +49,15 @@ A identidade *multiplataforma* traduz a visão do projeto, **não uma certifica�
 
 📖 [Guia técnico de instalação da integração disponível](docs/ZIMAOS_INSTALLATION.md) · [Relatórios e ensaios em equipamento](docs/ZIMAOS_COMPATIBILITY.md)
 
-## ⭐ Seleção piloto — 6 apps
+## ⭐ Catálogo completo — 254 aplicações
 
-A MrStore destaca agora **6 aplicações candidatas** na nova montra:
-Home Assistant, Jellyfin, Immich, Nextcloud, qBittorrent e Vaultwarden.
-A seleção é editorial e **não constitui certificação de segurança ou de instalação**.
-As restantes **248 definições** continuam no repositório, disponíveis para futuras
-fases — não foram apagadas. A publicação técnica de versões aprovadas continua
-a depender dos controlos CVE, das permissões e dos testes de integração.
+A MrStore apresenta **todas as aplicações com manifestos em `Apps/`**, incluindo Home Assistant, Jellyfin, Immich, Nextcloud, qBittorrent e Vaultwarden. As futuras adições entram automaticamente na publicação editorial quando os respectivos manifestos e metadados forem válidos.
 
-📖 [Consultar e aumentar a seleção inicial](docs/CURATED_STORE.md)
+- **Loja técnica ZimaOS v2:** https://mrpiracy94.github.io/MrStore/
+- **Homepage e pesquisa:** https://mrpiracy94.github.io/
+- **Website separado:** https://mrpiracy94.github.io/MrStore-Web/ (requer ativação GitHub Pages neste repositório)
+
+A listagem não filtra apps com avisos CVE. O ficheiro `release-status.json` apresenta `certification: not_assessed` nas edições editoriais; as auditorias continuam independentes da descoberta.
 
 ## 🧭 Descobrir aplicações
 
@@ -70,19 +69,15 @@ A montra web foi concebida para facilitar o uso:
 - **Consultar fichas** com a versão do pacote, serviço e link para o manifesto Docker.
 - **Distinguir publicação verificada de edições antigas**, com alertas caso o relatório de seleção segura esteja ausente.
 
-Para ver todos os manifests da origem, incluindo os que possam estar em quarentena, consulta a pasta [Apps/](Apps/).
+Para consultar os manifestos e configurações de todas as aplicações, abre a pasta [Apps/](Apps/).
 
 ## 🛡️ Segurança e transparência
 
-A MrStore não considera uma imagem segura simplesmente por constar da lista. O processo de publicação deve:
+A **publicação editorial** inclui todas as aplicações, independentemente do resultado CVE. Uma edição editorial não é uma certificação de instalação ou segurança.
 
-1. Resolver as referências Docker para **digests imutáveis**.
-2. Auditar as arquiteturas declaradas (**AMD64 e/ou ARM64**) com Trivy.
-3. Exigir **zero HIGH e CRITICAL conhecidos** no relatório completo, sem falhas de scanner nem plataformas em falta.
-4. Bloquear configurações inseguras, segredos por configurar e imagens descontinuadas quando aplicável.
-5. Publicar apenas a seleção aprovada, documentando as aplicações em quarentena.
+As **auditorias técnicas opcionais para releases verificados** continuam a analisar imagens Docker, arquitetura, digests e configurações. Os seus relatórios identificam riscos, sem apagar apps da montra. Uma edição técnica filtrada não pode substituir o catálogo completo por uma seleção menor.
 
-**Não afirmamos ausência absoluta de CVEs.** A publicação pública só está comprovada como filtrada quando existe um `release-status.json` coerente com o índice efetivamente publicado. Falhas de auditoria não equivalem a resultados limpos.
+**Não afirmamos ausência de CVEs.** Antes de instalar, confirma os requisitos, credenciais, permissões e dependências da aplicação.
 
 📖 [Política de publicação segura](docs/SAFE_RELEASE_POLICY.md) · [Validação técnica](docs/ZIMAOS_COMPATIBILITY.md) · [Avisos de segurança](SECURITY.md)
 
@@ -101,7 +96,7 @@ A MrStore não considera uma imagem segura simplesmente por constar da lista. O 
 
 ```text
 MrStore/
-├── Apps/                 # Manifests de origem; nem todos são necessariamente publicáveis
+├── Apps/                 # Manifests de todas as apps listadas na MrStore
 ├── web/                  # Montra e recursos visuais GitHub Pages
 │   ├── index.html
 │   └── assets/
@@ -124,7 +119,7 @@ python -m unittest discover -s tests -v
 python scripts/compatibility.py
 ```
 
-A nova montra pública é mantida no repositório [`mrpiracy94.github.io`](https://github.com/mrpiracy94/mrpiracy94.github.io). Apresenta as candidatas com uma indicação explícita de aprovação pendente e atualiza automaticamente a seleção. O `scripts/stage_storefront.py` continua a proteger a publicação técnica em `gh-pages`, exigindo um release validado; a montra independente não substitui o catálogo, os relatórios de segurança nem os Compose.
+A homepage pública é mantida em [`mrpiracy94.github.io`](https://github.com/mrpiracy94/mrpiracy94.github.io) e sincroniza automaticamente **todos os manifests** da MrStore. O catálogo técnico em `gh-pages` é publicado separadamente com o inventário completo e a indicação `not_assessed` nas edições editoriais; não altera os Compose instalados nos servidores.
 
 📖 [Como funciona a montra](docs/STORE_FRONTEND.md) · [GitHub Actions](https://github.com/mrpiracy94/MrStore/actions) · [Guia de integração](docs/ZIMAOS_INSTALLATION.md)
 
