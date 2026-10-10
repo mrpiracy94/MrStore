@@ -68,8 +68,22 @@ def convert(slug: str, doc: dict) -> tuple[str, str] | None:
         if mount.get("read_only") is True:
             item["read_only"] = True
         volumes.append(item)
-    if "CHANGE_ME" in str(service.get("environment", {})):
+    # Never embed static credentials or unresolved Compose interpolation in
+    # portable community-store packages. They require a per-platform setup UI.
+    environment = service.get("environment", {})
+    if isinstance(environment, list):
+        if any(not isinstance(item, str) or "=" not in item for item in environment):
+            return None
+        environment = dict(item.split("=", 1) for item in environment)
+    if not isinstance(environment, dict):
         return None
+    for key, value in environment.items():
+        if not isinstance(key, str) or not isinstance(value, (str, int)):
+            return None
+        if re.search(r"PASS|SECRET|TOKEN|CREDENTIAL|AUTH|PRIVATE|API_KEY|KEY", key, re.I):
+            return None
+        if any(marker in str(value) for marker in ("CHANGE_ME", "${", "[[")):
+            return None
     app_id = "mrstore-" + slug
     normalized = {k: v for k, v in service.items()
                   if k not in ("ports", "volumes", "container_name", "x-casaos")}
