@@ -216,7 +216,7 @@
     });
   }
   function verifyRelease(release, appList) {
-    if (!release || !Array.isArray(release.approved) ||
+    if (!release || release.certification !== "verified" || !Array.isArray(release.approved) ||
         !Number.isInteger(release.approved_count) ||
         release.approved_count !== release.approved.length ||
         release.approved_count !== appList.length) return false;
