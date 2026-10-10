@@ -4,3 +4,8 @@
 
 /* Preview de aplicação: componente HTML, nunca uma captura fictícia. */
 .card-preview{height:155px;background:radial-gradient(circle at 70% 20%,#254b76 0%,transparent 55%),linear-gradient(135deg,#142943,#081320);border-bottom:1px solid #2c4056;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;color:#c8dcf3}.preview-symbol{font-size:49px;color:#2b89ff}.preview-name{font-size:14px;font-weight:750;letter-spacing:.2px}.card .card-head{min-height:55px}.card .app-icon{background:#1c324d}.card .category{color:#98abc2}.card p{min-height:44px}.card a{border:1px solid #358bff}.showcase{background:linear-gradient(90deg,#061322 0%,#061322eb 36%,#06132280 70%,#06132222),radial-gradient(ellipse at 78% 60%,#a75b4b 0%,#2b385b 28%,#0b1a32 60%,#061322 100%)}.showcase:after{content:"";position:absolute;right:6%;bottom:7%;width:min(33vw,430px);height:250px;border:10px solid #0c1625;border-radius:18px;background:linear-gradient(150deg,#1d3049,#0a1422);box-shadow:0 15px 35px #0008;opacity:.8}.showcase:before{content:"ZimaOS     ▦    ▣    ▤    ⚙";position:absolute;right:7.5%;bottom:38%;z-index:1;font-size:clamp(14px,1.6vw,24px);color:#c7d7ee;letter-spacing:12px}.showcase-content{z-index:2}@media(max-width:850px){.showcase:before,.showcase:after{opacity:.18}}
+
+/* Arte panorâmica incluída no repositório, sem dependências externas. */
+.showcase{background:linear-gradient(90deg,#061322 0%,#061322f5 25%,#061322c7 46%,#06132200 79%),url('./web/hero.svg') center/cover no-repeat,#081525}
+.showcase:before,.showcase:after{display:none}
+@media(min-width:1000px){.showcase{min-height:385px}.showcase-content{max-width:850px}}
