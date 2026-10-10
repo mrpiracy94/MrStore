@@ -27,8 +27,8 @@ class VerifiedScreenshotsTests(unittest.TestCase):
             int(sha, 16)
 
     def test_git_object_hash_and_image_signature(self):
-        data = b"\\x89PNG\\r\\n\\x1a\\n" + b"data" * 50
-        sha = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\\0" + data).hexdigest()
+        data = b"\x89PNG\r\n\x1a\n" + b"data" * 50
+        sha = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
         verify_image(data, ".png", sha)
         with self.assertRaisesRegex(ValueError, "mismatch"):
             verify_image(data + b"modification", ".png", sha)
@@ -47,8 +47,8 @@ class VerifiedScreenshotsTests(unittest.TestCase):
             self.assertEqual(len(SOURCES), len(result["records"]))
 
     def test_verify_only_does_not_create_files(self):
-        data = b"\\x89PNG\\r\\n\\x1a\\n" + b"data" * 50
-        sha = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\\0" + data).hexdigest()
+        data = b"\x89PNG\r\n\x1a\n" + b"data" * 50
+        sha = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             app_dir = root / "Apps/test"
