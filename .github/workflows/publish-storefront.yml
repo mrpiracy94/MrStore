@@ -60,11 +60,16 @@ jobs:
           mkdir -p "$dest/assets"
           cp web/index.html "$dest/index.html"
           cp web/assets/site.css web/assets/site.js web/assets/mark.svg \
-            web/assets/readme-banner.svg web/assets/mrstore-hero.webp "$dest/assets/"
+            web/assets/readme-banner.svg web/assets/mrstore-hero.webp \
+            web/assets/platform-homeio.png web/assets/platform-homedock.svg \
+            web/assets/platform-olares.svg "$dest/assets/"
           test -s "$dest/index.html"
           test -s "$dest/assets/site.js"
           test -s "$dest/assets/site.css"
           test -s "$dest/assets/mrstore-hero.webp"
+          test -s "$dest/assets/platform-homeio.png"
+          test -s "$dest/assets/platform-homedock.svg"
+          test -s "$dest/assets/platform-olares.svg"
       - name: Publish website only, preserving current approved-release files
         shell: bash
         run: |
@@ -84,7 +89,9 @@ jobs:
             cp "$RUNNER_TEMP/mrstore-website/index.html" index.html
             cp "$RUNNER_TEMP/mrstore-website/assets/"* assets/
             git add -- index.html assets/site.css assets/site.js \
-              assets/mark.svg assets/readme-banner.svg assets/mrstore-hero.webp
+              assets/mark.svg assets/readme-banner.svg assets/mrstore-hero.webp \
+              assets/platform-homeio.png assets/platform-homedock.svg \
+              assets/platform-olares.svg
             if git diff --cached --quiet; then
               echo 'The published website already matches main.'
               exit 0

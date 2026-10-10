@@ -287,6 +287,10 @@ body{background:#10151d;overflow-x:hidden}
 .system-card.system-ready{background:#fff5ddbd;border:2px solid #fff0d9;box-shadow:0 0 0 2px #a34e2830,0 12px 28px #9e44183e}
 .system-card.system-ready small{background:#287a5540;color:#125f41;padding:3px 7px;border-radius:7px;font-weight:800}
 .system-glyph{width:55px;height:55px;border-radius:15px;display:grid;place-items:center;font-size:31px;font-weight:900;color:#fff;box-shadow:0 5px 13px #4f2d2818}
+/* Official self-hosted platform marks are local assets, not placeholder glyphs. */
+.system-glyph.platform-logo{background:#fff;color:#1c2532;padding:6px;overflow:hidden}
+.system-glyph.platform-logo img{display:block;width:100%;height:100%;object-fit:contain;flex:none}
+
 .system-glyph.purple{background:linear-gradient(135deg,#6835df,#9b68ff)}.system-glyph.cyan{background:linear-gradient(135deg,#00b5f3,#2874ca)}
 .system-glyph.midnight{background:linear-gradient(135deg,#101725,#34323c);color:#f8ac52}.system-glyph.blue{background:linear-gradient(135deg,#1b89de,#30bddd)}
 .system-glyph.deep{background:linear-gradient(135deg,#26242e,#18171c);color:#ffbd62}.system-glyph.sky{background:linear-gradient(135deg,#3b87c2,#78b8ed)}
