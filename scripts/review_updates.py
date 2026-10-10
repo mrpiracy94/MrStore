@@ -87,9 +87,17 @@ def immich_major_upgrade_hazards(old: dict | None, new: dict, folder: str) -> li
         return []
     prev = (old.get("services") or {}).get("immich-database")
     curr = (new.get("services") or {}).get("immich-database")
-    if not isinstance(prev, dict) or not isinstance(curr, dict):
+    if not isinstance(prev, dict):
         return []
     former = _pg_major(prev.get("image"))
+    # Renaming or deleting the existing DB service is not a safe major upgrade.
+    # Require an independently proven migration before accepting the update.
+    if former is not None and not isinstance(curr, dict):
+        return ["Immich PostgreSQL: existing immich-database service removed or "
+                "renamed; preserve the old database and require a tested migration "
+                "and rollback before any catalog deployment"]
+    if not isinstance(curr, dict):
+        return []
     future = _pg_major(curr.get("image"))
     if former is None:
         return []
