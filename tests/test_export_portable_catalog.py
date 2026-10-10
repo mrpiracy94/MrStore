@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from scripts.export_portable_catalog import build, PLATFORMS
+from scripts.export_portable_catalog import build, portainer_template, PLATFORMS
 
 SHA = "b" * 64
 
@@ -40,6 +40,9 @@ class PortableCatalogTests(unittest.TestCase):
                          (self.source / "Apps/example/docker-compose.yml").read_text())
         stored = json.loads((self.dist / "universal/catalog.json").read_text())
         self.assertEqual(stored["apps"], result["apps"])
+        templates = json.loads((self.dist / "universal/portainer-templates.json").read_text())
+        self.assertEqual(templates["version"], "2")
+        self.assertEqual(templates["templates"][0]["type"], 1)
 
     def test_reject_unapproved_addition(self):
         (self.source / "Apps" / "rogue").mkdir()
@@ -53,6 +56,29 @@ class PortableCatalogTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build(self.source, self.selection, self.dist)
         self.assertFalse((self.dist / "universal").exists())
+
+    def test_portainer_restricted_template_schema(self):
+        example = {
+            "services": {"main": {
+                "image": "example/img@sha256:" + SHA,
+                "environment": ["TZ=Europe/Lisbon"],
+                "ports": [{"published": "8080", "target": 80, "protocol": "tcp"}],
+                "volumes": [{"type": "bind", "source": "/DATA/AppData/example",
+                             "target": "/data", "read_only": True}],
+                "restart": "unless-stopped",
+            }},
+            "x-casaos": {"title": {"en_US": "Example"}, "category": "Home"}
+        }
+        template = portainer_template("example", example)
+        self.assertEqual(template["type"], 1)
+        self.assertEqual(template["ports"], ["8080:80/tcp"])
+        self.assertEqual(template["volumes"][0]["container"], "/data")
+        self.assertEqual(template["image"], "example/img@sha256:" + SHA)
+        example["services"]["database"] = {"image": "example/db@sha256:" + SHA}
+        self.assertIsNone(portainer_template("example", example))
+        example["services"].pop("database")
+        example["services"]["main"]["privileged"] = True
+        self.assertIsNone(portainer_template("example", example))
 
     def test_no_overwrite(self):
         build(self.source, self.selection, self.dist)
