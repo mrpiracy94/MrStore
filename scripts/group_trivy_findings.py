@@ -68,12 +68,48 @@ def aggregate(reports: list[dict], usage: dict[str,list[str]], expected: dict[st
                             "platforms":sorted(data["platforms"]),
                             "occurrences":sorted(data["occurrences"],key=lambda x:(x["image"],x["platform"]))})
     categorized.sort(key=lambda g:(-len(g["apps"]),-len(g["images"]),g["package"],g["cve"]))
+    # One auditable state per app (not one state per shared image or per CVE).
+    # A missing or incomplete scan takes precedence over a seemingly clean sibling image.
+    by_image = {row["image"]: row for row in details}
+    per_app = defaultdict(lambda: {
+        "images": set(), "missing_images": set(), "incomplete_images": set(),
+        "critical": 0, "high": 0,
+    })
+    for image in sorted(expected):
+        row = by_image.get(image)
+        for app in usage.get(image, []):
+            item = per_app[app]
+            item["images"].add(image)
+            if row is None:
+                item["missing_images"].add(image)
+            elif row["status"] not in ("clean", "vulnerable"):
+                item["incomplete_images"].add(image)
+            else:
+                item["critical"] += row["critical"]
+                item["high"] += row["high"]
+    applications = []
+    for app, item in sorted(per_app.items(), key=lambda pair: pair[0].casefold()):
+        if item["missing_images"] or item["incomplete_images"]:
+            status = "not_verified"
+        elif item["critical"] or item["high"]:
+            status = "vulnerable"
+        else:
+            status = "no_high_critical_detected"
+        applications.append({
+            "app": app, "status": status, "critical": item["critical"], "high": item["high"],
+            "images": sorted(item["images"]),
+            "missing_images": sorted(item["missing_images"]),
+            "incomplete_images": sorted(item["incomplete_images"]),
+        })
+    app_summary = {status: sum(item["status"] == status for item in applications)
+                   for status in ("not_verified", "vulnerable", "no_high_critical_detected")}
     return {
         "generated_at":datetime.now(timezone.utc).isoformat(),
         "expected_images":len(expected),"reported_images":len(found),
         "missing_images":missing,"unexpected_images":unexpected,
         "duplicate_images":sorted(set(duplicate_images)),
         "incomplete":failures,"groups":categorized,"images":details,
+        "applications": applications, "applications_summary": app_summary,
         "critical":sum(e["critical"] for e in details),
         "high":sum(e["high"] for e in details)
     }
@@ -89,6 +125,17 @@ def markdown(report:dict)->str:
               for x in report["incomplete"]]
     lines += [f"- imagem não analisada: {x}" for x in report["missing_images"]]
     lines += ["- Sem falhas conhecidas." ] if not report["incomplete"] and not report["missing_images"] else []
+    lines += ["", "## Estado individual de cada aplicação", "",
+              "NOT_VERIFIED = imagem, arquitetura ou evidência em falta. "
+              "VULNERABLE = HIGH/CRITICAL encontrados. "
+              "NO_HIGH_CRITICAL_DETECTED = análise completa sem HIGH/CRITICAL detetados (não é garantia absoluta).",
+              "",
+              "| Aplicação | Estado | CRITICAL | HIGH | Imagens |", "|---|---|---:|---:|---:|"]
+    for app in report["applications"]:
+        lines.append(f"| {app['app']} | {app['status'].upper()} | {app['critical']} | {app['high']} | {len(app['images'])} |")
+    lines += ["", "### Totais por estado", ""]
+    for status, count in report["applications_summary"].items():
+        lines.append(f"- {status}: {count}")
     lines += ["","## Dependências partilhadas (por aplicações afetadas)",""]
     if not report["groups"]:
         lines.append("Sem HIGH/CRITICAL com detalhes disponíveis; confirmar se todos os scans foram completos.")
