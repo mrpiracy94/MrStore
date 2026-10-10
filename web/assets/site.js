@@ -25,17 +25,21 @@
     umbrelos: ["umbrelOS", "Loja nativa pendente", ["A Community App Store do umbrelOS requer um repositório Git próprio.", "O exportador de manifestos Umbrel ainda não foi validado.", "Não adiciones o URL da MrStore ZimaOS como se fosse uma loja Umbrel."]],
     cosmos: ["Cosmos", "Importação Docker Compose", ["Escolhe uma aplicação e descarrega o Compose aprovado.", "Em ServApps, seleciona Import Docker Compose.", "Verifica a conversão, redes, volumes e exposição de portas antes de criar."]],
     portainer: ["Portainer", "Stacks a partir de Compose", ["Escolhe uma aplicação e descarrega o Compose aprovado.", "Vai a Stacks → Add stack → Web editor ou Upload.", "Corrige os caminhos dos volumes, valida variáveis e faz Deploy."]],
-    homedock: ["HomeDock OS", "Packager com Compose", ["Descarrega o Compose aprovado na ficha da aplicação.", "Abre o Packager do HomeDock OS e importa o Compose.", "Revê e testa o pacote gerado; ainda não há .hds nativo certificado."]],
-    olares: ["Olares", "OAC/Helm nativo pendente", ["O Market do Olares utiliza Olares Application Charts (OAC).", "Um Docker Compose não é diretamente uma aplicação nativa Olares.", "A conversão e os testes Kubernetes ainda não estão concluídos."]],
+    homedock: ["HomeDock OS", "Pacotes HDS e loja HDStore (pré-visualização)", ["Abre o Packager do HomeDock OS e seleciona importar .hdstore.", "Se o pacote aprovado estiver publicado, copia a ligação e importa o bundle.", "Verifica dados, configurações e atualização numa instância de testes antes de usar em produção."]],
+    olares: ["Olares", "Olares Application Charts (pré-visualização)", ["Abre a ficha de uma aplicação elegível e descarrega o OAC experimental.", "Valida o Helm chart e o OlaresManifest na versão instalada do Olares.", "Instala primeiro numa instância de teste. O pacote ainda não foi validado no Market oficial."]],
     dockge: ["Dockge", "Stacks Docker Compose", ["Escolhe uma aplicação e descarrega o Compose aprovado.", "Cria uma nova stack ou coloca o ficheiro na pasta de stacks.", "Revê caminhos de volumes/portas e inicia depois da validação."]],
     runtipi: ["Runtipi", "Loja Git Runtipi pendente", ["Runtipi v4+ aceita lojas externas como repositórios Git.", "Faltam config.json, x-runtipi, logo e testes por aplicação.", "O endereço ZimaOS/ZIP não substitui uma loja Runtipi."]],
     "docker-linux": ["Docker / Linux", "Docker Compose (CLI)", ["Escolhe uma aplicação e descarrega o Compose aprovado.", "Personaliza os volumes e as variáveis em ambiente seguro.", "Executa docker compose config e, depois de rever o resultado, docker compose up -d."]]
   };
-  const COMPOSE_TARGETS = new Set(["cosmos", "portainer", "homedock", "dockge", "docker-linux"]);
+  const COMPOSE_TARGETS = new Set(["cosmos", "portainer", "dockge", "docker-linux"]);
   let universalApps = new Map();
   let universalReady = false;
   let previewZipReady = false;
   let portainerTemplatesReady = false;
+  let homedockPackages = new Set();
+  let homedockReady = false;
+  let olaresCharts = new Map();
+  let olaresReady = false;
   let selectedStoreURL = STORE_URL;
 
   function renderPlatform() {
@@ -54,10 +58,15 @@
     selectedStoreURL = "";
     if (id === "zimaos") selectedStoreURL = STORE_URL;
     else if (id === "portainer" && portainerTemplatesReady) selectedStoreURL = STORE_URL + "/universal/portainer-templates.json";
+    else if (id === "homedock" && homedockReady) selectedStoreURL = STORE_URL + "/homedock/mrstore.hdstore";
     else if ((id === "homeio" || id === "casaos") && previewZipReady) {
       selectedStoreURL = STORE_URL + "/store/casaos-homeio-preview.zip";
     }
-    const intro = COMPOSE_TARGETS.has(id)
+    const intro = id === "homedock"
+      ? (homedockReady ? "Bundle HDStore experimental disponível. Os pacotes ainda exigem validação no HomeDock OS real." : "O bundle HDStore ainda não está disponível nesta publicação.")
+      : id === "olares"
+      ? (olaresReady ? "Existem OACs experimentais para algumas apps. Descarrega o chart na ficha da app; ainda não são aplicações certificadas Olares." : "Os charts Olares ainda não estão disponíveis nesta publicação.")
+      : COMPOSE_TARGETS.has(id)
       ? (universalReady
         ? (id === "portainer" && portainerTemplatesReady ? "O endereço contém apenas templates seguros de contentor único; para stacks com dependências usa o Compose aprovado na ficha da app." : "Seleciona uma aplicação e usa «Descarregar Compose aprovado» na respetiva ficha. Não é uma loja nativa integrada neste sistema.")
         : "O catálogo Compose aprovado ainda não está disponível nesta publicação.")
@@ -106,6 +115,52 @@
       });
       previewZipReady = response.ok;
     } catch (_) { previewZipReady = false; }
+    renderPlatform();
+  }
+  async function checkNativePackages() {
+    if (!state.validated) { renderPlatform(); return; }
+    const expected = new Set(state.apps.map(function (app) {
+      return app.id.slice(PREFIX.length);
+    }));
+    try {
+      const response = await fetch("./homedock/catalog.json", {cache: "no-store"});
+      if (!response.ok) throw new Error("HomeDock catalog missing");
+      const info = await response.json();
+      if (info.version !== 1 || info.source_approved !== expected.size ||
+          !Array.isArray(info.packages) || info.packages.length !== info.exported_count ||
+          info.packages.length < 1 || info.runtime_verified !== false ||
+          info.bundle !== "homedock/mrstore.hdstore") throw new Error("Invalid HomeDock release");
+      const names = new Set();
+      for (const app of info.packages) {
+        if (!app || typeof app.slug !== "string" || !expected.has(app.slug) ||
+            app.url !== "homedock/" + app.slug + ".hds" || names.has(app.slug)) {
+          throw new Error("HomeDock app set mismatch");
+        }
+        names.add(app.slug);
+      }
+      homedockPackages = names;
+      homedockReady = true;
+    } catch (_) { homedockPackages = new Set(); homedockReady = false; }
+
+    try {
+      const response = await fetch("./olares/catalog.json", {cache: "no-store"});
+      if (!response.ok) throw new Error("Olares catalog missing");
+      const info = await response.json();
+      if (info.version !== 1 || info.source_approved !== expected.size ||
+          !Array.isArray(info.packages) || info.packages.length !== info.chart_count ||
+          info.chart_count < 1 || info.runtime_verified !== false) throw new Error("Invalid Olares release");
+      const verified = new Map();
+      for (const item of info.packages) {
+        if (!item || typeof item.slug !== "string" || !expected.has(item.slug) ||
+            typeof item.chart !== "string" || !/^mr[a-z0-9]{7,24}$/.test(item.chart) ||
+            item.url !== "olares/" + item.chart + ".tgz" || verified.has(item.slug)) {
+          throw new Error("Olares chart set mismatch");
+        }
+        verified.set(item.slug, item.chart);
+      }
+      olaresCharts = verified;
+      olaresReady = true;
+    } catch (_) { olaresCharts = new Map(); olaresReady = false; }
     renderPlatform();
   }
   function readFavorites() {
@@ -278,8 +333,22 @@
     compose.hidden = !url; if (url) compose.href = url;
     const slug = app.id.slice(PREFIX.length);
     const portable = $("details-universal");
-    portable.hidden = !state.validated || !universalApps.has(slug);
-    if (!portable.hidden) portable.href = new URL("./universal/compose/" + encodeURIComponent(slug) + ".yml", base).href;
+    const selected = $("platform-select").value;
+    let downloadable = "";
+    let title = "Descarregar Compose aprovado ↓";
+    if (state.validated && selected === "homedock" && homedockPackages.has(slug)) {
+      downloadable = "./homedock/" + encodeURIComponent(slug) + ".hds";
+      title = "Descarregar pacote HDS experimental ↓";
+    } else if (state.validated && selected === "olares" && olaresCharts.has(slug)) {
+      downloadable = "./olares/" + olaresCharts.get(slug) + ".tgz";
+      title = "Descarregar OAC experimental ↓";
+    } else if (state.validated && selected !== "olares" &&
+               selected !== "homedock" && universalApps.has(slug)) {
+      downloadable = "./universal/compose/" + encodeURIComponent(slug) + ".yml";
+    }
+    portable.hidden = !downloadable;
+    portable.textContent = title;
+    if (downloadable) portable.href = new URL(downloadable, base).href;
     $("details-github").href = "https://github.com/mrpiracy94/MrStore/tree/main/Apps/" + encodeURIComponent(slug);
     $("details").showModal();
   }
@@ -341,7 +410,7 @@
       setNotice("Esta edição pública não inclui evidência completa de quarentena, ou existe uma divergência entre o índice e os relatórios. Podes consultar as fichas, mas NÃO interpretes estas aplicações como aprovadas pelos scanners atuais. Verifica os relatórios no GitHub antes de instalar.", true);
     }
     categoryList(); render();
-    checkUniversalPublication(); checkPreviewZip();
+    checkUniversalPublication(); checkPreviewZip(); checkNativePackages();
   }
   $("search").addEventListener("input", function (event) { state.query = event.target.value; state.limit = BATCH_SIZE; render(); });
   $("architecture").addEventListener("change", function (event) { state.arch = event.target.value; state.limit = BATCH_SIZE; render(); });
