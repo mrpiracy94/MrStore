@@ -4,10 +4,10 @@ O GitHub controla o seu próprio layout; não é possível mudar o tema, menus
 ou o CSS de github.com para cada repositório. A MrStore apresenta-se em dois
 locais distintos:
 
-1. README.md — página de entrada do repositório, com banner, navegação curta,
+1. README.md — página de entrada do repositório, com banner WebP oficial, navegação curta,
    instalação, segurança e ligações para documentação.
-2. https://mrpiracy94.github.io/MrStore/ — montra web estática com identidade
-   laranja e grafite, pesquisa, filtros, favoritos e detalhes das aplicações.
+2. https://mrpiracy94.github.io/MrStore/ — montra web estática com o mesmo
+   banner laranja e grafite, monograma M, pesquisa, filtros, favoritos e detalhes das aplicações.
 
 ## Dados e segurança
 
@@ -36,6 +36,11 @@ O programa exige index.json, store.json, release-status.json, app_count e
 o conjunto de IDs aprovados exatamente consistentes. Apenas copia index.html
 e recursos de web/assets. Não altera o protocolo, Compose, imagens, versões ou
 metadados oficiais. Se a lista não estiver aprovada, falha a publicação.
+
+A imagem `web/assets/mrstore-hero.webp` é usada no README e no hero da montra.
+É um recurso local otimizado em WebP, incluído na lista fechada `ALLOWED` do
+staging. O SVG antigo fica disponível apenas como recurso legado. O banner
+não anuncia integrações concretas; estas são detalhadas na secção Ecossistema.
 
 A montra só fica online depois de o workflow de publicação da main passar e
 GitHub Pages usar a branch gh-pages. Não é um instalador web.
