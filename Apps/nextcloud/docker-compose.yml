@@ -51,10 +51,12 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/nextcloud.png
   title:
     en_US: "Nextcloud"
+    pt_PT: "Nextcloud"
   tagline:
     en_US: "Nextcloud (LinuxServer.io)"
   description:
     en_US: "Nextcloud — origem: LinuxServer.io. O serviço LinuxServer.io usa HTTPS na porta interna 443, publicada na porta 20019. O certificado inicial pode ser autoassinado e exigir confirmação no browser; valida a instalação no ZimaOS. Docs: https://docs.linuxserver.io/images/docker-nextcloud/"
+    pt_PT: "Nuvem pessoal para sincronizar ficheiros, contactos e colaboração. Analisa os requisitos de base de dados, armazenamento e HTTPS, e confirma as credenciais e backups."
   port_map: "20019"
   scheme: https
   index: /
