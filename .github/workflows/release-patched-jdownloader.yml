@@ -1,0 +1,189 @@
+name: Fix, test and ship JDownloader 2 CVEs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - security/images/jdownloader/Dockerfile
+      - .github/workflows/release-patched-jdownloader.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+
+concurrency:
+  group: mrstore-jdownloader-cve-release
+  cancel-in-progress: false
+
+jobs:
+  verify_publish_and_update_catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-jdownloader
+      VERSION: v26.09.1-alpine-secfix-20261010
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Resolve and pin vendor's exact multiarch digest
+        run: |
+          set -euo pipefail
+          upstream="docker.io/jlesage/jdownloader-2:v26.09.1"
+          inspect="$(docker buildx imagetools inspect "$upstream")"
+          printf '%s\n' "$inspect"
+          digest="$(printf '%s\n' "$inspect" | awk '$1 == "Digest:" { print $2; exit }')"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          printf '%s\n' "$inspect" | grep -q 'linux/amd64'
+          printf '%s\n' "$inspect" | grep -q 'linux/arm64'
+          echo "UPSTREAM_IMAGE=docker.io/jlesage/jdownloader-2@$digest" >> "$GITHUB_ENV"
+      - name: Build AMD64 and ARM64 images preserving vendor runtime
+        run: |
+          set -euo pipefail
+          for arch in amd64 arm64; do
+            docker buildx build --pull --platform "linux/$arch" --load \
+              --build-arg "UPSTREAM_IMAGE=$UPSTREAM_IMAGE" \
+              -f security/images/jdownloader/Dockerfile \
+              -t "mrstore-jdownloader:patched-$arch" .
+          done
+      - name: Trivy scans with strict zero-HIGH/CRITICAL gate
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          for arch in amd64 arm64; do
+            trivy image --quiet --image-src docker --platform "linux/$arch" \
+              --scanners vuln --severity HIGH,CRITICAL --timeout 12m \
+              --format json --output "out/jdownloader-$arch.json" \
+              "mrstore-jdownloader:patched-$arch"
+          done
+          python - <<'PY'
+          import json
+          for arch in ("amd64", "arm64"):
+              with open(f"out/jdownloader-{arch}.json", encoding="utf-8") as fp:
+                  result = json.load(fp)
+              rows = result.get("Results")
+              if not isinstance(rows, list) or not rows:
+                  raise SystemExit(f"Invalid/incomplete Trivy results for {arch}")
+              if any(not isinstance(row, dict) or not row.get("Target") for row in rows):
+                  raise SystemExit(f"Invalid Trivy targets for {arch}")
+              vulns = [v for row in rows for v in (row.get("Vulnerabilities") or [])]
+              if any(not isinstance(v, dict) for v in vulns):
+                  raise SystemExit(f"Malformed Trivy vulnerabilities for {arch}")
+              high = sum(v.get("Severity") == "HIGH" for v in vulns)
+              critical = sum(v.get("Severity") == "CRITICAL" for v in vulns)
+              print(f"JDownloader {arch}: {critical} CRITICAL; {high} HIGH")
+              if critical or high:
+                  raise SystemExit(f"Refusing release: unpatched vulnerabilities on {arch}")
+          PY
+      - name: Smoke-test HTTP GUI and persistent mounts on both architectures
+        run: |
+          set -euo pipefail
+          for arch in amd64 arm64; do
+            name="jd2-smoke-$arch"
+            scratch="$(mktemp -d)"
+            mkdir -p "$scratch/config" "$scratch/output"
+            docker run -d --name "$name" --platform "linux/$arch" \
+              -p 127.0.0.1::5800 -e TZ=Europe/Lisbon \
+              -v "$scratch/config:/config" -v "$scratch/output:/output" \
+              "mrstore-jdownloader:patched-$arch"
+            endpoint="$(docker port "$name" 5800/tcp)"
+            port="${endpoint##*:}"
+            ok=0
+            for attempt in $(seq 1 120); do
+              if ! docker inspect -f '{{.State.Running}}' "$name" | grep -qx true; then
+                break
+              fi
+              code="$(curl --silent --max-time 4 -o /dev/null -w '%{http_code}' "http://127.0.0.1:$port/" || true)"
+              if [[ "$code" =~ ^[23][0-9][0-9]$ ]]; then
+                ok=1
+                break
+              fi
+              sleep 3
+            done
+            docker logs --tail 50 "$name" || true
+            docker rm -f "$name" || true
+            rm -rf "$scratch"
+            if [ "$ok" -ne 1 ]; then
+              echo "::error::JDownloader HTTP GUI failed on $arch"
+              exit 1
+            fi
+            echo "JDownloader GUI and /config /output mounted successfully: $arch"
+          done
+      - name: Preserve image security evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jdownloader-security-evidence
+          path: out/jdownloader-*.json
+          if-no-files-found: warn
+      - name: Authenticate to container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the two tested architectures and multiarch manifest
+        run: |
+          set -euo pipefail
+          for arch in amd64 arm64; do
+            docker tag "mrstore-jdownloader:patched-$arch" "$IMAGE:$VERSION-$arch"
+            docker push "$IMAGE:$VERSION-$arch"
+          done
+          docker buildx imagetools create -t "$IMAGE:$VERSION" \
+            "$IMAGE:$VERSION-amd64" "$IMAGE:$VERSION-arm64"
+          inspected="$(docker buildx imagetools inspect "$IMAGE:$VERSION")"
+          printf '%s\n' "$inspected"
+          digest="$(printf '%s\n' "$inspected" | awk '$1 == "Digest:" {print $2; exit}')"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+          printf '%s\n' "$inspected" | grep -q 'linux/amd64'
+          printf '%s\n' "$inspected" | grep -q 'linux/arm64'
+          echo "PATCHED_DIGEST=$digest" >> "$GITHUB_ENV"
+      - name: Verify public anonymous pull of published immutable image
+        run: |
+          set -euo pipefail
+          docker logout ghcr.io
+          docker pull --platform linux/amd64 "$IMAGE@$PATCHED_DIGEST"
+          docker pull --platform linux/arm64 "$IMAGE@$PATCHED_DIGEST"
+      - name: Update existing ZimaOS entry only after all gates pass
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import os, re
+          path = Path("Apps/jdownloader/docker-compose.yml")
+          text = path.read_text(encoding="utf-8")
+          original = "    image: jlesage/jdownloader-2:latest"
+          if text.count(original) != 1:
+              raise SystemExit("Catalog entry changed; refusing unattended update")
+          digest = os.environ["PATCHED_DIGEST"]
+          if not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
+              raise SystemExit("Invalid immutable digest")
+          image = f"{os.environ['IMAGE']}:{os.environ['VERSION']}@{digest}"
+          text = text.replace(original, f"    image: {image}", 1)
+          text = text.replace('  version: "1.0.0"', '  version: "1.0.1"', 1)
+          text = text.replace('  update_at: "2026-10-09"', '  update_at: "2026-10-10"', 1)
+          text = text.replace(
+              "JDownloader 2 — origem: seedit4.me catalog. Imagem: jlesage/jdownloader-2:latest. Verifica portas/variáveis na documentação do projeto.",
+              "JDownloader 2 com base Alpine atualizada; imagem fixada por digest multiarch, Trivy 0 HIGH/CRITICAL e GUI HTTP testada em AMD64/ARM64. Portas 5800 e volumes /config e /output preservados."
+          )
+          path.write_text(text, encoding="utf-8")
+          PY
+          python -m pip install -r requirements.txt
+          python scripts/validate.py
+          python -m unittest discover -s tests -v
+          git fetch origin main
+          test "$(git rev-parse HEAD)" = "$(git rev-parse origin/main)" || {
+            echo "::error::main has advanced; refusing stale automatic catalog update"
+            exit 1
+          }
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Apps/jdownloader/docker-compose.yml
+          git commit -m "security(jdownloader): publish scanned multiarch CVE-fixed digest"
+          git push origin HEAD:main

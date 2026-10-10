@@ -63,7 +63,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
@@ -94,7 +94,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
@@ -129,7 +129,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
@@ -138,7 +138,7 @@ jobs:
           python scripts/validate.py
           python -m unittest discover -s tests -v
       - name: Fetch eight mandatory security evidence reports
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           pattern: mrstore-release-security-shard-*
           path: out/release-evidence
@@ -173,7 +173,7 @@ jobs:
       # The external builder may change the active Python environment.
       # Restore our pinned runtime before importing PyYAML in release verification.
       - name: Restore Python 3.12 after ZimaOS builder
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
       - name: Restore release verification dependencies
@@ -231,7 +231,7 @@ jobs:
       contents: write
     steps:
       - name: Retrieve validated approved ZimaOS catalog
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: mrstore-v2-approved-dist
           path: dist/
