@@ -1,0 +1,102 @@
+"""Regression tests for fast per-application CVE audits (fully offline)."""
+import json
+import os
+from pathlib import Path
+import subprocess
+import sys
+import threading
+import unittest
+from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
+from cves import (application_results, changed_apps_since, evaluate,
+                  scan, select_app_images)
+
+
+class FastAppAuditTests(unittest.TestCase):
+    def test_app_selection_deduplicates_shared_images(self):
+        usage = {
+            "demo/server:1": ["alpha/web", "beta/web"],
+            "demo/db:2": ["alpha/db"],
+            "demo/third:1": ["gamma/web"],
+        }
+        self.assertEqual(select_app_images(usage, {"alpha"}),
+                         ["demo/db:2", "demo/server:1"])
+        self.assertEqual(select_app_images(usage, {"alpha", "beta"}),
+                         ["demo/db:2", "demo/server:1"])
+        with self.assertRaises(ValueError):
+            select_app_images(usage, {"missing"})
+
+    def test_only_apps_changed_in_git_diff_are_selected(self):
+        base = "a" * 40
+        change_list = ("Apps/alpha/docker-compose.yml\0"
+                       "Apps/beta/icons/icon.png\0"
+                       "README.md\0")
+        result = subprocess.CompletedProcess(["git"], 0, change_list, "")
+        with patch("cves.subprocess.run", return_value=result) as runner:
+            selected = changed_apps_since(ROOT, base)
+        self.assertEqual(selected, {"alpha", "beta"})
+        args = runner.call_args.args[0]
+        self.assertEqual(args[-3:], ["HEAD", "--", "Apps/"])
+        self.assertIn("-z", args)
+
+    def test_invalid_change_baseline_is_not_a_clean_scan(self):
+        with self.assertRaises(ValueError):
+            changed_apps_since(ROOT, "not-a-commit")
+
+    def test_parallel_results_keep_image_order(self):
+        barrier = threading.Barrier(2)
+
+        def scanner(image):
+            barrier.wait(timeout=5)
+            return [], None
+
+        usage = {"example/one:1": ["one/app"],
+                 "example/two:2": ["two/app"]}
+        images = ["example/two:2", "example/one:1"]
+        report = evaluate(usage, images, scanner=scanner, workers=2)
+        self.assertEqual([x["image"] for x in report["results"]], images)
+        self.assertEqual(report["failures"], 0)
+        self.assertEqual(report["applications"]["one"]["status"],
+                         "no_high_critical_detected")
+
+    def test_partial_or_failed_app_cannot_be_marked_clean(self):
+        usage = {"example/a:1": ["demo/web"],
+                 "example/b:2": ["demo/db"]}
+        clean = [{"image": "example/a:1", "status": "ok", "findings": []}]
+        status = application_results(usage, clean)["demo"]
+        self.assertEqual(status["status"], "partial")
+        self.assertFalse(status["complete"])
+
+        failure = clean + [{"image": "example/b:2", "status": "error",
+                            "error": "registry 429", "findings": []}]
+        status = application_results(usage, failure)["demo"]
+        self.assertEqual(status["status"], "inconclusive")
+        self.assertTrue(status["complete"])
+
+    def test_findings_cannot_be_hidden_by_incomplete_app_scan(self):
+        usage = {"example/a:1": ["demo/web"],
+                 "example/b:2": ["demo/db"]}
+        finding = {"severity": "CRITICAL", "cve": "CVE-TEST"}
+        status = application_results(usage, [
+            {"image": "example/a:1", "status": "ok", "findings": [finding]}
+        ])["demo"]
+        self.assertEqual(status["status"], "vulnerable")
+        self.assertEqual(status["critical"], 1)
+        self.assertFalse(status["complete"])
+
+    def test_parallel_trivy_uses_memory_cache_only_when_db_is_prepared(self):
+        done = subprocess.CompletedProcess(["trivy"], 0, json.dumps(
+            {"Results": [{"Target": "example/app:1", "Vulnerabilities": []}]}), "")
+        with patch.dict(os.environ, {"MRSTORE_CVE_DB_PREPARED": "1"}), \
+             patch("cves.subprocess.run", return_value=done) as runner:
+            self.assertEqual(scan("example/app:1"), ([], None))
+        args = runner.call_args.args[0]
+        for flag in ("--cache-backend", "memory", "--skip-db-update",
+                     "--skip-java-db-update"):
+            self.assertIn(flag, args)
+
+
+if __name__ == "__main__":
+    unittest.main()
