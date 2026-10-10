@@ -58,7 +58,13 @@ def local_asset_missing(url: object, root: Path) -> str | None:
     candidate = Path(relative)
     if candidate.is_absolute() or '..' in candidate.parts:
         return f'unsafe local asset path: {relative}'
-    if not (root / candidate).is_file():
+    resolved_root = Path(root).resolve()
+    resolved_asset = (resolved_root / candidate).resolve()
+    # A symlink in the repository must not turn a safe-looking URL into an
+    # accidental reference to an external file.
+    if not resolved_asset.is_relative_to(resolved_root):
+        return f'unsafe local asset path: {relative}'
+    if not resolved_asset.is_file():
         return f'missing local asset: {relative}'
     return None
 
