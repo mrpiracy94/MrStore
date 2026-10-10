@@ -122,7 +122,11 @@ def insecure_defaults(app) -> list[str]:
         # Compose environment values; the ZimaOS v2 appstore payload has no
         # verified prompt for them. Quarantine instead of publishing a broken
         # one-click installer or leaking dummy passwords into the catalog.
-        if REQUIRED_COMPOSE_VARIABLE.search(json.dumps(env)):
+        # Compose expands variables across service values, not just environment.
+        # Ignore ZimaOS x-* descriptive metadata (not runtime Compose config).
+        runtime_spec = {key: value for key, value in spec.items()
+                        if not str(key).startswith("x-")}
+        if REQUIRED_COMPOSE_VARIABLE.search(json.dumps(runtime_spec)):
             flags.append(f"{service}: required Compose installation variables unsupported by verified ZimaOS v2 installer")
         pairs = (env.items() if isinstance(env, dict) else
                  (value.split("=", 1) for value in env
