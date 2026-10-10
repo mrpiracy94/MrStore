@@ -9,7 +9,7 @@ services:
       - "LOG_LEVEL=info"
     ports:
       - target: 8191
-        published: "8191"
+        published: "127.0.0.1:8191"
         protocol: tcp
     x-casaos:
       envs:
@@ -24,7 +24,7 @@ services:
 x-casaos:
   id: io.github.mrpiracy94.flaresolverr
   version: "1.0.0"
-  update_at: "2026-10-09"
+  update_at: "2026-10-10"
   architectures:
     - amd64
     - arm64
