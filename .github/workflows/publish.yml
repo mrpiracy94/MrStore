@@ -11,6 +11,7 @@ on:
       - 'scripts/release_scan.py'
       - 'scripts/release_catalog.py'
       - 'scripts/release_versions.py'
+      - 'scripts/verify_update_signals.py'
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
@@ -138,6 +139,10 @@ jobs:
           report-json: out/build-report.json
       - name: Verify exact approved count and generated v2 files
         run: python scripts/verify_dist.py --expected ${{ steps.release.outputs.approved }}
+      - name: Refuse false ZimaOS update signals (version and content_hash)
+        run: >-
+          python scripts/verify_update_signals.py --previous previous-published
+          --dist dist --report out/release-versions.json
       - name: Verify published app set and every image digest was retained
         run: |
           python - <<'PY'
