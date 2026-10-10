@@ -1,0 +1,85 @@
+# Narrow only the legacy, already-public catalog. Never approve new images.
+# Audited publication remains controlled by release_catalog.py and CVE evidence.
+name: Publish six-app pilot catalog
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/featured-apps.json'
+      - 'scripts/featured.py'
+      - 'scripts/curate_small_catalog.py'
+      - 'tests/test_curate_small_catalog.py'
+      - '.github/workflows/publish-six-app-pilot.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mrstore-static-site
+  cancel-in-progress: false
+
+jobs:
+  publish_six:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Validate six curated source apps and offline regression tests
+        run: |
+          test ! -e Apps/steamos/docker-compose.yml
+          python -m unittest discover -s tests -p 'test_curate_small_catalog.py' -v
+          python -m unittest discover -s tests -p 'test_featured_release.py' -v
+          python -m py_compile scripts/curate_small_catalog.py
+      - name: Publish removals only to legacy GitHub Pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+          dest="$RUNNER_TEMP/mrstore-six-apps"
+          git worktree add --detach "$dest" origin/gh-pages
+          for attempt in 1 2 3 4; do
+            git fetch --no-tags origin '+refs/heads/gh-pages:refs/remotes/origin/gh-pages'
+            git -C "$dest" reset --hard origin/gh-pages
+            python scripts/curate_small_catalog.py --site "$dest" --source "$GITHUB_WORKSPACE"
+            git -C "$dest" add -A -- index.json index.pt_PT.json metadata.tar.gz metadata.sha256 apps/
+            while IFS= read -r file; do
+              case "$file" in
+                index.json|index.pt_PT.json|metadata.tar.gz|metadata.sha256|apps/*) ;;
+                *) echo "::error::Unexpected modified path: $file"; exit 2 ;;
+              esac
+            done < <(git -C "$dest" diff --cached --name-only)
+            # Never permit added or modified app contents: withdrawal is deletion only.
+            while IFS=$'\t' read -r mode path; do
+              if [[ "$path" == apps/* && "$mode" != D* ]]; then
+                echo "::error::A non-deletion change to a public app is forbidden: $mode $path"
+                exit 3
+              fi
+            done < <(git -C "$dest" diff --cached --name-status)
+            if git -C "$dest" diff --cached --quiet; then
+              echo "Public catalog already has exactly six selected applications."
+              exit 0
+            fi
+            git -C "$dest" commit -m 'deploy(catalog): temporarily feature six homelab applications'
+            if git -C "$dest" push origin HEAD:gh-pages; then
+              echo "### Six-app pilot public catalog" >> "$GITHUB_STEP_SUMMARY"
+              echo "The legacy public index now contains six apps; old manifests remain in main for future additions. This is NOT CVE certification." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            echo "Concurrent gh-pages update; retrying ($attempt/4)"
+            sleep "$((attempt * 3))"
+          done
+          echo "::error::Unable to publish curated public catalog"
+          exit 1
