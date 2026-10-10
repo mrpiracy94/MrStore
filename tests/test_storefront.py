@@ -72,6 +72,19 @@ class StorefrontTests(unittest.TestCase):
             stage(self.source, self.dist)
         self.assertEqual((self.dist / "index.html").read_text(), "original")
 
+    def test_universal_selector_covers_eleven_platforms(self):
+        html = (self.source / "index.html").read_text(encoding="utf-8")
+        js = (self.source / "assets/site.js").read_text(encoding="utf-8")
+        ids = ("zimaos", "homeio", "casaos", "umbrelos", "cosmos",
+               "portainer", "homedock", "olares", "dockge", "runtipi", "docker-linux")
+        for name in ids:
+            self.assertIn(f'<option value="{name}">', html)
+            self.assertIn(name + ":", js if name != "docker-linux" else js.replace('"docker-linux":', "docker-linux:"))
+        self.assertIn('id="details-universal"', html)
+        self.assertIn('fetch("./universal/catalog.json"', js)
+        self.assertIn('catalog.approved_count !== expected.size', js)
+        self.assertIn('selectedStoreURL', js)
+
     def test_ui_only_consumes_local_index_and_has_no_remote_dependencies(self):
         html = (self.source / "index.html").read_text(encoding="utf-8")
         js = (self.source / "assets/site.js").read_text(encoding="utf-8")
