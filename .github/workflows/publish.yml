@@ -25,6 +25,8 @@ on:
       - 'scripts/export_runtipi_preview.py'
       - 'scripts/export_homedock.py'
       - 'scripts/export_olares_preview.py'
+      - 'scripts/platform_support_report.py'
+      - 'tests/test_platform_support_report.py'
       - 'tests/test_export_homedock.py'
       - 'tests/test_export_olares_preview.py'
       - 'tests/test_export_umbrel_preview.py'
@@ -261,6 +263,21 @@ jobs:
       - name: Report native preview generation failures
         if: steps.homedock_preview.outcome == 'failure' || steps.olares_preview.outcome == 'failure'
         run: echo '::warning::A native preview failed. Check build logs; ZimaOS publication remains independent.'
+      - name: Verify optional cross-platform packages and publish honest compatibility counts
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f dist/universal/catalog.json ]; then
+            if ! python scripts/platform_support_report.py --selection out/release-selection.json --dist dist; then
+              echo '::warning::A universal preview did not match security evidence. Quarantining ALL optional exports.'
+              rm -rf dist/universal dist/homedock dist/olares
+              rm -f dist/store/casaos-homeio-preview.zip dist/store/umbrel-community-preview.zip dist/store/runtipi-store-preview.zip
+            fi
+          else
+            echo '::warning::Universal base catalog missing. Quarantining partial platform exports.'
+            rm -rf dist/universal dist/homedock dist/olares
+            rm -f dist/store/casaos-homeio-preview.zip dist/store/umbrel-community-preview.zip dist/store/runtipi-store-preview.zip
+          fi
       - name: Upload publication/quarantine diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -283,6 +300,7 @@ jobs:
             dist/olares/catalog.json
             dist/olares/olares-oac-preview.zip
             dist/universal/catalog.json
+            dist/universal/support-report.json
           if-no-files-found: warn
       - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
         uses: actions/upload-artifact@v4
