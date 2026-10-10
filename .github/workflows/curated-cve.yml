@@ -1,0 +1,55 @@
+name: Curated 32 dual-architecture CVE audit
+on:
+  pull_request:
+    paths:
+      - 'data/featured-apps.json'
+      - 'Apps/**'
+      - 'scripts/release_scan.py'
+      - 'scripts/cves.py'
+      - '.github/workflows/curated-cve.yml'
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: curated-cve-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Install Trivy
+        uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Install crane for immutable digest resolution
+        run: |
+          set -euo pipefail
+          curl -fsSL https://github.com/google/go-containerregistry/releases/download/v0.20.6/go-containerregistry_Linux_x86_64.tar.gz -o /tmp/crane.tar.gz
+          tar -xz -C /usr/local/bin -f /tmp/crane.tar.gz crane
+          crane version
+      - name: Scan curated image shard on all declared architectures
+        id: scan
+        continue-on-error: true
+        run: python scripts/release_scan.py --curated --shards 8 --shard ${{ matrix.shard }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: curated-cve-shard-${{ matrix.shard }}
+          path: out/release-cves-shard-${{ matrix.shard }}.json
+          if-no-files-found: error
+      - name: Enforce no HIGH/CRITICAL and no inconclusive results
+        if: steps.scan.outcome != 'success'
+        run: exit 1
