@@ -19,9 +19,9 @@ class CompatibilityTests(unittest.TestCase):
 
     def test_inventory_never_claims_real_device_proof(self):
         report = inventory()
-        self.assertEqual(report["total"], 253)
+        self.assertEqual(report["total"], len(self.by_name))
         self.assertEqual(report["runtime_verified"], 0)
-        self.assertEqual(len(report["apps"]), 253)
+        self.assertEqual(len(report["apps"]), len(self.by_name))
         self.assertTrue(all(item["runtime_verified"] is False for item in report["apps"]))
 
     def test_nextcloud_uses_https_on_published_20019(self):
