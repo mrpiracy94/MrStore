@@ -33,7 +33,7 @@ jobs:
       - name: Record original Healthchecks findings
         run: |
           mkdir -p out
-          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output out/old.json lscr.io/linuxserver/healthchecks:latest
+          trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --timeout 12m --format json --output out/old.json docker.io/linuxserver/healthchecks:latest
       - name: Build original LSIO with four patched Python modules
         run: |
           docker buildx build --pull --platform linux/${{ matrix.arch }} --load -f security/images/healthchecks/Dockerfile -t mrstore-healthchecks-patched:${{ matrix.arch }} .

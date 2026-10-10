@@ -1,7 +1,9 @@
-name: Publish verified LinuxServer Healthchecks Python security patches
+name: Build, scan, test and publish Healthchecks (native multiarch)
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - security/healthchecks-complete-20261010
     paths:
       - 'security/images/healthchecks/Dockerfile'
       - 'scripts/test_healthchecks_lsio_patches.sh'
@@ -11,79 +13,110 @@ permissions:
   contents: read
   packages: write
 concurrency:
-  group: mrstore-healthchecks-patched-publication
+  group: healthchecks-secfix-${{ github.ref }}
   cancel-in-progress: false
+
 jobs:
-  verified_publication:
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
+  verified_platform:
+    name: Scan and test ${{ matrix.arch }}
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
     env:
+      ARCH: ${{ matrix.arch }}
       IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-healthchecks
       VERSION: lsio-python-venv-secfix-20261010
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
+      - name: Confirm native architecture
+        run: |
+          case "$ARCH" in
+            amd64) test "$(uname -m)" = x86_64 ;;
+            arm64) test "$(uname -m)" = aarch64 ;;
+            *) exit 2 ;;
+          esac
       - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
         with:
           version: v0.75.0
-      - name: Build AMD64 patched LinuxServer image
-        run: docker buildx build --pull --platform linux/amd64 --load -f security/images/healthchecks/Dockerfile -t mrstore-healthchecks-patched:amd64 .
-      - name: Scan AMD64 exact image
+      - name: Build exact candidate with official Docker Hub mirror
+        run: docker buildx build --pull --platform "linux/$ARCH" --load -f security/images/healthchecks/Dockerfile -t "mrstore-healthchecks-patched:$ARCH" .
+      - name: Scan exact built candidate and save report
         run: |
           mkdir -p out
-          trivy image --quiet --image-src docker --platform linux/amd64 --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output out/amd64.json mrstore-healthchecks-patched:amd64
-      - name: Build ARM64 patched LinuxServer image
-        run: docker buildx build --pull --platform linux/arm64 --load -f security/images/healthchecks/Dockerfile -t mrstore-healthchecks-patched:arm64 .
-      - name: Scan ARM64 exact image
-        run: trivy image --quiet --image-src docker --platform linux/arm64 --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output out/arm64.json mrstore-healthchecks-patched:arm64
-      - name: Require complete and zero HIGH CRITICAL scans
+          trivy image --quiet --image-src docker --platform "linux/$ARCH" --scanners vuln --severity HIGH,CRITICAL --timeout 12m --format json --output "out/$ARCH.json" "mrstore-healthchecks-patched:$ARCH"
+      - name: Reject HIGH/CRITICAL or incomplete evidence
         run: |
           python - <<'PY'
           import json, os
-          from collections import Counter
-          lines=['## Healthchecks patched runtime security', '',
-                 '| Arch | CRITICAL | HIGH |', '|---|---:|---:|']
-          for arch in ('amd64', 'arm64'):
-              with open(f'out/{arch}.json',encoding='utf-8') as source:
-                  result=json.load(source)
-              if not isinstance(result.get('Results'),list) or not result['Results']:
-                  raise SystemExit('Incomplete Trivy report on '+arch)
-              counts=Counter(item.get('Severity') for group in result['Results']
-                             for item in group.get('Vulnerabilities') or []
-                             if item.get('Severity') in ('HIGH','CRITICAL'))
-              lines.append(f"| {arch} | {counts['CRITICAL']} | {counts['HIGH']} |")
-              if counts['CRITICAL'] or counts['HIGH']:
-                  raise SystemExit('Not publishing vulnerable Healthchecks on '+arch)
-          summary='\n'.join(lines)+'\n'
-          print(summary)
-          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as out:
-              out.write(summary)
+          path=f"out/{os.environ['ARCH']}.json"
+          with open(path,encoding='utf8') as f:
+              report=json.load(f)
+          results=report.get('Results')
+          if not isinstance(results,list) or not results:
+              raise SystemExit('FAIL: missing or incomplete Trivy results')
+          findings=[v for group in results for v in group.get('Vulnerabilities') or []
+                    if v.get('Severity') in ('HIGH','CRITICAL')]
+          high=sum(v['Severity']=='HIGH' for v in findings)
+          critical=sum(v['Severity']=='CRITICAL' for v in findings)
+          print(f"{os.environ['ARCH']}: {critical} CRITICAL / {high} HIGH")
+          if findings:
+              raise SystemExit('FAIL: vulnerable Healthchecks candidate')
           PY
-      - name: Verify Healthchecks login HTML and original /config on AMD64
-        run: bash scripts/test_healthchecks_lsio_patches.sh amd64
-      - name: Verify Healthchecks login HTML and original /config on ARM64
-        run: bash scripts/test_healthchecks_lsio_patches.sh arm64
-      - name: Keep vulnerability evidence even if build fails
+      - name: Real login page and preserved /config smoke test
+        run: bash scripts/test_healthchecks_lsio_patches.sh "$ARCH"
+      - name: Preserve raw CVE report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: healthchecks-secfix-release-cves
+          name: healthchecks-secfix-${{ matrix.arch }}
           path: out/*.json
           if-no-files-found: warn
-      - name: Authenticate to GHCR after all security and functional checks
+      - name: Authenticate to GHCR only after successful tests
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish both verified platforms with immutable index
+      - name: Push exact tested single-architecture image
         run: |
           set -euo pipefail
-          docker tag mrstore-healthchecks-patched:amd64 "$IMAGE:$VERSION-amd64"
-          docker tag mrstore-healthchecks-patched:arm64 "$IMAGE:$VERSION-arm64"
-          docker push "$IMAGE:$VERSION-amd64"
-          docker push "$IMAGE:$VERSION-arm64"
-          docker buildx imagetools create -t "$IMAGE:$VERSION" \
-            "$IMAGE:$VERSION-amd64" "$IMAGE:$VERSION-arm64"
-          docker buildx imagetools inspect "$IMAGE:$VERSION"
+          tag="$IMAGE:$VERSION-$GITHUB_SHA-$ARCH"
+          docker tag "mrstore-healthchecks-patched:$ARCH" "$tag"
+          docker push "$tag"
+
+  multiarch:
+    name: Publish immutable multiarch digest
+    needs: verified_platform
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-healthchecks
+      VERSION: lsio-python-venv-secfix-20261010
+    steps:
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Assemble manifest only after both native security and runtime checks passed
+        run: |
+          set -euo pipefail
+          tag="$IMAGE:$VERSION-$GITHUB_SHA"
+          docker buildx imagetools create -t "$tag" \
+            "$IMAGE:$VERSION-$GITHUB_SHA-amd64" \
+            "$IMAGE:$VERSION-$GITHUB_SHA-arm64"
+          docker buildx imagetools inspect "$tag" | tee manifest.txt
+          grep -q 'linux/amd64' manifest.txt
+          grep -q 'linux/arm64' manifest.txt
+          grep -E '^Digest:' manifest.txt | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Require public anonymous access before catalog promotion
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp -d)"
+          trap 'rm -rf "$tmp"' EXIT
+          DOCKER_CONFIG="$tmp" docker buildx imagetools inspect "$IMAGE:$VERSION-$GITHUB_SHA"
