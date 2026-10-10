@@ -45,6 +45,8 @@ Os ficheiros oficiais continuam disponíveis em [store.json](https://mrpiracy94.
 
 **Atenção:** não há garantia de instalação e atualização funcional em todas as versões do ZimaOS. Os testes reais no dispositivo são distintos dos testes estáticos efetuados pelo GitHub Actions.
 
+**Cobertura de testes reais:** cada aplicação tem agora uma linha no relatório gerado por `python scripts/zimaos_coverage.py`, separado por AMD64/ARM64. O registo de evidências encontra-se em [data/zimaos-device-tests.json](data/zimaos-device-tests.json); **sem registo não significa sem testes**, e a CI não considera testes estáticos como provas de funcionamento. Consulta [como documentar ensaios reais](docs/ZIMAOS_COMPATIBILITY.md#inventário-completo-de-evidências-por-aplicação-c2c4).
+
 ## 🧭 Descobrir aplicações
 
 A montra web foi concebida para facilitar o uso:
