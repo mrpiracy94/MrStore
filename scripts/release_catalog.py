@@ -19,6 +19,12 @@ from release_scan import image_platforms
 
 HEX = re.compile(r"^[a-f0-9]{64}$")
 DANGEROUS_SOURCE = {"/", "/etc", "/root", "/var/run/docker.sock", "/run/docker.sock"}
+# Required Compose interpolation is resolved before ZimaOS can show service
+# x-casaos.envs: the official store v2 builder strips that service metadata.
+# Do not mistake an unresolved secret for a usable or safe install.
+REQUIRED_COMPOSE_VARIABLE = re.compile(
+    r"\\$\\{[A-Za-z_][A-Za-z0-9_]*(?::\\?|\\?)[^}]*\\}"
+)
 
 
 def read_evidence(source_apps, report_dir: Path, shards: int = 8) -> dict:
@@ -112,6 +118,12 @@ def insecure_defaults(app) -> list[str]:
         env = spec.get("environment") or []
         if "CHANGE_ME" in json.dumps(env):
             flags.append(f"{service}: default credentials not configured")
+        # ${VAR:?message} and ${VAR?message} both require install-time
+        # Compose environment values; the ZimaOS v2 appstore payload has no
+        # verified prompt for them. Quarantine instead of publishing a broken
+        # one-click installer or leaking dummy passwords into the catalog.
+        if REQUIRED_COMPOSE_VARIABLE.search(json.dumps(env)):
+            flags.append(f"{service}: required Compose installation variables unsupported by verified ZimaOS v2 installer")
         pairs = (env.items() if isinstance(env, dict) else
                  (value.split("=", 1) for value in env
                   if isinstance(value, str) and "=" in value))
