@@ -309,7 +309,7 @@ def main() -> int:
         report = collect(args.repo, token, args.focus, args.issue)
         markdown = render_markdown(report)
         status = 0
-    except (ValueError, HTTPError, URLError, TimeoutError) as error:
+    except (ValueError, KeyError, TypeError, HTTPError, URLError, TimeoutError) as error:
         # No fabricated success report on network/API failure. Keep diagnostic artifacts.
         report = {"repository": args.repo, "focus": args.focus, "error": clean(error, 350),
                   "state": "incomplete", "generated_at": datetime.now(timezone.utc).isoformat()}
