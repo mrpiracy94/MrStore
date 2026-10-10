@@ -111,7 +111,7 @@ python scripts/compatibility.py
 
 A montra web é integrada pelo `scripts/stage_storefront.py` **apenas depois** de o builder oficial criar os JSON v2 e de o relatório da seleção aprovada ser validado. Não substitui `store.json`, `index.json` nem os Compose das aplicações.
 
-📖 [Como funciona a montra](docs/STORE_FRONTEND.md) · [GitHub Actions](https://github.com/mrpiracy94/MrStore/actions) · [Contribuir](CONTRIBUTING.md)
+📖 [Como funciona a montra](docs/STORE_FRONTEND.md) · [GitHub Actions](https://github.com/mrpiracy94/MrStore/actions) · [Compatibilidade ZimaOS](docs/ZIMAOS_COMPATIBILITY.md)
 
 ---
 

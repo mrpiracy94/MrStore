@@ -84,12 +84,15 @@
     });
     $("total-categories").textContent = String(counts.size);
   }
+  function fold(value) {
+    return String(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("pt");
+  }
   function scoreSearch(app, query) {
-    const title = (app.title || "").toLocaleLowerCase("pt");
-    const slug = app.id.slice(PREFIX.length).toLowerCase();
-    const label = (app.tagline || "").toLocaleLowerCase("pt");
+    const title = fold(app.title || "");
+    const slug = fold(app.id.slice(PREFIX.length));
+    const label = fold(app.tagline || "");
     return title.includes(query) || slug.includes(query) ||
-      label.includes(query) || categoryLabel(app.category).toLocaleLowerCase("pt").includes(query);
+      label.includes(query) || fold(categoryLabel(app.category)).includes(query);
   }
   function makeCard(app) {
     const card = element("article", "app-card"), head = element("div", "app-card-head");
@@ -120,7 +123,7 @@
     return card;
   }
   function render() {
-    const needle = state.query.trim().toLocaleLowerCase("pt");
+    const needle = fold(state.query.trim());
     state.filtered = state.apps.filter(function (app) {
       return (!state.category || app.category === state.category) &&
         (!state.arch || (app.architectures || []).includes(state.arch)) &&
