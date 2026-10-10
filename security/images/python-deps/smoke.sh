@@ -21,10 +21,12 @@ trap cleanup EXIT
 # The actual bundled interpreter must contain the corrected versions.
 docker run --rm --platform "linux/$arch" --entrypoint /lsiopy/bin/python "$image" -c '
 from importlib.metadata import version
-for pkg, expected in (("msgpack","1.2.1"),("urllib3","2.8.0"),("setuptools","80.9.0")):
+for pkg, expected in (("msgpack","1.2.1"),("urllib3","2.8.0")):
     actual=version(pkg)
     assert actual == expected, (pkg, actual, expected)
-print("PASS Python versions")
+import importlib.util
+assert all(importlib.util.find_spec(pkg) is None for pkg in ("pip", "setuptools", "wheel"))
+print("PASS Python runtime modules; installation tools absent")
 '
 
 mkdir -p "$root/config"
@@ -38,11 +40,11 @@ if [[ "$app" == beets ]]; then
 fi
 
 case "$app" in
-  bazarr) port=6767; kind=http ;;
+  sickgear) port=8081; kind=http ;;
   tautulli) port=8181; kind=http ;;
   nzbget) port=6789; kind=http ;;
   sickgear) port=8081; kind=http ;;
-  limnoria) port=6667; kind=tcp ;;
+  limnoria) port=8080; kind=http ;;
 esac
 
 docker run --detach --platform "linux/$arch" --name "$name" \
