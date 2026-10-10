@@ -31,7 +31,7 @@ jobs:
           names = sorted(p.parent.name for p in Path('Apps').glob('*/docker-compose.yml'))
           assert len(names) == 253 and len(names) == len(set(names))
           Path('out').mkdir(exist_ok=True)
-          Path('out/featured-all.json').write_text(json.dumps({'schema': 1, 'description': 'Entire source inventory, editorial only; not certified', 'apps': names}, indent=2) + '\\n')
+          Path('out/featured-all.json').write_text(json.dumps({'schema': 1, 'description': 'Entire source inventory, editorial only; not certified', 'apps': names}, indent=2) + chr(10))
           PY
       - name: Stage entire editorial selection
         run: python scripts/publish_editorial.py --featured out/featured-all.json --stage release-source --report out/release-selection.json
