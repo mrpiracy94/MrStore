@@ -40,8 +40,16 @@ on:
       - '.github/workflows/publish.yml'
   pull_request:
     paths:
-      - 'scripts/**'
-      - 'tests/**'
+      - 'tests/test_publish_workflow_contract.py'
+      - 'scripts/zimaos_coverage.py'
+      - 'scripts/platform_support_report.py'
+      - 'scripts/export_runtipi_preview.py'
+      - 'scripts/export_umbrel_preview.py'
+      - 'scripts/export_olares_preview.py'
+      - 'scripts/export_homedock.py'
+      - 'scripts/export_portable_catalog.py'
+      - 'scripts/export_universal.py'
+      - 'scripts/native_contract_smoke.py'
       - 'docs/UNIVERSAL_PLATFORMS.md'
       - 'docs/UNIVERSAL_COMPATIBILITY.md'
       - 'Apps/**'
