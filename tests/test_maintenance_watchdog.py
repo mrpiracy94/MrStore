@@ -95,6 +95,22 @@ class WatchdogTests(unittest.TestCase):
         self.assertTrue(any("⚠️" in note for note in notes))
         api.assert_called_once()  # Disabled schedules must not pass.
 
+    def test_initial_schedule_grace_is_pending_not_reported_as_success(self):
+        def fake_api(path):
+            if path.endswith("/runs?event=schedule&per_page=10"):
+                return {"workflow_runs": []}
+            return {"state": "active",
+                    "created_at": (NOW - timedelta(hours=2)).isoformat()}
+
+        with (patch.dict(mw.WORKFLOWS, {"cve-scan.yml": 60}, clear=True),
+              patch.object(mw, "api", side_effect=fake_api),
+              patch.object(mw, "api_pages", return_value=[])):
+            problems, notes, outcomes = mw.github_review("mrpiracy94/MrStore", NOW)
+        self.assertEqual(problems, [])
+        self.assertTrue(any("⏳ cve-scan.yml" in line for line in notes))
+        self.assertFalse(any("✅ cve-scan.yml" in line for line in notes))
+        self.assertIn("A aguardar", outcomes["workflows"]["cve-scan.yml"])
+
     def test_active_recent_run_is_not_a_failure(self):
         _, problem = mw.evaluate_run(
             "cve-scan.yml", [run(hours=1, status="in_progress", conclusion=None)],
