@@ -6,6 +6,7 @@ on:
       - 'Apps/**'
       - 'scripts/**'
       - 'data/taglines-pt.json'
+      - 'data/zimaos-device-tests.json'
       - 'tests/**'
       - 'store-config.json'
       - 'supported-languages.json'
@@ -44,6 +45,18 @@ jobs:
         with:
           name: zimaos-compatibility-static
           path: out/compatibility.*
+          if-no-files-found: warn
+      - name: Validate real-device evidence registry and inventory all catalog apps
+        run: python scripts/zimaos_coverage.py
+      - name: Device coverage summary
+        if: always()
+        run: test ! -f out/zimaos-coverage.md || cat out/zimaos-coverage.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload ZimaOS device evidence coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zimaos-device-coverage
+          path: out/zimaos-coverage.*
           if-no-files-found: warn
       - name: Parse every Compose file with official Docker Compose V2 (no containers)
         run: python scripts/compose_preflight.py
