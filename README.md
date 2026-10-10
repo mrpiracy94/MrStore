@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/branding/mrstore-banner.svg" alt="MrStore — A tua loja de aplicações para ZimaOS" width="100%"></p>
+
 # MrStore — A tua loja de aplicações para ZimaOS
 
 **Descobre aplicações para organizar os teus ficheiros, guardar fotografias, ver filmes, fazer cópias de segurança e muito mais.**
