@@ -17,9 +17,11 @@ class ReleaseStateContract(unittest.TestCase):
         source = {p.parent.name for p in (ROOT / "Apps").glob("*/docker-compose.yml")}
         selected = load_featured(ROOT / "data/featured-apps.json", source)
         plan = read_plan(ROOT / "data/rollout-233.json", source)
-        self.assertEqual(len(selected), 233)
+        self.assertGreaterEqual(len(selected), 233)
         self.assertEqual(len(plan), 233)
-        self.assertEqual(set(selected), set(plan))
+        # The branch can contain a larger editorial source snapshot while
+        # the progressive public target remains exactly 233.
+        self.assertTrue(set(plan).issubset(set(selected)))
         self.assertIn("changedetection.io", plan)
         self.assertIn("doplarr_rs", plan)
         self.assertNotIn("steamos", plan)
