@@ -73,6 +73,8 @@ jobs:
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
   security_audit:
+    # PRs execute fast checks; 8 full Trivy shards remain mandatory for releases.
+    if: github.event_name != 'pull_request'
     needs: preflight
     name: Scan release images and platforms (shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
