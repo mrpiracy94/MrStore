@@ -23,6 +23,10 @@ atualizações devem ser validadas num sistema real.
 
 - `/store.json` + `/index.json`: catálogo ZimaOS v2.
 - `/universal/catalog.json`: catálogo central e 11 perfis de instalação.
+- `/universal/support-report.json`: contagem de **formatos elegíveis**
+  por sistema, por app e por release. `runtime_verified_count`,
+  `upgrade_verified_count` e `native_certified` permanecem zero/falso
+  até existir prova de ensaio num sistema real.
 - `/universal/compose/<slug>.yml`: Docker Compose auditado por aplicação.
 - `/universal/portainer-templates.json`: templates v2 de apps representáveis num contentor.
 - `/store/casaos-homeio-preview.zip`: origem CasaOS/Homeio experimental.
