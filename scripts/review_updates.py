@@ -2,6 +2,7 @@
 """Risk-classify app updates on pull requests; never install third-party manifests."""
 import argparse
 import json
+import posixpath
 from pathlib import Path
 import re
 import subprocess
@@ -100,6 +101,13 @@ def immich_major_upgrade_hazards(old: dict | None, new: dict, folder: str) -> li
         return []
     old_volume = _postgres_data_source(prev)
     new_volume = _postgres_data_source(curr)
+    # Normalize equivalent absolute Linux paths: a rewritten alias such as
+    # /DATA/AppData/immich/postgres/. must never bypass the PG major gate.
+    # Symlink resolution cannot be proven offline and needs device review.
+    if old_volume:
+        old_volume = posixpath.normpath(old_volume)
+    if new_volume:
+        new_volume = posixpath.normpath(new_volume)
     if not old_volume or not new_volume or old_volume == new_volume:
         return [
             f"Immich PostgreSQL {former}->{future or 'unknown'}: direct major/unknown image change "
