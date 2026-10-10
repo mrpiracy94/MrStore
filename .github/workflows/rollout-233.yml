@@ -1,4 +1,4 @@
-name: Publish curated 254 MrStore applications
+name: Validate curated 254 MrStore applications (no publish)
 on:
   push:
     branches: [main]
@@ -9,10 +9,7 @@ on:
       - '.github/workflows/rollout-233.yml'
   workflow_dispatch:
 permissions:
-  contents: write
-concurrency:
-  group: mrstore-static-site
-  cancel-in-progress: false
+  contents: read
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -71,30 +68,11 @@ jobs:
           cp out/release-selection.json dist/release-status.json
           python scripts/stage_storefront.py --source web --dist dist
           touch dist/.nojekyll
-      - name: Publish complete catalog
-        uses: peaceiris/actions-gh-pages@v4
+      # Never overwrite the audited gh-pages release with editorial manifests.
+      - name: Preserve uncertified editorial preview as CI artifact
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./dist
-      - name: Confirm gh-pages contains 254 applications
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          python - <<'PY'
-          import json, time, urllib.request
-          url = "https://raw.githubusercontent.com/mrpiracy94/MrStore/gh-pages/index.json"
-          for attempt in range(15):
-              req = urllib.request.Request(url + "?check=" + str(time.time_ns()), headers={"User-Agent": "MrStore-release-check"})
-              try:
-                  with urllib.request.urlopen(req, timeout=20) as response:
-                      data = json.load(response)
-                  if data.get("app_count") == 254 and len(data.get("apps", [])) == 254:
-                      print("Confirmed 254 entries on gh-pages")
-                      break
-              except Exception as exc:
-                  print("Waiting for gh-pages:", exc)
-              time.sleep(8)
-          else:
-              raise SystemExit("Published gh-pages index did not reach 254")
-          PY
+          name: mrstore-editorial-preview-254
+          path: dist/
+          include-hidden-files: true
+          if-no-files-found: error
