@@ -93,9 +93,31 @@ def report(selection: Path, dist: Path) -> dict:
         if info.get("source_approved") != len(slugs):
             raise ValueError(f"{key}: stale release selection")
         items = info.get(field)
-        if not isinstance(items, list):
+        if not isinstance(items, list) or info.get(
+                "exported_count" if key == "homedock" else "chart_count") != len(items):
             raise ValueError(f"{key}: invalid app records")
-        return _subset(key, {item["slug"] for item in items}, approved)
+        identified = set()
+        for item in items:
+            if not isinstance(item, dict) or not isinstance(item.get("slug"), str):
+                raise ValueError(f"{key}: invalid app slug")
+            slug = item["slug"]
+            if key == "homedock":
+                expected = f"homedock/{slug}.hds"
+            else:
+                chart = item.get("chart")
+                if not isinstance(chart, str) or not chart.isalnum():
+                    raise ValueError("olares: invalid chart name")
+                expected = f"olares/{chart}.tgz"
+            if item.get("url") != expected or not (dist / expected).is_file():
+                raise ValueError(f"{key}: missing/mismatched package file")
+            identified.add(slug)
+        if len(identified) != len(items):
+            raise ValueError(f"{key}: duplicate app entry")
+        if key == "homedock" and not (dist / "homedock/mrstore.hdstore").is_file():
+            raise ValueError("homedock: bundle missing")
+        if key == "olares" and not (dist / "olares/olares-oac-preview.zip").is_file():
+            raise ValueError("olares: source ZIP missing")
+        return _subset(key, identified, approved)
 
     zip_apps = _archive_apps(dist / "store/casaos-homeio-preview.zip", "Apps", "homeio")
     if zip_apps is not None and zip_apps != approved:
