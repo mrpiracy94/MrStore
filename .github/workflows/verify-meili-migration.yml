@@ -17,7 +17,7 @@ jobs:
       - name: Verify older Meilisearch indices survive v1.54.3 migration
         run: bash scripts/test_meili_migration.sh
       - name: Configure Docker Buildx for multi-architecture digest inspection
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Verify the exact published multi-architecture digest
         run: |
           set -euo pipefail
