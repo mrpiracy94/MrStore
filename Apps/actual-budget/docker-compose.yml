@@ -38,9 +38,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/actual-budget.png
   title:
     en_US: "Actual Budget"
+    pt_PT: "Actual Budget"
   tagline:
     en_US: "Orçamento pessoal"
   description:
     en_US: "Orçamento pessoal. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+    pt_PT: "Gestão pessoal de orçamento e despesas com uma interface web. Os dados são guardados em /DATA/AppData/actual-budget. Verifica o acesso à porta 5006 e configura os backups antes de utilizar."
   port_map: "5006"
   index: /
