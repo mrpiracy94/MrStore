@@ -10,6 +10,15 @@ on:
       - '.github/workflows/rollout-233.yml'
       - 'scripts/rollout_233.py'
       - 'data/rollout-233.json'
+  pull_request:
+    paths:
+      - 'data/rollout-233.json'
+      - 'data/featured-apps.json'
+      - 'scripts/rollout_233.py'
+      - 'scripts/featured.py'
+      - 'scripts/publish_editorial.py'
+      - 'tests/test_rollout_233.py'
+      - '.github/workflows/rollout-233.yml'
   workflow_dispatch:
 
 permissions:
@@ -20,8 +29,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  validate_plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -p 'test_rollout_233.py' -v
+      - run: python scripts/rollout_233.py --plan data/rollout-233.json
   rollout:
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate_plan
     name: Build once, publish 19 cumulative stages
     runs-on: ubuntu-latest
     timeout-minutes: 360
