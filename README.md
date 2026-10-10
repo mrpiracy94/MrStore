@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="web/assets/readme-banner.svg" alt="MrStore — O teu homelab. As tuas apps. Uma só loja." width="100%">
+  <img src="web/assets/readme-banner.svg?brand=2026-orange-v2" alt="MrStore — O teu homelab. As tuas apps. Uma só loja." width="100%">
 
   <h1>MrStore · Your Homelab App Hub</h1>
 
