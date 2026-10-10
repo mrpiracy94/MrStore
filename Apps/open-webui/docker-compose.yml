@@ -43,9 +43,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/open-webui.png
   title:
     en_US: "Open WebUI"
+    pt_PT: "Open WebUI"
   tagline:
     en_US: "Interface web para Ollama/LLMs"
   description:
     en_US: "Interface web para Ollama/LLMs. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+    pt_PT: "Interface web para conversar com modelos de IA e serviços compatíveis. Configura o fornecedor de modelos e protege o acesso, sobretudo em instalações expostas à Internet."
   port_map: "30016"
   index: /
