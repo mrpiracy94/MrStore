@@ -65,3 +65,23 @@ no ZimaOS, não diretamente no navegador.
 O atributo HTML `hidden` tem prioridade sobre estilos flex para impedir
 que ações indisponíveis fiquem visíveis. A pré-visualização de cada app
 usa apenas URLs locais do catálogo, com fallback quando a imagem falha.
+
+## Revisão baseada no design Lovable (10-10-2026)
+
+A montra HTML mantém o catálogo aprovado, a política de quarentena e os URLs
+locais; o novo `web/assets/lovable.css` aplica o layout da referência enviada:
+hero azul-escuro, secção de oito categorias (mapeadas para metadados reais),
+quatro aplicações em destaque, cartões com screenshots locais e rodapé compacto.
+A secção completa de pesquisa, filtros, favoritos e paginação abre em
+«Ver todas as aplicações». Nenhuma aplicação é introduzida artificialmente
+no catálogo. «Instalar» abre a ficha e encaminha para a instalação normal no ZimaOS.
+
+O ficheiro `web/assets/hero-scene.svg` é uma **ilustração local de substituição**
+e não a fotografia original exportada do Lovable. Para obter uma correspondência
+visual exata, substituir só esta imagem por uma fotografia autorizada, mantendo
+HTML, interações e regras de segurança.
+
+Um workflow separado `lovable-ui.yml` executa Playwright/Chromium a
+1536×864 e 390×844. As capturas de PR são **fixtures sintéticas explicitamente
+marcadas**, nunca prova de que as aplicações foram aprovadas ou publicadas.
+O workflow do release continua a exigir a seleção de segurança antes de publicar.
