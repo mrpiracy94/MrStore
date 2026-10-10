@@ -20,7 +20,7 @@ class FeaturedCatalogTests(unittest.TestCase):
     def test_initial_selection_is_small_unique_and_from_existing_source(self):
         known = {x.parent.name for x in (ROOT / "Apps").glob("*/docker-compose.yml")}
         featured = load_featured(STARTER, known)
-        self.assertEqual(len(featured), 6)
+        self.assertEqual(len(featured), 32)
         self.assertGreater(len(known), len(featured))
         self.assertIn("jellyfin", featured)
         self.assertIn("immich", featured)
