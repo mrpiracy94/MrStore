@@ -61,13 +61,13 @@ class StoreTests(unittest.TestCase):
         workflow = yaml.safe_load(path.read_text(encoding='utf-8'))
         jobs = workflow['jobs']
         scan = jobs['security_audit']
-        self.assertEqual(scan['strategy']['matrix']['shard'], list(range(8)))
+        self.assertEqual(scan['strategy']['matrix']['shard'], list(range(32)))
         self.assertFalse(scan['strategy']['fail-fast'])
         self.assertEqual(jobs['build']['needs'], 'security_audit')
         script = next(step['run'] for step in scan['steps']
                       if isinstance(step, dict) and 'run' in step
                       and 'scripts/release_scan.py' in step['run'])
-        self.assertIn('--shards 8', script)
+        self.assertIn('--shards 32', script)
         self.assertIn('--shard', script)
         self.assertTrue(any(step.get('if') == 'always()' for step in scan['steps']))
         build = jobs['build']['steps']
