@@ -18,7 +18,7 @@
     <div class="shell topbar">
       <a class="brand" href="./" aria-label="MrStore, página inicial">
         <img src="./assets/mark.svg" width="44" height="44" alt="">
-        <span class="brand-text">Mr<span>Store</span><small>APP STORE PARA ZIMAOS</small></span>
+        <span class="brand-text">Mr<span>Store</span></span>
       </a>
       <nav aria-label="Navegação principal" class="main-nav">
         <a href="#catalogo">Explorar aplicações</a>
@@ -31,49 +31,26 @@
   <main>
     <section class="hero shell" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <div class="eyebrow"><span class="pulse"></span> CATÁLOGO COMUNITÁRIO · ZIMAOS V2</div>
+        
         <h1 id="hero-title">A tua loja de <span>aplicações</span><br>para ZimaOS</h1>
         <p>Descobre aplicações para organizar os teus ficheiros, ver filmes e séries, guardar fotografias, fazer cópias de segurança e muito mais. Pesquisa o catálogo real antes de instalar.</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#catalogo">Ver todas as aplicações <span aria-hidden="true">→</span></a>
-          <a class="btn btn-outline" href="#como-instalar">Como funciona <span aria-hidden="true">↗</span></a>
+        
+        <div class="hero-trust" aria-label="Vantagens da MrStore">
+          <div class="trust-item"><span class="trust-icon" aria-hidden="true">ϟ</span><span><strong>Explora</strong><small>de forma simples</small></span></div>
+          <div class="trust-item"><span class="trust-icon" aria-hidden="true">♢</span><span><strong>Aplicações</strong><small>com revisão contínua</small></span></div>
+          <div class="trust-item"><span class="trust-icon" aria-hidden="true">▦</span><span><strong>Tudo num só lugar</strong><small>para o teu ZimaOS</small></span></div>
+          <div class="trust-item"><span class="trust-icon" aria-hidden="true">◎</span><span><strong>Para iniciantes</strong><small>e utilizadores avançados</small></span></div>
         </div>
-        <div class="hero-trust"><span><span class="tick">✓</span> Comunidade & código aberto</span><span><span class="tick">✓</span> ZimaOS v2</span><span><span class="tick">✓</span> Sem instalação automática</span></div>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-        <div class="visual-window">
-          <div class="window-top"><span class="traffic"><i></i><i></i><i></i></span><span class="window-pill">MrStore / Apps</span><span class="tiny-dot"></span></div>
-          <div class="window-head"><div><span class="window-kicker">O TEU ECOSSISTEMA</span><strong>Instala mais.<br>Descobre melhor.</strong></div><div class="mini-symbol">✦</div></div>
-          <div class="mock-search"><span>⌕</span> Pesquisa a tua próxima aplicação <span class="shortcut">⌘ K</span></div>
-          <div class="mock-grid">
-            <div class="mock-app"><span class="mock-icon mint">◈</span><span>Multimédia<small>Explorar</small></span></div>
-            <div class="mock-app"><span class="mock-icon amber">⌘</span><span>Produtividade<small>Explorar</small></span></div>
-            <div class="mock-app"><span class="mock-icon blue">▣</span><span>Rede<small>Explorar</small></span></div>
-            <div class="mock-app"><span class="mock-icon pink">✳</span><span>Ferramentas<small>Explorar</small></span></div>
-          </div>
-          <div class="window-bottom"><span class="live-light"></span> O teu próximo projeto começa aqui <span>↗</span></div>
-        </div>
-        <div class="floating-card floating-top"><span>✦</span><span>Self-hosted<br><strong>Sem complicações</strong></span></div>
-        <div class="floating-card floating-bottom"><span class="live-light"></span> Explora por categorias</div>
-      </div>
-    </section>
-    <section class="stats-strip" aria-label="Visão geral">
-      <div class="shell stats-grid">
-        <div class="stat"><strong id="total-apps">—</strong><span>Aplicações no índice</span></div>
-        <div class="stat"><strong id="total-categories">—</strong><span>Categorias</span></div>
-        <div class="stat"><strong>2</strong><span>Arquiteturas possíveis</span></div>
-        <div class="stat stat-last"><strong>v2</strong><span>Protocolo ZimaOS</span></div>
-      </div>
+      <div class="hero-art" aria-hidden="true"></div>
     </section>
     <section id="catalogo" class="catalog-section shell" aria-labelledby="catalog-title">
       <div class="categories" id="categories" role="group" aria-label="Filtrar por categoria"><button type="button" class="chip active" data-category="" aria-pressed="true">Todas</button></div>
       <div class="section-heading">
-        <div><span class="section-kicker">DESCOBRE A MRSTORE</span><h2 id="catalog-title">Encontra a app <em>ideal.</em></h2><p>Pesquisa, filtra e consulta os detalhes antes de instalar no teu servidor.</p></div>
-        <div class="results-summary" id="results-summary" aria-live="polite">A carregar catálogo…</div>
+        <div><h2 id="catalog-title">Aplicações em destaque</h2><p id="catalog-subtitle">As aplicações em destaque disponíveis nesta edição da MrStore</p></div>
+        <div class="catalog-heading-actions"><span class="results-summary" id="results-summary" aria-live="polite">A carregar catálogo…</span><button class="show-all" id="show-all" type="button" aria-expanded="false" aria-controls="catalog-tools">Ver todas as aplicações <span aria-hidden="true">→</span></button></div>
       </div>
-      <div id="catalog-alert" class="notice" role="status" hidden></div>
-      <div class="toolbar">
+      <div class="toolbar" id="catalog-tools" hidden>
         <label class="searchbox" for="search"><span aria-hidden="true" class="search-glyph">⌕</span><input type="search" id="search" placeholder="Pesquisar aplicações, categorias…" autocomplete="off"><kbd>/</kbd></label>
         <label class="arch-filter"><span>Arquitetura</span><select id="architecture"><option value="">Todas</option><option value="amd64">AMD64</option><option value="arm64">ARM64</option></select></label>
         <button class="favorites-toggle" id="favorites-toggle" type="button" aria-pressed="false" title="Mostrar favoritos guardados neste navegador">☆ <span>Favoritos</span></button>
@@ -81,16 +58,17 @@
       
       <div id="catalog-state" class="catalog-state" role="status" aria-live="polite">A carregar aplicações…</div>
       <div class="app-grid" id="app-grid" aria-label="Resultados do catálogo"></div>
+      <div id="catalog-alert" class="notice" role="status" hidden></div>
       <div class="load-more-wrap"><button id="load-more" class="btn btn-more" type="button" hidden>Mostrar mais aplicações ↓</button></div>
     </section>
-    <section class="installation" id="como-instalar" aria-labelledby="installation-title">
+    <section class="installation" id="como-instalar" aria-labelledby="installation-title" hidden>
       <div class="shell installation-layout">
         <div><span class="section-kicker">COMEÇA A EXPLORAR</span><h2 id="installation-title">A tua loja.<br><em>Em poucos passos.</em></h2><p>Adiciona o endereço da MrStore na área de lojas externas do teu ZimaOS. O catálogo não instala nem atualiza contentores automaticamente.</p><div class="install-address"><code id="store-address">https://mrpiracy94.github.io/MrStore</code><button id="copy-store" type="button" aria-label="Copiar endereço da MrStore">Copiar <span aria-hidden="true">⧉</span></button></div><span class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></span></div>
         <ol class="steps"><li><span>01</span><div><strong>Abre o teu ZimaOS</strong><p>Entra na loja de aplicações e procura a opção de adicionar uma loja externa compatível com v2.</p></div></li><li><span>02</span><div><strong>Adiciona o endereço</strong><p>Copia o URL da MrStore e confirma a importação da loja no ZimaOS.</p></div></li><li><span>03</span><div><strong>Explora com atenção</strong><p>Consulta versões, permissões, requisitos e vulnerabilidades antes de instalar qualquer aplicação.</p></div></li></ol>
       </div>
     </section>
   </main>
-  <footer class="site-footer"><div class="shell footer-layout"><div class="footer-brand"><img src="./assets/mark.svg" width="32" height="32" alt=""><div><strong>MrStore</strong><small>Feita para a comunidade ZimaOS.</small></div></div><div class="footer-links"><a href="https://github.com/mrpiracy94/MrStore">Repositório</a><a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/SAFE_RELEASE_POLICY.md">Segurança</a><a href="./store.json">Protocolo v2</a></div><p>Projeto comunitário não oficial. Sem ligação à IceWhaleTech.</p></div></footer>
-  <dialog id="details" aria-labelledby="details-title"><div class="dialog-layout"><button class="dialog-close" id="details-close" type="button" aria-label="Fechar detalhes">×</button><div class="detail-header"><div class="detail-icon" id="details-icon"></div><div><span class="detail-label">DETALHES DA APLICAÇÃO</span><h2 id="details-title">Aplicação</h2><p id="details-tagline"></p></div></div><div class="detail-preview" id="details-preview" hidden aria-label="Pré-visualização da aplicação"></div><div class="detail-attributes"><div><span>Categoria</span><strong id="details-category"></strong></div><div><span>Arquiteturas</span><strong id="details-arches"></strong></div><div><span>Versão do pacote</span><strong id="details-version"></strong></div><div><span>Origem</span><strong id="details-developer"></strong></div></div><p class="detail-disclaimer">As versões indicam revisões do catálogo, não necessariamente a versão upstream. A compatibilidade real e ausência de CVEs não são garantidas.</p><div class="detail-links"><a class="btn btn-primary" id="details-compose" href="#" target="_blank" rel="noopener noreferrer">Ver manifesto Docker ↗</a><a class="btn btn-outline" id="details-github" href="https://github.com/mrpiracy94/MrStore" target="_blank" rel="noopener noreferrer">Ver no GitHub ↗</a></div></div></dialog>
+  <footer class="site-footer"><div class="shell footer-layout"><div class="footer-brand"><img src="./assets/mark.svg" width="32" height="32" alt=""><div><strong>MrStore</strong><small>Feita para a comunidade ZimaOS.</small></div></div><div class="footer-links"><button id="show-install-guide" type="button">Como instalar</button><a href="https://github.com/mrpiracy94/MrStore">GitHub</a><a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/SAFE_RELEASE_POLICY.md">Segurança</a></div><p>Projeto comunitário não oficial. Sem ligação à IceWhaleTech.</p></div></footer>
+  <dialog id="details" aria-labelledby="details-title"><div class="dialog-layout"><button class="dialog-close" id="details-close" type="button" aria-label="Fechar detalhes">×</button><div class="detail-header"><div class="detail-icon" id="details-icon"></div><div><span class="detail-label">DETALHES DA APLICAÇÃO</span><h2 id="details-title">Aplicação</h2><p id="details-tagline"></p></div></div><div class="detail-preview" id="details-preview" hidden aria-label="Pré-visualização da aplicação"></div><div class="detail-attributes"><div><span>Categoria</span><strong id="details-category"></strong></div><div><span>Arquiteturas</span><strong id="details-arches"></strong></div><div><span>Versão do pacote</span><strong id="details-version"></strong></div><div><span>Origem</span><strong id="details-developer"></strong></div></div><p class="detail-disclaimer">Para instalar, adiciona a MrStore como loja externa no ZimaOS e seleciona a aplicação no teu dispositivo. Este botão não instala contentores remotamente. As versões indicam revisões do catálogo; a compatibilidade e a ausência de CVEs não são garantidas.</p><div class="detail-links"><a class="btn btn-primary" id="details-compose" href="#" target="_blank" rel="noopener noreferrer">Ver manifesto Docker ↗</a><a class="btn btn-outline" id="details-github" href="https://github.com/mrpiracy94/MrStore" target="_blank" rel="noopener noreferrer">Ver no GitHub ↗</a></div></div></dialog>
 </body>
 </html>
