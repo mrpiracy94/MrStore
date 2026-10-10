@@ -96,6 +96,9 @@ ZimaOS.
 | `digest_differs_review_required` | Hash remoto e local diferem; requer revisão da plataforma/imagem | Não atualizar sem confirmar segurança e compatibilidade |
 | `listed_as_upgradable` | API nativa devolve entrada correspondente | Confirmar também que a UI reflete esse resultado |
 | `not_listed_not_proof_of_current` | App ausente da listagem da API | **Não é** prova de que esteja na versão mais recente |
+| `candidate_native_false_negative_review_required` | Digest da imagem em execução difere do digest consultado, mas a app não surge na API nativa | Possível falso negativo; confirmar arquitetura, referência aprovada e política CVE antes de atualizar |
+| `possible_main_service_lookup_bug_592` | Labels Docker Compose identificam o contentor, mas não existe contentor com o nome do serviço principal e a API não mostra update | Comparar logs do ZimaOS; não renomear contentores em massa |
+| `possible_missing_repodigests_bug_591` | Faltam RepoDigests e a API não mostra update | Estado indeterminado; não assumir que existe upgrade nem que está atualizado |
 
 Para diagnóstico adicional, verificar os logs de forma manual:
 
