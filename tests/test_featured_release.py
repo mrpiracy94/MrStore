@@ -21,7 +21,7 @@ class FeaturedCatalogTests(unittest.TestCase):
         known = {x.parent.name for x in (ROOT / "Apps").glob("*/docker-compose.yml")}
         featured = load_featured(STARTER, known)
         self.assertEqual(len(featured), 253)
-        self.assertGreater(len(known), len(featured))
+        self.assertEqual(len(known), len(featured))
         self.assertIn("jellyfin", featured)
         self.assertIn("immich", featured)
         self.assertIn("qbittorrent", featured)
