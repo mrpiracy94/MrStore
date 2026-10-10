@@ -1,0 +1,153 @@
+name: Rebuild and verify patched Go apps (Gitea + Qui)
+on:
+  pull_request:
+    paths:
+      - 'security/images/gitea/**'
+      - 'security/images/qui/**'
+      - 'scripts/check_patched_go_release.py'
+      - 'scripts/test_go_native_smoke.sh'
+      - 'tests/test_patched_go_release.py'
+      - '.github/workflows/publish-patched-go-batch.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'security/images/gitea/**'
+      - 'security/images/qui/**'
+      - 'scripts/check_patched_go_release.py'
+      - 'scripts/test_go_native_smoke.sh'
+      - 'tests/test_patched_go_release.py'
+      - '.github/workflows/publish-patched-go-batch.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: mrstore-go-batch-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - app: gitea
+            arch: amd64
+            runner: ubuntu-24.04
+          - app: gitea
+            arch: arm64
+            runner: ubuntu-24.04-arm
+          - app: qui
+            arch: amd64
+            runner: ubuntu-24.04
+          - app: qui
+            arch: arm64
+            runner: ubuntu-24.04-arm
+    name: Verify ${{ matrix.app }} on native ${{ matrix.arch }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 240
+    permissions:
+      contents: read
+      packages: write
+    env:
+      LOCAL_IMAGE: mrstore-go-secfix:${{ matrix.app }}-${{ matrix.arch }}
+      PUBLIC_IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-${{ matrix.app }}
+      PATCH_TAG: go-1272-xnet-0600-20261010
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: docker/setup-buildx-action@v4
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Assert native CPU and fail-closed report parser tests
+        run: |
+          set -euo pipefail
+          python -m unittest discover -s tests -p test_patched_go_release.py -v
+          case "${{ matrix.arch }}:$(uname -m)" in
+            amd64:x86_64|arm64:aarch64) ;;
+            *) echo 'Wrong runner architecture' >&2; exit 1;;
+          esac
+      - name: Rebuild exactly pinned upstream with Go and x/net patched
+        run: |
+          docker build --pull --progress plain \
+            --platform linux/${{ matrix.arch }} \
+            -f security/images/${{ matrix.app }}/Dockerfile \
+            -t "$LOCAL_IMAGE" .
+      - name: Capture complete vulnerability evidence without ignoring CVEs
+        run: |
+          mkdir -p out
+          trivy image --quiet --image-src docker \
+            --platform linux/${{ matrix.arch }} --scanners vuln \
+            --severity HIGH,CRITICAL --ignorefile /dev/null \
+            --timeout 20m --format json \
+            --output out/trivy-${{ matrix.app }}-${{ matrix.arch }}.json \
+            "$LOCAL_IMAGE"
+      - name: Reject any incomplete scan or remaining HIGH / CRITICAL
+        run: >-
+          python scripts/check_patched_go_release.py
+          --report out/trivy-${{ matrix.app }}-${{ matrix.arch }}.json
+          --app ${{ matrix.app }} --arch ${{ matrix.arch }}
+      - name: Verify runtime port, UI/API, volume persistence and restart
+        run: bash scripts/test_go_native_smoke.sh "${{ matrix.app }}" "$LOCAL_IMAGE" "${{ matrix.arch }}"
+      - name: Preserve per-image per-architecture Trivy evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: go-secfix-${{ matrix.app }}-${{ matrix.arch }}-trivy
+          path: out/trivy-${{ matrix.app }}-${{ matrix.arch }}.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Authenticate only for an approved main-branch rebuild
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push only scanned and smoke-tested architecture
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          set -euo pipefail
+          docker tag "$LOCAL_IMAGE" "$PUBLIC_IMAGE:$PATCH_TAG-${{ matrix.arch }}"
+          docker push "$PUBLIC_IMAGE:$PATCH_TAG-${{ matrix.arch }}"
+  publish_multiarch:
+    name: Publish multiarch only after all 4 native validations
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: verify
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    env:
+      OWNER: ${{ github.repository_owner }}
+      PATCH_TAG: go-1272-xnet-0600-20261010
+    steps:
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Assemble and verify immutable two-platform GHCR manifests
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          : > out/go-patched-digests.txt
+          for app in gitea qui; do
+            ref="ghcr.io/$OWNER/mrstore-$app:$PATCH_TAG"
+            docker buildx imagetools create -t "$ref" \
+              "$ref-amd64" "$ref-arm64"
+            docker buildx imagetools inspect --raw "$ref" | jq -e \
+              '[(.manifests[] | select(.platform.os=="linux") | .platform.architecture)] | sort == ["amd64","arm64"]'
+            digest="$(docker buildx imagetools inspect "$ref" | awk '/^Digest:/ { print $2; exit }')"
+            [[ "$digest" =~ ^sha256:[a-f0-9]{64}$ ]] || { echo "Missing digest for $ref" >&2; exit 1; }
+            echo "$ref@$digest" | tee -a out/go-patched-digests.txt
+          done
+          cat out/go-patched-digests.txt >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: go-patched-ghcr-multiarch-digests
+          path: out/go-patched-digests.txt
+          if-no-files-found: error
