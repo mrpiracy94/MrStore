@@ -29,7 +29,7 @@
         <a href="#ecossistema">Plataformas</a>
         <a href="#vantagens">Vantagens</a>
         <a href="#vistaprevia">A montra</a>
-        <a href="#como-instalar">Instalação</a>
+        <a href="#como-instalar">Como funciona</a>
       </nav>
       <div class="nav-utilities">
         <a class="nav-search" href="#catalogo" aria-label="Ir para a pesquisa de aplicações"><span aria-hidden="true">⌕</span> Pesquisar apps <kbd>/</kbd></a>
@@ -42,7 +42,7 @@
           <a href="#ecossistema">Plataformas</a>
           <a href="#vantagens">Vantagens</a>
           <a href="#vistaprevia">A montra</a>
-          <a href="#como-instalar">Instalação</a>
+          <a href="#como-instalar">Como funciona</a>
           <a href="https://github.com/mrpiracy94/MrStore" rel="noopener noreferrer">GitHub ↗</a>
         </nav>
       </details>
@@ -52,7 +52,7 @@
     <section class="hero-universe" aria-labelledby="hero-title">
       <div class="shell hero-main">
         <div class="hero-lead">
-          <span class="hero-overline"><span class="hero-overline-dot" aria-hidden="true"></span> A LOJA UNIVERSAL PARA O TEU HOMELAB</span>
+          <span class="hero-overline"><span class="hero-overline-dot" aria-hidden="true"></span> O ECOSSISTEMA DE APPS PARA O TEU HOMELAB</span>
           <h1 id="hero-title">O universo <span>self-hosted</span> começa aqui.</h1>
           <p class="hero-subtitle">O teu homelab. As tuas apps. <strong>Uma só loja.</strong></p>
           <p class="hero-description">Descobre aplicações para servidores, NAS e ambientes self-hosted. Pesquisa o catálogo, explora cada projeto e acompanha a evolução de uma loja criada para unir plataformas.</p>
@@ -94,7 +94,7 @@
         <div class="platform-grid" aria-label="Plataformas do ecossistema">
           <div class="system-card"><span class="system-glyph purple">∩</span><strong>UmbrelOS</strong><small>Integração planeada</small></div>
           <div class="system-card"><span class="system-glyph cyan">●</span><strong>CasaOS</strong><small>Integração planeada</small></div>
-          <div class="system-card system-ready"><span class="system-glyph midnight">▣</span><strong>ZimaOS v2</strong><small>Catálogo disponível</small></div>
+          <div class="system-card"><span class="system-glyph midnight">▣</span><strong>ZimaOS</strong><small>Formato de loja v2</small></div>
           <div class="system-card"><span class="system-glyph blue">▤</span><strong>Portainer</strong><small>Integração planeada</small></div>
           <div class="system-card"><span class="system-glyph deep">◉</span><strong>Cosmos</strong><small>Integração planeada</small></div>
           <div class="system-card"><span class="system-glyph sky">⬡</span><strong>Dockge</strong><small>Integração planeada</small></div>
@@ -105,8 +105,8 @@
           <div class="system-card"><span class="system-glyph green">✳</span><strong>Olares</strong><small>Integração planeada</small></div>
         </div>
         <div class="platform-status">
-          <span class="platform-label">PLATAFORMAS-ALVO · NÃO DISPONÍVEIS AINDA</span>
-          <p><strong>Estado atual:</strong> a montra é universal, mas o formato de instalação publicado é ZimaOS App Store v2. As outras integrações só serão anunciadas após testes reais. <a href="#como-instalar">Consultar instalação ↗</a></p>
+          <span class="platform-label">COMPATIBILIDADE · FORMATO ATUAL E PLATAFORMAS-ALVO</span>
+          <p><strong>Explorar é diferente de instalar:</strong> a montra funciona num navegador. O catálogo de loja externa utiliza atualmente o formato ZimaOS App Store v2; as restantes integrações nativas necessitam de adaptadores e testes. <a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/ZIMAOS_INSTALLATION.md">Ver documentação técnica ↗</a></p>
         </div>
       </div>
     </section>
@@ -163,8 +163,19 @@
 
     <section class="installation" id="como-instalar" aria-labelledby="installation-title">
       <div class="shell installation-layout">
-        <div><span class="section-kicker">✦ INTEGRAÇÃO ATUAL · ZIMAOS V2</span><h2 id="installation-title">Pronto para descobrir <em>a MrStore?</em></h2><p>Adiciona o endereço da loja na área de lojas externas do ZimaOS. A navegação web não instala aplicações diretamente e as restantes plataformas continuam em desenvolvimento.</p><div class="install-address"><code id="store-address">https://mrpiracy94.github.io/MrStore</code><button id="copy-store" type="button" aria-label="Copiar endereço da MrStore">Copiar <span aria-hidden="true">⧉</span></button></div><span class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></span></div>
-        <ol class="steps"><li><span>01</span><div><strong>Abre o ZimaOS</strong><p>Na App Store, procura a opção para adicionar uma loja externa compatível com v2.</p></div></li><li><span>02</span><div><strong>Adiciona o endereço</strong><p>Copia o endereço da MrStore e confirma a importação do catálogo.</p></div></li><li><span>03</span><div><strong>Consulta antes de instalar</strong><p>Confirma as permissões, arquiteturas, versões e possíveis vulnerabilidades.</p></div></li></ol>
+        <div>
+          <span class="section-kicker">✦ DESCOBRE · COMPARA · DECIDE</span>
+          <h2 id="installation-title">O teu catálogo.<br><em>À tua maneira.</em></h2>
+          <p>Explora aplicações e confirma os requisitos antes de instalar. A montra não instala nem atualiza contentores automaticamente; a compatibilidade nativa depende de cada plataforma.</p>
+          <div class="install-address"><code id="store-address">https://mrpiracy94.github.io/MrStore</code><button id="copy-store" type="button" aria-label="Copiar endereço da MrStore">Copiar <span aria-hidden="true">⧉</span></button></div>
+          <span class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></span>
+          <p class="installation-technical">O endereço público não é um instalador universal. Consulta o <a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/ZIMAOS_INSTALLATION.md" rel="noopener noreferrer">guia de integração disponível ↗</a> antes de adicionar uma loja externa.</p>
+        </div>
+        <ol class="steps">
+          <li><span>01</span><div><strong>Descobre aplicações</strong><p>Pesquisa por nome, categoria e arquitetura.</p></div></li>
+          <li><span>02</span><div><strong>Confirma os requisitos</strong><p>Consulta permissões, dependências e avisos de segurança.</p></div></li>
+          <li><span>03</span><div><strong>Segue a integração compatível</strong><p>Utiliza as instruções técnicas do sistema apenas quando a integração estiver validada.</p></div></li>
+        </ol>
       </div>
     </section>
     <section class="final-cta" aria-labelledby="final-title">
@@ -175,7 +186,7 @@
     <div class="shell footer-layout">
       <div class="footer-brand"><img src="./assets/mark.svg" width="40" height="40" alt=""><div><strong>Mr<span>Store</span></strong><small>O teu homelab. As tuas apps. Uma só loja.</small><p>Um projeto aberto à comunidade self-hosted. <span aria-hidden="true">♥</span></p></div></div>
       <nav aria-label="Produtos" class="footer-column"><strong>Produto</strong><a href="#catalogo">Aplicações</a><a href="#ecossistema">Plataformas</a><a href="#vantagens">Vantagens</a></nav>
-      <nav aria-label="Recursos" class="footer-column"><strong>Recursos</strong><a href="#como-instalar">Instalação</a><a href="./store.json">Catálogo v2</a><a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/SAFE_RELEASE_POLICY.md">Segurança</a></nav>
+      <nav aria-label="Recursos" class="footer-column"><strong>Recursos</strong><a href="#como-instalar">Como funciona</a><a href="./store.json">Dados do catálogo</a><a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/SAFE_RELEASE_POLICY.md">Segurança</a></nav>
       <nav aria-label="Comunidade" class="footer-column"><strong>Comunidade</strong><a href="https://github.com/mrpiracy94/MrStore">GitHub</a><a href="https://github.com/mrpiracy94/MrStore/discussions">Discussões</a><a href="https://github.com/mrpiracy94/MrStore/issues">Sugestões</a></nav>
     </div>
     <div class="shell footer-bottom"><span>© 2026 MrStore · Projeto comunitário não oficial.</span><span>Sem afiliação aos fabricantes das plataformas. A compatibilidade deve ser validada antes da instalação.</span></div>
