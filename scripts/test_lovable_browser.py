@@ -46,6 +46,13 @@ with tempfile.TemporaryDirectory(prefix="mrstore-ui-fixture-") as temp:
         "quarantined_count": 0, "quarantined": {}
     }), encoding="utf-8")
     assert stage(SOURCE, dist) == len(slugs)
+    # Serve the screenshot watermark as a local CSS file. The real storefront
+    # disallows inline styles through CSP; tests must not bypass that policy.
+    (dist / "fixture-watermark.css").write_text(
+        "body::after{content:'EXEMPLO DE TESTE — NÃO É A LOJA PUBLICADA';"
+        "position:fixed;top:0;right:0;background:#b91c1c;color:white;"
+        "z-index:99999;padding:5px 10px;font-size:11px;pointer-events:none}",
+        encoding="utf-8")
 
     handler = lambda *args, **kwargs: Handler(*args, directory=str(dist), **kwargs)
     server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
@@ -69,10 +76,8 @@ with tempfile.TemporaryDirectory(prefix="mrstore-ui-fixture-") as temp:
                 assert not page.evaluate("document.documentElement.scrollWidth > window.innerWidth + 1"), (
                     f"Horizontal overflow at {width}px")
                 assert not errors, errors
-                page.add_style_tag(content=(
-                    "body:after{content:'EXEMPLO DE TESTE — NÃO É A LOJA PUBLICADA';"
-                    "position:fixed;top:0;right:0;background:#b91c1c;color:white;"
-                    "z-index:99999;padding:5px 10px;font-size:11px;pointer-events:none}"))
+                page.add_style_tag(
+                    url=f"http://127.0.0.1:{server.server_port}/fixture-watermark.css")
                 page.screenshot(path=str(ARTIFACTS / f"lovable-fixture-{width}x{height}.png"), full_page=True)
                 if width == 1536:
                     page.locator(".chip").filter(has_text="Fotografias").click()
