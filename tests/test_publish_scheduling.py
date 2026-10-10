@@ -1,4 +1,4 @@
-"""Prevent 8 expensive Trivy shards on PRs without relaxing release security.
+"""Prevent 32 expensive Trivy shards on PRs without relaxing release security.
 
 The ordinary Validate MrStore and privilege/migration gates still run for PRs.
 Full digest-locked Trivy scanning is mandatory for push/dispatch publication.
@@ -31,10 +31,10 @@ class PublishSchedulingTests(unittest.TestCase):
         self.assertEqual(scan["if"], "github.event_name != 'pull_request'")
         self.assertEqual(scan["needs"], "preflight")
 
-    def test_release_remains_fail_closed_on_eight_full_shards(self):
+    def test_release_remains_fail_closed_on_32_full_shards(self):
         jobs = self.workflow["jobs"]
         scan = jobs["security_audit"]
-        self.assertEqual(scan["strategy"]["matrix"]["shard"], list(range(8)))
+        self.assertEqual(scan["strategy"]["matrix"]["shard"], list(range(32)))
         self.assertFalse(scan["strategy"]["fail-fast"])
         self.assertEqual(jobs["build"]["needs"], "security_audit")
         self.assertEqual(jobs["publish"]["needs"], "build")
@@ -48,7 +48,7 @@ class PublishSchedulingTests(unittest.TestCase):
             for step in jobs["build"]["steps"] if isinstance(step, dict)
         ))
         self.assertTrue(any(
-            step.get("name") == "Fetch eight mandatory security evidence reports"
+            step.get("name") == "Fetch 32 mandatory security evidence reports"
             for step in jobs["build"]["steps"]
         ))
         self.assertFalse(any(step.get("continue-on-error")
