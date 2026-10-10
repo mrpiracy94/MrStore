@@ -46,8 +46,14 @@ existente (exemplo: Sonarr):
 python scripts/zimaos_update_visibility.py --runtime --app sonarr
 ```
 
-Esta opção usa somente `docker ps -a` e `docker image inspect`. Não executa
-`docker pull`, `docker compose up`, instalação, atualização ou restart.
+Esta opção usa apenas consultas de leitura (`docker ps -a`,
+`docker container inspect` e `docker image inspect`). Compara o digest da
+**imagem efetivamente usada pelo contentor** através do seu ID imutável
+(`docker container inspect ... --format '{{.Image}}'`) — não a tag
+`:latest`, que pode ter mudado após um `docker pull` sem recriar o
+contentor. Se o ID não for obtido, o estado é **desconhecido**, nunca
+«atualizado». Não executa `docker pull`, `docker compose up`, instalação,
+atualização ou restart.
 
 Para consultar também o digest remoto, sem fazer pull, quando o binário
 [`crane`](https://github.com/google/go-containerregistry/tree/main/cmd/crane)
