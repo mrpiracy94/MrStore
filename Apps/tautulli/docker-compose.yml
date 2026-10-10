@@ -1,7 +1,7 @@
 name: tautulli
 services:
   tautulli:
-    image: lscr.io/linuxserver/tautulli:latest
+    image: ghcr.io/mrpiracy94/mrstore-python-tautulli@sha256:6d9fa8bf48dd804b6b6ba2833a892f2cebfe05ffcbaf365c9474a9efe1c29c8b
     container_name: tautulli
     restart: unless-stopped
     environment:
@@ -32,8 +32,8 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.tautulli
-  version: "1.0.0"
-  update_at: "2026-10-09"
+  version: "1.0.1"
+  update_at: "2026-10-10"
   architectures:
     - amd64
     - arm64

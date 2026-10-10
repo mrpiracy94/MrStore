@@ -1,7 +1,7 @@
 name: sickgear
 services:
   sickgear:
-    image: lscr.io/linuxserver/sickgear:latest
+    image: ghcr.io/mrpiracy94/mrstore-python-sickgear@sha256:01e888bbe243143797e5d6e9247f87c2d90d985ac6af54f700d84b42d5e58562
     container_name: sickgear
     restart: unless-stopped
     environment:
@@ -44,8 +44,8 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.sickgear
-  version: "1.0.0"
-  update_at: "2026-10-09"
+  version: "1.0.1"
+  update_at: "2026-10-10"
   architectures:
     - amd64
     - arm64
