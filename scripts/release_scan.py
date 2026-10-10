@@ -142,20 +142,36 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
             "results": results}
 
 
+def curated_apps(root=ROOT):
+    """Fail closed if the documented 32-app selection is missing or invalid."""
+    selected = json.loads((Path(root) / "data/featured-apps.json").read_text(encoding="utf-8"))["apps"]
+    if not isinstance(selected, list) or len(selected) != 32 or len(set(selected)) != 32:
+        raise ValueError("Expected exactly 32 unique curated applications")
+    all_items = apps(root)
+    by_folder = {app.folder: app for app in all_items}
+    missing = set(selected) - set(by_folder)
+    if missing:
+        raise ValueError(f"Unknown curated applications: {sorted(missing)}")
+    return [by_folder[name] for name in selected]
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--shard", type=int, required=True)
+    p.add_argument("--curated", action="store_true", help="Scan only the 32 curated apps")
     p.add_argument("--shards", type=int, default=8)
     p.add_argument("--output-dir", type=Path, default=ROOT / "out")
     o = p.parse_args()
-    report = audit_shard(apps(), o.shard, o.shards)
+    report = audit_shard(curated_apps() if o.curated else apps(), o.shard, o.shards)
     o.output_dir.mkdir(parents=True, exist_ok=True)
     dest = o.output_dir / f"release-cves-shard-{o.shard}.json"
     dest.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     counts = {status: sum(r["status"] == status for r in report["results"])
               for status in ("clean", "vulnerable", "error")}
     print(f"Shard {o.shard}: {counts}; report saved {dest}", flush=True)
-    # Image vulnerabilities and registry failures are visible but do not block OTHER apps.
+    # Curated security audit must fail closed; legacy release behavior remains unchanged.
+    if o.curated and any(r["status"] != "clean" for r in report["results"]):
+        return 1
     return 0
 
 
