@@ -197,6 +197,7 @@ def evaluate(usage: dict[str, list[str]], chosen: list[str], scanner=scan,
              workers: int = 1) -> dict:
     if not 1 <= workers <= 4:
         raise ValueError('workers must be between 1 and 4')
+    started = time.monotonic()
     results = [None] * len(chosen)
 
     def inspect(image: str) -> dict:
@@ -230,14 +231,21 @@ def evaluate(usage: dict[str, list[str]], chosen: list[str], scanner=scan,
         'critical': sum(y['severity'] == 'CRITICAL' for x in results for y in x['findings']),
         'high': sum(y['severity'] == 'HIGH' for x in results for y in x['findings']),
         'results': results,
+        'elapsed_seconds': round(time.monotonic() - started, 2),
+        'worker_limit': workers,
     }
+    elapsed = report['elapsed_seconds']
+    report['images_per_minute'] = round(60 * len(results) / elapsed, 2) if elapsed > 0 else 0
     report['applications'] = application_results(usage, results)
     return report
 
 def summarize(report: dict, shard: int, shards: int) -> str:
     lines = ['# Auditoria CVE — MrStore', '',
              f"Shard {shard+1}/{shards} | {report['images_checked']}/{report['images_total']} imagens | {report['critical']} CRITICAL | {report['high']} HIGH | falhas: {report['failures']}", '',
-             'A presença de CVE não comprova exploração possível; ausência de alertas não garante segurança. Falhas de scanner não são contadas como imagens limpas.', '']
+             'A presença de CVE não comprova exploração possível; ausência de alertas não garante segurança. Falhas de scanner não são contadas como imagens limpas.', '',
+             f"Tempo: {report.get('elapsed_seconds', 0):.2f}s | "
+             f"Rendimento: {report.get('images_per_minute', 0):.2f} imagens/minuto | "
+             f"Workers: {report.get('worker_limit', 1)}", '']
     if not report['results']:
         lines.append('Nenhuma imagem selecionada nesta execução; isto não é uma auditoria completa.')
     lines.extend(['', '## Resultado por aplicação (apenas imagens deste grupo)', ''])
