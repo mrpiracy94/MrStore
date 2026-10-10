@@ -4,14 +4,13 @@ O GitHub controla o seu próprio layout; não é possível mudar o tema, menus
 ou o CSS de github.com para cada repositório. A MrStore apresenta-se em dois
 locais distintos:
 
-1. README.md — página de entrada do repositório, com banner WebP oficial, navegação curta,
-   instalação, segurança e ligações para documentação.
+1. README.md — apresentação universal do projeto com banner WebP, ligações para o catálogo, plataformas e política de segurança.
 2. https://mrpiracy94.github.io/MrStore/ — montra web estática com o mesmo
    banner laranja e grafite, monograma M, pesquisa, filtros, favoritos e detalhes das aplicações.
 
 ## Dados e segurança
 
-O navegador obtém os dados do index.json oficial do ZimaOS v2.
+O navegador obtém as entradas do index.json do catálogo publicado (atualmente exportado no formato v2).
 Nenhuma aplicação é hardcoded no JavaScript. O número de aplicações
 e categorias é calculado a partir da edição efetivamente distribuída.
 
@@ -53,26 +52,23 @@ Para testar a página localmente, usa a pasta dist de uma publicação válida e
 um servidor HTTP estático. Abrir web/index.html diretamente a partir de file://
 não dá acesso ao index.json publicado.
 
-Não confundir a qualidade visual com segurança certificada ou prova de runtime
-num NAS ZimaOS.
+Não confundir a qualidade visual com certificação de segurança ou prova de funcionamento real em qualquer equipamento.
 
 ## Correspondência visual e limites
 
-A interface foi recriada com HTML, CSS e JavaScript funcional, seguindo o
-identidade laranja e grafite da MrStore: logótipo em caixa tridimensional,
-hero escuro, categorias em mosaico e cartões com capturas **reais do índice publicado**.
-O banner vetorial do README é uma interpretação do conceito visual; não é
-o PNG original, que ainda não foi acrescentado ao repositório. A montra
-não usa uma imagem estática como substituto de botões nem simula instalações.
-O botão «Ver detalhes» abre dados reais; a instalação continua a ser feita
-no ZimaOS, não diretamente no navegador. A navegação móvel utiliza um elemento
-HTML nativo `details`; o botão «Limpar filtros» repõe pesquisa, categoria,
-arquitetura e seleção de favoritos, sem apagar favoritos guardados.
+O README e a homepage usam o mesmo banner local `web/assets/mrstore-hero.webp`,
+com monograma M laranja e fundo grafite. Os botões, pesquisa, filtros,
+categorias, favoritos e fichas são HTML e JavaScript funcionais, não uma imagem
+estática a simular uma aplicação.
 
-A área «Ecossistema» identifica **ZimaOS v2 como integração atual** e lista
-UmbrelOS, Homeio, CasaOS, Cosmos, Portainer, HomeDock OS, Olares, Dockge,
-Runtipi e Docker/Linux como **plataformas-alvo ainda não integradas**.
+A **identidade da marca é universal**. A secção «Ecossistema» apresenta as
+plataformas na visão da MrStore e distingue a navegação pública da instalação
+nativa. O protocolo efetivamente implementado tem documentação própria no
+[guia técnico de integração](ZIMAOS_INSTALLATION.md); não existe garantia
+de suporte de loja nativa em todas as plataformas.
 
-O atributo HTML `hidden` tem prioridade sobre estilos flex para impedir
-que ações indisponíveis fiquem visíveis. A pré-visualização de cada app
-usa apenas URLs locais do catálogo, com fallback quando a imagem falha.
+A navegação móvel utiliza `details` nativo e o botão «Limpar filtros»
+repõe pesquisa, categoria, arquitetura e modo favoritos sem apagar os favoritos
+guardados. Os ícones e as capturas são locais, com fallback quando uma imagem
+falha. O atributo HTML `hidden` prevalece sobre regras visuais, para que os
+controlos indisponíveis não fiquem visíveis.
