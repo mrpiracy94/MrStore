@@ -2,10 +2,12 @@
 import argparse
 import json
 from pathlib import Path
+import re
 import sys
 
 
 def verify(root: Path, expected: int) -> int:
+    root = root.resolve()
     for name in ('store.json', 'index.json'):
         if not (root / name).is_file():
             raise ValueError(f'Missing generated {name}')
@@ -23,20 +25,31 @@ def verify(root: Path, expected: int) -> int:
         if not isinstance(entry, dict):
             raise ValueError('Invalid index entry')
         app_id=entry.get('id','')
-        if not isinstance(app_id,str) or app_id in found or '/' in app_id or '..' in app_id:
+        if (not isinstance(app_id, str) or app_id in found or '..' in app_id
+                or not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*', app_id)):
             raise ValueError(f'Invalid/duplicate ID in index: {app_id!r}')
         found.add(app_id)
         for field in ('compose_url','meta_url','icon','content_hash','version'):
             if not entry.get(field):
                 raise ValueError(f'{app_id} missing {field}')
         app_folder=root/'apps'/app_id
+        if not app_folder.resolve().is_relative_to(root):
+            raise ValueError(f'{app_id}: app directory escapes release root')
         if not (app_folder/'docker-compose.yml').is_file() or not (app_folder/'meta.json').is_file():
             raise ValueError(f'{app_id} has missing generated compose or metadata')
-        for field in ('compose_url','meta_url','icon','thumbnail'):
+        # Manifest/metadata URLs must identify this exact app, not a different
+        # existing app or an attacker-controlled external endpoint.
+        for field, filename in (('compose_url', 'docker-compose.yml'), ('meta_url', 'meta.json')):
+            required_url = f'/apps/{app_id}/{filename}'
+            if entry[field] != required_url:
+                raise ValueError(f'{app_id}: invalid generated {field}: {entry[field]!r}')
+        for field in ('icon','thumbnail'):
             url=entry.get(field)
             if isinstance(url,str) and url.startswith('/apps/'):
                 relative=url.lstrip('/')
-                if '..' in Path(relative).parts or not (root/relative).is_file():
+                target=(root/relative).resolve()
+                if ('..' in Path(relative).parts or not target.is_relative_to(root)
+                        or not target.is_file()):
                     raise ValueError(f'{app_id}: broken generated {field}: {url}')
     meta=list((root/'apps').glob('*/meta.json'))
     compose=list((root/'apps').glob('*/docker-compose.yml'))
