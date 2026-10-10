@@ -83,6 +83,26 @@ def docker_names(runner=subprocess.run) -> tuple[set[str] | None, str | None]:
     return (set(value.splitlines()), None) if error is None else (None, error)
 
 
+def docker_compose_names(project: str, service: str, runner=subprocess.run) -> tuple[list[str] | None, str | None]:
+    """Read containers identified by BOTH Docker Compose project and service labels.
+
+    Unlike the service-only name lookup involved in ZimaOS #592, this avoids
+    confusing independent applications whose main service is named "app".
+    """
+    if not project or not service:
+        return None, "invalid_compose_identity"
+    value, error = command(
+        ["docker", "ps", "-a",
+         "--filter", f"label=com.docker.compose.project={project}",
+         "--filter", f"label=com.docker.compose.service={service}",
+         "--format", "{{.Names}}"],
+        runner=runner,
+    )
+    if error:
+        return None, error
+    return [line for line in value.splitlines() if line], None
+
+
 def docker_repo_digests(image: str, runner=subprocess.run) -> tuple[list[str] | None, str | None]:
     value, error = command(
         ["docker", "image", "inspect", image, "--format", "{{json .RepoDigests}}"],
@@ -195,14 +215,30 @@ def runtime_check(item: dict, *, check_registry: bool = False,
         outcome.update(installed="unknown", docker_error=names_error)
         return outcome
     expected = item["main_container"] or f"{item['compose_project']}-{item['main_service']}-1"
-    actual = expected if expected in names else None
-    outcome["installed"] = "found" if actual else "not_found_by_expected_name"
     outcome["expected_docker_name"] = expected
     outcome["zimaos_service_name_resolves"] = item["main_service"] in names
-    if not actual:
-        # Do not equate "not found by our expected name" with "not installed".
-        outcome["update_evidence"] = "unknown_container_not_identified"
+    matching, label_error = docker_compose_names(item["compose_project"], item["main_service"], runner)
+    if label_error:
+        outcome["compose_label_error"] = label_error
+    if matching is not None and len(matching) > 1:
+        # Replicas can legitimately exist, but selecting one image at random
+        # could lead to an incorrect verdict. Report the ambiguity.
+        outcome["installed"] = "ambiguous_multiple_main_containers"
+        outcome["update_evidence"] = "unknown_ambiguous_main_containers"
+        actual = None
     else:
+        labeled = matching[0] if matching else None
+        actual = labeled if labeled in names else (expected if expected in names else None)
+        outcome["installed"] = "found" if actual else "not_found_by_expected_name"
+        outcome["container_resolution"] = (
+            "compose_project_and_service_labels" if labeled and actual == labeled
+            else "expected_name_unverified" if actual
+            else "not_resolved"
+        )
+        if not actual:
+            # Do not equate "not found by our expected name" with "not installed".
+            outcome["update_evidence"] = "unknown_container_not_identified"
+    if actual:
         local_ref, container_error = installed_container_image(actual, runner)
         if container_error:
             outcome["container_inspect_error"] = container_error
