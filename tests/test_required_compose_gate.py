@@ -76,6 +76,17 @@ class RequiredInstallerEnvironmentTests(unittest.TestCase):
         self.assertTrue(any("default credentials not configured" in x
                             for x in insecure_defaults(fixture(["PASSWORD=CHANGE_ME"]))))
 
+    def test_change_me_in_runtime_command_or_labels_is_quarantined(self):
+        for field, value in (
+            ("command", ["--admin-password=CHANGE_ME"]),
+            ("labels", {"admin.password": "CHANGE_ME"}),
+        ):
+            with self.subTest(field=field):
+                app = fixture(["TZ=Europe/Lisbon"])
+                app.source["services"]["example"][field] = value
+                self.assertTrue(any("default credentials not configured" in e
+                                    for e in insecure_defaults(app)))
+
     def test_pattern_does_not_match_plain_container_variables(self):
         self.assertIsNone(REQUIRED_COMPOSE_VARIABLE.search(
             "PASSWORD=valid_private_value_without_interpolation"))
