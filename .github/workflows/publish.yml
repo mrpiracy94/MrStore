@@ -1,9 +1,12 @@
 name: Build and publish MrStore v2
 on:
   push:
-    branches: [main]
+    branches: [main, docs/public-copy-ptpt-20261010]
     paths:
       - 'Apps/**'
+      - 'web/**'
+      - 'assets/branding/**'
+      - 'scripts/test_storefront_browser.py'
       - 'scripts/catalog.py'
       - 'scripts/cves.py'
       - 'scripts/release_scan.py'
