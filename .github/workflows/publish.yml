@@ -21,6 +21,10 @@ on:
       - 'scripts/export_universal.py'
       - 'tests/test_export_universal.py'
       - 'scripts/export_portable_catalog.py'
+      - 'scripts/export_umbrel_preview.py'
+      - 'scripts/export_runtipi_preview.py'
+      - 'tests/test_export_umbrel_preview.py'
+      - 'tests/test_export_runtipi_preview.py'
       - 'tests/test_export_portable_catalog.py'
       - 'tests/test_storefront.py'
       - 'category-list.json'
@@ -224,6 +228,20 @@ jobs:
       - name: Warn if optional portable compatibility catalog failed
         if: steps.universal_compose.outcome == 'failure'
         run: echo '::warning::Portable universal catalog unavailable. ZimaOS output stays intact.'
+      - name: Generate isolated Umbrel community-store pilot ZIP (not certified)
+        id: umbrel_preview
+        continue-on-error: true
+        run: >-
+          python scripts/export_umbrel_preview.py --source release-source
+          --selection out/release-selection.json
+          --output dist/store/umbrel-community-preview.zip
+      - name: Generate isolated Runtipi custom-store pilot ZIP (not certified)
+        id: runtipi_preview
+        continue-on-error: true
+        run: >-
+          python scripts/export_runtipi_preview.py --source release-source
+          --selection out/release-selection.json
+          --output dist/store/runtipi-store-preview.zip
       - name: Upload publication/quarantine diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -239,6 +257,8 @@ jobs:
             dist/index.json
             dist/release-status.json
             dist/store/casaos-homeio-preview.zip
+            dist/store/umbrel-community-preview.zip
+            dist/store/runtipi-store-preview.zip
             dist/universal/catalog.json
           if-no-files-found: warn
       - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
