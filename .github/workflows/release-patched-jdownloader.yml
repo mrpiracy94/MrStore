@@ -172,14 +172,21 @@ jobs:
           import os, re
           path = Path("Apps/jdownloader/docker-compose.yml")
           text = path.read_text(encoding="utf-8")
-          original = "    image: jlesage/jdownloader-2:latest"
-          if text.count(original) != 1:
-              raise SystemExit("Catalog entry changed; refusing unattended update")
           digest = os.environ["PATCHED_DIGEST"]
           if not re.fullmatch(r"sha256:[0-9a-f]{64}", digest):
               raise SystemExit("Invalid immutable digest")
           image = f"{os.environ['IMAGE']}:{os.environ['VERSION']}@{digest}"
-          text = text.replace(original, f"    image: {image}", 1)
+          image_lines = re.findall(r"(?m)^    image: (.+)$", text)
+          if len(image_lines) != 1:
+              raise SystemExit("Unexpected image entries in catalog")
+          current = image_lines[0]
+          legacy = "jlesage/jdownloader-2:latest"
+          tested_release = re.fullmatch(
+              re.escape(f"{os.environ['IMAGE']}:{os.environ['VERSION']}@") +
+              r"sha256:[0-9a-f]{64}", current)
+          if current != legacy and not tested_release:
+              raise SystemExit("Catalog uses a different image; refusing overwrite")
+          text = text.replace(f"    image: {current}", f"    image: {image}", 1)
           text = text.replace('  version: "1.0.0"', '  version: "1.0.1"', 1)
           text = text.replace('  update_at: "2026-10-09"', '  update_at: "2026-10-10"', 1)
           text = text.replace(
@@ -199,5 +206,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add Apps/jdownloader/docker-compose.yml
+          if git diff --cached --quiet; then
+            echo "JDownloader already pinned to this validated multiarch digest"
+            exit 0
+          fi
           git commit -m "security(jdownloader): publish scanned multiarch CVE-fixed digest"
           git push origin HEAD:main
