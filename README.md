@@ -1,91 +1,121 @@
-# MrStore — ZimaOS v2
+<div align="center">
+  <img src="web/assets/readme-banner.svg" alt="MrStore — a tua loja para ZimaOS" width="100%">
 
-Loja comunitária não oficial, reconstruída em 09-10-2026 a partir das **254 definições Docker Compose** da Minha Loja original. O código da automação foi refeito: os manifests são tratados exclusivamente como dados, nunca executados nos runners. O catálogo contém **260 serviços** e **258 referências únicas de imagens**.
+  <h1>MrStore · ZimaOS App Store</h1>
 
-**GitHub:** https://github.com/mrpiracy94/MrStore  
-**URL após publicar em Pages:** https://mrpiracy94.github.io/MrStore
+  <p><strong>A loja comunitária de aplicações self-hosted para o teu ZimaOS.</strong><br>Descobre, pesquisa e organiza as aplicações do homelab num só lugar.</p>
 
-## Como adicionar ao ZimaOS
+  <p>
+    <a href="https://mrpiracy94.github.io/MrStore/"><strong>🌐 Explorar a loja</strong></a>
+    &nbsp; · &nbsp;
+    <a href="#-adicionar-ao-zimaos"><strong>🚀 Como instalar</strong></a>
+    &nbsp; · &nbsp;
+    <a href="#-segurança-e-transparência"><strong>🛡️ Segurança</strong></a>
+    &nbsp; · &nbsp;
+    <a href="https://github.com/mrpiracy94/MrStore/issues"><strong>💬 Issues e sugestões</strong></a>
+  </p>
+</div>
 
-1. Abra `Actions → Build and publish MrStore v2` e confirme que o build publicou todas as 254 apps sem erros.
-2. Em `Settings → Pages`, selecione `Deploy from a branch`, a branch **gh-pages** e a pasta **/(root)**; não selecione `main`.
-3. Aguarde a publicação, confirme que [`store.json`](https://mrpiracy94.github.io/MrStore/store.json) e [`index.json`](https://mrpiracy94.github.io/MrStore/index.json) devolvem JSON válido e então adicione `https://mrpiracy94.github.io/MrStore` ao ZimaOS como loja externa (cliente compatível com protocolo v2).
+---
 
-O builder oficial do ZimaOS é responsável por gerar os JSON e `content_hash` corretos. A verificação adicional `scripts/verify_dist.py` impede a publicação de catálogos incompletos. A primeira importação para ZimaOS ainda tem de ser validada num dispositivo real.
+## ✨ O que é a MrStore?
 
-## Publicação com quarentena por aplicação
+A **MrStore** organiza **254 definições de aplicações** em Docker Compose, preparadas para o formato **ZimaOS App Store v2**. A edição pública pode conter **menos aplicações**, porque o nosso sistema de publicação exclui as que não passaram os controlos obrigatórios de segurança.
 
-A publicação não precisa esperar que **todas as imagens** do catálogo estejam livres de CVEs. Em cada execução, a MrStore analisa as 258 referências de imagens em todas as arquiteturas declaradas, fixa o digest que foi realmente analisado e só publica as apps cujos **todos os serviços** passaram sem HIGH/CRITICAL ou erros de scanner. As apps inseguras ou inconclusivas **não entram no índice publicado** e ficam documentadas; os 254 manifests permanecem no repositório.
+| 🔍 Exploração fácil | 📦 Aplicações self-hosted | 🛡️ Segurança por aplicação |
+|:---|:---|:---|
+| Pesquisa por nome, categoria, arquitetura e favoritos na montra web. | Catálogo de origem organizado por categorias, com IDs estáveis. | Verificação das imagens Docker, digest imutável e quarentena de resultados vulneráveis ou inconclusivos. |
 
-Configurações perigosas e segredos predefinidos também impedem a aprovação individual. Nenhuma CVE é considerada resolvida só por retirar uma app do catálogo. Consultar [política de segurança do release](docs/SAFE_RELEASE_POLICY.md) e os relatórios públicos `release-status.json` quando existir um release válido.
+**[Abrir a montra da MrStore →](https://mrpiracy94.github.io/MrStore/)**
 
-**Importante:** a lista de apps na loja publicada pode ser inferior às 254 definições originais. A publicação só ocorre após scans completos em oito grupos; se nenhum resultado for elegível, não publica uma lista vazia enganadora. Isto não instala nem atualiza containers automaticamente.
-## Funcionalidades
+> **Nota:** a montra em GitHub Pages é uma interface informativa. Não instala aplicações automaticamente. A nova interface só fica disponível publicamente após uma publicação segura e bem-sucedida na branch `gh-pages`. Se estiver publicada uma edição anterior, consulta os avisos e relatórios antes de instalar.
 
-| Componente | Funcionamento | Automação |
-| --- | --- | --- |
-| Validação | Inspeciona todos os Compose, IDs, metadados, ícones locais, portas e flags de segurança | Push, PR e manual |
-| Publicação | Compila catálogo v2 pelo builder oficial, verifica 254 entradas e publica `dist/` | Push e manual |
-| CVE | Trivy verifica vulnerabilidades **HIGH/CRITICAL**, mostrando pacotes afetados e versões corrigidas (quando existem) | Diário, 1/8 das 258 imagens por dia; report JSON/Markdown; issue caso existam CVEs CRITICAL |
-| Atualizações por digest | Compara a referência da imagem Docker com o digest anterior; gera relatório e issue por alterações efetivas | Diário, sem instalar atualizações |
-| Novas tags/versionamento | Renovate propõe pull requests de alterações nas imagens com tags suportadas | Depois de autorizar a GitHub App Renovate |
+## 🚀 Adicionar ao ZimaOS
 
-**Limitações:** a alteração do digest de `latest`/`release` não é, por si só, uma nova versão upstream e não informa qual a versão instalada no ZimaOS. Para atualizar apps instaladas será necessária uma integração específica com a API da instalação. Os manifestos usam uma versão de revisão inicial `1.0.0` da loja, **não** a versão atual oficial de cada imagem. Não existem atualizações de containers automáticas.
+1. Abre a App Store do teu ZimaOS e procura a opção de **adicionar uma loja externa** compatível com o protocolo v2.
+2. Adiciona o endereço abaixo (URL base da loja):
 
-## Segurança
+   ```text
+   https://mrpiracy94.github.io/MrStore
+   ```
 
-- Nunca instalamos containers para validar os Compose. A revisão estática não elimina perigos reais.
-- Alguns projetos exigem `privileged`, `seccomp:unconfined` ou acesso ao Docker Socket; veja os relatórios antes de instalar.
-- Substitua todos os segredos `CHANGE_ME` no momento de instalação.
-- Ícones externos inválidos foram trocados por placeholders próprios para 87 apps; thumbnails podem continuar externos.
-- Os logs do builder oficial mostraram **37 apps com imagem sem ARM64**: declaramos apenas AMD64 nessas apps. A compatibilidade de outras arquiteturas deve ser reconfirmada a cada nova imagem/tag.
-- Os scans dependem de acesso a registries e bases de dados Trivy; erros são **falhas**, não resultados limpos.
-- `x-casaos.version` e `content_hash` controlam atualizações do catálogo, não upgrades automáticos dos containers.
+3. Consulta o catálogo e verifica requisitos, permissões, arquitetura suportada e dados persistentes antes de instalar uma aplicação.
 
-## Compatibilidade comprovada no ZimaOS
+Os ficheiros oficiais continuam disponíveis em [store.json](https://mrpiracy94.github.io/MrStore/store.json) e [index.json](https://mrpiracy94.github.io/MrStore/index.json).
 
-O catálogo de 254 apps publicado em formato v2 e os testes de CI **não são** equivalentes a instalações comprovadas num ZimaOS real.
+**Atenção:** não há garantia de instalação e atualização funcional em todas as versões do ZimaOS. Os testes reais no dispositivo são distintos dos testes estáticos efetuados pelo GitHub Actions.
 
-- Inventário estático por app: `python scripts/compatibility.py` (artefacto GitHub Actions `zimaos-compatibility-static`).
-- Smoke test opt-in de uma app já instalada num NAS: `python scripts/zimaos_runtime_probe.py --app actual-budget --host IP_DO_NAS`. O comando usa apenas Docker inspect e HTTP, sem modificar containers; não valida logins nem dados persistentes.
-- Critérios C0–C4, testes funcionais, registo de evidência e limitações: [docs/ZIMAOS_COMPATIBILITY.md](docs/ZIMAOS_COMPATIBILITY.md).
+## 🧭 Descobrir aplicações
 
-**Nenhuma app é declarada validada em ambiente real apenas pelo inventário/CI.**
+A montra web foi concebida para facilitar o uso:
 
-## Estrutura do projeto
+- **Pesquisar** por nome, descrição e categoria.
+- **Filtrar** por categoria e arquitetura AMD64/ARM64.
+- **Guardar favoritos** localmente no navegador, sem criar conta.
+- **Consultar fichas** com a versão do pacote, serviço e link para o manifesto Docker.
+- **Distinguir publicação verificada de edições antigas**, com alertas caso o relatório de seleção segura esteja ausente.
+
+Para ver todos os manifests da origem, incluindo os que possam estar em quarentena, consulta a pasta [Apps/](Apps/).
+
+## 🛡️ Segurança e transparência
+
+A MrStore não considera uma imagem segura simplesmente por constar da lista. O processo de publicação deve:
+
+1. Resolver as referências Docker para **digests imutáveis**.
+2. Auditar as arquiteturas declaradas (**AMD64 e/ou ARM64**) com Trivy.
+3. Exigir **zero HIGH e CRITICAL conhecidos** no relatório completo, sem falhas de scanner nem plataformas em falta.
+4. Bloquear configurações inseguras, segredos por configurar e imagens descontinuadas quando aplicável.
+5. Publicar apenas a seleção aprovada, documentando as aplicações em quarentena.
+
+**Não afirmamos ausência absoluta de CVEs.** A publicação pública só está comprovada como filtrada quando existe um `release-status.json` coerente com o índice efetivamente publicado. Falhas de auditoria não equivalem a resultados limpos.
+
+📖 [Política de publicação segura](docs/SAFE_RELEASE_POLICY.md) · [Compatibilidade real ZimaOS](docs/ZIMAOS_COMPATIBILITY.md) · [Avisos de segurança](SECURITY.md)
+
+## ⚙️ Tecnologias e automação
+
+| Componente | Finalidade |
+|:---|:---|
+| **ZimaOS App Store v2** | Gerar o catálogo através do builder oficial. |
+| **Docker Compose** | Definir as aplicações, serviços, volumes e portas. |
+| **Python + PyYAML** | Validar metadados, arquiteturas, segurança e catálogos. |
+| **Trivy + crane** | Auditar vulnerabilidades e consultar digests das imagens. |
+| **GitHub Actions** | Verificações, testes de regressão, monitorização e publicação. |
+| **HTML + CSS + JavaScript** | Montra leve e responsiva no GitHub Pages, sem dependências CDN. |
+
+## 🗂️ Estrutura do projeto
 
 ```text
-Apps/<app>/docker-compose.yml  # 254 manifests, origem preservada
-Apps/<app>/icon.svg            # ícones de recurso para as apps sem ícone válido
-scripts/catalog.py             # catálogo e segurança estática
-scripts/validate.py            # validação / relatório
-scripts/verify_dist.py         # validação do resultado real da compilação v2
-scripts/updates.py             # crane / digest e alertas
-scripts/cves.py                # Trivy CVEs HIGH/CRITICAL
-.github/workflows/             # CI, publicação e monitorizações
-renovate.json                  # PRs opcionais de novas tags
+MrStore/
+├── Apps/                 # 254 manifests de origem; não são todos necessariamente publicáveis
+├── web/                  # Montra e recursos visuais GitHub Pages
+│   ├── index.html
+│   └── assets/
+├── scripts/              # Validação, auditoria CVE, publicação e monitorização
+├── security/images/      # Imagens de segurança corrigidas quando justificadas
+├── tests/                # Testes offline e regressões
+├── docs/                 # Guias, política de segurança e migrações
+├── .github/workflows/    # Validação CI, publicação e verificações programadas
+├── category-list.json
+├── recommend-list.json
+└── store-config.json
 ```
 
-## Executar localmente
+## 🧪 Desenvolvimento e testes
 
 ```bash
 python -m pip install -r requirements.txt
 python scripts/validate.py
 python -m unittest discover -s tests -v
-# Após instalar a CLI crane e ter acesso aos registries:
-python scripts/updates.py
-# Após instalar o Trivy e atualizar a base de CVEs:
-python scripts/cves.py --shards 8 --shard 0
+python scripts/compatibility.py
 ```
 
-Os relatórios são escritos em `out/` e carregados como artefactos no GitHub Actions. Os dados de referência de digests ficam em `data/image-digests.json`. Revisão obrigatória antes de aceitar PRs de novas imagens ou versões; **não há merges automáticos**.
+A montra web é integrada pelo `scripts/stage_storefront.py` **apenas depois** de o builder oficial criar os JSON v2 e de o relatório da seleção aprovada ser validado. Não substitui `store.json`, `index.json` nem os Compose das aplicações.
 
-## Fontes e compatibilidade
+📖 [Como funciona a montra](docs/STORE_FRONTEND.md) · [GitHub Actions](https://github.com/mrpiracy94/MrStore/actions) · [Contribuir](CONTRIBUTING.md)
 
-- [Documentação do protocolo ZimaOS v2](https://www.zimaspace.com/docs/developer/app-store-github-actions)
-- [Descrição da saída de build v2](https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/build-output.md)
-- [Trivy](https://github.com/aquasecurity/trivy)
-- [crane](https://github.com/google/go-containerregistry/tree/main/cmd/crane)
-- [Renovate](https://github.com/renovatebot/renovate)
+---
 
-MrStore não é uma loja oficial IceWhaleTech. Os projetos originais continuam a pertencer aos respetivos desenvolvedores; o catálogo não garante disponibilidade, manutenção ou segurança de cada imagem.
+<div align="center">
+  <strong>MrStore</strong> · Feita para a comunidade, com paixão por self-hosting. 🧡<br>
+  <sub>Projeto não oficial, sem afiliação à IceWhaleTech ou aos programadores das aplicações.</sub>
+</div>
