@@ -279,5 +279,15 @@
       $("copy-feedback").textContent = "Endereço copiado!";
     } catch (_) { $("copy-feedback").textContent = "Seleciona e copia o endereço manualmente."; }
   });
+  // A pesquisa do cabeçalho conduz ao filtro real do catálogo.
+  const navSearch = document.querySelector(".nav-search");
+  if (navSearch) navSearch.addEventListener("click", function () {
+    window.setTimeout(function () { $("search").focus({ preventScroll: true }); }, 60);
+  });
+  // Fecha o menu móvel ao navegar para uma secção.
+  const mobileNav = document.querySelector(".mobile-nav");
+  if (mobileNav) mobileNav.querySelectorAll("a").forEach(function (link) {
+    link.addEventListener("click", function () { mobileNav.open = false; });
+  });
   readFavorites(); initialize();
 })();
