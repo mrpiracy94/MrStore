@@ -2,15 +2,9 @@
 # Audited publication remains controlled by release_catalog.py and CVE evidence.
 name: Publish six-app pilot catalog
 
+# Historical six-app withdrawal workflow: disabled after progressive expansion.
+# Keep for audit history only; it cannot overwrite the growing catalogue.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'data/featured-apps.json'
-      - 'scripts/featured.py'
-      - 'scripts/curate_small_catalog.py'
-      - 'tests/test_curate_small_catalog.py'
-      - '.github/workflows/publish-six-app-pilot.yml'
   workflow_dispatch:
 
 permissions:
@@ -22,7 +16,7 @@ concurrency:
 
 jobs:
   publish_six:
-    if: github.ref == 'refs/heads/main'
+    if: false  # Retired; replaced by rollout-233.yml
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
