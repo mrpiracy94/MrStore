@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from zimaos_update_visibility import (
-    catalog_item, compare_digests, docker_repo_digests, is_latest,
+    catalog_item, compare_digests, docker_compose_names, docker_repo_digests, is_latest,
     native_upgradable, runtime_check, scan_catalog, validate_api_base,
 )
 from catalog import App
@@ -30,6 +30,10 @@ def fixture(name="test-app", service="web", container="web", image="example/app:
 def fake_run_for(values):
     def fake(command, **kwargs):
         joined = " ".join(command)
+        # Generic docker-ps fixture output is NOT proof of project/service
+        # labels. Return an empty filtered listing unless specified.
+        if "--filter" in command and not any(k.startswith("label=") for k in values):
+            return subprocess.CompletedProcess(command, 0, "", "")
         for text, output in values.items():
             if text in joined:
                 return subprocess.CompletedProcess(command, 0, output, "")
@@ -159,6 +163,55 @@ class UpdateVisibilityTests(unittest.TestCase):
         result = runtime_check(item, runner=runner)
         self.assertEqual(result["update_evidence"], "unknown_local_inspection_failed")
         self.assertEqual(result["docker_image_error"], "invalid_installed_image_id")
+
+    def test_scoped_compose_labels_identify_container_without_name_guessing(self):
+        calls = []
+        image_id = "sha256:" + "c" * 64
+
+        def runner(command, **kwargs):
+            calls.append(command)
+            if command[:3] == ["docker", "ps", "-a"]:
+                value = "my-real-container" if "--filter" in command else "my-real-container\\nother-app"
+            elif command[:3] == ["docker", "container", "inspect"]:
+                value = image_id if "{{.Image}}" in command else "example/app:latest"
+            elif command[:3] == ["docker", "image", "inspect"]:
+                value = "[]"
+            else:
+                return subprocess.CompletedProcess(command, 1, "", "")
+            return subprocess.CompletedProcess(command, 0, value, "")
+
+        item = catalog_item(fixture(name="test-app", service="app",
+                                    container="name-that-is-not-running"))
+        outcome = runtime_check(item, runner=runner)
+        self.assertEqual(outcome["installed"], "found")
+        self.assertEqual(outcome["container_resolution"], "compose_project_and_service_labels")
+        self.assertFalse(outcome["zimaos_service_name_resolves"])
+        self.assertEqual(outcome["installed_image_id"], image_id)
+        filters = next(c for c in calls if c[:3] == ["docker", "ps", "-a"] and "--filter" in c)
+        self.assertIn("label=com.docker.compose.project=test-app", filters)
+        self.assertIn("label=com.docker.compose.service=app", filters)
+        self.assertTrue(any(c[:3] == ["docker", "container", "inspect"] and
+                            c[3] == "my-real-container" for c in calls))
+
+    def test_multiple_matching_compose_replicas_does_not_guess(self):
+        calls = []
+
+        def runner(command, **kwargs):
+            calls.append(command)
+            if command[:3] == ["docker", "ps", "-a"]:
+                value = "project-app-1\\nproject-app-2"
+                return subprocess.CompletedProcess(command, 0, value, "")
+            self.fail("Ambiguous Compose containers must not be inspected")
+
+        item = catalog_item(fixture(name="project", service="app", container=None))
+        outcome = runtime_check(item, runner=runner)
+        self.assertEqual(outcome["installed"], "ambiguous_multiple_main_containers")
+        self.assertEqual(outcome["update_evidence"], "unknown_ambiguous_main_containers")
+
+    def test_label_lookup_fails_closed_on_missing_project(self):
+        names, err = docker_compose_names("", "app")
+        self.assertIsNone(names)
+        self.assertEqual(err, "invalid_compose_identity")
 
     def test_runtime_does_not_claim_absent_container_is_not_installed(self):
         runner = fake_run_for({"docker ps -a": "different-container\n"})
