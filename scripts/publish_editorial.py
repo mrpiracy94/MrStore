@@ -53,8 +53,8 @@ def main():
     opts.report.parent.mkdir(parents=True, exist_ok=True)
     opts.report.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"Staged {len(selected)} editorial apps without certification claims")
-    if len(selected) != 64:
-        raise SystemExit("Expected exactly 64 editorial apps")
+    if len(selected) != 80:
+        raise SystemExit("Expected exactly 80 editorial apps")
     return 0
 
 if __name__ == "__main__":
