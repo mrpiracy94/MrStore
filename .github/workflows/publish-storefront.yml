@@ -24,6 +24,7 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: write
+      pages: write
     steps:
       - name: Checkout verified website source
         uses: actions/checkout@v4
@@ -82,3 +83,19 @@ jobs:
           done
           echo 'Website deployment did not succeed after retries.'
           exit 1
+      - name: Explicitly request GitHub Pages build after bot push
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # GITHUB_TOKEN pushes do not trigger the branch-based Pages builder.
+          # A successful git push is not proof that GitHub Pages went live.
+          curl --fail-with-body --show-error --silent \
+            --retry 3 --retry-delay 3 \
+            --request POST \
+            --header "Accept: application/vnd.github+json" \
+            --header "Authorization: Bearer $GH_TOKEN" \
+            --header "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/pages/builds"
+          echo 'GitHub Pages rebuild has been explicitly queued.'
