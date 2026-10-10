@@ -4,6 +4,7 @@ Unlike the daily advisory scan, releases need proof for each manifest platform.
 Scan failures and detected HIGH/CRITICAL findings are quarantined, never clean.
 """
 from __future__ import annotations
+from collections import defaultdict
 import argparse
 import json
 from pathlib import Path
@@ -54,6 +55,51 @@ def image_platforms(items) -> dict[str, list[str]]:
     return {image: sorted(values) for image, values in platforms.items()}
 
 
+
+def shared_package_groups(results: list[dict], usage: dict[str, list[str]]) -> list[dict]:
+    """Group actual Trivy package findings across image refs and CPU architectures.
+
+    Aggregate only diagnostic evidence; never use grouping to suppress or
+    downgrade a vulnerability or to skip per-architecture security gates.
+    """
+    grouped = defaultdict(lambda: {
+        "images": set(), "applications": set(), "architectures": set(),
+        "vulnerabilities": set(), "high": 0, "critical": 0, "unfixed": 0,
+    })
+    for entry in results:
+        image = entry["image"]
+        for arch, outcome in entry["scans"].items():
+            for finding in outcome.get("findings") or []:
+                package = finding.get("package") or "unknown"
+                item = grouped[package]
+                item["images"].add(image)
+                item["applications"].update(usage[image])
+                item["architectures"].add(arch)
+                if finding.get("cve"):
+                    item["vulnerabilities"].add(finding["cve"])
+                if finding.get("severity") == "CRITICAL":
+                    item["critical"] += 1
+                elif finding.get("severity") == "HIGH":
+                    item["high"] += 1
+                if not finding.get("fixed"):
+                    item["unfixed"] += 1
+    return [
+        {
+            "package": package,
+            "images": sorted(record["images"]),
+            "applications": sorted(record["applications"]),
+            "architectures": sorted(record["architectures"]),
+            "cves": sorted(record["vulnerabilities"]),
+            "critical": record["critical"],
+            "high": record["high"],
+            "without_fixed_version": record["unfixed"],
+        }
+        for package, record in sorted(
+            grouped.items(), key=lambda pair: (
+                -len(pair[1]["images"]), -len(pair[1]["applications"]), pair[0]))
+    ]
+
+
 def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner=scan) -> dict:
     usage = image_usage(items)
     platforms = image_platforms(items)
@@ -73,6 +119,9 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
                     "error": failure,
                     "critical": sum(v.get("severity") == "CRITICAL" for v in findings),
                     "high": sum(v.get("severity") == "HIGH" for v in findings),
+                    # Keep package-level findings: these permit root-cause
+                    # grouping and independently verifiable CVE remediation.
+                    "findings": findings,
                 }
         if error or not pinned or len(scans) != len(platforms[image]):
             status = "error"
@@ -88,7 +137,9 @@ def audit_shard(items, shard: int, shards: int, resolver=resolve_digest, scanner
         })
         print(f"[{len(results)}/{len(chosen)}] {image}: {status}", flush=True)
     return {"shard": shard, "shards": shards, "images_total": len(usage),
-            "images_checked": len(results), "results": results}
+            "images_checked": len(results),
+            "package_groups": shared_package_groups(results, usage),
+            "results": results}
 
 
 def main() -> int:
