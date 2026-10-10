@@ -95,6 +95,12 @@ testada, aprovada e integrada, e **não são certificações de instalação rea
 As assinaturas HomeDock são checksums SHA-256 de integridade, não uma
 identidade criptográfica autenticada do publicador.
 
+O relatório público [`support-report.json`](https://mrpiracy94.github.io/MrStore/universal/support-report.json)
+passará a apresentar a contagem de **formatos elegíveis** em cada um dos 11
+destinos, com certificações reais a zero até existir evidência de instalação
+e atualização. Um pacote opcional que não corresponda ao release auditado é
+retirado da publicação, sem afetar a loja ZimaOS.
+
 **[Matriz completa e estado por plataforma](docs/UNIVERSAL_PLATFORMS.md)** ·
 [Plano CasaOS/Homeio](docs/UNIVERSAL_COMPATIBILITY.md) ·
 [Política de publicação segura](docs/SAFE_RELEASE_POLICY.md)
