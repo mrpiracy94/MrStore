@@ -64,7 +64,7 @@ def audit(root: Path = ROOT) -> dict:
             if image.name.startswith("screenshot-") and image.suffix.lower() in SCREENSHOT_EXTS:
                 if image.stat().st_size < 128:
                     issues.append(f"{name}: missing or truncated screenshot asset")
-                elif image.suffix.lower() == ".png" and image.open("rb").read(8) != b"\\x89PNG\\r\\n\\x1a\\n":
+                elif image.suffix.lower() == ".png" and image.open("rb").read(8) != b"\x89PNG\r\n\x1a\n":
                     issues.append(f"{name}: invalid PNG screenshot signature")
                 else:
                     local_screenshots += 1
