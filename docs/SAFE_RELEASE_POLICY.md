@@ -12,7 +12,9 @@ O catálogo original continua com 254 manifestos versionados, mas a edição pub
 6. A verificação confirma os IDs, contagem aprovada, Compose, metadados, digests e subtítulos PT antes de atualizar gh-pages.
 7. O ficheiro público release-status.json e os artefactos no Actions guardam as apps não aprovadas e os motivos. A auditoria diária de CVEs e respetivos issues continuam ativos.
 
-**Separação editorial:** o workflow `rollout-233.yml` valida a seleção editorial de 254 aplicações e disponibiliza uma pré-visualização exclusivamente como artefacto GitHub Actions, com `certification: not_assessed`. Não atualiza `gh-pages`. A publicação de um catálogo instalável em `gh-pages` só pode ocorrer após aprovação da pipeline CVE e verificação da edição (`publish.yml`); a montra editorial independente pode continuar a mostrar candidatas sem apresentar certificação.
+**Catálogo completo:** `rollout-233.yml` publica todas as aplicações presentes em `Apps/`, sem filtragem CVE. O seu `release-status.json` identifica sempre `certification: not_assessed`, incluindo os avisos de configuração. Esta listagem é editorial, não uma certificação de instalação, segurança ou compatibilidade. Uma auditoria CVE separada continua a identificar problemas, mas não remove aplicações desta listagem.
+
+A edição auditada em `publish.yml` apenas pode substituir a loja se o seu índice contiver **todos os IDs do inventário**. Nunca poderá reduzir silenciosamente a listagem para o subconjunto sem alertas.
 
 ## Limitações e riscos
 - Um scan Trivy sem HIGH/CRITICAL não prova ausência absoluta de vulnerabilidades.

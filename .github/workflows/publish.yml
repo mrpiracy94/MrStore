@@ -232,11 +232,24 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
       - name: Retrieve validated approved ZimaOS catalog
         uses: actions/download-artifact@v8
         with:
           name: mrstore-v2-approved-dist
           path: dist/
+      # Never replace the full editorial store with a security-filtered subset.
+      - name: Require exact full inventory before overwriting gh-pages
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          source = {'io.github.mrpiracy94.' + p.parent.name for p in Path('Apps').glob('*/docker-compose.yml')}
+          index = json.loads(Path('dist/index.json').read_text(encoding='utf-8'))
+          ids = [item['id'] for item in index['apps']]
+          if not source or set(ids) != source or len(ids) != len(source):
+              raise SystemExit('Refusing to replace full MrStore catalog with a filtered release')
+          PY
       - name: Publish approved dist to gh-pages
         if: success()
         uses: peaceiris/actions-gh-pages@v4

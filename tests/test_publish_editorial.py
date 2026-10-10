@@ -35,13 +35,20 @@ class EditorialSafetyTests(unittest.TestCase):
             self.assertFalse(stage.exists(), "Partial stage must not exist")
             self.assertFalse(report.exists(), "No release report on failure")
 
-    def test_editorial_workflow_never_overwrites_audited_gh_pages(self):
+    def test_full_editorial_workflow_publishes_all_sources_without_security_claims(self):
         text = (ROOT / ".github/workflows/rollout-233.yml").read_text()
-        self.assertIn("mrstore-editorial-preview-254", text)
-        self.assertIn("actions/upload-artifact@v4", text)
-        self.assertNotIn("peaceiris/actions-gh-pages", text)
-        self.assertNotIn("contents: write", text)
-        self.assertNotIn("raw.githubusercontent.com/mrpiracy94/MrStore/gh-pages", text)
+        self.assertIn("p.parent.name for p in Path('Apps').glob('*/docker-compose.yml')", text)
+        self.assertIn("mrstore-complete-editorial-catalog", text)
+        self.assertIn("peaceiris/actions-gh-pages@v4", text)
+        self.assertIn("certification'] != 'not_assessed'", text)
+        self.assertIn("set(ids) != source", text)
+        self.assertNotIn("scripts/release_scan.py", text)
+
+    def test_audited_release_cannot_replace_all_apps_with_a_subset(self):
+        text = (ROOT / ".github/workflows/publish.yml").read_text()
+        self.assertIn("Refusing to replace full MrStore catalog with a filtered release", text)
+        self.assertIn("set(ids) != source", text)
+
 
 
 if __name__ == "__main__":
