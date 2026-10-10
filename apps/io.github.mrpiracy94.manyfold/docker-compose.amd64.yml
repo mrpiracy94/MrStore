@@ -1,7 +1,7 @@
 name: manyfold
 services:
   manyfold:
-    image: lscr.io/linuxserver/manyfold:latest@sha256:5fb8097c0c8cb3a63a522309ce26485d936aab66ce4b1fb137f9220e411927dc
+    image: lscr.io/linuxserver/manyfold:latest
     container_name: manyfold
     restart: unless-stopped
     environment:

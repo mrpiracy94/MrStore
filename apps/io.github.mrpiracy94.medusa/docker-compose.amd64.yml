@@ -1,7 +1,7 @@
 name: medusa
 services:
   medusa:
-    image: lscr.io/linuxserver/medusa:latest@sha256:7392a7f549348ab6957ec3158415d7aaf0e97e9875a6807c779c67c0659bc534
+    image: lscr.io/linuxserver/medusa:latest
     container_name: medusa
     restart: unless-stopped
     environment:

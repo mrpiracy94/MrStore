@@ -1,7 +1,7 @@
 name: synclounge
 services:
   synclounge:
-    image: lscr.io/linuxserver/synclounge:latest@sha256:b39ce5e6363c6f7d7b0512190c3f19cd9d2d91fd116957e91ea050047cb9d103
+    image: lscr.io/linuxserver/synclounge:latest
     container_name: synclounge
     restart: unless-stopped
     environment:

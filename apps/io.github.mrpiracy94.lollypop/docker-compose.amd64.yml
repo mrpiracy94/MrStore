@@ -1,7 +1,7 @@
 name: lollypop
 services:
   lollypop:
-    image: lscr.io/linuxserver/lollypop:latest@sha256:79d5e1d737ea00e08bd21dae7886e67e1d332dea7d6090f5fadaff5985615acc
+    image: lscr.io/linuxserver/lollypop:latest
     container_name: lollypop
     restart: unless-stopped
     environment:

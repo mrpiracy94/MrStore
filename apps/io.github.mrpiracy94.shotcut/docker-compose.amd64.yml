@@ -1,7 +1,7 @@
 name: shotcut
 services:
   shotcut:
-    image: lscr.io/linuxserver/shotcut:latest@sha256:55e38b082051754844fcf21c12735ec8ac5a5bd227ddc6c50f8756ee22039cc1
+    image: lscr.io/linuxserver/shotcut:latest
     container_name: shotcut
     restart: unless-stopped
     environment:

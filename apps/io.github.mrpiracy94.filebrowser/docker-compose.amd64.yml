@@ -1,0 +1,30 @@
+name: filebrowser
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:v2.43.0@sha256:e3ea5bdb834fae91f43de573f866d30ee926e3763acb7d4f2407cae4a3a845ec
+    container_name: mrstore-filebrowser
+    restart: unless-stopped
+    user: "1000:1000"
+    ports:
+      - target: 80
+        published: "30154"
+        protocol: tcp
+    volumes:
+      - type: bind
+        source: /DATA/AppData/filebrowser/database
+        target: /database
+      - type: bind
+        source: /DATA/AppData/filebrowser/config
+        target: /config
+      - type: bind
+        source: /DATA/AppData/filebrowser/files
+        target: /srv
+x-casaos:
+  id: io.github.mrpiracy94.filebrowser
+  version: "2.43.1"
+  main: filebrowser
+  icon: https://mrpiracy94.github.io/MrStore/apps/io.github.mrpiracy94.filebrowser/assets/icon.png
+  title:
+    en_US: File Browser
+  port_map: "30154"
+  index: /

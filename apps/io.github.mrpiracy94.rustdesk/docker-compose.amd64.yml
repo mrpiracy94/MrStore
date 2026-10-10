@@ -1,7 +1,7 @@
 name: rustdesk
 services:
   rustdesk:
-    image: lscr.io/linuxserver/rustdesk:latest@sha256:8645ebfa7a8679b488a069cd4762b6d0b9f507c9b51f4fcbf77ab0ba3b0e760f
+    image: lscr.io/linuxserver/rustdesk:latest
     container_name: rustdesk
     restart: unless-stopped
     environment:

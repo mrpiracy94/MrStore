@@ -1,7 +1,7 @@
 name: gitqlient
 services:
   gitqlient:
-    image: lscr.io/linuxserver/gitqlient:latest@sha256:7d133735226579a4df58739130dd58d364e422a641d035ac2f7b878ba5c49284
+    image: lscr.io/linuxserver/gitqlient:latest
     container_name: gitqlient
     restart: unless-stopped
     environment:

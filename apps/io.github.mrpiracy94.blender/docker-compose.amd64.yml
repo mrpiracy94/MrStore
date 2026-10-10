@@ -1,7 +1,7 @@
 name: blender
 services:
   blender:
-    image: lscr.io/linuxserver/blender:latest@sha256:fdae0a7e4a2a0a6d867199770a2f75dd7e371e9c7952631becaffb350f21943c
+    image: lscr.io/linuxserver/blender:latest
     container_name: blender
     restart: unless-stopped
     environment:

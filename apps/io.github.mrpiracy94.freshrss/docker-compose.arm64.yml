@@ -1,7 +1,7 @@
 name: freshrss
 services:
   freshrss:
-    image: lscr.io/linuxserver/freshrss:latest@sha256:1a46ce0355094d6167a74f1c9887c6644d6ceea0e848297be89163a9d275c384
+    image: lscr.io/linuxserver/freshrss:latest
     container_name: freshrss
     restart: unless-stopped
     environment:

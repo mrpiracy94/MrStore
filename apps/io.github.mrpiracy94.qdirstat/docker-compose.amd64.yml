@@ -1,7 +1,7 @@
 name: qdirstat
 services:
   qdirstat:
-    image: lscr.io/linuxserver/qdirstat:latest@sha256:b5a39fa2c848bae006ec05b01a168d994eeae199422647689430a51a02494fe3
+    image: lscr.io/linuxserver/qdirstat:latest
     container_name: qdirstat
     restart: unless-stopped
     environment:

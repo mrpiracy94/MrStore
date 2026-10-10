@@ -1,7 +1,7 @@
 name: resilio-sync
 services:
   resilio-sync:
-    image: lscr.io/linuxserver/resilio-sync:latest@sha256:615094d2ba34c52003a45807db172b44214bc0f1e23ac0a2f9f297c27f36c646
+    image: lscr.io/linuxserver/resilio-sync:latest
     container_name: resilio-sync
     restart: unless-stopped
     environment:

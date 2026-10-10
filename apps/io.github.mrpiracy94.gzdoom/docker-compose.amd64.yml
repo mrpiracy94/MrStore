@@ -1,7 +1,7 @@
 name: gzdoom
 services:
   gzdoom:
-    image: lscr.io/linuxserver/gzdoom:latest@sha256:99c0116316f254cc5bc053f2a336a6c63dc4a55d1e39411eb1dfe37f53aaf28c
+    image: lscr.io/linuxserver/gzdoom:latest
     container_name: gzdoom
     restart: unless-stopped
     environment:

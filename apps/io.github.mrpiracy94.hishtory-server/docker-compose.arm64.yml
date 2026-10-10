@@ -1,7 +1,7 @@
 name: hishtory-server
 services:
   hishtory-server:
-    image: lscr.io/linuxserver/hishtory-server:latest@sha256:067703ba6f4fd7df52d6b4829c471425de17647290a801a2f942d3812c0600f8
+    image: lscr.io/linuxserver/hishtory-server:latest
     container_name: hishtory-server
     restart: unless-stopped
     environment:

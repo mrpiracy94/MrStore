@@ -1,7 +1,7 @@
 name: hedgedoc
 services:
   hedgedoc:
-    image: lscr.io/linuxserver/hedgedoc:latest@sha256:aacca8939a307e6f76f9d84ab045148772b33ca00d6081ea78c33c2021718478
+    image: lscr.io/linuxserver/hedgedoc:latest
     container_name: hedgedoc
     restart: unless-stopped
     environment:

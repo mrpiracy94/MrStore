@@ -1,7 +1,7 @@
 name: darktable
 services:
   darktable:
-    image: lscr.io/linuxserver/darktable:latest@sha256:8626336f48d274cc41ea0b3ed780d328e74ec28011419036b6308528d06a48c6
+    image: lscr.io/linuxserver/darktable:latest
     container_name: darktable
     restart: unless-stopped
     environment:

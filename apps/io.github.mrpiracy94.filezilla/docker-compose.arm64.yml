@@ -1,7 +1,7 @@
 name: filezilla
 services:
   filezilla:
-    image: lscr.io/linuxserver/filezilla:latest@sha256:44963709fdfef1f33317287be247888158c64090aea827062a155d51bf59229f
+    image: lscr.io/linuxserver/filezilla:latest
     container_name: filezilla
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: flexget
 services:
   flexget:
-    image: lscr.io/linuxserver/flexget:latest@sha256:b5db35e1c11e8d5b6d0fbcc3aedc86e0d3ea966e7497be84986310eb5dae1613
+    image: lscr.io/linuxserver/flexget:latest
     container_name: flexget
     restart: unless-stopped
     environment:

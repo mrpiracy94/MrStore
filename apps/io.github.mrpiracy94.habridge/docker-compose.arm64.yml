@@ -1,7 +1,7 @@
 name: habridge
 services:
   habridge:
-    image: lscr.io/linuxserver/habridge:latest@sha256:905ef73339dabd7b77384cc7e59d11f3b7e53a7e3fc6ff5a362d299f7ebdc621
+    image: lscr.io/linuxserver/habridge:latest
     container_name: habridge
     restart: unless-stopped
     environment:

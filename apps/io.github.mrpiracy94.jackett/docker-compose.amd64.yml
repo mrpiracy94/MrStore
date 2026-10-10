@@ -1,7 +1,7 @@
 name: jackett
 services:
   jackett:
-    image: lscr.io/linuxserver/jackett:latest@sha256:ef9b2d7b0333f18d07bc12f73a0706f1ecf10a3271d47c89cd0d82c0571ebdee
+    image: lscr.io/linuxserver/jackett:latest
     container_name: jackett
     restart: unless-stopped
     environment:

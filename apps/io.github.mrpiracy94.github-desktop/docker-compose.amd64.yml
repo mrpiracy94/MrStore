@@ -1,7 +1,7 @@
 name: github-desktop
 services:
   github-desktop:
-    image: lscr.io/linuxserver/github-desktop:latest@sha256:9717930d37d67b7cb5671fbe9e090cc8ff1c0728f599532055b059049e75ae48
+    image: lscr.io/linuxserver/github-desktop:latest
     container_name: github-desktop
     restart: unless-stopped
     environment:

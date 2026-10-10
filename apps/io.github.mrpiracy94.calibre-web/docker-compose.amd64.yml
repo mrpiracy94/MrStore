@@ -1,7 +1,7 @@
 name: calibre-web
 services:
   calibre-web:
-    image: lscr.io/linuxserver/calibre-web:latest@sha256:b73573f44704522c1d3d444d679cb461416fedbb1c0afdf063997afbf5b55a44
+    image: lscr.io/linuxserver/calibre-web:latest
     container_name: calibre-web
     restart: unless-stopped
     environment:

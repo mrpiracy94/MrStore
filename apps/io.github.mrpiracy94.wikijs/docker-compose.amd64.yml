@@ -1,7 +1,7 @@
 name: wikijs
 services:
   wikijs:
-    image: lscr.io/linuxserver/wikijs:latest@sha256:540f222f3c8d267ed2c5ffac1b7bf0d6a4dd7352540bd5d44030307095a02f26
+    image: lscr.io/linuxserver/wikijs:latest
     container_name: wikijs
     restart: unless-stopped
     environment:

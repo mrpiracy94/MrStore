@@ -1,7 +1,7 @@
 name: handbrake
 services:
   handbrake:
-    image: lscr.io/linuxserver/handbrake:latest@sha256:15ff10ecd1cd6e62d11f22a8e2ed2ab6a57fcb8b38bccfc371fc7283cb258b70
+    image: lscr.io/linuxserver/handbrake:latest
     container_name: handbrake
     restart: unless-stopped
     environment:

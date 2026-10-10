@@ -1,7 +1,7 @@
 name: lychee
 services:
   lychee:
-    image: lscr.io/linuxserver/lychee:latest@sha256:a73471523126b898438617984770661df91f1e0da69e858ca1812588929fcf0a
+    image: lscr.io/linuxserver/lychee:latest
     container_name: lychee
     restart: unless-stopped
     environment:

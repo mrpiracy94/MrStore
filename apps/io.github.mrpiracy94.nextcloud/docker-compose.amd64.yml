@@ -1,7 +1,7 @@
 name: nextcloud
 services:
   nextcloud:
-    image: lscr.io/linuxserver/nextcloud:latest@sha256:f77303e8d1a149a23c16e4253b710a4e47d3d5d686384f5717fe7823fbeb3984
+    image: lscr.io/linuxserver/nextcloud:latest
     container_name: nextcloud
     restart: unless-stopped
     environment:

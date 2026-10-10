@@ -1,7 +1,7 @@
 name: cops
 services:
   cops:
-    image: lscr.io/linuxserver/cops:latest@sha256:4ccb28b9cc43e0c00a4df1a6fd8a199982007fdf74c775d8263540cb3655ea00
+    image: lscr.io/linuxserver/cops:latest
     container_name: cops
     restart: unless-stopped
     environment:

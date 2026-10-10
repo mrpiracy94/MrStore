@@ -1,7 +1,7 @@
 name: fail2ban
 services:
   fail2ban:
-    image: lscr.io/linuxserver/fail2ban:latest@sha256:a5ba3c55e0f2894f543a53c3a42946d58c5d2a84af96b6f0b567ea1bdc42e556
+    image: lscr.io/linuxserver/fail2ban:latest
     container_name: fail2ban
     restart: unless-stopped
     environment:

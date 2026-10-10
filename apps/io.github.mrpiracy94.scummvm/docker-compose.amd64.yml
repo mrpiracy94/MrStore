@@ -1,7 +1,7 @@
 name: scummvm
 services:
   scummvm:
-    image: lscr.io/linuxserver/scummvm:latest@sha256:ab874b52592e22df4b27b94f87c1df96b35e6e964585540e5e6a34d94726a244
+    image: lscr.io/linuxserver/scummvm:latest
     container_name: scummvm
     restart: unless-stopped
     environment:

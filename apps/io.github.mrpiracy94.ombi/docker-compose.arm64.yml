@@ -1,7 +1,7 @@
 name: ombi
 services:
   ombi:
-    image: lscr.io/linuxserver/ombi:latest@sha256:2949f1b0d468b081807d8deb37ed5b4016ee2bd0b68088b35d286246b22f8f82
+    image: lscr.io/linuxserver/ombi:latest
     container_name: ombi
     restart: unless-stopped
     environment:

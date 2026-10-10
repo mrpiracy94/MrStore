@@ -1,7 +1,7 @@
 name: krita
 services:
   krita:
-    image: lscr.io/linuxserver/krita:latest@sha256:d38ad92b8a84eb835f159908af46cab40fc7c86bc4851916132c2dff03e4c9de
+    image: lscr.io/linuxserver/krita:latest
     container_name: krita
     restart: unless-stopped
     environment:

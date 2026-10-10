@@ -1,7 +1,7 @@
 name: foldingathome
 services:
   foldingathome:
-    image: lscr.io/linuxserver/foldingathome:latest@sha256:22a754347784371ae920895709d7d7dc99ba4bec779577f48af6a40b5ea33c3d
+    image: lscr.io/linuxserver/foldingathome:latest
     container_name: foldingathome
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: rpcs3
 services:
   rpcs3:
-    image: lscr.io/linuxserver/rpcs3:latest@sha256:f23c61d3d37add45e59a35fd7555cf50e5ff09d397e94995cbfaf80092ce4c19
+    image: lscr.io/linuxserver/rpcs3:latest
     container_name: rpcs3
     restart: unless-stopped
     environment:

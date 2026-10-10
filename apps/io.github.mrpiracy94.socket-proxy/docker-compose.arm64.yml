@@ -1,7 +1,7 @@
 name: socket-proxy
 services:
   socket-proxy:
-    image: lscr.io/linuxserver/socket-proxy:latest@sha256:3bf68de5e334fb06a4288d94b1d98dc2bc69a99536f093a3c9c67d313e4883a8
+    image: lscr.io/linuxserver/socket-proxy:latest
     container_name: socket-proxy
     restart: unless-stopped
     read_only: true

@@ -1,7 +1,7 @@
 name: radarr-4k
 services:
   radarr-4k:
-    image: lscr.io/linuxserver/radarr:latest@sha256:2fce439bf4e1001b55b58eac915918ed101fa51ed2d396475ecc4c99c70062c2
+    image: lscr.io/linuxserver/radarr:latest
     container_name: radarr-4k
     restart: unless-stopped
     environment:

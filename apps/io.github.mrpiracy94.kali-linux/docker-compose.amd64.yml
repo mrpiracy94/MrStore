@@ -1,7 +1,7 @@
 name: kali-linux
 services:
   kali-linux:
-    image: lscr.io/linuxserver/kali-linux:latest@sha256:2ea6cfbf76b51732feebf62d35afa704eef2478ef2f65f55d374bf287b79976e
+    image: lscr.io/linuxserver/kali-linux:latest
     container_name: kali-linux
     restart: unless-stopped
     environment:

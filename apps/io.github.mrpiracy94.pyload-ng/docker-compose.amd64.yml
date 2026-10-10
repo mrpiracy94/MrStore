@@ -1,7 +1,7 @@
 name: pyload-ng
 services:
   pyload-ng:
-    image: lscr.io/linuxserver/pyload-ng:latest@sha256:8864daecdba53acd25d4229a1c8df02f8abb2f3148e24dbfcb94548bb25d2546
+    image: lscr.io/linuxserver/pyload-ng:latest
     container_name: pyload-ng
     restart: unless-stopped
     environment:

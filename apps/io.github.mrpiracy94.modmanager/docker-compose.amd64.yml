@@ -1,7 +1,7 @@
 name: modmanager
 services:
   modmanager:
-    image: lscr.io/linuxserver/modmanager:latest@sha256:e7470d51c22cdd2a5d80f9298916c408795f684d83057eb724bf6339f43b9a0d
+    image: lscr.io/linuxserver/modmanager:latest
     container_name: modmanager
     restart: unless-stopped
     environment:

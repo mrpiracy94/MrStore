@@ -1,0 +1,25 @@
+{
+  "update_at": "2026-10-10",
+  "architectures": [
+    "amd64",
+    "arm64"
+  ],
+  "author": "MrStore",
+  "developer": "File Browser",
+  "category": "Productivity",
+  "thumbnail": "/apps/io.github.mrpiracy94.filebrowser/assets/filebrowser.webp",
+  "tagline": "Gerir ficheiros e pastas através do navegador",
+  "description": "Community-provided deployment candidate. Configure directory permissions and credentials prior to use. Not independently installation or CVE certified.",
+  "title": "File Browser",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.filebrowser",
+  "version": "2.43.1",
+  "categories": [
+    "productivity"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 10942074,
+    "arm64": 10414675
+  }
+}

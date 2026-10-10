@@ -1,7 +1,7 @@
 name: brave
 services:
   brave:
-    image: lscr.io/linuxserver/brave:latest@sha256:c1f63a5f5b1d52fd70b6b6bd864c1be4a9a5772089df44bee1454e04cd5f0fc0
+    image: lscr.io/linuxserver/brave:latest
     container_name: brave
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: dokuwiki
 services:
   dokuwiki:
-    image: lscr.io/linuxserver/dokuwiki:latest@sha256:b34c380bca0f45d24b46a2d46841e07957e39b206d76ccd31d49accb3987ae3d
+    image: lscr.io/linuxserver/dokuwiki:latest
     container_name: dokuwiki
     restart: unless-stopped
     environment:

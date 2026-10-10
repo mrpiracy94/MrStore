@@ -1,7 +1,7 @@
 name: duplicati
 services:
   duplicati:
-    image: lscr.io/linuxserver/duplicati:latest@sha256:1dd0ff9c40cc399f8bf87dcb2eb882c5808f37c3b716fae5fc9d5b9daaa8b966
+    image: lscr.io/linuxserver/duplicati:latest
     container_name: duplicati
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 {
   "source_apps": 254,
-  "featured_count": 223,
-  "approved_count": 223,
+  "featured_count": 254,
+  "approved_count": 254,
   "approved": [
     "actual-budget",
     "adguardhome-sync",
@@ -60,6 +60,7 @@
     "faster-whisper",
     "ferdium",
     "ffmpeg",
+    "filebrowser",
     "filezilla",
     "firefox",
     "flaresolverr",
@@ -210,37 +211,28 @@
     "sonarr",
     "sonarr-4k",
     "speedtest-tracker",
+    "spotube",
+    "sqlitebrowser",
+    "steam",
     "stirling-pdf",
     "swag",
     "synclounge",
     "syncthing",
+    "syslog-ng",
     "tailscale",
     "tautulli",
     "tdarr",
+    "telegram",
+    "thelounge",
+    "thunderbird",
     "transmission",
     "tvheadend",
+    "ubooquity",
+    "ungoogled-chromium",
     "unifi-network-application",
     "unpackerr",
     "uptime-kuma",
     "vaultwarden",
-    "wikijs",
-    "wireguard",
-    "wizarr"
-  ],
-  "quarantined_count": 0,
-  "quarantined": {},
-  "deferred_count": 31,
-  "deferred": [
-    "filebrowser",
-    "spotube",
-    "sqlitebrowser",
-    "steam",
-    "syslog-ng",
-    "telegram",
-    "thelounge",
-    "thunderbird",
-    "ubooquity",
-    "ungoogled-chromium",
     "vivaldi",
     "vlc",
     "vscode",
@@ -252,8 +244,11 @@
     "webtop",
     "weixin",
     "whisparr",
+    "wikijs",
     "winegui",
+    "wireguard",
     "wireshark",
+    "wizarr",
     "wps-office",
     "xbackbone",
     "xemu",
@@ -263,6 +258,10 @@
     "znc",
     "zotero"
   ],
+  "quarantined_count": 0,
+  "quarantined": {},
+  "deferred_count": 0,
+  "deferred": [],
   "warnings": {
     "altus": [
       "altus: dangerous security_opt=seccomp:unconfined"
@@ -556,6 +555,15 @@
     "speedtest-tracker": [
       "speedtest-tracker: default credentials not configured"
     ],
+    "spotube": [
+      "spotube: dangerous security_opt=seccomp:unconfined"
+    ],
+    "sqlitebrowser": [
+      "sqlitebrowser: dangerous security_opt=seccomp:unconfined"
+    ],
+    "steam": [
+      "steam: dangerous security_opt=seccomp:unconfined"
+    ],
     "tailscale": [
       "tailscale: dangerous cap_add=NET_ADMIN",
       "tailscale: dangerous cap_add=NET_RAW",
@@ -563,9 +571,63 @@
       "tailscale: dangerous sensitive_mount=/dev/net/tun",
       "tailscale: default credentials not configured"
     ],
+    "telegram": [
+      "telegram: dangerous security_opt=seccomp:unconfined"
+    ],
+    "thunderbird": [
+      "thunderbird: dangerous security_opt=seccomp:unconfined"
+    ],
+    "ungoogled-chromium": [
+      "ungoogled-chromium: dangerous security_opt=seccomp:unconfined"
+    ],
+    "vivaldi": [
+      "vivaldi: dangerous security_opt=seccomp:unconfined"
+    ],
+    "vlc": [
+      "vlc: dangerous security_opt=seccomp:unconfined"
+    ],
+    "vscode": [
+      "vscode: dangerous security_opt=seccomp:unconfined"
+    ],
+    "vscodium": [
+      "vscodium: dangerous security_opt=seccomp:unconfined"
+    ],
+    "webcord": [
+      "webcord: dangerous security_opt=seccomp:unconfined"
+    ],
+    "webstation": [
+      "webstation: dangerous security_opt=seccomp:unconfined"
+    ],
+    "webtop": [
+      "webtop: dangerous security_opt=seccomp:unconfined"
+    ],
+    "weixin": [
+      "weixin: dangerous security_opt=seccomp:unconfined"
+    ],
+    "winegui": [
+      "winegui: dangerous security_opt=seccomp:unconfined"
+    ],
     "wireguard": [
       "wireguard: dangerous cap_add=NET_ADMIN",
       "wireguard: dangerous cap_add=SYS_MODULE"
+    ],
+    "wireshark": [
+      "wireshark: dangerous security_opt=seccomp:unconfined"
+    ],
+    "wps-office": [
+      "wps-office: dangerous security_opt=seccomp:unconfined"
+    ],
+    "xemu": [
+      "xemu: dangerous security_opt=seccomp:unconfined"
+    ],
+    "yaak": [
+      "yaak: dangerous security_opt=seccomp:unconfined"
+    ],
+    "zen": [
+      "zen: dangerous security_opt=seccomp:unconfined"
+    ],
+    "zotero": [
+      "zotero: dangerous security_opt=seccomp:unconfined"
     ]
   },
   "certification": "not_assessed",

@@ -1,7 +1,7 @@
 name: rsnapshot
 services:
   rsnapshot:
-    image: lscr.io/linuxserver/rsnapshot:latest@sha256:37cbe97e9c96286b3e85462ceeb46327f4e10533d097d5dd0ccc6f450f6b70e2
+    image: lscr.io/linuxserver/rsnapshot:latest
     container_name: rsnapshot
     restart: unless-stopped
     environment:

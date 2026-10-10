@@ -1,7 +1,7 @@
 name: signal
 services:
   signal:
-    image: lscr.io/linuxserver/signal:latest@sha256:587cf340e2a110a18fbb4748c5ef2762124e2cba41eea18ba255fd9585f26620
+    image: lscr.io/linuxserver/signal:latest
     container_name: signal
     restart: unless-stopped
     environment:

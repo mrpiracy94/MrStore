@@ -1,7 +1,7 @@
 name: librewolf
 services:
   librewolf:
-    image: lscr.io/linuxserver/librewolf:latest@sha256:d649af4bf3d5acedd8fda7219d366695603d82314cc0e3dd37d0f4aa69916130
+    image: lscr.io/linuxserver/librewolf:latest
     container_name: librewolf
     restart: unless-stopped
     environment:

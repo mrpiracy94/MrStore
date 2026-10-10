@@ -1,7 +1,7 @@
 name: melonds
 services:
   melonds:
-    image: lscr.io/linuxserver/melonds:latest@sha256:c879f476ec9f8d5cdb1dae3049e5781f5eaa9f18b4ec18b2621b367ae5a77651
+    image: lscr.io/linuxserver/melonds:latest
     container_name: melonds
     restart: unless-stopped
     environment:

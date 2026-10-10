@@ -1,7 +1,7 @@
 name: nginx
 services:
   nginx:
-    image: lscr.io/linuxserver/nginx:latest@sha256:7743abf7d8fb55f96d2f9eabf0c3988101af6bc4f1556e2da3bd5a1d5745eab8
+    image: lscr.io/linuxserver/nginx:latest
     container_name: nginx
     restart: unless-stopped
     environment:

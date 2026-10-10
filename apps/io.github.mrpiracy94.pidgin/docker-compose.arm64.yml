@@ -1,7 +1,7 @@
 name: pidgin
 services:
   pidgin:
-    image: lscr.io/linuxserver/pidgin:latest@sha256:fab05e8b1388bec16f7865cf9d5c65fe265b21bbce8f245ea72664de7e0b6e68
+    image: lscr.io/linuxserver/pidgin:latest
     container_name: pidgin
     restart: unless-stopped
     environment:

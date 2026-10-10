@@ -1,0 +1,23 @@
+{
+  "update_at": "2026-10-09",
+  "architectures": [
+    "amd64"
+  ],
+  "author": "MrStore",
+  "developer": "LinuxServer.io",
+  "category": "Others",
+  "thumbnail": "/apps/io.github.mrpiracy94.steam/assets/steam.webp",
+  "tagline": "Plataforma de jogos para computador",
+  "description": "Steam — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/steam:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-steam/",
+  "title": "Steam",
+  "base_url": "https://mrpiracy94.github.io/MrStore",
+  "id": "io.github.mrpiracy94.steam",
+  "version": "1.0.1",
+  "categories": [
+    "others"
+  ],
+  "min_memory": 0,
+  "min_image_size": {
+    "amd64": 0
+  }
+}

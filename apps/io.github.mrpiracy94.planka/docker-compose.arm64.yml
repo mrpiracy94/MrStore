@@ -1,7 +1,7 @@
 name: planka
 services:
   planka:
-    image: lscr.io/linuxserver/planka:latest@sha256:5ed78066581d30492a1005fdf3fbe931bc7de15eff3d20e315472c75c7078f42
+    image: lscr.io/linuxserver/planka:latest
     container_name: planka
     restart: unless-stopped
     environment:

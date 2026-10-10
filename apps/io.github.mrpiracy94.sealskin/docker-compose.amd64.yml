@@ -1,7 +1,7 @@
 name: sealskin
 services:
   sealskin:
-    image: lscr.io/linuxserver/sealskin:latest@sha256:23433134048ffcdd3c1e65a2ee60a2b161070fff400f38a3de035627917cdb35
+    image: lscr.io/linuxserver/sealskin:latest
     container_name: sealskin
     restart: unless-stopped
     environment:

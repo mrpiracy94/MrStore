@@ -1,7 +1,7 @@
 name: speedtest-tracker
 services:
   speedtest-tracker:
-    image: lscr.io/linuxserver/speedtest-tracker:latest@sha256:e0bbf68d0254e09d457d8b2b5069f3b996fd9c16ba3558e9747dd2923e3db613
+    image: lscr.io/linuxserver/speedtest-tracker:latest
     container_name: speedtest-tracker
     restart: unless-stopped
     environment:
