@@ -1,4 +1,4 @@
-name: Build and publish MrStore v2
+name: MrStore — audited release build (publishes main only)
 on:
   push:
     branches: [main]
@@ -40,6 +40,10 @@ on:
       - '.github/workflows/publish.yml'
   pull_request:
     paths:
+      - 'scripts/**'
+      - 'tests/**'
+      - 'docs/UNIVERSAL_PLATFORMS.md'
+      - 'docs/UNIVERSAL_COMPATIBILITY.md'
       - 'Apps/**'
       - 'scripts/catalog.py'
       - 'scripts/cves.py'
@@ -93,15 +97,15 @@ jobs:
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
   security_audit:
-    # Run full eight-shard audits only on main/manual releases; PRs get preflight.
-    if: github.event_name != 'pull_request'
+    # PRs MUST perform the same eight-shard security scan as production.
+    # A green PR must never mean only the cheap preflight ran.
     needs: preflight
     name: Scan release images and platforms (shard ${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 240
     strategy:
       fail-fast: false
-      max-parallel: 4
+      max-parallel: 8
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     permissions:
@@ -278,6 +282,44 @@ jobs:
             rm -rf dist/universal dist/homedock dist/olares
             rm -f dist/store/casaos-homeio-preview.zip dist/store/umbrel-community-preview.zip dist/store/runtipi-store-preview.zip
           fi
+      - name: REQUIRE real audited ZimaOS and Universal output on pull requests
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          set -euo pipefail
+          for artifact in \
+            out/release-selection.json \
+            out/release-compose.json \
+            out/build-report.json \
+            dist/store.json \
+            dist/index.json \
+            dist/release-status.json \
+            dist/universal/catalog.json \
+            dist/universal/support-report.json; do
+            if [ ! -s "$artifact" ]; then
+              echo "::error::Mandatory PR build artifact missing: $artifact"
+              exit 1
+            fi
+          done
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          approved = json.loads(Path("out/release-selection.json").read_text())
+          idx = json.loads(Path("dist/index.json").read_text())
+          universal = json.loads(Path("dist/universal/catalog.json").read_text())
+          support = json.loads(Path("dist/universal/support-report.json").read_text())
+          total = approved["approved_count"]
+          assert total > 0, "Empty approved release"
+          assert idx["app_count"] == total, "ZimaOS build did not preserve approved count"
+          assert universal["approved_count"] == total, "Universal build did not preserve approved count"
+          assert support["security_selection_count"] == total, "Support report not from current audit"
+          assert len(support["systems"]) == 11, "Missing Universal system targets"
+          assert support["runtime_tested"] is False, "No device testing was executed in CI"
+          print(f"Verified actual PR release build: {total} approved apps; 11 targets (format-level only)")
+          PY
+      - name: Assert publication never happens on pull requests
+        if: github.event_name == 'pull_request'
+        run: echo "Full audit and catalog build ran. Deployment intentionally reserved for main."
       - name: Upload publication/quarantine diagnostics
         if: always()
         uses: actions/upload-artifact@v4
