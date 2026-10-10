@@ -222,6 +222,9 @@ class FastAppAuditTests(unittest.TestCase):
         for flag in ("--cache-backend", "memory", "--skip-db-update",
                      "--skip-java-db-update"):
             self.assertIn(flag, args)
+        # Four subprocesses per small hosted runner must not double their own
+        # internal parallelism and exhaust CPU or memory.
+        self.assertEqual(args[args.index("--parallel") + 1], "1")
 
 
 if __name__ == "__main__":
