@@ -76,6 +76,20 @@ class RequiredInstallerEnvironmentTests(unittest.TestCase):
         self.assertTrue(any("default credentials not configured" in x
                             for x in insecure_defaults(fixture(["PASSWORD=CHANGE_ME"]))))
 
+    def test_required_top_level_volume_variables_cannot_escape_gate(self):
+        app = fixture(["TZ=Europe/Lisbon"])
+        app.source["volumes"] = {"shared": {
+            "driver_opts": {"device": "${DATA_ROOT:?configure data root}"}}}
+        reasons = insecure_defaults(app)
+        self.assertTrue(any("compose: required Compose installation variables" in x
+                            for x in reasons), reasons)
+
+    def test_descriptive_root_metadata_does_not_require_secret(self):
+        app = fixture(["TZ=Europe/Lisbon"])
+        app.source["x-casaos"] = {"description": "${FAKE_SECRET:?just documentation}"}
+        self.assertFalse(any("required Compose installation variables" in x
+                             for x in insecure_defaults(app)))
+
     def test_change_me_in_runtime_command_or_labels_is_quarantined(self):
         for field, value in (
             ("command", ["--admin-password=CHANGE_ME"]),
