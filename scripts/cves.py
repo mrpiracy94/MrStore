@@ -35,8 +35,12 @@ BACKOFF_SECONDS = (12, 36)
 
 
 def scan(image: str, binary: str = 'trivy', platform: str | None = None) -> tuple[list[dict], str | None]:
+    # Four independent Trivy processes run on a typical two-vCPU GitHub
+    # runner. Prevent nested parallelism from multiplying CPU/RAM pressure.
+    prepared = os.environ.get('MRSTORE_CVE_DB_PREPARED') == '1'
+    internal_workers = '1' if prepared else '2'
     args = [binary, 'image', '--quiet', '--scanners', 'vuln', '--severity', 'HIGH,CRITICAL',
-            '--image-src', 'remote', '--parallel', '2',
+            '--image-src', 'remote', '--parallel', internal_workers,
             '--format', 'json', '--timeout', '8m']
     if platform is not None:
         if platform not in ('amd64', 'arm64'):
@@ -45,7 +49,7 @@ def scan(image: str, binary: str = 'trivy', platform: str | None = None) -> tupl
     # Parallel daily scans share freshly prepared read-only databases.
     # Memory scan cache avoids Trivy's filesystem cache lock; release scans
     # retain their existing cache/update behaviour.
-    if os.environ.get('MRSTORE_CVE_DB_PREPARED') == '1':
+    if prepared:
         args.extend(['--cache-backend', 'memory', '--skip-db-update',
                      '--skip-java-db-update'])
     args.append(image)
