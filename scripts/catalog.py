@@ -66,6 +66,8 @@ def local_asset_missing(url: object, root: Path) -> str | None:
 def report(root: Path = ROOT) -> dict:
     root = Path(root)
     items = apps(root)
+    # Imported lazily: privilege_policy itself imports catalog.
+    from privilege_policy import sensitive_host_bind
     issues: list[dict] = []
     seen_ids: set[str] = set()
     used_ports = defaultdict(set)
@@ -122,8 +124,11 @@ def report(root: Path = ROOT) -> dict:
             if any('seccomp:unconfined' in str(x) for x in (spec.get('security_opt') or [])):
                 add('warning', app.folder, 'seccomp_unconfined', service)
             for volume in spec.get('volumes') or []:
-                src = volume.get('source') if isinstance(volume, dict) else str(volume).split(':', 1)[0]
-                if src in ('/', '/etc', '/root', '/var/run/docker.sock'):
+                if isinstance(volume, dict):
+                    src = volume.get('source') if volume.get('type', 'bind') == 'bind' else None
+                else:
+                    src = str(volume).split(':', 1)[0]
+                if sensitive_host_bind(src):
                     add('warning', app.folder, 'sensitive_mount', f'{service}: {src}')
             env = spec.get('environment') or []
             if 'CHANGE_ME' in json.dumps(env):
