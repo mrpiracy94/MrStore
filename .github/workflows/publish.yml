@@ -18,6 +18,8 @@ on:
       - 'store-config.json'
       - 'web/**'
       - 'scripts/stage_storefront.py'
+      - 'scripts/export_universal.py'
+      - 'tests/test_export_universal.py'
       - 'tests/test_storefront.py'
       - 'category-list.json'
       - 'recommend-list.json'
@@ -191,6 +193,11 @@ jobs:
           report = json.loads(Path("out/release-selection.json").read_text())
           verify_published(Path("dist"), report, Path("release-source"))
           PY
+      - name: Export approved CasaOS/Homeio preview archive (no unscanned source apps)
+        run: >-
+          python scripts/export_universal.py --source release-source
+          --selection out/release-selection.json
+          --output dist/store/casaos-homeio-preview.zip
       - name: Verify PT subtitles of approved apps
         run: >-
           python -S scripts/curate_taglines.py --verify-dist dist/index.json
@@ -215,6 +222,7 @@ jobs:
             dist/store.json
             dist/index.json
             dist/release-status.json
+            dist/store/casaos-homeio-preview.zip
           if-no-files-found: warn
       - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
         uses: actions/upload-artifact@v4
