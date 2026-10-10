@@ -156,6 +156,10 @@ jobs:
           with open(os.environ["GITHUB_OUTPUT"], "a") as file:
               file.write(f"approved={selected['approved_count']}\n")
           PY
+      - name: Add authentic upstream screenshots only to approved staged apps
+        run: >-
+          python scripts/official_screenshots.py --root release-source
+          --report out/screenshot-provenance.json
       - name: Validate staged Compose manifests with official Docker Compose parser
         run: >-
           python scripts/compose_preflight.py --root release-source
@@ -204,6 +208,7 @@ jobs:
             out/release-selection.json
             out/release-compose.json
             out/release-compose.md
+            out/screenshot-provenance.json
             dist/store.json
             dist/index.json
             dist/release-status.json
