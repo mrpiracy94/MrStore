@@ -1,7 +1,7 @@
 name: ffmpeg
 services:
   ffmpeg:
-    image: lscr.io/linuxserver/ffmpeg:latest
+    image: ghcr.io/mrpiracy94/mrstore-pebble-ffmpeg@sha256:f162f645eec4d4c4b91ee3323a52ccbf8798faef184edb75ad12a0f772d8cb97
     container_name: ffmpeg
     restart: unless-stopped
     environment:
@@ -30,8 +30,8 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.ffmpeg
-  version: "1.0.0"
-  update_at: "2026-10-09"
+  version: "1.0.1"
+  update_at: "2026-10-10"
   architectures:
     - amd64
     - arm64

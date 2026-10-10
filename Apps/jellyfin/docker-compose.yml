@@ -1,7 +1,7 @@
 name: jellyfin
 services:
   jellyfin:
-    image: lscr.io/linuxserver/jellyfin:latest
+    image: ghcr.io/mrpiracy94/mrstore-pebble-jellyfin@sha256:3d572cac49486117afc12d5fa5bf4a1823a57b15d370e26bcc4d8a9e92d09979
     container_name: jellyfin
     restart: unless-stopped
     environment:
@@ -62,8 +62,8 @@ services:
 
 x-casaos:
   id: io.github.mrpiracy94.jellyfin
-  version: "1.0.0"
-  update_at: "2026-10-09"
+  version: "1.0.1"
+  update_at: "2026-10-10"
   architectures:
     - amd64
     - arm64
