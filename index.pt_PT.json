@@ -829,18 +829,6 @@
       "tagline": "Regista e compara velocidades da Internet"
     },
     {
-      "id": "io.github.mrpiracy94.spotube",
-      "tagline": "Leitor de música com integração de serviços"
-    },
-    {
-      "id": "io.github.mrpiracy94.sqlitebrowser",
-      "tagline": "Editor visual de bases de dados SQLite"
-    },
-    {
-      "id": "io.github.mrpiracy94.steam",
-      "tagline": "Plataforma de jogos para computador"
-    },
-    {
       "id": "io.github.mrpiracy94.stirling-pdf",
       "tagline": "Converte e edita ficheiros PDF"
     },
@@ -857,10 +845,6 @@
       "tagline": "Sincroniza pastas entre dispositivos"
     },
     {
-      "id": "io.github.mrpiracy94.syslog-ng",
-      "tagline": "Recolhe e centraliza logs de sistemas"
-    },
-    {
       "id": "io.github.mrpiracy94.tailscale",
       "tagline": "Rede privada segura entre dispositivos"
     },
@@ -873,32 +857,12 @@
       "tagline": "Converte e otimiza bibliotecas de vídeo"
     },
     {
-      "id": "io.github.mrpiracy94.telegram",
-      "tagline": "Mensagens e conversas no Telegram"
-    },
-    {
-      "id": "io.github.mrpiracy94.thelounge",
-      "tagline": "Cliente IRC acessível no navegador"
-    },
-    {
-      "id": "io.github.mrpiracy94.thunderbird",
-      "tagline": "Cliente de correio eletrónico e calendário"
-    },
-    {
       "id": "io.github.mrpiracy94.transmission",
       "tagline": "Cliente BitTorrent leve"
     },
     {
       "id": "io.github.mrpiracy94.tvheadend",
       "tagline": "Servidor de televisão e gravações digitais"
-    },
-    {
-      "id": "io.github.mrpiracy94.ubooquity",
-      "tagline": "Servidor de ebooks e banda desenhada"
-    },
-    {
-      "id": "io.github.mrpiracy94.ungoogled-chromium",
-      "tagline": "Navegador Chromium sem serviços Google"
     },
     {
       "id": "io.github.mrpiracy94.unifi-network-application",
@@ -917,100 +881,16 @@
       "tagline": "Gestor de palavras-passe compatível com Bitwarden"
     },
     {
-      "id": "io.github.mrpiracy94.vivaldi",
-      "tagline": "Navegador web personalizável"
-    },
-    {
-      "id": "io.github.mrpiracy94.vlc",
-      "tagline": "Reproduz ficheiros de áudio e vídeo"
-    },
-    {
-      "id": "io.github.mrpiracy94.vscode",
-      "tagline": "Editor Visual Studio Code no navegador"
-    },
-    {
-      "id": "io.github.mrpiracy94.vscodium",
-      "tagline": "Editor de código VSCodium"
-    },
-    {
-      "id": "io.github.mrpiracy94.vscodium-web",
-      "tagline": "Editor VSCodium acessível na web"
-    },
-    {
-      "id": "io.github.mrpiracy94.webcord",
-      "tagline": "Cliente de Discord para ambiente de trabalho"
-    },
-    {
-      "id": "io.github.mrpiracy94.webgrabplus",
-      "tagline": "Recolhe guias de programação televisiva"
-    },
-    {
-      "id": "io.github.mrpiracy94.webstation",
-      "tagline": "Ambiente de trabalho Linux acessível na web"
-    },
-    {
-      "id": "io.github.mrpiracy94.webtop",
-      "tagline": "Ambiente de trabalho Linux no navegador"
-    },
-    {
-      "id": "io.github.mrpiracy94.weixin",
-      "tagline": "Mensagens e conversas no Weixin"
-    },
-    {
-      "id": "io.github.mrpiracy94.whisparr",
-      "tagline": "Organiza e acompanha conteúdos multimédia"
-    },
-    {
       "id": "io.github.mrpiracy94.wikijs",
       "tagline": "Wiki moderna para documentação de equipas"
-    },
-    {
-      "id": "io.github.mrpiracy94.winegui",
-      "tagline": "Executa aplicações Windows através de Wine"
     },
     {
       "id": "io.github.mrpiracy94.wireguard",
       "tagline": "VPN segura e de alto desempenho"
     },
     {
-      "id": "io.github.mrpiracy94.wireshark",
-      "tagline": "Analisa e inspeciona tráfego de rede"
-    },
-    {
       "id": "io.github.mrpiracy94.wizarr",
       "tagline": "Convites para servidores Plex, Jellyfin e Emby"
-    },
-    {
-      "id": "io.github.mrpiracy94.wps-office",
-      "tagline": "Suite de escritório para documentos e apresentações"
-    },
-    {
-      "id": "io.github.mrpiracy94.xbackbone",
-      "tagline": "Partilha ficheiros e capturas de ecrã"
-    },
-    {
-      "id": "io.github.mrpiracy94.xemu",
-      "tagline": "Emulador da consola Xbox original"
-    },
-    {
-      "id": "io.github.mrpiracy94.yaak",
-      "tagline": "Cliente de API para testar pedidos HTTP"
-    },
-    {
-      "id": "io.github.mrpiracy94.your_spotify",
-      "tagline": "Estatísticas pessoais de música no Spotify"
-    },
-    {
-      "id": "io.github.mrpiracy94.zen",
-      "tagline": "Navegador Zen com foco em produtividade"
-    },
-    {
-      "id": "io.github.mrpiracy94.znc",
-      "tagline": "Bouncer IRC para manter sessões ligadas"
-    },
-    {
-      "id": "io.github.mrpiracy94.zotero",
-      "tagline": "Organiza referências e bibliografias"
     }
   ]
 }
