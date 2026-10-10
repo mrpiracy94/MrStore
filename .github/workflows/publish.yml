@@ -23,6 +23,10 @@ on:
       - 'scripts/export_portable_catalog.py'
       - 'scripts/export_umbrel_preview.py'
       - 'scripts/export_runtipi_preview.py'
+      - 'scripts/export_homedock.py'
+      - 'scripts/export_olares_preview.py'
+      - 'tests/test_export_homedock.py'
+      - 'tests/test_export_olares_preview.py'
       - 'tests/test_export_umbrel_preview.py'
       - 'tests/test_export_runtipi_preview.py'
       - 'tests/test_export_portable_catalog.py'
@@ -242,6 +246,21 @@ jobs:
           python scripts/export_runtipi_preview.py --source release-source
           --selection out/release-selection.json
           --output dist/store/runtipi-store-preview.zip
+      - name: Generate native HomeDock HDS and HDStore packages (device tests pending)
+        id: homedock_preview
+        continue-on-error: true
+        run: >-
+          python scripts/export_homedock.py --source release-source
+          --selection out/release-selection.json --dist dist
+      - name: Generate experimental Olares OAC 0.12 charts (device tests pending)
+        id: olares_preview
+        continue-on-error: true
+        run: >-
+          python scripts/export_olares_preview.py --source release-source
+          --selection out/release-selection.json --dist dist
+      - name: Report native preview generation failures
+        if: steps.homedock_preview.outcome == 'failure' || steps.olares_preview.outcome == 'failure'
+        run: echo '::warning::A native preview failed. Check build logs; ZimaOS publication remains independent.'
       - name: Upload publication/quarantine diagnostics
         if: always()
         uses: actions/upload-artifact@v4
@@ -259,6 +278,10 @@ jobs:
             dist/store/casaos-homeio-preview.zip
             dist/store/umbrel-community-preview.zip
             dist/store/runtipi-store-preview.zip
+            dist/homedock/catalog.json
+            dist/homedock/mrstore.hdstore
+            dist/olares/catalog.json
+            dist/olares/olares-oac-preview.zip
             dist/universal/catalog.json
           if-no-files-found: warn
       - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
