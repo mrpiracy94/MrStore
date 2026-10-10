@@ -1,0 +1,62 @@
+name: Verify OCI update detection against real Docker images
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/oci_installed_update_check.py'
+      - 'tests/test_oci_installed_update_check.py'
+      - '.github/workflows/verify-zimaos-oci-update.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.26'
+      - name: Install pinned read-only registry utility
+        run: |
+          go install github.com/google/go-containerregistry/cmd/crane@v0.21.7
+          echo "$HOME/go/bin" >> "$GITHUB_PATH"
+      - name: Verify offline branch coverage
+        run: python -m unittest discover -s tests -p 'test_oci_installed_update_check.py' -v
+      - name: Create an inert Docker fixture (never start container)
+        run: |
+          docker pull docker.io/library/alpine:3.20
+          docker create --name mrstore-oci-probe docker.io/library/alpine:3.20 sh
+      - name: Check same-image and different-image OCI results against registry
+        run: |
+          set -eu
+          python scripts/oci_installed_update_check.py \
+            --container mrstore-oci-probe \
+            --target docker.io/library/alpine:3.20 \
+            --output same.json
+          python scripts/oci_installed_update_check.py \
+            --container mrstore-oci-probe \
+            --target docker.io/library/alpine:3.21 \
+            --output different.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          same=json.loads(Path('same.json').read_text())
+          newer=json.loads(Path('different.json').read_text())
+          assert same['status']=='same_image',same
+          assert newer['status']=='candidate_update',newer
+          assert not same['updated_or_pulled']
+          assert not newer['updated_or_pulled']
+          assert not same['zimaos_native_badge_verified']
+          assert not newer['zimaos_native_badge_verified']
+          print('OCI update detection: same image vs candidate update verified in real Docker.')
+          PY
+      - name: Always remove inert fixture
+        if: always()
+        run: docker rm -f mrstore-oci-probe 2>/dev/null || true
