@@ -88,8 +88,10 @@ class IssueSyncTests(unittest.TestCase):
             report.write_text(json.dumps({
                 "shard": 31, "shards": 32, "critical": 0, "high": 0,
                 "failures": 0,
-                "coverage": {"images": {"complete": True,
-                    "expected": 8, "scanned": 8}},
+                "coverage": {
+                    "amd64": {"complete": True, "expected": 8, "scanned": 8},
+                    "arm64": {"complete": True, "expected": 7, "scanned": 7},
+                },
             }))
             summary.write_text("# Sem alertas no grupo 31\\n")
             calls = []
@@ -112,6 +114,34 @@ class IssueSyncTests(unittest.TestCase):
                                 and cmd[-1] == "51" for cmd in calls))
             self.assertFalse(any(cmd[:3] == ["gh", "issue", "close"]
                                  and cmd[-1] == "15" for cmd in calls))
+
+    def test_32_shard_single_architecture_results_do_not_close_issue(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            report = Path(tmp) / "cves.json"
+            summary = Path(tmp) / "cves.md"
+            report.write_text(json.dumps({
+                "shard": 31, "shards": 32, "critical": 0, "high": 0,
+                "failures": 0,
+                "coverage": {"images": {"complete": True,
+                    "expected": 8, "scanned": 8}},
+            }))
+            summary.write_text("# No findings on default runner architecture\\n")
+            calls = []
+
+            def runner(args, **kwargs):
+                calls.append(args)
+                if args[:3] == ["gh", "issue", "list"]:
+                    return subprocess.CompletedProcess(args, 0, json.dumps([
+                        {"number": 51, "title":
+                         "MrStore CVE HIGH/CRITICAL — 32-shard 31",
+                         "state": "OPEN"},
+                    ]), "")
+                return subprocess.CompletedProcess(args, 0, "", "")
+
+            outcome = sync(report, summary, runner=runner)
+            self.assertEqual(outcome["action"], "scan_incomplete")
+            self.assertFalse(any(cmd[:3] == ["gh", "issue", "close"]
+                                 for cmd in calls))
 
     def test_32_shard_incomplete_evidence_keeps_cve_issue_open(self):
         with tempfile.TemporaryDirectory() as tmp:
