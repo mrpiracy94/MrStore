@@ -62,3 +62,9 @@ Uma aprovação estática não é prova de funcionamento real.
 Referências: [formato CasaOS](https://github.com/IceWhaleTech/CasaOS-AppStore/blob/main/docs/specs/compose-and-x-casaos.md),
 [compatibilidade declarada pelo Homeio](https://github.com/doctor-io/homeio),
 [exemplo Umbrel](https://github.com/getumbrel/umbrel-community-app-store).
+
+## Alargamento às 11 plataformas
+
+Este piloto integra-se agora na iniciativa [MrStore Universal](UNIVERSAL_PLATFORMS.md),
+com catálogo portátil, templates Portainer e ZIPs-semente Umbrel/Runtipi.
+A compatibilidade real continua dependente de testes no sistema de destino.
