@@ -106,3 +106,21 @@ instalada.
 
 Os exemplos são deliberadamente inválidos para certificação até serem
 preenchidos a partir de instalações reais.
+
+
+## Piloto de runtime Docker/Linux em GitHub-hosted Ubuntu
+
+O job docker_live_pilot usa o mesmo release aprovado pela auditoria de oito
+shards, importando a imagem imutável da IT-Tools e executando-a num contentor
+verdadeiro no Ubuntu descartável do GitHub Actions. A porta HTTP é local
+127.0.0.1, não são montados volumes nem passados segredos. Faz um pedido à
+aplicação, reinicia o contentor e repete o pedido. Em seguida remove os
+contentores, redes e volumes transitórios.
+
+O artifact mrstore-docker-live-pilot contém prova de arranque, digest, SHA
+do manifesto, versões Docker/Compose e resposta HTTP. A app pode ficar em
+quarentena pelo Trivy, caso em que o piloto regista que não foi executado.
+Resultados positivos são apenas candidatos C2 a revisão; não constituem C3
+(persistência/função completa), C4 (backup/upgrade/rollback), nem comprovam
+outras plataformas como CasaOS, ZimaOS, Umbrel ou Olares. Não acrescentar
+o registro à lista C4 sem ensaio e dupla revisão humana.

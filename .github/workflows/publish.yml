@@ -369,6 +369,40 @@ jobs:
           path: dist/
           include-hidden-files: true
           if-no-files-found: error
+  docker_live_pilot:
+    name: Real Docker/Linux IT-Tools smoke test (C2 candidate, never certified)
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - name: Download audited release from THIS workflow run
+        uses: actions/download-artifact@v8
+        with:
+          name: mrstore-v2-approved-dist
+          path: dist/
+      - name: Deploy and restart vetted IT-Tools in disposable Docker
+        run: >-
+          python scripts/docker_live_pilot.py
+          --manifest dist/universal/compose/it-tools.yml
+          --selection dist/release-status.json
+          --catalog dist/universal/catalog.json
+          --output out/docker-live-pilot.json
+      - name: Archive actual runtime evidence, even after failures
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-docker-live-pilot
+          path: out/docker-live-pilot.json
+          if-no-files-found: warn
+          retention-days: 30
   publish:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: build
