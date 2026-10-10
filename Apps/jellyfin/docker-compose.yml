@@ -75,9 +75,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/jellyfin.png
   title:
     en_US: "Jellyfin"
+    pt_PT: "Jellyfin"
   tagline:
     en_US: "Jellyfin (LinuxServer.io)"
   description:
     en_US: "Jellyfin — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/jellyfin:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-jellyfin/"
+    pt_PT: "Servidor multimédia para organizar e reproduzir filmes, séries e música. Por predefinição, usa /DATA/Media/Movies e /DATA/Media/TV. Confirma a localização das bibliotecas e o acesso aos ficheiros."
   port_map: "8096"
   index: /
