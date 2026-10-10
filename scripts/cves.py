@@ -153,7 +153,7 @@ def changed_apps_since(root: Path, base_sha: str) -> set[str]:
          base_sha, 'HEAD', '--', 'Apps/'],
         capture_output=True, text=True, check=True,
     )
-    return {parts[1] for name in result.stdout.split('\\0') if name
+    return {parts[1] for name in result.stdout.split('\0') if name
             for parts in [Path(name).parts]
             if len(parts) >= 3 and parts[0] == 'Apps'}
 
