@@ -20,7 +20,7 @@ jobs:
       IMAGE: ghcr.io/mrpiracy94/mrstore-phpmyadmin:lsio-composer-twig-symfony-secfix-20261010@sha256:e013e13d834b9ae5c0cf47f9edb5501aa99a60109813ef3280131621498b1749
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-qemu-action@v4
       - name: Prove unauthenticated registry can fetch exact dualarch digest
         run: |
           docker logout ghcr.io || true
