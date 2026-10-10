@@ -11,6 +11,8 @@ on:
       - 'scripts/curate_taglines.py'
       - 'scripts/validate.py'
       - 'scripts/verify_dist.py'
+      - 'scripts/privilege_policy.py'
+      - 'scripts/compose_preflight.py'
       - 'data/taglines-pt.json'
       - 'store-config.json'
       - 'category-list.json'
