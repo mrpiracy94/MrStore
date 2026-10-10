@@ -133,9 +133,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/immich.png
   title:
     en_US: "Immich"
+    pt_PT: "Immich"
   tagline:
     en_US: "Biblioteca de fotos e vídeos (alternativa ao Google Fotos)"
   description:
     en_US: "Biblioteca de fotos e vídeos (alternativa ao Google Fotos). Estado: verificado em out/2026 (compose oficial atual; postgres vectorchord 0.4.3, valkey 9). Confirma portas e variáveis na documentação do projeto. Muda a password em DB_PASSWORD e POSTGRES_PASSWORD (têm de ser iguais)."
+    pt_PT: "Biblioteca privada de fotos e vídeos com pesquisa e funcionalidades inteligentes. Antes de instalar, configura DB_PASSWORD e POSTGRES_PASSWORD com o mesmo segredo forte; os valores CHANGE_ME não são seguros. Confirma os requisitos e faz cópias de segurança."
   port_map: "2283"
   index: /
