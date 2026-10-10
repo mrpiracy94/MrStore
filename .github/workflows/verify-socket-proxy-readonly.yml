@@ -16,7 +16,16 @@ jobs:
       - name: Start the actual proxy without exposing it publicly
         run: |
           set -euo pipefail
-          docker compose --project-name mrstore-sock-test -f Apps/socket-proxy/docker-compose.yml up -d
+          # lscr.io can temporarily return TOOMANYREQUESTS on shared GH runners.
+          for attempt in 1 2 3 4 5; do
+            if docker compose --project-name mrstore-sock-test -f Apps/socket-proxy/docker-compose.yml pull; then break; fi
+            if [ "$attempt" -eq 5 ]; then
+              echo "::error::Socket-proxy registry still unavailable after retries"
+              exit 1
+            fi
+            sleep $((attempt * 15))
+          done
+          docker compose --project-name mrstore-sock-test -f Apps/socket-proxy/docker-compose.yml up -d --pull never
           docker ps --filter name=socket-proxy
       - name: Verify GET works and Docker POST is actually blocked
         run: |
