@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        app: [beets, limnoria, nzbget, sickgear, tautulli]
+        app: [beets, nzbget, sickgear, tautulli]
         arch: [amd64, arm64]
     env:
       APP: ${{ matrix.app }}
@@ -118,7 +118,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [beets, limnoria, nzbget, sickgear, tautulli]
+        app: [beets, nzbget, sickgear, tautulli]
     env:
       APP: ${{ matrix.app }}
       IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-python-${{ matrix.app }}
@@ -175,7 +175,7 @@ jobs:
           : > out/approved.txt
           anonymous="$(mktemp -d)"
           trap 'rm -rf "$anonymous"' EXIT
-          for app in beets limnoria nzbget sickgear tautulli; do
+          for app in beets nzbget sickgear tautulli; do
             image="ghcr.io/$IMAGE_OWNER/mrstore-python-$app"
             tag="$image:secfix-$GITHUB_SHA"
             if ! DOCKER_CONFIG="$anonymous" docker buildx imagetools inspect "$tag" > out/inspect.txt 2>/dev/null; then
@@ -203,7 +203,7 @@ jobs:
           from pathlib import Path
           for row in Path('out/approved.txt').read_text().splitlines():
               app,image=row.split('|',1)
-              if app not in {'beets','limnoria','nzbget','sickgear','tautulli'}:
+              if app not in {'beets','nzbget','sickgear','tautulli'}:
                   raise SystemExit('Unexpected application')
               if not re.fullmatch(r'ghcr\.io/[a-z0-9-]+/mrstore-python-[a-z0-9-]+@sha256:[0-9a-f]{64}',image):
                   raise SystemExit('Invalid immutable image reference')
