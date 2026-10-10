@@ -74,6 +74,7 @@ class UpdateVisibilityTests(unittest.TestCase):
     def test_runtime_with_absent_digest_marks_unknown(self):
         runner = fake_run_for({
             "docker ps -a": "test-app\n",
+            "--format {{.Image}}": "sha256:" + "c" * 64,
             "docker container inspect": "example/installed:latest",
             "docker image inspect": "[]",
         })
@@ -84,14 +85,14 @@ class UpdateVisibilityTests(unittest.TestCase):
         self.assertEqual(outcome["update_evidence"], "unknown_missing_repodigests")
         self.assertTrue(outcome["zimaos_service_name_resolves"])
 
-    def test_runtime_uses_real_installed_image_reference_not_catalog_tag(self):
+    def test_runtime_inspects_immutable_running_image_id_not_mutable_tag(self):
         calls = []
         def runner(command, **kwargs):
             calls.append(command)
             if command[:3] == ["docker", "ps", "-a"]:
                 value = "test-app\n"
             elif command[:3] == ["docker", "container", "inspect"]:
-                value = "example/installed:old"
+                value = ("sha256:" + "c" * 64) if "{{.Image}}" in command else "example/installed:old"
             elif command[:3] == ["docker", "image", "inspect"]:
                 value = '["example/installed@sha256:' + "a" * 64 + '"]'
             else:
@@ -101,9 +102,63 @@ class UpdateVisibilityTests(unittest.TestCase):
                                     container="test-app", image="example/catalog:latest"))
         result = runtime_check(item, runner=runner)
         self.assertEqual(result["installed_image"], "example/installed:old")
+        self.assertEqual(result["installed_image_id"], "sha256:" + "c" * 64)
         self.assertTrue(any(c[:3] == ["docker", "image", "inspect"]
-                            and c[3] == "example/installed:old" for c in calls))
+                            and c[3] == "sha256:" + "c" * 64 for c in calls))
+        self.assertFalse(any(c[:3] == ["docker", "image", "inspect"]
+                             and c[3] == "example/installed:old" for c in calls))
         self.assertEqual(result["update_evidence"], "unknown_remote_not_checked")
+
+    def test_a_re_pulled_latest_tag_does_not_hide_running_old_image(self):
+        """A moved latest tag must never be mistaken for the running image."""
+        old = "sha256:" + "a" * 64
+        new = "sha256:" + "b" * 64
+        running_id = "sha256:" + "c" * 64
+        calls = []
+
+        def runner(command, **kwargs):
+            calls.append(command)
+            if command[:3] == ["docker", "ps", "-a"]:
+                value = "test-app"
+            elif command[:3] == ["docker", "container", "inspect"]:
+                value = running_id if "{{.Image}}" in command else "example/installed:latest"
+            elif command[:3] == ["docker", "image", "inspect"]:
+                # If accidentally inspected by tag, Docker would return the
+                # newly pulled digest, producing a false "up to date".
+                value = json.dumps(["example/installed@" + old] if command[3] == running_id
+                                   else ["example/installed@" + new])
+            elif command[:2] == ["crane", "digest"]:
+                value = new
+            else:
+                return subprocess.CompletedProcess(command, 1, "", "")
+            return subprocess.CompletedProcess(command, 0, value, "")
+
+        item = catalog_item(fixture(name="test-app", service="test-app",
+                                    container="test-app", image="example/installed:latest"))
+        result = runtime_check(item, check_registry=True, runner=runner)
+        self.assertEqual(result["update_evidence"], "digest_differs_review_required")
+        self.assertTrue(any(c[:3] == ["docker", "image", "inspect"] and c[3] == running_id
+                            for c in calls))
+        self.assertFalse(any(c[:3] == ["docker", "image", "inspect"] and
+                             c[3] == "example/installed:latest" for c in calls))
+
+    def test_invalid_image_id_cannot_fall_back_to_mutable_tag(self):
+        def runner(command, **kwargs):
+            if command[:3] == ["docker", "ps", "-a"]:
+                value = "test-app"
+            elif command[:3] == ["docker", "container", "inspect"]:
+                value = "malformed-id" if "{{.Image}}" in command else "demo:latest"
+            elif command[:3] == ["docker", "image", "inspect"]:
+                self.fail("Do not inspect a mutable tag when image ID is invalid")
+            else:
+                return subprocess.CompletedProcess(command, 1, "", "")
+            return subprocess.CompletedProcess(command, 0, value, "")
+
+        item = catalog_item(fixture(name="test-app", service="test-app",
+                                    container="test-app"))
+        result = runtime_check(item, runner=runner)
+        self.assertEqual(result["update_evidence"], "unknown_local_inspection_failed")
+        self.assertEqual(result["docker_image_error"], "invalid_installed_image_id")
 
     def test_runtime_does_not_claim_absent_container_is_not_installed(self):
         runner = fake_run_for({"docker ps -a": "different-container\n"})
