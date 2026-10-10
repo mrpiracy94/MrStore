@@ -86,7 +86,27 @@ def gh_api(path: str, *, token: str | None = None, payload: dict | None = None):
     if token is not None:
         env["GH_TOKEN"] = token
     proc = subprocess.run(cmd, input=json.dumps(payload) if payload else None,
-                          capture_output=True, text=True, env=env, check=True)
+                          capture_output=True, text=True, env=env, check=False)
+    if proc.returncode:
+        # gh writes the useful HTTP error to stderr, but CalledProcessError
+        # previously hid it and prevented writing a queue report.
+        stderr = proc.stderr or ""
+        match = re.search(r"\bHTTP\s+([1-5]\d{2})\b", stderr, re.IGNORECASE)
+        code = match.group(1) if match else "unknown"
+        detail = next((line.strip() for line in stderr.splitlines()
+                       if line.strip().startswith("gh:")), "")
+        if not detail:
+            detail = (stderr.splitlines() or ["No GitHub API error detail"])[0].strip()
+        # Never print user PATs, GitHub App credentials or bearer tokens.
+        for secret in (token, env.get("GH_TOKEN"), env.get("GITHUB_TOKEN")):
+            if secret:
+                detail = detail.replace(secret, "[REDACTED]")
+        detail = re.sub(r"(github_pat_|gh[pousr]_|Bearer\s+)[A-Za-z0-9_\.-]+",
+                        "[REDACTED]", detail, flags=re.IGNORECASE)
+        raise RuntimeError(
+            f"GitHub API {cmd[-3] if payload is not None else path} "
+            f"returned HTTP {code}: {detail[:320]}"
+        )
     return json.loads(proc.stdout)
 
 
@@ -133,9 +153,24 @@ def render(report: dict) -> str:
         out.append(f"- ⏳ #{item['issue']} → {item['agent']} — {item['title']}")
     for item in report["blocked"]:
         out.append(f"- ⛔ #{item['issue']} — {item['reason']}")
+    if report.get("error"):
+        error = report["error"]
+        out.extend(["", f"### ERRO: delegação não confirmada no issue #{error['issue']}",
+                    f"- Passo: {error['stage']}",
+                    f"- Detalhe da API: {error['detail']}",
+                    "- Não interpretar este run como delegação concluída. "
+                    "Verificar autorização do PAT e disponibilidade do Copilot antes de repetir."])
     if report.get("note"):
         out.extend(["", report["note"]])
     return "\n".join(out) + "\n"
+
+
+def save_report(report: dict) -> None:
+    out = Path("out")
+    out.mkdir(exist_ok=True)
+    (out / "copilot-queue.json").write_text(
+        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (out / "copilot-queue.md").write_text(render(report), encoding="utf-8")
 
 
 def main() -> None:
@@ -164,17 +199,24 @@ def main() -> None:
               "ready": ready, "blocked": blocked, "assigned": [],
               "note": ("Missing COPILOT_ASSIGN_TOKEN: report only, no Copilot task started."
                        if args.mode == "auto" and not token else "")}
+    # Save before performing writes so an API failure never destroys the audit trail.
+    save_report(report)
     if wants_assignment:
-        for item in ready[:args.max_assignments]:
-            # Failure stops the run; an unconfirmed assignment is never marked successful.
-            assignment(repo, item, token)
+        for index, item in enumerate(ready[:args.max_assignments]):
+            try:
+                # Failure stops the run; an unconfirmed assignment is never reported as successful.
+                assignment(repo, item, token)
+            except (RuntimeError, ValueError, subprocess.CalledProcessError) as exc:
+                report["error"] = {
+                    "issue": item["issue"], "stage": "Copilot API assignment",
+                    "detail": str(exc)[:450],
+                }
+                save_report(report)
+                print(render(report))
+                raise SystemExit(1) from None
             report["assigned"].append(item)
-        report["ready"] = ready[args.max_assignments:]
-    out = Path("out")
-    out.mkdir(exist_ok=True)
-    (out / "copilot-queue.json").write_text(
-        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    (out / "copilot-queue.md").write_text(render(report), encoding="utf-8")
+            report["ready"] = ready[index + 1:]
+            save_report(report)
     print(render(report))
 
 
