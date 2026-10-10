@@ -1,14 +1,14 @@
 <div align="center">
   <img src="web/assets/mrstore-hero.webp" alt="MrStore — O teu homelab. As tuas apps. Uma só loja. Um ecossistema, múltiplas plataformas." width="100%">
 
-  <h1>MrStore · Your Homelab App Hub</h1>
+  <h1>MrStore · The Homelab App Hub</h1>
 
   <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Descobre aplicações self-hosted num catálogo comunitário pensado para unir sistemas, servidores e plataformas. Uma identidade independente do teu sistema operativo.</p>
 
   <p>
     <a href="https://mrpiracy94.github.io/MrStore/"><strong>🌐 Explorar a loja</strong></a>
     &nbsp; · &nbsp;
-    <a href="#-uma-marca-para-todo-o-homelab"><strong>🌍 Ecossistema</strong></a>
+    <a href="#-plataformas-e-compatibilidade"><strong>🌍 Plataformas</strong></a>
     &nbsp; · &nbsp;
     <a href="#-segurança-e-transparência"><strong>🛡️ Segurança</strong></a>
     &nbsp; · &nbsp;
@@ -20,9 +20,9 @@
 
 ## ✨ O que é a MrStore?
 
-A **MrStore** é uma montra comunitária de aplicações **self-hosted** concebida para o universo homelab — independentemente da marca do NAS, servidor ou plataforma. Organiza **254 definições de aplicações** baseadas em Docker Compose. O catálogo público pode disponibilizar **menos aplicações**, porque a publicação exclui as que não passaram os controlos de segurança.
+A **MrStore** reúne aplicações **self-hosted** para servidores, NAS e projetos homelab, independentemente da marca ou sistema utilizado. O repositório organiza definições Docker Compose; a seleção pública pode conter menos aplicações porque apenas são publicadas as entradas aprovadas pelos controlos de segurança.
 
-**Estado técnico atual:** o adaptador de loja disponível neste repositório utiliza o protocolo **ZimaOS App Store v2**. O suporte de instalação nativa noutros sistemas faz parte do desenvolvimento futuro.
+**A montra web é universal para descoberta, não para instalação automática.** A instalação nativa depende do adaptador e da validação de cada plataforma.
 
 | 🔍 Exploração fácil | 📦 Aplicações self-hosted | 🛡️ Segurança por aplicação |
 |:---|:---|:---|
@@ -30,30 +30,24 @@ A **MrStore** é uma montra comunitária de aplicações **self-hosted** concebi
 
 **[Abrir a montra da MrStore →](https://mrpiracy94.github.io/MrStore/)**
 
-> **Nota:** a montra em GitHub Pages é uma interface informativa. Não instala aplicações automaticamente. A nova interface só fica disponível publicamente após uma publicação segura e bem-sucedida na branch `gh-pages`. Se estiver publicada uma edição anterior, consulta os avisos e relatórios antes de instalar.
+> **Nota:** a montra em GitHub Pages permite descobrir aplicações e consultar o catálogo real, mas não instala contentores. Só considera uma edição validada quando os relatórios da publicação correspondem ao índice apresentado.
 
-## 🌍 Uma marca para todo o homelab
+## 🌍 Plataformas e compatibilidade
 
-A **MrStore** pretende ser um ponto de descoberta de aplicações self-hosted para diferentes ambientes. O objetivo futuro abrange **UmbrelOS, Homeio, CasaOS, ZimaOS, Cosmos, Portainer, HomeDock OS, Olares, Dockge, Runtipi e Docker/Linux**.
+A visão da MrStore abrange **UmbrelOS, Homeio, CasaOS, ZimaOS, Cosmos, Portainer, HomeDock OS, Olares, Dockge, Runtipi e Docker/Linux**.
 
-> **Estado de compatibilidade:** estes nomes representam **plataformas-alvo**, não integrações já concluídas. Atualmente, o formato de catálogo e as instruções de instalação disponibilizadas neste repositório são específicos do **ZimaOS App Store v2**. Não assumas que o URL da loja funciona diretamente nos restantes sistemas.
+**A descoberta de aplicações e a instalação nativa são coisas diferentes.**
 
-## 🚀 Adicionar ao ZimaOS
+| Capacidade | Estado atual | Limites |
+|:---|:---|:---|
+| **Montra web** | Disponível | Pesquisa e filtros acessíveis num navegador, independentemente do sistema. |
+| **Definições Docker Compose** | Disponíveis no repositório | Cada manifesto tem requisitos e dependências próprios. |
+| **Integração de loja externa** | Formato ZimaOS App Store v2 | O formato está implementado; o funcionamento exige validação por versão, equipamento e aplicação. |
+| **Integração nativa nas restantes plataformas** | Em desenvolvimento | Não assumir suporte sem adaptador e testes reais. |
 
-1. Abre a App Store do teu ZimaOS e procura a opção de **adicionar uma loja externa** compatível com o protocolo v2.
-2. Adiciona o endereço abaixo (URL base da loja):
+A identidade *multiplataforma* traduz a visão do projeto, **não uma certificação de funcionamento em todos os sistemas**. O URL público não é um instalador universal.
 
-   ```text
-   https://mrpiracy94.github.io/MrStore
-   ```
-
-3. Consulta o catálogo e verifica requisitos, permissões, arquitetura suportada e dados persistentes antes de instalar uma aplicação.
-
-Os ficheiros oficiais continuam disponíveis em [store.json](https://mrpiracy94.github.io/MrStore/store.json) e [index.json](https://mrpiracy94.github.io/MrStore/index.json).
-
-**Atenção:** não há garantia de instalação e atualização funcional em todas as versões do ZimaOS. Os testes reais no dispositivo são distintos dos testes estáticos efetuados pelo GitHub Actions.
-
-**Cobertura de testes reais:** cada aplicação tem agora uma linha no relatório gerado por `python scripts/zimaos_coverage.py`, separado por AMD64/ARM64. O registo de evidências encontra-se em [data/zimaos-device-tests.json](data/zimaos-device-tests.json); **sem registo não significa sem testes**, e a CI não considera testes estáticos como provas de funcionamento. Consulta [como documentar ensaios reais](docs/ZIMAOS_COMPATIBILITY.md#inventário-completo-de-evidências-por-aplicação-c2c4).
+📖 [Guia técnico de instalação da integração disponível](docs/ZIMAOS_INSTALLATION.md) · [Relatórios e ensaios em equipamento](docs/ZIMAOS_COMPATIBILITY.md)
 
 ## 🧭 Descobrir aplicações
 
@@ -109,6 +103,10 @@ retirado da publicação, sem afetar a loja ZimaOS.
 
 
 
+
+📋 [Programa de certificação real](docs/UNIVERSAL_CERTIFICATION.md) ·
+[Inventário de ensaios por plataforma](data/universal-device-tests.json)
+
 ## 🛡️ Segurança e transparência
 
 A MrStore não considera uma imagem segura simplesmente por constar da lista. O processo de publicação deve:
@@ -121,13 +119,13 @@ A MrStore não considera uma imagem segura simplesmente por constar da lista. O 
 
 **Não afirmamos ausência absoluta de CVEs.** A publicação pública só está comprovada como filtrada quando existe um `release-status.json` coerente com o índice efetivamente publicado. Falhas de auditoria não equivalem a resultados limpos.
 
-📖 [Política de publicação segura](docs/SAFE_RELEASE_POLICY.md) · [Compatibilidade real ZimaOS](docs/ZIMAOS_COMPATIBILITY.md) · [Avisos de segurança](SECURITY.md)
+📖 [Política de publicação segura](docs/SAFE_RELEASE_POLICY.md) · [Validação técnica](docs/ZIMAOS_COMPATIBILITY.md) · [Avisos de segurança](SECURITY.md)
 
 ## ⚙️ Tecnologias e automação
 
 | Componente | Finalidade |
 |:---|:---|
-| **ZimaOS App Store v2** | Gerar o catálogo através do builder oficial. |
+| **Builder de catálogo v2** | Exportação para o protocolo atualmente integrado. |
 | **Docker Compose** | Definir as aplicações, serviços, volumes e portas. |
 | **Python + PyYAML** | Validar metadados, arquiteturas, segurança e catálogos. |
 | **Trivy + crane** | Auditar vulnerabilidades e consultar digests das imagens. |
@@ -138,7 +136,7 @@ A MrStore não considera uma imagem segura simplesmente por constar da lista. O 
 
 ```text
 MrStore/
-├── Apps/                 # 254 manifests de origem; não são todos necessariamente publicáveis
+├── Apps/                 # Manifests de origem; nem todos são necessariamente publicáveis
 ├── web/                  # Montra e recursos visuais GitHub Pages
 │   ├── index.html
 │   └── assets/
@@ -163,11 +161,11 @@ python scripts/compatibility.py
 
 A montra web é integrada pelo `scripts/stage_storefront.py` **apenas depois** de o builder oficial criar os JSON v2 e de o relatório da seleção aprovada ser validado. Não substitui `store.json`, `index.json` nem os Compose das aplicações.
 
-📖 [Como funciona a montra](docs/STORE_FRONTEND.md) · [GitHub Actions](https://github.com/mrpiracy94/MrStore/actions) · [Compatibilidade ZimaOS](docs/ZIMAOS_COMPATIBILITY.md)
+📖 [Como funciona a montra](docs/STORE_FRONTEND.md) · [GitHub Actions](https://github.com/mrpiracy94/MrStore/actions) · [Guia de integração](docs/ZIMAOS_INSTALLATION.md)
 
 ---
 
 <div align="center">
   <strong>MrStore</strong> · Feita para a comunidade, com paixão por self-hosting. 🧡<br>
-  <sub>Projeto não oficial, sem afiliação à IceWhaleTech ou aos programadores das aplicações.</sub>
+  <sub>Projeto comunitário independente, sem afiliação aos fabricantes das plataformas ou aos autores das aplicações.</sub>
 </div>
