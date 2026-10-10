@@ -34,6 +34,22 @@ class ImmichPostgresGuardTests(unittest.TestCase):
         self.assertIn("previous/missing data directory", hazards[0])
         self.assertEqual(classify(self.original, new, "immich")["risk"], "high")
 
+    def test_equivalent_linux_path_alias_cannot_bypass_upgrade_guard(self):
+        for alias in (
+            "/DATA/AppData/immich/postgres/.",
+            "/DATA/AppData/immich/./postgres",
+            "/DATA/AppData/immich/postgres/../postgres",
+            "//DATA//AppData/immich/postgres",
+        ):
+            with self.subTest(alias=alias):
+                changed = copy.deepcopy(self.original)
+                db = changed["services"]["immich-database"]
+                db["image"] = "ghcr.io/immich-app/postgres:16-vectorchord0.4.3"
+                db["volumes"][0]["source"] = alias
+                self.assertTrue(
+                    immich_major_upgrade_hazards(self.original, changed, "immich")
+                )
+
     def test_missing_data_mount_is_rejected(self):
         new = copy.deepcopy(self.original)
         db = new["services"]["immich-database"]
