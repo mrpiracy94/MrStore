@@ -87,7 +87,8 @@ jobs:
     timeout-minutes: 240
     strategy:
       fail-fast: false
-      max-parallel: 4
+      # 8 independent runners x 4 workers per runner = 32 image scans.
+      max-parallel: 8
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     permissions:
@@ -109,10 +110,16 @@ jobs:
         uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
         with:
           version: v0.75.0
+      - name: Prepare Trivy vulnerability databases once per runner
+        run: |
+          trivy image --quiet --download-db-only
+          trivy image --quiet --download-java-db-only
       - name: Scan all catalog images by immutable digest on AMD64 and ARM64
+        env:
+          MRSTORE_CVE_DB_PREPARED: '1'
         run: >-
           python scripts/release_scan.py --shards 8 --shard ${{ matrix.shard }}
-          --output-dir out
+          --workers 4 --output-dir out
       - name: Preserve complete per-image evidence, including vulnerable/inconclusive
         if: always()
         uses: actions/upload-artifact@v4
