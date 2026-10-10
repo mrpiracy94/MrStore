@@ -49,11 +49,14 @@ python scripts/zimaos_update_visibility.py --runtime --app sonarr
 Esta opção usa apenas consultas de leitura (`docker ps -a`,
 `docker container inspect` e `docker image inspect`). Primeiro procura o
 contentor através das etiquetas Docker Compose
-`com.docker.compose.project` + `com.docker.compose.service`, e só depois
-recorre ao nome configurado como alternativa **não confirmada pelas labels**.
+`com.docker.compose.project` + `com.docker.compose.service`.
+**Não inspeciona contentores encontrados apenas pelo nome**: um contentor
+chamado `app` pode pertencer a outra aplicação. Se faltar a identidade
+Compose, a ferramenta informa **estado desconhecido** e exige diagnóstico
+manual, sem assumir atualização disponível ou ausência dela.
 A existência de várias réplicas é reportada como ambígua, sem adivinhar uma
-imagem a comparar. Uma instalação anterior com nome de projeto diferente
-pode continuar a exigir diagnóstico manual.
+imagem a comparar. Instalações antigas com nomes de projeto diferentes
+também podem necessitar de diagnóstico manual.
 Compara o digest da
 **imagem efetivamente usada pelo contentor** através do seu ID imutável
 (`docker container inspect ... --format '{{.Image}}'`) — não a tag
@@ -92,7 +95,8 @@ ZimaOS.
 | `latest_requires_usable_local_repodigest` | Possível bug #591 **se** faltar o digest no Docker local | Inspecionar `RepoDigests`; não presumir update |
 | `unknown_missing_repodigests` | Não há prova local suficiente para comparar digests | Falha de deteção possível; confirmar registos do App Management |
 | `unknown_ambiguous_main_containers` | Várias réplicas partilham o serviço principal | Não escolher um contentor aleatório; comparar todas as réplicas num teste dedicado |
-| `container_resolution=expected_name_unverified` | Contentor encontrado pelo nome mas não pelas labels de projeto e serviço esperadas | Confirmar o nome do projeto e identidade da instalação |
+| `container_resolution=unverified_named_container_ignored` | Existe um nome esperado mas não há labels Compose que confirmem a identidade | Contentor deliberadamente não inspecionado; confirmar manualmente o projeto/serviço |
+| `unknown_no_matching_repository_digest` | O ID da imagem tem RepoDigests, mas nenhum pertence ao mesmo repositório do catálogo | Não comparar digests de repositórios diferentes; rever a origem da imagem |
 | `digest_differs_review_required` | Hash remoto e local diferem; requer revisão da plataforma/imagem | Não atualizar sem confirmar segurança e compatibilidade |
 | `listed_as_upgradable` | API nativa devolve entrada correspondente | Confirmar também que a UI reflete esse resultado |
 | `not_listed_not_proof_of_current` | App ausente da listagem da API | **Não é** prova de que esteja na versão mais recente |
@@ -106,9 +110,12 @@ Para diagnóstico adicional, verificar os logs de forma manual:
 grep -E 'no digests found|no latest digest found|failed to inspect container' /var/log/casaos/mod-management.log | tail -n 20
 ```
 
-A comparação de digest remoto pode variar por arquitetura/manifest list,
-portanto diferenças devem ser tratadas como **candidatas a atualização**,
-não como ordem para atualizar automaticamente.
+Os `RepoDigests` associados ao mesmo ID podem incluir vários repositórios.
+O diagnóstico normaliza aliases do Docker Hub e compara **apenas o repositório
+pretendido**. Se só encontrar digests de outros repositórios, o estado fica
+desconhecido em vez de falso «atualizado». A comparação de digest remoto
+também pode variar por arquitetura/manifest list; diferenças são **candidatas
+a revisão**, não ordens de atualização automática.
 
 ## Limite atual
 
