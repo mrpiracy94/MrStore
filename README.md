@@ -107,6 +107,7 @@ retirado da publicação, sem afetar a loja ZimaOS.
 📋 [Programa de certificação real](docs/UNIVERSAL_CERTIFICATION.md) ·
 [Inventário de ensaios por plataforma](data/universal-device-tests.json)
 
+
 ## 🛡️ Segurança e transparência
 
 A MrStore não considera uma imagem segura simplesmente por constar da lista. O processo de publicação deve:
