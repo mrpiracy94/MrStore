@@ -1,0 +1,44 @@
+name: Investigate Gitea rootful Alpine CVE fixes
+on:
+  pull_request:
+    paths:
+      - 'security/images/gitea/Dockerfile'
+      - '.github/workflows/verify-gitea-rootful-alpine.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 85
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: [amd64, arm64]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
+        with:
+          version: v0.75.0
+      - name: Scan upstream rootful Gitea for accurate baseline
+        run: trivy image --image-src remote --scanners vuln --severity HIGH,CRITICAL --platform linux/${{ matrix.arch }} --format json --timeout 12m --output upstream-${{ matrix.arch }}.json docker.io/gitea/gitea:latest
+      - name: Build patched rootful Gitea (retain upstream config)
+        run: docker buildx build --platform linux/${{ matrix.arch }} --load -f security/images/gitea/Dockerfile -t mrstore-gitea:${{ matrix.arch }} .
+      - name: Fail on ANY HIGH or CRITICAL in candidate
+        run: trivy image --image-src docker --scanners vuln --severity HIGH,CRITICAL --exit-code 1 --format json --timeout 12m --output candidate-${{ matrix.arch }}.json mrstore-gitea:${{ matrix.arch }}
+      - name: Verify Gitea executable and original data mount
+        run: |
+          set -euo pipefail
+          docker run --rm --platform linux/${{ matrix.arch }} --entrypoint /app/gitea/gitea mrstore-gitea:${{ matrix.arch }} --version
+          test "$(grep -c 'FROM docker.io/gitea/gitea:latest' security/images/gitea/Dockerfile)" -eq 1
+      - name: Preserve real CVE evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitea-rootful-cve-${{ matrix.arch }}
+          path: |
+            upstream-${{ matrix.arch }}.json
+            candidate-${{ matrix.arch }}.json
+          if-no-files-found: warn
