@@ -54,7 +54,7 @@ A identidade *multiplataforma* traduz a visão do projeto, **não uma certifica�
 A MrStore destaca agora **6 aplicações candidatas** na nova montra:
 Home Assistant, Jellyfin, Immich, Nextcloud, qBittorrent e Vaultwarden.
 A seleção é editorial e **não constitui certificação de segurança ou de instalação**.
-As restantes **247 definições** continuam no repositório, disponíveis para futuras
+As restantes **248 definições** continuam no repositório, disponíveis para futuras
 fases — não foram apagadas. A publicação técnica de versões aprovadas continua
 a depender dos controlos CVE, das permissões e dos testes de integração.
 
