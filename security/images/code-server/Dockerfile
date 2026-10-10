@@ -1,6 +1,6 @@
 # Explicitly patch only the two packages Trivy located inside LSIO code-server.
 # Preserve the complete LinuxServer init, UID mapping, 8443 port, /config and /workspace.
-FROM node:22-alpine AS fixed-node-packages
+FROM node:25-alpine AS fixed-node-packages
 RUN npm install --prefix /opt/patched --ignore-scripts --omit=dev --no-audit --no-fund \
       shell-quote@1.11.0 basic-ftp@6.2.1
 
