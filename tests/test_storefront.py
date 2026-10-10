@@ -97,8 +97,18 @@ class StorefrontTests(unittest.TestCase):
         self.assertIn('const CATEGORY_SYMBOLS =', js)
         self.assertIn('const cover = element("div", "app-card-cover")', js)
         self.assertIn("shot.addEventListener(\"error\", coverFallback", js)
-        self.assertIn("--orange:#208bff", css)  # Blue accent of the approved UI.
+        self.assertIn("--orange:#ff831f", css)  # Identidade unificada em laranja.
+        self.assertNotIn("--orange:#208bff", css)  # Evita regressões para o tema antigo.
         self.assertIn("grid-template-columns:repeat(8,minmax(0,1fr))", css)
+        self.assertIn('id="ecossistema"', html)
+        self.assertIn('class="mobile-nav"', html)
+        self.assertIn('id="clear-filters"', html)
+        self.assertIn('$("clear-filters").addEventListener("click"', js)
+        self.assertIn('$("favorites-toggle").setAttribute("aria-pressed", "false")', js)
+        self.assertIn("PLATAFORMAS-ALVO · NÃO DISPONÍVEIS AINDA", html)
+        self.assertIn("ZimaOS v2", html)
+        self.assertIn(".platform-grid{display:grid", css)
+        self.assertIn("@media(max-width:960px)", css)
         for asset in ("mark.svg", "readme-banner.svg"):
             self.assertIn("MrStore", (self.source / "assets" / asset).read_text(encoding="utf-8"))
         for bad in ("https://cdn.", "https://fonts.googleapis.com", "unpkg.com"):
