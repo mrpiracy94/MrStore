@@ -82,18 +82,18 @@ class WatchdogTests(unittest.TestCase):
                 self.assertEqual(problem["id"], "missing:cve-scan.yml")
 
     def test_disabled_workflow_is_flagged_even_inside_bootstrap_grace(self):
-        with patch.dict(mw.WORKFLOWS, {"cve-scan.yml": 60}, clear=True), \\
-             patch.object(mw, "api", return_value={
-                 "state": "disabled_manually",
-                 "created_at": (NOW - timedelta(hours=1)).isoformat()
-             }) as api, \\
-             patch.object(mw, "api_pages", return_value=[]):
+        with (patch.dict(mw.WORKFLOWS, {"cve-scan.yml": 60}, clear=True),
+              patch.object(mw, "api", return_value={
+                  "state": "disabled_manually",
+                  "created_at": (NOW - timedelta(hours=1)).isoformat()
+              }) as api,
+              patch.object(mw, "api_pages", return_value=[])):
             problems, notes, outcomes = mw.github_review("mrpiracy94/MrStore", NOW)
         self.assertEqual([item["id"] for item in problems],
                          ["inactive:cve-scan.yml"])
         self.assertIn("inativo", outcomes["workflows"]["cve-scan.yml"])
         self.assertTrue(any("⚠️" in note for note in notes))
-        api.assert_called_once()  # Disabled schedule should not be marked healthy.
+        api.assert_called_once()  # Disabled schedules must not pass.
 
     def test_active_recent_run_is_not_a_failure(self):
         _, problem = mw.evaluate_run(
