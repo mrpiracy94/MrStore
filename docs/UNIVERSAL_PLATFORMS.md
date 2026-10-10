@@ -1,58 +1,101 @@
-# MrStore Universal — 11 plataformas (matriz de suporte)
+# MrStore Universal — matriz de suporte e provas
 
-> **Objetivo:** encontrar, inspecionar e obter aplicações **aprovadas** da MrStore em
-> todos os ecossistemas indicados. Suporte por Compose/importação **não** é o mesmo
-> que uma loja externa integrada com instalação por um clique.
+Um catálogo central com 11 destinos **não equivale** a 11 integrações nativas
+concluídas. Cada integração é independente, gerada apenas a partir de
+`release-source` aprovado pelo processo de segurança, e a sua instalação e
+atualizações devem ser validadas num sistema real.
 
-| Sistema | Método de distribuição | Estado atual |
-|---|---|---|
-| ZimaOS | Loja oficial v2 da MrStore | Catálogo existente, runtime por validar |
-| Homeio | ZIP com Apps/ e x-casaos | Piloto PR #116; teste de importação real pendente |
-| CasaOS | ZIP CasaOS/Compose | Piloto; ZIP atual não é pacote CasaOS legado v1 |
-| umbrelOS | Community App Store num repositório Git dedicado | ZIP-semente experimental (subset restrito), instalação real pendente |
-| Cosmos | Import Docker Compose em ServApps | Download Compose aprovado; testar importador |
-| Portainer | App Templates v2 (apenas contentores simples) + Stacks Compose | JSON nativo para subset elegível; resto via Compose; testes reais pendentes |
-| HomeDock OS | Packager a partir do Compose CasaOS | Download Compose aprovado; pacote .hds futuro |
-| Olares | Olares Application Chart (Helm/OAC) | Adaptador e validação Kubernetes pendentes |
-| Dockge | compose.yaml / stack | Download Compose aprovado; testar caminhos e volumes |
-| Runtipi | Repositório Git custom App Store com x-runtipi | ZIP-semente experimental (subset restrito); testes reais pendentes |
-| Docker / Linux | docker compose config / up | Download Compose aprovado; testes por app pendentes |
+| Plataforma | Forma de utilização | Estado em PR #116 |
+| --- | --- | --- |
+| ZimaOS | Loja v2 por URL | Existente, não alterada |
+| Homeio | Importação de fonte ZIP CasaOS | ZIP experimental; testar versões reais |
+| CasaOS | ZIP CasaOS / Compose | Pacote de origem experimental; não equivale ao sysroot v1 |
+| umbrelOS | Community App Store via repositório Git | ZIP-semente de apps simples; sem repo Git dedicado |
+| Cosmos | Importar Compose em ServApps | Compose aprovado por app, instalação real pendente |
+| Portainer | App Templates v2 e Stacks Compose | Templates de contentor único + Compose por app |
+| HomeDock OS | Packager HDS / bundle HDStore | Gerador de .hds e .hdstore, testes reais pendentes |
+| Olares | Olares Application Chart v0.12.0 / Helm | Charts experimentais de apps simples, Market e runtime pendentes |
+| Dockge | Stacks Docker Compose | Compose aprovado, instalação real pendente |
+| Runtipi | Loja externa através de repositório Git | ZIP-semente Runtipi v4+, sem repo Git dedicado |
+| Docker / Linux | docker compose | Manifesto auditado para importar manualmente |
 
-A geração \`scripts/export_portable_catalog.py\` recebe **somente**
-\`release-source\` e \`out/release-selection.json\` do scanner Trivy em oito
-shards. Reutiliza as verificações de \`scripts/export_universal.py\`.
-Não existe exportação que faça fallback para os 254 manifests de origem.
+## Artefactos — apenas depois de release aprovado
 
-Depois de um release aprovado e publicado:
+- `/store.json` + `/index.json`: catálogo ZimaOS v2.
+- `/universal/catalog.json`: catálogo central e 11 perfis de instalação.
+- `/universal/compose/<slug>.yml`: Docker Compose auditado por aplicação.
+- `/universal/portainer-templates.json`: templates v2 de apps representáveis num contentor.
+- `/store/casaos-homeio-preview.zip`: origem CasaOS/Homeio experimental.
+- `/store/umbrel-community-preview.zip`: semente para um **repositório Git** Umbrel.
+- `/store/runtipi-store-preview.zip`: semente para um **repositório Git** Runtipi.
+- `/homedock/catalog.json`: mapa de pacotes elegíveis.
+- `/homedock/<slug>.hds`: pacote nativo HomeDock por app.
+- `/homedock/mrstore.hdstore`: bundle HomeDock.
+- `/olares/catalog.json`: mapa de charts elegíveis.
+- `/olares/<chart>.tgz`: OAC/Helm por app.
+- `/olares/olares-oac-preview.zip`: árvore de charts para ensaios.
 
-- \`https://mrpiracy94.github.io/MrStore/universal/catalog.json\` — lista dos 11 destinos, métodos e apps aprovadas.
-- \`https://mrpiracy94.github.io/MrStore/universal/compose/<slug>.yml\` — Compose por app, digest SHA256 da auditoria.
-- \`https://mrpiracy94.github.io/MrStore/store/casaos-homeio-preview.zip\` — ZIP experimental (Homeio/CasaOS).
-- \`https://mrpiracy94.github.io/MrStore\` — índice ZimaOS v2, mantido.
+Os caminhos são relativos a `https://mrpiracy94.github.io/MrStore`,
+mas **não existem garantidamente** enquanto a PR não for testada,
+aprovada e publicada. Não usar um ZIP direto da branch main, porque
+pode incluir aplicações em quarentena.
 
-**IMPORTANTE:** os ZIP Umbrel/Runtipi **não** são URLs diretamente importáveis como loja: é necessário publicar o conteúdo num repositório Git separado e confirmar requisitos de cada app. Alguns serviços são excluídos por terem vários contentores, mounts de media, modos de rede ou recursos que não podemos converter sem riscos. A ausência de ZIP significa que não houve candidatos seguros nessa edição.
+## HomeDock OS — HDS 1.0 e HDStore
 
-**Atenção:** ficheiros Compose podem conter caminhos \`/DATA/*\`, portas
-ocupadas ou serviços dependentes de dispositivos. Antes de instalar,
-adaptar os volumes, verificar permissões, portas, segredos e arquitetura.
-\`docker compose config\` analisa sintaxe e interpolação, **não** comprova
-segurança operacional nem ausência de CVEs.
+O exportador próprio `scripts/export_homedock.py` gera `.hds` com
+`manifest.json`, `icon.png`, `docker-compose.yml`,
+`.hds_signature` e um bundle `.hdstore` com
+`store_manifest.json`, os pacotes e `.hdstore_signature`.
+O hash SHA-256 verifica **integridade**, mas **não autentica o publicador**.
+Staks multi-serviço permanecem multi-serviço no Compose original.
 
-## Critérios para declarar suporte nativo
+**Atualizações:** o manifest `version` vem dos metadados de origem e
+pode não mudar quando a imagem muda de digest; não se afirma suporte
+automático a updates, rollback ou migrações antes de testar no HomeDock OS.
+O utilizador deve inspecionar volumes, portas, segredos e compatibilidade
+de arquitetura em máquina de ensaio.
 
-Cada integração terá de passar:
-1. exportador com formato documentado para a versão alvo;
-2. validador de estrutura e referências a imagens aprovadas;
-3. importação num dispositivo/VM real com versão e arquitetura registadas;
-4. instalação, ligação à UI, persistência, upgrade, backup e recuperação;
-5. bloqueio de publicação dessa integração se algum critério falhar.
+Formato de referência:
+https://github.com/BansheeTech/HomeDockOS/blob/main/pymodules/hd_HDSPackageManager.py
 
-Documentação consultada:
+## Olares — OAC 0.12.0 e Helm
+
+O exportador `scripts/export_olares_preview.py` cria
+`Chart.yaml`, `OlaresManifest.yaml`, `values.yaml`,
+`owners` e `templates/workload.yaml`, apenas se o Compose
+for uma aplicação HTTP simples de contentor único, uma porta TCP,
+sem segredos externos e com pastas apenas em
+`/DATA/AppData/<slug>/...`. O armazenamento é ligado a
+`.Values.userspace.appData`, valor injetado pelo Olares.
+
+**Ainda falta:** validar `helm lint` e `helm template`, carregar no Olares
+Studio, ensaiar instalação e atualização com dados de teste, e submeter um
+chart aceite segundo o processo do Olares Market. Estes ficheiros não criam
+magicamente uma loja externa nativa do Olares.
+
+Especificação:
+https://www.olares.com/docs/developer/develop/package/manifest
+
+## Critérios de certificação por sistema e arquitetura
+
+Antes de classificar uma app como compatível:
+
+1. Verificar equivalência de serviços, imagens/digests, volumes, portas,
+   arquitetura AMD64/ARM64 e mecanismos de atualização.
+2. Importar o pacote num sistema **real de teste**, registando versão.
+3. Instalar, validar UI e função principal, reiniciar e verificar dados.
+4. Fazer backup, upgrade, ensaio de reversão/restauro e revalidar CVEs.
+5. Guardar prova anonimizada por aplicação e plataforma; sem prova,
+   apresentar *não verificado*.
+
+Uma falha num adaptador opcional não desbloqueia apps em quarentena nem
+permite publicar manifests não analisados. O catálogo ZimaOS deve continuar
+independente do sucesso das pré-visualizações multiplataforma.
+
+Referências:
 - https://github.com/getumbrel/umbrel-community-app-store
 - https://runtipi.io/docs/guides/create-your-own-app-store
 - https://docs.portainer.io/user/docker/templates/custom
-- https://cosmos-cloud.io/docs/servapps/
 - https://docs.homedock.cloud/homedock-os/app-store/
 - https://www.olares.com/docs/developer/develop/
-- https://github.com/louislam/dockge
 - https://github.com/doctor-io/homeio
