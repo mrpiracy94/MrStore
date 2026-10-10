@@ -69,9 +69,11 @@ x-casaos:
   thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/syncthing.png
   title:
     en_US: "Syncthing"
+    pt_PT: "Syncthing"
   tagline:
     en_US: "Syncthing (LinuxServer.io)"
   description:
     en_US: "Syncthing — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/syncthing:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-syncthing/"
+    pt_PT: "Sincroniza ficheiros diretamente entre dispositivos, sem depender de uma nuvem central. Escolhe as pastas com cuidado e verifica as permissões e as opções de partilha."
   port_map: "8384"
   index: /
