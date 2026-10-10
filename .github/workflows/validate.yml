@@ -34,6 +34,22 @@ jobs:
         run: python scripts/curate_taglines.py --check
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
+      - name: Setup pinned Helm 3 for Olares chart parser
+        uses: azure/setup-helm@v4.3.1
+        with:
+          version: v3.18.4
+      - name: Check 11 platform package contracts with Docker Compose V2 and Helm 3
+        run: |
+          python scripts/native_contract_smoke.py --output out/native-contract --external
+          cat out/native-contract/native-format-evidence.json >> "$GITHUB_STEP_SUMMARY"
+      - name: Publish native format contract evidence (NOT runtime certification)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-native-format-contracts
+          path: out/native-contract/native-format-evidence.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Inventory ZimaOS launcher compatibility (offline, not runtime proof)
         run: python scripts/compatibility.py
       - name: Compatibility summary
