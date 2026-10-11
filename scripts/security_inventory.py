@@ -30,6 +30,14 @@ SECRET_KEY = re.compile(
     re.I,
 )
 NOT_SECRET = re.compile(r"(?:PASSWORD_ACCESS|PASSWORD_ENABLED|PASSWD_FILE|TOKEN_FILE|PASSWORD_FILE)$", re.I)
+# These target ports are intended for ordinary public services, not admin UIs.
+# Review the target port, not the host port (which varies per NAS).
+PUBLIC_SERVICE_TARGETS = {
+    "nginx-proxy-manager": frozenset({80, 443}),
+    "qbittorrent": frozenset({6881}),
+    "qbittorrent-4": frozenset({6881}),
+}
+
 SENSITIVE_WEB = frozenset({
     "dockge", "dozzle", "vaultwarden", "qbittorrent", "qbittorrent-4",
     "nginx-proxy-manager", "node-red", "filebrowser", "open-webui",
@@ -121,7 +129,10 @@ def check_manifest(doc: dict, slug: str, digests: dict | None = None) -> list[di
                     protocol = "tcp"
                 else:
                     continue
-                if exposed and protocol == "tcp" and host not in ("127.0.0.1", "::1"):
+                if (exposed and protocol == "tcp" and
+                        not (isinstance(port, dict) and str(port.get("target", "")).isdigit() and
+                             int(port["target"]) in PUBLIC_SERVICE_TARGETS.get(slug, ()) ) and
+                        host not in ("127.0.0.1", "::1")):
                     issues.append(finding(path, name, "public_sensitive_ui",
                                           f"Porta de serviço sensível sem binding local: {exposed}"))
     return issues

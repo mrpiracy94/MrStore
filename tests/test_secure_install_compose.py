@@ -27,6 +27,15 @@ class SecureInstallTests(unittest.TestCase):
         self.assertEqual(len(changed), 2)
         self.assertEqual(doc["services"]["postgres"]["environment"], ["POSTGRES_PASSWORD=CHANGE_ME"])
 
+    def test_supplied_database_secret_is_shared_across_immich_services(self):
+        doc = {"services": {
+            "immich": {"environment": ["DB_PASSWORD=CHANGE_ME"]},
+            "postgres": {"environment": ["POSTGRES_PASSWORD=CHANGE_ME"]},
+        }}
+        config, _ = resolve_manifest(doc, "immich", {"DB_PASSWORD": "unique-customer-secret"})
+        self.assertEqual(config["services"]["postgres"]["environment"][0],
+                         "POSTGRES_PASSWORD=unique-customer-secret")
+
     def test_karakeep_meili_secret_shared_and_auth_unique(self):
         counter = iter(["unique-one", "unique-two"])
         doc = {"services": {

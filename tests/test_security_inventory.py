@@ -49,6 +49,22 @@ class SecurityInventoryTest(unittest.TestCase):
         self.assertNotIn("public_sensitive_ui",
                          {r["code"] for r in issues_of(exposed, "dockge")})
 
+    def test_public_proxy_web_ports_and_torrent_peers_are_not_admin_ui(self):
+        for app, allowed in (("nginx-proxy-manager", [80, 443]),
+                             ("qbittorrent", [6881]),
+                             ("qbittorrent-4", [6881])):
+            for target in allowed:
+                with self.subTest(app=app, target=target):
+                    doc = {"services": {"svc": {"image": "demo:1",
+                           "ports": [{"target": target, "published": str(target),
+                                      "protocol": "tcp"}]}}}
+                    self.assertNotIn("public_sensitive_ui",
+                                     {x["code"] for x in issues_of(doc, app)})
+        web = {"services": {"svc": {"image": "demo:1",
+               "ports": [{"target": 81, "published": "81", "protocol": "tcp"}]}}}
+        self.assertIn("public_sensitive_ui",
+                      {x["code"] for x in issues_of(web, "nginx-proxy-manager")})
+
     def test_socket_read_only_is_still_host_risk(self):
         doc = {"services": {"monitor": {"image": "demo:1", "volumes": [
             {"type": "bind", "source": "/var/run/docker.sock",

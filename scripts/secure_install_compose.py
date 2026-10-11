@@ -69,21 +69,25 @@ def resolve_manifest(source: dict, app: str, provided: dict | None = None,
             key, old = item
             if not isinstance(old, str) or not PLACEHOLDER.fullmatch(old):
                 continue
+            group = _secrets_group(app, key)
             if key in provided:
                 new_value = provided[key]
                 if not isinstance(new_value, str) or not new_value or PLACEHOLDER.fullmatch(new_value):
                     raise NeedsConfiguration(f"Invalid supplied value for {key}")
+                if group in generated and generated[group] != new_value:
+                    raise NeedsConfiguration(f"Inconsistent linked credential group for {key}")
+                generated[group] = new_value
+            elif group in generated:
+                new_value = generated[group]
             elif key in EXTERNAL_KEYS.get(app, set()) or not SENSITIVE.search(key):
                 raise NeedsConfiguration(
                     f"{app}: {key} requires real external configuration before installation")
             else:
-                group = _secrets_group(app, key)
-                if group not in generated:
-                    if key == "APP_KEY" and app == "bookstack":
-                        generated[group] = "base64:" + base64.b64encode(
-                            secrets.token_bytes(32)).decode("ascii")
-                    else:
-                        generated[group] = factory()
+                if key == "APP_KEY" and app == "bookstack":
+                    generated[group] = "base64:" + base64.b64encode(
+                        secrets.token_bytes(32)).decode("ascii")
+                else:
+                    generated[group] = factory()
                 new_value = generated[group]
             pairs[index][1] = new_value
             keys_changed.append(key)
