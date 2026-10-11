@@ -6,8 +6,8 @@
     "pt_PT": "MrStore"
   },
   "description": {
-    "en_US": "Independent multi-platform self-hosted app catalog with transparent container security monitoring.",
-    "pt_PT": "Catálogo comunitário multiplataforma de aplicações self-hosted, com monitorização transparente da segurança dos contentores."
+    "en_US": "Community self-hosted app catalog with a ZimaOS v2 feed and Docker Compose sources. Installation on devices is not certified.",
+    "pt_PT": "Catálogo comunitário self-hosted, com distribuição ZimaOS v2 e manifestos Docker Compose. Instalação em dispositivos não certificada."
   },
   "maintainer": "mrpiracy94",
   "url": "https://github.com/mrpiracy94/MrStore"
