@@ -59,6 +59,8 @@ jobs:
           )
           print(f'{len(source)} source applications selected for public listing')
           PY
+      - name: Test editorial digest pinning (offline)
+        run: python -m unittest discover -s tests -p 'test_pin_editorial_images.py' -v
       - name: Stage full editorial selection
         run: python scripts/publish_editorial.py --featured out/featured-all.json --stage release-source --report out/release-selection.json
       - name: Pin all editorial images to immutable reviewed baseline
