@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import argparse
 import copy
-import io
+from functools import lru_cache
 import json
 from pathlib import Path
 import re
@@ -30,6 +30,40 @@ CATEGORY_MAP = {
     "Networking": "networking", "Developer": "development",
     "AI": "ai", "Finance": "finance", "Social": "social", "Others": "utilities",
 }
+
+
+@lru_cache(maxsize=8)
+def _digests(root: Path) -> dict[str, str]:
+    data = json.loads((root / "data/image-digests.json").read_text(encoding="utf-8"))
+    images = data.get("images")
+    if not isinstance(images, dict):
+        raise ValueError("Missing verified digest inventory")
+    return images
+
+
+def _trusted_digest(app: App, image: str) -> str | None:
+    baseline = _digests(app.path.parents[2])
+    listed = baseline.get(image)
+    if "@sha256:" in image:
+        existing = "sha256:" + image.rsplit("@sha256:", 1)[1]
+        candidate = existing if listed is None else listed
+        if candidate != existing:
+            return None
+    else:
+        candidate = listed
+    if not isinstance(candidate, str) or not re.fullmatch(r"sha256:[0-9a-f]{64}", candidate):
+        return None
+    return candidate
+
+
+def _pin_images(app: App, compose: dict) -> None:
+    for service in compose["services"].values():
+        image = service.get("image")
+        digest = _trusted_digest(app, image) if isinstance(image, str) else None
+        if digest is None:
+            raise ValueError(f"{app.folder}: image has no matching immutable inventory digest")
+        if "@sha256:" not in image:
+            service["image"] = image + "@" + digest
 
 
 def _environment(value: object) -> dict[str, str]:
@@ -108,6 +142,8 @@ def blockers(app: App, platform: str) -> list[str]:
         image = service.get("image")
         if not isinstance(image, str) or not image or IMAGE_MUTABLE.search(image):
             reasons.add("mutable_or_missing_image")
+        elif _trusted_digest(app, image) is None:
+            reasons.add("missing_image_digest_baseline")
         if service.get("privileged") or service.get("devices") or service.get("cap_add"):
             reasons.add("elevated_privileges")
         if service.get("network_mode") in ("host", "service:docker") or service.get("pid") == "host":
@@ -154,6 +190,7 @@ def _native_compose(app: App, platform: str) -> dict:
     if reasons:
         raise ValueError(f"{app.folder}: {platform} blocked: {', '.join(reasons)}")
     output = copy.deepcopy(app.source)
+    _pin_images(app, output)
     output.pop("x-casaos", None)
     output.pop("name", None)
     for service in output["services"].values():
@@ -292,7 +329,10 @@ def export(root: Path, destination: Path, selected: str = "all") -> dict:
             files: dict[str, bytes] = {}
             for name in chosen[platform]:
                 app = by_name[name]
-                files[f"Apps/{name}/docker-compose.yml"] = app.path.read_bytes()
+                pinned = copy.deepcopy(app.source)
+                _pin_images(app, pinned)
+                files[f"Apps/{name}/docker-compose.yml"] = yaml.safe_dump(
+                    pinned, sort_keys=False, allow_unicode=True).encode("utf-8")
             for filename in ("store-config.json", "supported-languages.json", "category-list.json"):
                 files[filename] = (root / filename).read_bytes()
             files["README-COMPATIBILITY.txt"] = (
