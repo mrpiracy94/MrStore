@@ -62,10 +62,10 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
@@ -95,12 +95,12 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@924ae3a1cded613372ab5595356fb5720e22ba16
         with:
           go-version: '1.26'
       - name: Install pinned crane registry client
@@ -117,7 +117,7 @@ jobs:
           --output-dir out --featured data/featured-apps.json
       - name: Preserve complete per-image evidence, including vulnerable/inconclusive
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: mrstore-release-security-shard-${{ matrix.shard }}
           path: out/release-cves-shard-${{ matrix.shard }}.json
@@ -130,8 +130,8 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
@@ -140,7 +140,7 @@ jobs:
           python scripts/validate.py
           python -m unittest discover -s tests -v
       - name: Fetch eight mandatory security evidence reports
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           pattern: mrstore-release-security-shard-*
           path: out/release-evidence
@@ -164,7 +164,7 @@ jobs:
           python scripts/compose_preflight.py --root release-source
           --json out/release-compose.json --md out/release-compose.md
       - name: Build official ZimaOS v2 catalog
-        uses: IceWhaleTech/build-appstore-action@v1
+        uses: IceWhaleTech/build-appstore-action@c9bb47fad5b32d7928a07978fad68801f52e910f
         with:
           source: release-source
           output: dist
@@ -175,7 +175,7 @@ jobs:
       # The external builder may change the active Python environment.
       # Restore our pinned runtime before importing PyYAML in release verification.
       - name: Restore Python 3.12 after ZimaOS builder
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
         with:
           python-version: '3.12'
       - name: Restore release verification dependencies
@@ -206,7 +206,7 @@ jobs:
         run: python scripts/stage_storefront.py --source web --dist dist
       - name: Upload publication/quarantine diagnostics
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: mrstore-v2-build
           path: |
@@ -220,7 +220,7 @@ jobs:
             dist/release-status.json
           if-no-files-found: warn
       - name: Preserve approved ZimaOS v2 catalog for dry-run and publication
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: mrstore-v2-approved-dist
           path: dist/
@@ -233,9 +233,9 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Retrieve validated approved ZimaOS catalog
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
         with:
           name: mrstore-v2-approved-dist
           path: dist/
@@ -253,7 +253,7 @@ jobs:
           PY
       - name: Publish approved dist to gh-pages
         if: success()
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages

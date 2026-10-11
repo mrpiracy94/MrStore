@@ -103,11 +103,88 @@ def manifests_at_revision(revision):
     return result
 
 
+
+def _approved_dozzle_socket_migration(doc, old_risks):
+    """Exception *only* for replacing Dozzle's existing socket with a confined proxy.
+
+    The original app had direct socket access. The new daemon capability must
+    not increase: no Docker API writes, no published proxy port, no other
+    new privilege, and no socket mounted into the UI. A new unrelated app
+    or a loose proxy MUST still fail the ordinary privilege regression gate.
+    """
+    if ("dozzle", "sensitive_mount", "/var/run/docker.sock") not in old_risks:
+        return False
+    services = doc.get("services", {})
+    if not isinstance(services, dict) or set(services) != {"dozzle", "dozzle-socket-proxy"}:
+        return False
+    ui = services["dozzle"]
+    proxy = services["dozzle-socket-proxy"]
+    if not isinstance(ui, dict) or not isinstance(proxy, dict):
+        return False
+    if any(sensitive_host_bind(
+            v.get("source") if isinstance(v, dict) else str(v).split(":", 1)[0]
+        ) for v in (ui.get("volumes") or [])):
+        return False
+    ui_env = ui.get("environment", [])
+    if "DOZZLE_REMOTE_HOST=tcp://dozzle-socket-proxy:2375" not in ui_env:
+        return False
+    if not {"DOZZLE_ENABLE_ACTIONS=false", "DOZZLE_ENABLE_SHELL=false"}.issubset(set(ui_env)):
+        return False
+    if not {"default", "docker-api"}.issubset(set(ui.get("networks") or [])):
+        return False
+    networks = doc.get("networks", {})
+    if not isinstance(networks, dict) or networks.get("docker-api") != {"internal": True}:
+        return False
+    if proxy.get("networks") != ["docker-api"] or proxy.get("ports"):
+        return False
+    if proxy.get("privileged") or proxy.get("cap_add") or proxy.get("devices"):
+        return False
+    if proxy.get("network_mode") or proxy.get("pid") or proxy.get("userns"):
+        return False
+    if proxy.get("read_only") is not True or proxy.get("tmpfs") != ["/run"]:
+        return False
+    if "no-new-privileges:true" not in (proxy.get("security_opt") or []):
+        return False
+    if not str(proxy.get("image", "")).startswith("lscr.io/linuxserver/socket-proxy:") or "@sha256:" not in proxy["image"]:
+        return False
+    volume = proxy.get("volumes") or []
+    if volume != [{
+        "type": "bind",
+        "source": "/var/run/docker.sock",
+        "target": "/var/run/docker.sock",
+        "read_only": True,
+    }]:
+        return False
+    env = proxy.get("environment") or []
+    if not isinstance(env, list):
+        return False
+    pairs = {}
+    for item in env:
+        if not isinstance(item, str) or "=" not in item:
+            return False
+        key, value = item.split("=", 1)
+        pairs[key] = value
+    required = {"POST": "0", "EXEC": "0", "BUILD": "0",
+                "AUTH": "0", "SECRETS": "0", "CONTAINERS": "1",
+                "ALLOW_LOGS": "1"}
+    if any(pairs.get(k) != v for k, v in required.items()):
+        return False
+    if any(k.startswith("ALLOW_") and v == "1" and k != "ALLOW_LOGS"
+           for k, v in pairs.items()):
+        return False
+    return risky_settings(doc) == {
+        ("dozzle-socket-proxy", "sensitive_mount", "/var/run/docker.sock")
+    }
+
+
 def regressions(current, baseline):
     new = []
     for app in current:
         old = baseline.get(app.folder, set())
-        for service, code, detail in sorted(risky_settings(app.source) - old):
+        risks = risky_settings(app.source) - old
+        if (app.folder == "dozzle" and _approved_dozzle_socket_migration(app.source, old)):
+            risks.discard(("dozzle-socket-proxy", "sensitive_mount", "/var/run/docker.sock"))
+        for service, code, detail in sorted(risks):
             new.append(f"{app.folder}/{service}: new {code}={detail}")
     return new
 

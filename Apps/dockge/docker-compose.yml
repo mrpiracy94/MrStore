@@ -58,6 +58,6 @@ x-casaos:
   tagline:
     en_US: "Gestor de stacks Docker Compose (alternativa ao Portainer)"
   description:
-    en_US: "Gestor de stacks Docker Compose (alternativa ao Portainer). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto."
+    en_US: "ATENÇÃO: gestão de Docker via docker.sock concede controlo praticamente root sobre o host. Instalar apenas em rede administrativa autenticada, nunca expor a UI à Internet."
   port_map: "5001"
   index: /

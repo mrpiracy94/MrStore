@@ -43,5 +43,63 @@ class PrivilegeRegressionTests(unittest.TestCase):
         self.assertIn(("web", "network_mode", "host"), risky_settings(manifest))
 
 
+    def _dozzle_migration(self):
+        original = {"services": {"dozzle": {"volumes": [
+            "/var/run/docker.sock:/var/run/docker.sock"]}}}
+        revised = {
+            "services": {
+                "dozzle": {
+                    "environment": [
+                        "DOZZLE_REMOTE_HOST=tcp://dozzle-socket-proxy:2375",
+                        "DOZZLE_ENABLE_ACTIONS=false", "DOZZLE_ENABLE_SHELL=false",
+                    ],
+                    "networks": ["default", "docker-api"],
+                },
+                "dozzle-socket-proxy": {
+                    "image": "lscr.io/linuxserver/socket-proxy:latest@sha256:" + "a" * 64,
+                    "read_only": True,
+                    "tmpfs": ["/run"],
+                    "security_opt": ["no-new-privileges:true"],
+                    "environment": [
+                        "CONTAINERS=1", "ALLOW_LOGS=1", "POST=0", "EXEC=0",
+                        "BUILD=0", "AUTH=0", "SECRETS=0",
+                    ],
+                    "networks": ["docker-api"],
+                    "volumes": [{
+                        "type": "bind", "source": "/var/run/docker.sock",
+                        "target": "/var/run/docker.sock", "read_only": True,
+                    }],
+                },
+            },
+            "networks": {"docker-api": {"internal": True}},
+        }
+        return original, revised
+
+    def test_dozzle_migration_allows_only_relocated_socket(self):
+        old, revised = self._dozzle_migration()
+        app = App("dozzle", Path("unused"), revised, {})
+        self.assertFalse(regressions([app], {"dozzle": risky_settings(old)}))
+
+    def test_dozzle_proxy_exposing_api_is_blocked(self):
+        old, revised = self._dozzle_migration()
+        revised["services"]["dozzle-socket-proxy"]["ports"] = ["2375:2375"]
+        app = App("dozzle", Path("unused"), revised, {})
+        self.assertTrue(regressions([app], {"dozzle": risky_settings(old)}))
+
+    def test_dozzle_proxy_enabling_posts_is_blocked(self):
+        old, revised = self._dozzle_migration()
+        p = revised["services"]["dozzle-socket-proxy"]
+        p["environment"][2] = "POST=1"
+        app = App("dozzle", Path("unused"), revised, {})
+        self.assertTrue(regressions([app], {"dozzle": risky_settings(old)}))
+
+    def test_other_app_cannot_use_dozzle_exception(self):
+        old, revised = self._dozzle_migration()
+        app = App("imposter", Path("unused"), revised, {})
+        self.assertTrue(regressions([app], {"imposter": risky_settings(old)}))
+
+
+
+
 if __name__ == "__main__":
     unittest.main()

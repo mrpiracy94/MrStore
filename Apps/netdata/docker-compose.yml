@@ -28,10 +28,6 @@ services:
         source: /sys
         target: /host/sys
         read_only: true
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-        read_only: true
     x-casaos:
       envs: []
       ports:
@@ -54,9 +50,6 @@ services:
         - container: /host/sys
           description:
             en_US: /host/sys
-        - container: /var/run/docker.sock
-          description:
-            en_US: /var/run/docker.sock
 
 x-casaos:
   id: io.github.mrpiracy94.netdata
