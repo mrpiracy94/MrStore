@@ -199,7 +199,11 @@ class StoreTests(unittest.TestCase):
         self.assertNotIn('lscr.io/linuxserver/netbootxyz:latest', target)
         self.assertTrue(any(x.startswith('ghcr.io/mrpiracy94/mrstore-netbootxyz:') for x in target))
         self.assertEqual(len(set(target)), 24)
-        self.assertTrue(set(target).issubset(image_usage(apps())))
+        current = image_usage(apps())
+        self.assertTrue(all(
+            ref in current or any(x.startswith(ref + '@sha256:') for x in current)
+            for ref in target
+        ), 'Every inconclusive source must still correspond to a catalog image')
         workflow = (ROOT / '.github/workflows/retry-inconclusive-cves.yml').read_text()
         self.assertIn('scripts/cves.py', workflow)
         self.assertIn('data/cve-inconclusive-20261009.json', workflow)
@@ -232,7 +236,7 @@ class StoreTests(unittest.TestCase):
         app = next(item for item in apps() if item.folder == 'vaultwarden')
         service = app.source['services']['vaultwarden']
         import re
-        match = re.fullmatch(r'vaultwarden/server:(\d+)\.(\d+)\.(\d+)-alpine',
+        match = re.fullmatch(r'vaultwarden/server:(\d+)\.(\d+)\.(\d+)-alpine@sha256:[0-9a-f]{64}',
                              service['image'])
         self.assertIsNotNone(match, service['image'])
         self.assertGreaterEqual(tuple(map(int, match.groups())), (1, 37, 4),
@@ -245,12 +249,15 @@ class StoreTests(unittest.TestCase):
     def test_paperless_redis_alpine_keeps_persistent_data(self):
         app = next(item for item in apps() if item.folder == 'paperless-ngx')
         service = app.source['services']['paperless-broker']
-        self.assertEqual(service['image'], 'docker.io/library/redis:8.10.1-alpine')
+        baseline = json.loads((ROOT/'data/image-digests.json').read_text())['images']
+        redis = 'docker.io/library/redis:8.10.1-alpine'
+        self.assertEqual(service['image'], redis + '@' + baseline[redis])
         self.assertTrue(any(vol.get('source') == '/DATA/AppData/paperless/redis'
                             and vol.get('target') == '/data'
                             for vol in service['volumes']))
+        paperless = 'ghcr.io/paperless-ngx/paperless-ngx:latest'
         self.assertEqual(app.source['services']['paperless-ngx']['image'],
-                         'ghcr.io/paperless-ngx/paperless-ngx:latest')
+                         paperless + '@' + baseline[paperless])
 
     def test_karakeep_meilisearch_migration_is_explicit_and_persistent(self):
         karakeep = next(item for item in apps() if item.folder == 'karakeep')
