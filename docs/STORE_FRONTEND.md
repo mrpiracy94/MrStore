@@ -4,7 +4,7 @@ O GitHub controla o seu próprio layout; não é possível mudar o tema, menus
 ou o CSS de github.com para cada repositório. A MrStore apresenta-se em dois
 locais distintos:
 
-1. README.md — apresentação universal do projeto com banner WebP, ligações para o catálogo, plataformas e política de segurança.
+1. README.md — apresentação do projeto com banner WebP, ligações para o catálogo, o formato ZimaOS v2 e a política de segurança.
 2. https://mrpiracy94.github.io/MrStore/ — montra web estática com o mesmo
    banner laranja e grafite, monograma M, pesquisa, filtros, favoritos e detalhes das aplicações.
 
@@ -39,7 +39,7 @@ metadados oficiais. Se a lista não estiver aprovada, falha a publicação.
 A imagem `web/assets/mrstore-hero.webp` é usada no README e no hero da montra.
 É um recurso local otimizado em WebP, incluído na lista fechada `ALLOWED` do
 staging. O SVG antigo fica disponível apenas como recurso legado. O banner
-não anuncia integrações concretas; estas são detalhadas na secção Ecossistema.
+não anuncia compatibilidades não verificadas; o estado técnico é explicado na secção Formatos.
 
 A montra só fica online depois de o workflow de publicação da main passar e
 GitHub Pages usar a branch gh-pages. Não é um instalador web.
@@ -61,11 +61,11 @@ com monograma M laranja e fundo grafite. Os botões, pesquisa, filtros,
 categorias, favoritos e fichas são HTML e JavaScript funcionais, não uma imagem
 estática a simular uma aplicação.
 
-A **identidade da marca é universal**. A secção «Ecossistema» apresenta as
-plataformas na visão da MrStore e distingue a navegação pública da instalação
-nativa. O protocolo efetivamente implementado tem documentação própria no
-[guia técnico de integração](ZIMAOS_INSTALLATION.md); não existe garantia
-de suporte de loja nativa em todas as plataformas.
+A montra está acessível em qualquer navegador, **sem ser um instalador universal**.
+A secção «Formatos» apresenta apenas o acesso web, o catálogo ZimaOS App Store v2
+existente e a disponibilidade dos manifestos Docker Compose. A integração técnica
+está descrita no [guia ZimaOS](ZIMAOS_INSTALLATION.md); mesmo nessa plataforma,
+uma compilação estática não substitui ensaios em equipamento real.
 
 A navegação móvel utiliza `details` nativo e o botão «Limpar filtros»
 repõe pesquisa, categoria, arquitetura e modo favoritos sem apagar os favoritos
