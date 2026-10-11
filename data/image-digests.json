@@ -35,7 +35,7 @@
     "ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe": "sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe",
     "ghcr.io/mrpiracy94/mrstore-healthchecks@sha256:32c4096680c75431b0e7c20a0064f3e54b25cf55e67c012092f29d1fe61b4b81": "sha256:32c4096680c75431b0e7c20a0064f3e54b25cf55e67c012092f29d1fe61b4b81",
     "ghcr.io/mrpiracy94/mrstore-it-tools:static-nginx-alpine-secfix-20261010@sha256:36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073": "sha256:36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073",
-    "ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:4b7e4ba450fb511da21ffa56d2618d012d4cb6d5c553da1bd2797b1eb4b06769": "sha256:4b7e4ba450fb511da21ffa56d2618d012d4cb6d5c553da1bd2797b1eb4b06769",
+    "ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:b0778ccce498d81b3a10f16beb52525b6e7b93e204cb00a308719915dacf62cf": "sha256:b0778ccce498d81b3a10f16beb52525b6e7b93e204cb00a308719915dacf62cf",
     "ghcr.io/mrpiracy94/mrstore-lowcve-ngircd:secfix-38353c004df31ee7ac721591496f8937b9013dc9@sha256:8ec35cbc9b8cfbc0ba5645a2a7274662e48b3d706d2447a5f2781195847cc40a": "sha256:8ec35cbc9b8cfbc0ba5645a2a7274662e48b3d706d2447a5f2781195847cc40a",
     "ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527": "sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527",
     "ghcr.io/mrpiracy94/mrstore-pebble-ffmpeg@sha256:f162f645eec4d4c4b91ee3323a52ccbf8798faef184edb75ad12a0f772d8cb97": "sha256:f162f645eec4d4c4b91ee3323a52ccbf8798faef184edb75ad12a0f772d8cb97",
