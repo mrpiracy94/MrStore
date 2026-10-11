@@ -67,3 +67,10 @@ Fontes:
 **Estado desta fase:** apenas auditoria e pipeline de comparação. Não se
 declara redução de CVEs sem resultado dos scanners e não foram modificados
 os manifestos de produção ou contentores existentes.
+
+## Segunda vaga de comparação (ainda sem migração)
+
+- Syncthing: syncthing/syncthing:latest, documentação do projeto em https://github.com/syncthing/syncthing/blob/main/README-Docker.md . Exige migração de /config para o layout /var/syncthing, e revisão da descoberta LAN.
+- FreshRSS: freshrss/freshrss:latest, origem em https://github.com/FreshRSS/FreshRSS/blob/edge/Docker/README.md . Requer migrar a persistência de /config para /var/www/FreshRSS/data e extensões.
+
+A inclusão no comparador não altera os Compose nem significa instalação certificada.
