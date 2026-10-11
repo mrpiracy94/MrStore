@@ -21,10 +21,13 @@ import yaml
 from catalog import ROOT, APP_ID
 
 PLACEHOLDER = re.compile(r"^CHANGE_ME(?:_[A-Z0-9_]+)?$")
-SENSITIVE = re.compile(r"(?:PASS|TOKEN|SECRET|_KEY|APP_KEY|SEED)", re.I)
+SENSITIVE = re.compile(r"(?:PASS|TOKEN|SECRET|_KEY|AUTHKEY|APP_KEY|SEED)", re.I)
 EXTERNAL_KEYS = {
     "bookstack": {"DB_HOST", "DB_PASSWORD"},
     "cloudflared": {"TUNNEL_TOKEN"},
+    "duckdns": {"TOKEN", "SUBDOMAINS"},
+    "gluetun": {"VPN_SERVICE_PROVIDER", "WIREGUARD_PRIVATE_KEY"},
+    "tailscale": {"TS_AUTHKEY"},
     "frigate": {"FRIGATE_RTSP_PASSWORD"},
     "healthchecks": {"SUPERUSER_EMAIL"},
     "hedgedoc": {"DB_HOST", "DB_PASS", "CMD_DOMAIN"},

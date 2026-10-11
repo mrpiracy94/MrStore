@@ -214,7 +214,8 @@
     const codes = state.security && state.security[slug];
     const advisory = $("details-security");
     const blocked = Array.isArray(codes) &&
-      (codes.includes("credential_placeholder") || codes.includes("weak_example_secret"));
+      (codes.includes("credential_placeholder") || codes.includes("configuration_placeholder") ||
+       codes.includes("weak_example_secret"));
     if (!Array.isArray(codes)) {
       advisory.textContent = "O relatório de segurança desta aplicação está indisponível. Consulta o manifesto no GitHub e verifica os riscos antes de instalar.";
     } else if (blocked) {

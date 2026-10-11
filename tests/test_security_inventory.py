@@ -30,6 +30,14 @@ class SecurityInventoryTest(unittest.TestCase):
         self.assertIn("POSTGRES_PASSWORD", json.dumps(rows))
         self.assertNotIn("CHANGE_ME", json.dumps(rows))
 
+    def test_non_secret_required_configuration_is_detected(self):
+        doc = {"services": {"vpn": {"image": "demo:1", "environment": [
+            "VPN_SERVICE_PROVIDER=CHANGE_ME", "SUBDOMAINS=CHANGE_ME_SUBDOMAIN",
+            "TS_AUTHKEY=CHANGE_ME"]}}}
+        found = {row["code"] for row in issues_of(doc, "gluetun")}
+        self.assertIn("credential_placeholder", found)
+        self.assertIn("configuration_placeholder", found)
+
     def test_weak_known_example(self):
         doc = {"services": {"a": {"image": "demo:1",
                 "environment": {"ADMIN_PASSWORD": "admin"}}}}

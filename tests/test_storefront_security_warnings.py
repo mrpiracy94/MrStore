@@ -12,6 +12,7 @@ class StorefrontSecurityWarnings(unittest.TestCase):
         self.assertIn('inventory.apps_total !== state.apps.length', site)
         self.assertIn('credential_placeholder', site)
         self.assertIn('weak_example_secret', site)
+        self.assertIn('configuration_placeholder', site)
         self.assertIn('compose.hidden = !url || !Array.isArray(codes) || blocked;', site)
         self.assertIn('state.security = null;', site)
 
