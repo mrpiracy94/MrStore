@@ -145,7 +145,7 @@ def _translate_bind(source: str, slug: str, *, umbrel: bool) -> str:
     if source != root and not source.startswith(root + "/"):
         raise ValueError("Cannot safely relocate " + source)
     suffix = source[len(root):].lstrip("/")
-    base = "\${APP_DATA_DIR}/data" if umbrel else "./data"
+    base = "$" + "{APP_DATA_DIR}/data" if umbrel else "./data"
     return base + ("/" + suffix if suffix else "")
 
 
