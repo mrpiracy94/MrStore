@@ -92,7 +92,8 @@ class StoreTests(unittest.TestCase):
                          'Old registry timeout issue must not persist in the new baseline')
         images = image_usage(apps())
         self.assertNotIn(ref, images)
-        self.assertIn('ghcr.io/actualbudget/actual:latest', images)
+        digest = latest["images"]["ghcr.io/actualbudget/actual:latest"]
+        self.assertIn('ghcr.io/actualbudget/actual:latest@' + digest, images)
 
     def test_registry_changes_baseline_errors(self):
         a='sha256:'+'a'*64;b='sha256:'+'b'*64;c='sha256:'+'c'*64

@@ -42,7 +42,7 @@ class HistoricalPRSafetyTests(unittest.TestCase):
         db = immich["immich-database"]
         self.assertRegex(
             db["image"],
-            r"^ghcr\.io/immich-app/postgres:14-vectorchord0\.4\.3-pgvectors0\.2\.0$",
+            r"^ghcr\.io/immich-app/postgres:14-vectorchord0\.4\.3-pgvectors0\.2\.0@sha256:[0-9a-f]{64}$",
         )
         self.assertTrue(any(v["source"] == "/DATA/AppData/immich/postgres"
                             and v["target"] == "/var/lib/postgresql/data"
@@ -72,7 +72,7 @@ class HistoricalPRSafetyTests(unittest.TestCase):
 
     def test_pr13_actual_budget_official_registry_remains_selected(self):
         service = self.entries["actual-budget"].source["services"]["actual-budget"]
-        self.assertEqual(service["image"], "ghcr.io/actualbudget/actual:latest")
+        self.assertRegex(service["image"], r"^ghcr\.io/actualbudget/actual:latest@sha256:[a-f0-9]{64}$")
         self.assertTrue(any(v["source"] == "/DATA/AppData/actual-budget"
                             for v in service["volumes"]))
 
