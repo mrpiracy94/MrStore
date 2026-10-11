@@ -24,11 +24,11 @@ jobs:
       IMAGE: ghcr.io/${{ github.repository_owner }}/mrstore-qbittorrent
       VERSION: 5.2.4-libtorrentv1-secfix-20261009
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Enable ARM64 emulation
-        uses: docker/setup-qemu-action@v4
+        uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1
       - name: Set up Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
         with:
@@ -47,7 +47,7 @@ jobs:
         run: docker run --rm --platform linux/arm64 --entrypoint /app/qbittorrent-nox mrstore-qbittorrent:arm64 --version
       - name: Authenticate to GitHub Container Registry
         if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -66,7 +66,7 @@ jobs:
           docker buildx imagetools inspect "$IMAGE:$VERSION"
       - name: Save vulnerability evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: patched-qbittorrent-security-evidence
           path: |

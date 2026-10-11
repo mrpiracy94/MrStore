@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 70
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Enable ARM64 emulation
-        uses: docker/setup-qemu-action@v4
+        uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1
       - name: Configure Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@e07451d2e059ed86c2870430ea286b3a9e0bf241
         with:
@@ -82,7 +82,7 @@ jobs:
           trivy image --quiet --scanners vuln --severity HIGH,CRITICAL --platform linux/arm64 --exit-code 1 --format json --timeout 12m --output released-arm64.json "$IMAGE"
       - name: Archive all scan reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: qbittorrent-security-comparison
           path: |

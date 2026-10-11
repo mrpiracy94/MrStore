@@ -30,6 +30,14 @@ class SecurityInventoryTest(unittest.TestCase):
         self.assertIn("POSTGRES_PASSWORD", json.dumps(rows))
         self.assertNotIn("CHANGE_ME", json.dumps(rows))
 
+    def test_non_secret_required_configuration_is_detected(self):
+        doc = {"services": {"vpn": {"image": "demo:1", "environment": [
+            "VPN_SERVICE_PROVIDER=CHANGE_ME", "SUBDOMAINS=CHANGE_ME_SUBDOMAIN",
+            "TS_AUTHKEY=CHANGE_ME"]}}}
+        found = {row["code"] for row in issues_of(doc, "gluetun")}
+        self.assertIn("credential_placeholder", found)
+        self.assertIn("configuration_placeholder", found)
+
     def test_weak_known_example(self):
         doc = {"services": {"a": {"image": "demo:1",
                 "environment": {"ADMIN_PASSWORD": "admin"}}}}
@@ -48,6 +56,22 @@ class SecurityInventoryTest(unittest.TestCase):
         exposed["services"]["web"]["ports"][0]["host_ip"] = "127.0.0.1"
         self.assertNotIn("public_sensitive_ui",
                          {r["code"] for r in issues_of(exposed, "dockge")})
+
+    def test_public_proxy_web_ports_and_torrent_peers_are_not_admin_ui(self):
+        for app, allowed in (("nginx-proxy-manager", [80, 443]),
+                             ("qbittorrent", [6881]),
+                             ("qbittorrent-4", [6881])):
+            for target in allowed:
+                with self.subTest(app=app, target=target):
+                    doc = {"services": {"svc": {"image": "demo:1",
+                           "ports": [{"target": target, "published": str(target),
+                                      "protocol": "tcp"}]}}}
+                    self.assertNotIn("public_sensitive_ui",
+                                     {x["code"] for x in issues_of(doc, app)})
+        web = {"services": {"svc": {"image": "demo:1",
+               "ports": [{"target": 81, "published": "81", "protocol": "tcp"}]}}}
+        self.assertIn("public_sensitive_ui",
+                      {x["code"] for x in issues_of(web, "nginx-proxy-manager")})
 
     def test_socket_read_only_is_still_host_risk(self):
         doc = {"services": {"monitor": {"image": "demo:1", "volumes": [

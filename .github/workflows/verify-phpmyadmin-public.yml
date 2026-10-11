@@ -19,8 +19,8 @@ jobs:
     env:
       IMAGE: ghcr.io/mrpiracy94/mrstore-phpmyadmin:lsio-composer-twig-symfony-secfix-20261010@sha256:e013e13d834b9ae5c0cf47f9edb5501aa99a60109813ef3280131621498b1749
     steps:
-      - uses: actions/checkout@v7
-      - uses: docker/setup-qemu-action@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1
       - name: Prove unauthenticated registry can fetch exact dualarch digest
         run: |
           docker logout ghcr.io || true
@@ -55,7 +55,7 @@ jobs:
         run: bash scripts/test_phpmyadmin_mariadb_integration.sh ${{ matrix.arch }}
       - name: Retain public scan results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: public-phpmyadmin-${{ matrix.arch }}-scan
           path: public-phpmyadmin.json

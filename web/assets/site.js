@@ -14,7 +14,8 @@
   const CATEGORY_SYMBOLS = { "": "▦", Media: "▣", Productivity: "◈", Home: "⌂", Networking: "⛨", Network: "⛨", Cloud: "☁", Browser: "◉", Downloader: "↓", Games: "✦", Graphics: "▧", Developer: "</>", AI: "✺", Finance: "▤", Social: "◎", Utilities: "⚙", Others: "◇" };
   const $ = (id) => document.getElementById(id);
   const state = { apps: [], filtered: [], category: "", query: "", arch: "",
-    favoritesOnly: false, limit: BATCH_SIZE, saved: new Set(), validated: false };
+    favoritesOnly: false, limit: BATCH_SIZE, saved: new Set(), validated: false,
+    security: null };
   const base = new URL("./", window.location.href);
   function readFavorites() {
     try {
@@ -209,8 +210,25 @@
       preview.appendChild(screenshot);
     }
     const compose = $("details-compose"), url = safePath(app.compose_url, ".yml");
-    compose.hidden = !url; if (url) compose.href = url;
     const slug = app.id.slice(PREFIX.length);
+    const codes = state.security && state.security[slug];
+    const advisory = $("details-security");
+    const blocked = Array.isArray(codes) &&
+      (codes.includes("credential_placeholder") || codes.includes("configuration_placeholder") ||
+       codes.includes("weak_example_secret"));
+    if (!Array.isArray(codes)) {
+      advisory.textContent = "O relatório de segurança desta aplicação está indisponível. Consulta o manifesto no GitHub e verifica os riscos antes de instalar.";
+    } else if (blocked) {
+      advisory.textContent = "Instalação direta não segura: existem passwords ou tokens por configurar. O download direto foi ocultado nesta montra. Gera um Compose privado com scripts/secure_install_compose.py, ou configura manualmente os segredos antes de instalar.";
+    } else if (codes.length) {
+      advisory.textContent = "Atenção: existem " + codes.length +
+        " tipos de aviso técnico para esta aplicação. Consulta security-inventory.json antes de instalar; a ausência de CVEs não foi certificada.";
+    } else {
+      advisory.textContent = "Sem alertas desta auditoria estática. Não equivale a certificação de segurança nem a testes em equipamentos reais.";
+    }
+    // Fail closed for direct downloads when evidence is missing or credentials are unsafe.
+    compose.hidden = !url || !Array.isArray(codes) || blocked;
+    if (!compose.hidden) compose.href = url;
     $("details-github").href = "https://github.com/mrpiracy94/MrStore/tree/main/Apps/" + encodeURIComponent(slug);
     $("details").showModal();
   }
@@ -265,6 +283,25 @@
       renderShowcasePreview(); return;
     }
     $("total-apps").textContent = String(state.apps.length);
+    try {
+      const response = await fetch("./security-inventory.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("Security inventory missing");
+      const inventory = await response.json();
+      const findings = inventory.app_findings;
+      const ids = state.apps.map(function (a) { return a.id.slice(PREFIX.length); });
+      if (inventory.certification !== "not_assessed" ||
+          inventory.apps_total !== state.apps.length ||
+          !findings || typeof findings !== "object" ||
+          Object.keys(findings).length !== ids.length ||
+          ids.some(function (id) {
+            return !Object.prototype.hasOwnProperty.call(findings, id) ||
+              !Array.isArray(findings[id]) ||
+              findings[id].some(function (code) { return typeof code !== "string"; });
+          })) throw new Error("Inconsistent security inventory");
+      state.security = findings;
+    } catch (_) {
+      state.security = null;
+    }
     try {
       const reply = await fetch("./release-status.json", { cache: "no-store" });
       if (!reply.ok) throw new Error("Sem relatório de publicação");

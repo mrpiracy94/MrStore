@@ -683,3 +683,6 @@ body{background:#10151d;overflow-x:hidden}
   .preview-mini-card{min-height:79px;padding:5px}
   .preview-mini-icon{width:26px;height:26px}
 }
+
+/* Explicit, non-certifying installation warning shown before Compose download. */
+.detail-security{margin:12px 0 18px;padding:12px 15px;border:1px solid #ff831f70;background:#ff831f10;color:#f4d2ac;border-radius:12px;font-size:13px;line-height:1.55}

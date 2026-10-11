@@ -13,11 +13,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
       - name: Verify older Meilisearch indices survive v1.54.3 migration
         run: bash scripts/test_meili_migration.sh
       - name: Configure Docker Buildx for multi-architecture digest inspection
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
       - name: Verify the exact published multi-architecture digest
         run: |
           set -euo pipefail
@@ -63,7 +63,7 @@ jobs:
           PY
       - name: Archive vulnerability scan reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: karakeep-meilisearch-vulnerability-evidence
           path: |

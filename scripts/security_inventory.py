@@ -21,15 +21,23 @@ from privilege_policy import sensitive_host_bind
 
 SHA = re.compile(r"^sha256:[0-9a-f]{64}$")
 PLACEHOLDER = re.compile(
-    r"^(?:CHANGE[_-]?ME|CHANGEME|YOUR[_-]?(?:PASSWORD|TOKEN|SECRET|API[_-]?KEY)(?:[_-]?HERE)?"
+    r"^(?:CHANGE[_-]?ME(?:[_-][A-Z0-9]+)*|CHANGEME|YOUR[_-]?(?:PASSWORD|TOKEN|SECRET|API[_-]?KEY)(?:[_-]?HERE)?"
     r"|REPLACE[_-]?ME|INSERT[_-]?(?:TOKEN|PASSWORD)|DEFAULT_PASSWORD|PASSWORD123)$",
     re.I,
 )
 SECRET_KEY = re.compile(
-    r"(?:PASSWORD|PASSWD|_PASS$|_TOKEN$|_SECRET$|_API_KEY$|_KEY_SEED$|JWT_SECRET|AUTH_KEY)",
+    r"(?:PASSWORD|PASSWD|_PASS$|(?:^|_)TOKEN$|_AUTHKEY$|_SECRET$|_API_KEY$|_KEY_SEED$|JWT_SECRET|AUTH_KEY|_KEY$)",
     re.I,
 )
 NOT_SECRET = re.compile(r"(?:PASSWORD_ACCESS|PASSWORD_ENABLED|PASSWD_FILE|TOKEN_FILE|PASSWORD_FILE)$", re.I)
+# These target ports are intended for ordinary public services, not admin UIs.
+# Review the target port, not the host port (which varies per NAS).
+PUBLIC_SERVICE_TARGETS = {
+    "nginx-proxy-manager": frozenset({80, 443}),
+    "qbittorrent": frozenset({6881}),
+    "qbittorrent-4": frozenset({6881}),
+}
+
 SENSITIVE_WEB = frozenset({
     "dockge", "dozzle", "vaultwarden", "qbittorrent", "qbittorrent-4",
     "nginx-proxy-manager", "node-red", "filebrowser", "open-webui",
@@ -38,7 +46,7 @@ SENSITIVE_WEB = frozenset({
     "grafana", "portainer", "paperless-ngx",
 })
 BLOCK_NEW = frozenset({
-    "credential_placeholder", "weak_example_secret", "public_sensitive_ui",
+    "credential_placeholder", "configuration_placeholder", "weak_example_secret", "public_sensitive_ui",
     "privileged", "seccomp_unconfined", "host_network", "sensitive_bind",
     "floating_dockerfile_base", "unresolved_dockerfile_base", "unknown_image_digest",
 })
@@ -86,14 +94,15 @@ def check_manifest(doc: dict, slug: str, digests: dict | None = None) -> list[di
             issues.append(finding(path, name, "missing_image", "Serviço sem imagem", "error"))
         for key, value in _env_pairs(spec):
             key = str(key)
-            if not SECRET_KEY.search(key) or NOT_SECRET.search(key):
-                continue
             if not isinstance(value, str):
                 continue
+            sensitive = bool(SECRET_KEY.search(key) and not NOT_SECRET.search(key))
             if PLACEHOLDER.fullmatch(value.strip()):
-                issues.append(finding(path, name, "credential_placeholder",
-                                      f"Credencial {key} não configurada"))
-            elif value.strip().lower() in ("admin", "password", "secret", "123456", "test"):
+                code = "credential_placeholder" if sensitive else "configuration_placeholder"
+                noun = "Credencial" if sensitive else "Parâmetro de instalação"
+                issues.append(finding(path, name, code, f"{noun} {key} não configurado"))
+            elif sensitive and value.strip().lower() in (
+                    "admin", "password", "secret", "123456", "test"):
                 issues.append(finding(path, name, "weak_example_secret",
                                       f"Credencial {key} usa valor de exemplo fraco"))
         if spec.get("privileged") is True:
@@ -121,7 +130,10 @@ def check_manifest(doc: dict, slug: str, digests: dict | None = None) -> list[di
                     protocol = "tcp"
                 else:
                     continue
-                if exposed and protocol == "tcp" and host not in ("127.0.0.1", "::1"):
+                if (exposed and protocol == "tcp" and
+                        not (isinstance(port, dict) and str(port.get("target", "")).isdigit() and
+                             int(port["target"]) in PUBLIC_SERVICE_TARGETS.get(slug, ()) ) and
+                        host not in ("127.0.0.1", "::1")):
                     issues.append(finding(path, name, "public_sensitive_ui",
                                           f"Porta de serviço sensível sem binding local: {exposed}"))
     return issues
