@@ -1,0 +1,34 @@
+[
+  {
+    "app": "homeassistant",
+    "service": "homeassistant",
+    "candidate_image": "ghcr.io/home-assistant/home-assistant:stable",
+    "source_url": "https://www.home-assistant.io/installation/linux/",
+    "migration_status": "needs_runtime_validation",
+    "migration_risk": "Network mode, hardware integrations, privileges and /config permissions must be tested."
+  },
+  {
+    "app": "qbittorrent",
+    "service": "qbittorrent",
+    "candidate_image": "qbittorrentofficial/qbittorrent-nox:latest",
+    "source_url": "https://github.com/qbittorrent/docker-qbittorrent-nox",
+    "migration_status": "needs_runtime_validation",
+    "migration_risk": "Legal notice, existing /config, WebUI authentication, ports and 30-minute shutdown required."
+  },
+  {
+    "app": "nextcloud",
+    "service": "nextcloud",
+    "candidate_image": "nextcloud:apache",
+    "source_url": "https://github.com/nextcloud/docker",
+    "migration_status": "needs_runtime_validation",
+    "migration_risk": "Official /var/www/html layout differs from current /config and /data; database and data migrations required."
+  },
+  {
+    "app": "jellyfin",
+    "service": "jellyfin",
+    "candidate_image": "jellyfin/jellyfin:latest",
+    "source_url": "https://jellyfin.org/docs/general/installation/container/",
+    "migration_status": "needs_runtime_validation",
+    "migration_risk": "MrStore custom image differs in runtime, UID/GID, media paths, cache and persistent configuration."
+  }
+]
