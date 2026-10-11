@@ -21,6 +21,7 @@ def fixtures():
         BASE + "/release-status.json": {
             "source_apps": 3, "approved_count": 2, "quarantined_count": 1,
             "approved": ["immich", "nextcloud"], "quarantined": {"unsafe": ["CVE"]},
+            "certification": "verified",
         },
     }
 
@@ -31,7 +32,7 @@ class PublicCatalogTests(unittest.TestCase):
 
     def test_complete_matching_selection(self):
         self.assertEqual(self.check(fixtures()),
-                         {"approved": 2, "quarantined": 1, "total": 3})
+                         {"approved": 2, "quarantined": 1, "total": 3, "certification": "verified"})
 
     def test_equal_counts_with_wrong_approved_id_are_not_validated(self):
         data = fixtures()
@@ -56,6 +57,17 @@ class PublicCatalogTests(unittest.TestCase):
         data = fixtures()
         data.pop(BASE + "/release-status.json")
         with self.assertRaises(KeyError):
+            self.check(data)
+
+    def test_editorial_is_not_a_cve_certification(self):
+        data = fixtures()
+        data[BASE + "/release-status.json"]["certification"] = "not_assessed"
+        self.assertEqual(self.check(data)["certification"], "not_assessed")
+
+    def test_unknown_certification_rejected(self):
+        data = fixtures()
+        del data[BASE + "/release-status.json"]["certification"]
+        with self.assertRaisesRegex(ValueError, "certification"):
             self.check(data)
 
     def test_v2_only(self):

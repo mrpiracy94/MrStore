@@ -106,6 +106,19 @@ jobs:
           touch dist/.nojekyll
       - name: Attach all-image security inventory (not CVE-certified)
         run: python scripts/security_inventory.py --output dist/security-inventory.json --markdown out/all-image-security.md
+      - name: Confirm every published app has an inventory entry
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          index = json.loads(Path('dist/index.json').read_text(encoding='utf-8'))
+          inventory = json.loads(Path('dist/security-inventory.json').read_text(encoding='utf-8'))
+          if (inventory.get('certification') != 'not_assessed' or
+                  inventory.get('apps_total') != index['app_count'] or
+                  len(inventory.get('app_findings', {})) != index['app_count']):
+              raise SystemExit('Security inventory does not cover all published apps')
+          print(f"All {index['app_count']} apps have a security inventory entry")
+          PY
       - name: Preserve complete build artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

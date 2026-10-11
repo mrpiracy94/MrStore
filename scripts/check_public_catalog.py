@@ -30,6 +30,10 @@ def verify_live(base, fetcher=fetch_json):
         raise ValueError("Invalid app entry or ID")
     if len(set(ids)) != len(ids):
         raise ValueError("Duplicate app ID")
+    # The field approved_count is an editorial selection, not CVE certification.
+    certification = release.get("certification")
+    if certification not in ("not_assessed", "verified"):
+        raise ValueError("Missing or invalid certification status")
     approved = len(entries)
     source_count = release.get("source_apps")
     approved_count = release.get("approved_count")
@@ -61,14 +65,18 @@ def verify_live(base, fetcher=fetch_json):
         raise ValueError("Published app IDs differ from the approved CVE selection")
     if set(quarantined).intersection(allowed):
         raise ValueError("An application is both approved and quarantined")
-    return {"approved": approved, "quarantined": quarantined_count, "total": source_count}
+    return {"approved": approved, "quarantined": quarantined_count,
+            "total": source_count, "certification": certification}
 
 
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--base", default="https://mrpiracy94.github.io/MrStore")
     args = p.parse_args()
-    print("MrStore public catalog:", verify_live(args.base))
+    status = verify_live(args.base)
+    note = ("EDITORIAL, NOT security certified" if status["certification"] == "not_assessed"
+            else "verified selection; inspect CVE evidence separately")
+    print("MrStore public catalog:", status, "|", note)
 
 
 if __name__ == "__main__":
