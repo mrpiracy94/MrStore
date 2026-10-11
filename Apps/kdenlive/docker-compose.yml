@@ -1,7 +1,7 @@
 name: kdenlive
 services:
   kdenlive:
-    image: lscr.io/linuxserver/kdenlive:latest
+    image: lscr.io/linuxserver/kdenlive:latest@sha256:bf582df3fb9bd4ff4a468fb9f1826df42fde78f866927abcb4b4808df282f877
     container_name: kdenlive
     restart: unless-stopped
     environment:

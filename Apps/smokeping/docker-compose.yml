@@ -1,7 +1,7 @@
 name: smokeping
 services:
   smokeping:
-    image: lscr.io/linuxserver/smokeping:latest
+    image: lscr.io/linuxserver/smokeping:latest@sha256:52ab5b6bb2cbe03e775f970ac110300964d4069917820fccdfd6db80dd5ac143
     container_name: smokeping
     restart: unless-stopped
     environment:

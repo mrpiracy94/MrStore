@@ -1,7 +1,7 @@
 name: spotube
 services:
   spotube:
-    image: lscr.io/linuxserver/spotube:latest
+    image: lscr.io/linuxserver/spotube:latest@sha256:6208861b02289a8e19c49754595e70c06df09db50cf27458fb4f0ac5b0d171a7
     container_name: spotube
     restart: unless-stopped
     environment:

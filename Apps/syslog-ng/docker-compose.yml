@@ -1,7 +1,7 @@
 name: syslog-ng
 services:
   syslog-ng:
-    image: lscr.io/linuxserver/syslog-ng:latest
+    image: lscr.io/linuxserver/syslog-ng:latest@sha256:124b191502b82118ab3078a1dc02609517dd8fd4cb64442e14ef86c9998286f0
     container_name: syslog-ng
     restart: unless-stopped
     environment:

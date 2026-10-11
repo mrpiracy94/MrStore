@@ -1,7 +1,7 @@
 name: dashy
 services:
   dashy:
-    image: lissy93/dashy:latest
+    image: lissy93/dashy:latest@sha256:9671ff9eeb3490a7f1e81b90592262da64049b6b901cce1354ba74b178b09d71
     container_name: dashy
     restart: unless-stopped
     ports:

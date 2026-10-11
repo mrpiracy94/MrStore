@@ -1,7 +1,7 @@
 name: webcord
 services:
   webcord:
-    image: lscr.io/linuxserver/webcord:latest
+    image: lscr.io/linuxserver/webcord:latest@sha256:56fd4fb3ed40ff914601424e63b81556fc169bec88607a24aded67017128cf2e
     container_name: webcord
     restart: unless-stopped
     environment:

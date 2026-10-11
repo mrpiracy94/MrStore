@@ -1,7 +1,7 @@
 name: raneto
 services:
   raneto:
-    image: lscr.io/linuxserver/raneto:latest
+    image: lscr.io/linuxserver/raneto:latest@sha256:cf9d477e458b039f121ae12bca48e1d00b7c9b45cd85e6b5ccc166cf5b3757f3
     container_name: raneto
     restart: unless-stopped
     environment:

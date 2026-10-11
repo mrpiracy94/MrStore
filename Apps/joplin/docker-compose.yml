@@ -1,7 +1,7 @@
 name: joplin
 services:
   joplin:
-    image: lscr.io/linuxserver/joplin:latest
+    image: lscr.io/linuxserver/joplin:latest@sha256:eec9ce35ef4a275f1ca84d8c0d08fa6792359efa8ccaa63227cb57a4288bb407
     container_name: joplin
     restart: unless-stopped
     environment:

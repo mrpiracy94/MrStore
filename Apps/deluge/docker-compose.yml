@@ -1,7 +1,7 @@
 name: deluge
 services:
   deluge:
-    image: lscr.io/linuxserver/deluge:latest
+    image: lscr.io/linuxserver/deluge:latest@sha256:bf306ddd5e6d4a85d3d05ce1b947ab6e344e7fca1b7740b77c58ce170118c7ff
     container_name: deluge
     restart: unless-stopped
     environment:

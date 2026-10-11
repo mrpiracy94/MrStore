@@ -1,7 +1,7 @@
 name: mullvad-browser
 services:
   mullvad-browser:
-    image: lscr.io/linuxserver/mullvad-browser:latest
+    image: lscr.io/linuxserver/mullvad-browser:latest@sha256:1aa06e17e52f5e2370b64919615bb5f13df07b71a9e6a82e487fad89c1752853
     container_name: mullvad-browser
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: steam
 services:
   steam:
-    image: lscr.io/linuxserver/steam:latest
+    image: lscr.io/linuxserver/steam:latest@sha256:70daa8991f7e20bee8d93c818897b79828790f9eb7a7ef52f2060564cff71bc8
     container_name: steam
     restart: unless-stopped
     environment:

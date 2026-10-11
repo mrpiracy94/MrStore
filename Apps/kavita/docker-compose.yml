@@ -1,7 +1,7 @@
 name: kavita
 services:
   kavita:
-    image: lscr.io/linuxserver/kavita:latest
+    image: lscr.io/linuxserver/kavita:latest@sha256:1a74624c346fc00b6bbc5ea7fc4017dad7e4a0ba7e509e562a7387d5141379f1
     container_name: kavita
     restart: unless-stopped
     environment:

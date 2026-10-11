@@ -1,7 +1,7 @@
 name: firefox
 services:
   firefox:
-    image: lscr.io/linuxserver/firefox:latest
+    image: lscr.io/linuxserver/firefox:latest@sha256:1d8fc33b44f2d1c819c59af62d28724e3b32025b0f4dd2d525c0624b43947ada
     container_name: firefox
     restart: unless-stopped
     environment:

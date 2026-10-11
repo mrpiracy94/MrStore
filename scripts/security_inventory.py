@@ -47,6 +47,7 @@ SENSITIVE_WEB = frozenset({
 })
 BLOCK_NEW = frozenset({
     "credential_placeholder", "configuration_placeholder", "weak_example_secret", "public_sensitive_ui",
+    "floating_image",
     "privileged", "seccomp_unconfined", "host_network", "sensitive_bind",
     "floating_dockerfile_base", "unresolved_dockerfile_base", "unknown_image_digest",
 })

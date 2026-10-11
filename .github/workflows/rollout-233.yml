@@ -12,6 +12,7 @@ on:
       - 'data/taglines-pt.json'
       - 'scripts/publish_editorial.py'
       - 'scripts/pin_editorial_images.py'
+      - 'scripts/verify_source_digests.py'
       - 'scripts/security_inventory.py'
       - 'security/images/**'
       - 'scripts/curate_taglines.py'
@@ -44,6 +45,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
+      - name: Block unapproved source image references for every Docker target
+        run: python scripts/verify_source_digests.py
       - name: Build full manifest allowlist without filtering for CVEs
         run: |
           python - <<'PY'

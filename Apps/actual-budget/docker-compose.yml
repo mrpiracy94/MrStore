@@ -1,7 +1,7 @@
 name: actual-budget
 services:
   actual-budget:
-    image: ghcr.io/actualbudget/actual:latest
+    image: ghcr.io/actualbudget/actual:latest@sha256:24645e971da6bb1a1f953d6859e307a0b29be1e8b4130a35b3220c209b5b860c
     container_name: actual-budget
     restart: unless-stopped
     ports:

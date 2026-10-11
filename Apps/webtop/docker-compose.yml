@@ -1,7 +1,7 @@
 name: webtop
 services:
   webtop:
-    image: lscr.io/linuxserver/webtop:latest
+    image: lscr.io/linuxserver/webtop:latest@sha256:529034b4cb77ac4ba3368b7667b50ebeb0c4b054943981d462c035a56ae4308b
     container_name: webtop
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: mysql-workbench
 services:
   mysql-workbench:
-    image: lscr.io/linuxserver/mysql-workbench:latest
+    image: lscr.io/linuxserver/mysql-workbench:latest@sha256:e3e266f611846fb31a6741a9c46f6cd0b6e54e2fc3b3b77021aab75fe93762f6
     container_name: mysql-workbench
     restart: unless-stopped
     environment:
