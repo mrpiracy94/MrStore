@@ -30,5 +30,21 @@
     "source_url": "https://jellyfin.org/docs/general/installation/container/",
     "migration_status": "needs_runtime_validation",
     "migration_risk": "MrStore custom image differs in runtime, UID/GID, media paths, cache and persistent configuration."
+  },
+  {
+    "app": "syncthing",
+    "service": "syncthing",
+    "candidate_image": "syncthing/syncthing:latest",
+    "source_url": "https://github.com/syncthing/syncthing/blob/main/README-Docker.md",
+    "migration_status": "needs_runtime_validation",
+    "migration_risk": "Official image normally stores configuration under /var/syncthing, while LinuxServer uses /config; requires safe migration and LAN discovery validation."
+  },
+  {
+    "app": "freshrss",
+    "service": "freshrss",
+    "candidate_image": "freshrss/freshrss:latest",
+    "source_url": "https://github.com/FreshRSS/FreshRSS/blob/edge/Docker/README.md",
+    "migration_status": "needs_runtime_validation",
+    "migration_risk": "Official image persists /var/www/FreshRSS/data; current manifest binds /config. Backup and migrate config, DB, extensions and UID/GID."
   }
 ]
