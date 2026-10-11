@@ -1,5 +1,7 @@
 # Public editorial listing is independent of the vulnerability audit.
 # The release-status.json must clearly state certification: not_assessed.
+# Sole automatic gh-pages publisher for main. The website-only workflow is
+# manual-only on main and legacy 233/SteamOS workflows cannot auto-publish.
 name: Publish complete MrStore app catalog
 on:
   push:
