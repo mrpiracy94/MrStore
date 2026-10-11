@@ -1,7 +1,7 @@
 name: nzbhydra2
 services:
   nzbhydra2:
-    image: lscr.io/linuxserver/nzbhydra2:latest
+    image: lscr.io/linuxserver/nzbhydra2:latest@sha256:123782636d66dc299b3addb617fd720a55ac2f858fa8ca312892bf9176492d58
     container_name: nzbhydra2
     restart: unless-stopped
     environment:

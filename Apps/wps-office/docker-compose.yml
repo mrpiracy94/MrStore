@@ -1,7 +1,7 @@
 name: wps-office
 services:
   wps-office:
-    image: lscr.io/linuxserver/wps-office:latest
+    image: lscr.io/linuxserver/wps-office:latest@sha256:3c1e8dc06b08b5f25fd205c50b4c057070e2e1fd2e127532f540cc84f8f350bd
     container_name: wps-office
     restart: unless-stopped
     environment:

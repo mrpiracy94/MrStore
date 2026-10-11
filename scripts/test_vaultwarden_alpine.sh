@@ -37,7 +37,8 @@ start_image() {
   curl -fsS "$base_url/" >/dev/null
 }
 
-version="$(sed -nE 's/^[[:space:]]*image:[[:space:]]*vaultwarden\/server:([0-9]+\.[0-9]+\.[0-9]+)-alpine[[:space:]]*$/\1/p' Apps/vaultwarden/docker-compose.yml)"
+alpine_image="$(sed -nE 's/^[[:space:]]*image:[[:space:]]*(vaultwarden\/server:[0-9]+\.[0-9]+\.[0-9]+-alpine@sha256:[0-9a-f]{64})[[:space:]]*$/\1/p' Apps/vaultwarden/docker-compose.yml)"
+version="$(printf '%s\n' "$alpine_image" | sed -nE 's#^vaultwarden/server:([0-9]+\.[0-9]+\.[0-9]+)-alpine@sha256:[0-9a-f]{64}$#\1#p')"
 if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   echo "Cannot resolve pinned Alpine Vaultwarden version" >&2
   exit 1
@@ -48,7 +49,7 @@ sudo touch "$data_dir/compatibility-sentinel"
 docker rm -f "$container" >/dev/null
 
 # Reuse exactly the same persistent volume and service settings.
-start_image "vaultwarden/server:$version-alpine"
+start_image "$alpine_image"
 sudo test -s "$data_dir/db.sqlite3"
 sudo test -f "$data_dir/compatibility-sentinel"
 echo "PASS: same $version release, login UI, health and persistent DB with Alpine."

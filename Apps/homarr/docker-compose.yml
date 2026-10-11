@@ -1,7 +1,7 @@
 name: homarr
 services:
   homarr:
-    image: ghcr.io/homarr-labs/homarr:latest
+    image: ghcr.io/homarr-labs/homarr:latest@sha256:447267051fd7f3c76087498ad96c8b969f57c6762eaeb78717b69388ae1a781a
     container_name: homarr
     restart: unless-stopped
     environment:

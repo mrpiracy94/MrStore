@@ -30,6 +30,8 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install -r requirements.txt
+      - name: Reject all source images without approved immutable digests
+        run: python scripts/verify_source_digests.py
       - name: Check all Compose manifests and security posture
         run: python scripts/validate.py
       - name: Validate Portuguese app summaries (no modifications)

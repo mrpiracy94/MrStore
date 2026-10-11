@@ -1,7 +1,7 @@
 name: paperless-ngx
 services:
   paperless-ngx:
-    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:6b94799bc769a063b3340cc5847402e626d4d91d29a295a8e747f8e9bead4207
     container_name: paperless-ngx
     restart: unless-stopped
     depends_on:
@@ -68,7 +68,7 @@ services:
           description:
             en_US: /usr/src/paperless/consume
   paperless-broker:
-    image: docker.io/library/redis:8.10.1-alpine
+    image: docker.io/library/redis:8.10.1-alpine@sha256:ef216d85ec44f4fdf7c0e6df2d1757a4734ed32fbb278cabd3181b5a27353b79
     container_name: paperless-broker
     restart: unless-stopped
     volumes:

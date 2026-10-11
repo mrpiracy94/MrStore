@@ -1,7 +1,7 @@
 name: mame
 services:
   mame:
-    image: lscr.io/linuxserver/mame:latest
+    image: lscr.io/linuxserver/mame:latest@sha256:0968ba5bd934527a550d0b76cdaaff5bcf1cda16c6ac2850b7f5e68a4b7868d9
     container_name: mame
     restart: unless-stopped
     environment:

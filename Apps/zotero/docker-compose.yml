@@ -1,7 +1,7 @@
 name: zotero
 services:
   zotero:
-    image: lscr.io/linuxserver/zotero:latest
+    image: lscr.io/linuxserver/zotero:latest@sha256:e976bdf12c1b384d37758a23545910ba5b74867241886901dafe20f91b8c57f1
     container_name: zotero
     restart: unless-stopped
     environment:

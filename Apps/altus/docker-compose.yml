@@ -1,7 +1,7 @@
 name: altus
 services:
   altus:
-    image: lscr.io/linuxserver/altus:latest
+    image: lscr.io/linuxserver/altus:latest@sha256:e4df4114c1cc350bb475c4d2f6616dcf434659cf4557fa8738759c089fd51fea
     container_name: altus
     restart: unless-stopped
     environment:

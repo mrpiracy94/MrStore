@@ -1,7 +1,7 @@
 name: thelounge
 services:
   thelounge:
-    image: lscr.io/linuxserver/thelounge:latest
+    image: lscr.io/linuxserver/thelounge:latest@sha256:8793004304efb7744792c55911fc069495ecbc04c46e6054f06c12e7a44074e0
     container_name: thelounge
     restart: unless-stopped
     environment:

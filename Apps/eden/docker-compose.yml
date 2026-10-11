@@ -1,7 +1,7 @@
 name: eden
 services:
   eden:
-    image: lscr.io/linuxserver/eden:latest
+    image: lscr.io/linuxserver/eden:latest@sha256:cf7267aaa8aeafcd67bfa107a966e5fe7eeed88022fc551a975cfda1cab6ded4
     container_name: eden
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: mediaelch
 services:
   mediaelch:
-    image: lscr.io/linuxserver/mediaelch:latest
+    image: lscr.io/linuxserver/mediaelch:latest@sha256:79b05cca059fa038537fbfc7c5eb3877fb5dd3aed6fee4cb514731c5e733d3a5
     container_name: mediaelch
     restart: unless-stopped
     environment:

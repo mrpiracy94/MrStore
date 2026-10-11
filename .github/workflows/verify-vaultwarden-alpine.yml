@@ -29,7 +29,7 @@ jobs:
           import os, re
           from pathlib import Path
           source = Path('Apps/vaultwarden/docker-compose.yml').read_text(encoding='utf-8')
-          matches = re.findall(r'(?m)^\s+image:\s+(vaultwarden/server:([0-9]+\.[0-9]+\.[0-9]+)-alpine)\s*$', source)
+          matches = re.findall(r'(?m)^\s+image:\s+(vaultwarden/server:([0-9]+\.[0-9]+\.[0-9]+)-alpine@sha256:[0-9a-f]{64})\s*$', source)
           if len(matches) != 1:
               raise SystemExit('Expected one pinned official Alpine image')
           image, version = matches[0]

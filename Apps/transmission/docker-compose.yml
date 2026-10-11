@@ -1,7 +1,7 @@
 name: transmission
 services:
   transmission:
-    image: lscr.io/linuxserver/transmission:latest
+    image: lscr.io/linuxserver/transmission:latest@sha256:4813745e2c721997d8849f5718786fd4406b3c656fbef479f87a161e51383cbd
     container_name: transmission
     restart: unless-stopped
     environment:

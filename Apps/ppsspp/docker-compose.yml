@@ -1,7 +1,7 @@
 name: ppsspp
 services:
   ppsspp:
-    image: lscr.io/linuxserver/ppsspp:latest
+    image: lscr.io/linuxserver/ppsspp:latest@sha256:a237f0248e5f20eb5d9f459bc9d88e354ad956779361cb21605fc5375a45bf65
     container_name: ppsspp
     restart: unless-stopped
     environment:
