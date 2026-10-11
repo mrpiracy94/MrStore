@@ -1,8 +1,7 @@
 # Integração de loja externa — ZimaOS App Store v2
 
-A MrStore tem uma **identidade universal** para o ecossistema homelab.
-Este guia documenta **apenas o formato de integração atualmente existente**,
-não uma certificação universal nem a garantia de funcionamento de cada aplicação.
+A MrStore disponibiliza um catálogo público e uma distribuição técnica no formato **ZimaOS App Store v2**.
+Este guia descreve esse formato e não constitui certificação de instalação ou garantia de funcionamento de cada aplicação.
 
 ## Adicionar a loja
 
@@ -40,11 +39,8 @@ O registo de evidências está em
 Consulta [Compatibilidade ZimaOS e evidências reais](ZIMAOS_COMPATIBILITY.md)
 para as instruções de teste, checklist C2–C4 e submissão de resultados.
 
-## Outras plataformas
+## Limites
 
-UmbrelOS, Homeio, CasaOS, Cosmos, Portainer, HomeDock OS, Olares, Dockge,
-Runtipi e Docker/Linux integram o plano de evolução. Não é seguro anunciar
-o URL deste guia como instalador nativo para esses sistemas sem adaptadores,
-testes de instalação e validação de atualizações.
+Não anunciamos suporte nativo para sistemas sem integração utilizável e validada. Os ficheiros em `Apps/` são também manifestos Docker Compose, sujeitos a revisão e configuração manual antes da execução.
 
-[Voltar à apresentação universal da MrStore](../README.md)
+[Voltar à MrStore](../README.md)

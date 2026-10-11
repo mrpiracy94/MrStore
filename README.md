@@ -1,14 +1,14 @@
 <div align="center">
-  <img src="web/assets/mrstore-hero.webp" alt="MrStore — O teu homelab. As tuas apps. Uma só loja. Um ecossistema, múltiplas plataformas." width="100%">
+  <img src="web/assets/mrstore-hero.webp" alt="MrStore — catálogo comunitário de aplicações self-hosted." width="100%">
 
   <h1>MrStore · The Homelab App Hub</h1>
 
-  <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Descobre aplicações self-hosted num catálogo comunitário pensado para unir sistemas, servidores e plataformas. Uma identidade independente do teu sistema operativo.</p>
+  <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Descobre aplicações self-hosted num catálogo comunitário para servidores e NAS. Consulta aplicações no navegador, usa o formato ZimaOS v2 quando adequado ou prepara manualmente os manifestos Docker Compose.</p>
 
   <p>
     <a href="https://mrpiracy94.github.io/"><strong>🌐 Explorar a loja</strong></a>
     &nbsp; · &nbsp;
-    <a href="#-plataformas-e-compatibilidade"><strong>🌍 Plataformas</strong></a>
+    <a href="#-plataformas-e-compatibilidade"><strong>📦 Formatos disponíveis</strong></a>
     &nbsp; · &nbsp;
     <a href="#-segurança-e-transparência"><strong>🛡️ Segurança</strong></a>
     &nbsp; · &nbsp;
@@ -20,9 +20,9 @@
 
 ## ✨ O que é a MrStore?
 
-A **MrStore** reúne aplicações **self-hosted** para servidores, NAS e projetos homelab, independentemente da marca ou sistema utilizado. **Todas as 254 aplicações atuais** são apresentadas na montra pública e na loja técnica ZimaOS v2, a partir do mesmo inventário `Apps/`. A presença no catálogo é editorial: não prova ausência de CVEs nem compatibilidade de instalação.
+A **MrStore** reúne **254 aplicações self-hosted** para servidores, NAS e homelab num único inventário `Apps/`. A montra permite pesquisar e consultar aplicações; a distribuição técnica usa o formato **ZimaOS App Store v2**. Uma entrada no catálogo não prova instalação funcional num equipamento real nem ausência de vulnerabilidades.
 
-**A montra web é universal para descoberta, não para instalação automática.** A instalação nativa depende do adaptador e da validação de cada plataforma.
+**A montra web funciona num navegador, mas não instala aplicações.** Esta edição não anuncia integração nativa com sistemas que ainda não foram validados.
 
 | 🔍 Exploração fácil | 📦 Aplicações self-hosted | 🛡️ Segurança por aplicação |
 |:---|:---|:---|
@@ -34,23 +34,17 @@ A **MrStore** reúne aplicações **self-hosted** para servidores, NAS e projeto
 
 ## 🌍 Plataformas e compatibilidade
 
-A visão da MrStore abrange **UmbrelOS, Homeio, CasaOS, ZimaOS, Cosmos, Portainer, HomeDock OS, Olares, Dockge, Runtipi e Docker/Linux**.
+**Consultar o catálogo não significa poder adicionar esta loja a qualquer sistema.**
 
-**A descoberta de aplicações e a instalação nativa são coisas diferentes.**
-
-| Capacidade | Estado atual | Limites |
+| Funcionalidade | Disponibilidade | Limites |
 |:---|:---|:---|
-| **Montra web** | Disponível | Pesquisa e filtros acessíveis num navegador, independentemente do sistema. |
-| **Definições Docker Compose** | Disponíveis no repositório | Cada manifesto tem requisitos e dependências próprios. |
-| **Integração de loja externa** | Formato ZimaOS App Store v2 | O formato está implementado; o funcionamento exige validação por versão, equipamento e aplicação. |
-| **CasaOS / Homeio** | Pacotes ZIP piloto exportáveis | Importação e persistência ainda requerem ensaios reais em cada sistema. |
-| **UmbrelOS** | Exportador de loja comunitária piloto | A saída precisa de um repositório Git próprio e testes antes de ser importada. |
-| **Docker / Portainer / Dockge** | Compose portátil piloto | A instalação é manual, com revisão de dados, redes e credenciais. |
-| **Cosmos / Runtipi / Olares / HomeDock OS** | Adaptadores futuros | Sem integração nativa demonstrada. |
+| **Montra web** | Disponível | Pesquisa, favoritos, categorias e fichas num navegador; não instala contentores. |
+| **ZimaOS App Store v2** | Catálogo técnico gerado e publicado | Instalação, configuração e atualização exigem validação real por versão, dispositivo e aplicação. |
+| **Docker Compose** | 254 manifestos-fonte em `Apps/` | Para consulta e implantação manual após rever permissões, portas, volumes e segredos. |
 
-A identidade *multiplataforma* traduz a visão do projeto, **não uma certificação de funcionamento em todos os sistemas**. O URL público não é um instalador universal.
+As integrações não funcionais foram retiradas da apresentação e da publicação. Uma nova integração apenas deverá ser anunciada quando existirem formatos utilizáveis e testes reais.
 
-📖 [Integração multiplataforma, exportadores e limitações](docs/MULTIPLATFORM.md) · [Instalação ZimaOS](docs/ZIMAOS_INSTALLATION.md) · [Ensaios em dispositivo](docs/ZIMAOS_COMPATIBILITY.md)
+📖 [Guia ZimaOS](docs/ZIMAOS_INSTALLATION.md) · [Ensaios em equipamento](docs/ZIMAOS_COMPATIBILITY.md) · [Segurança](SECURITY.md)
 
 ## ⭐ Catálogo completo — 254 aplicações
 
@@ -64,7 +58,7 @@ A listagem não filtra apps com avisos CVE. O ficheiro `release-status.json` apr
 
 ## 🧭 Descobrir aplicações
 
-A montra web foi concebida para facilitar o uso:
+A montra web permite consultar aplicações sem anunciar suporte nativo por validar:
 
 - **Pesquisar** por nome, descrição e categoria.
 - **Filtrar** por categoria e arquitetura AMD64/ARM64.
@@ -88,7 +82,7 @@ As **auditorias técnicas opcionais para releases verificados** continuam a anal
 
 | Componente | Finalidade |
 |:---|:---|
-| **Builder de catálogo v2** | Exportação para o protocolo atualmente integrado. |
+| **Builder ZimaOS v2** | Exportação para o formato de loja externa atualmente integrado. |
 | **Docker Compose** | Definir as aplicações, serviços, volumes e portas. |
 | **Python + PyYAML** | Validar metadados, arquiteturas, segurança e catálogos. |
 | **Trivy + crane** | Auditar vulnerabilidades e consultar digests das imagens. |
@@ -120,7 +114,6 @@ python -m pip install -r requirements.txt
 python scripts/validate.py
 python -m unittest discover -s tests -v
 python scripts/compatibility.py
-python scripts/platform_export.py --platform all --output out/platforms
 ```
 
 A homepage pública é mantida em [`mrpiracy94.github.io`](https://github.com/mrpiracy94/mrpiracy94.github.io) e sincroniza automaticamente **todos os manifests** da MrStore. O catálogo técnico em `gh-pages` é publicado separadamente com o inventário completo e a indicação `not_assessed` nas edições editoriais; não altera os Compose instalados nos servidores.
