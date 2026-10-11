@@ -1,5 +1,5 @@
 {
   "store_id": "io.github.mrpiracy94.mrstore",
   "name": "MrStore",
-  "description": "Catálogo comunitário ZimaOS com monitorização de vulnerabilidades e atualizações de imagens Docker."
+  "description": "Catálogo comunitário self-hosted, com distribuição ZimaOS v2 e manifestos Docker Compose. Instalação em dispositivos não certificada."
 }

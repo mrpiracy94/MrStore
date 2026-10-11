@@ -2,7 +2,7 @@
   "version": 2,
   "store_id": "io.github.mrpiracy94.mrstore",
   "name": "MrStore",
-  "description": "Community ZimaOS app catalog with vulnerability and container update monitoring.",
+  "description": "Community self-hosted app catalog with a ZimaOS v2 feed and Docker Compose sources. Installation on devices is not certified.",
   "maintainer": "mrpiracy94",
   "url": "https://github.com/mrpiracy94/MrStore"
 }
