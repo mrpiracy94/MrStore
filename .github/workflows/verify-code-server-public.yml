@@ -19,8 +19,8 @@ jobs:
     env:
       IMAGE: ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe
     steps:
-      - uses: actions/checkout@v7
-      - uses: docker/setup-qemu-action@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: docker/setup-qemu-action@99012661954931238ded8c8b007157a8430204e1
       - name: Confirm exact image is public and contains both architectures
         run: |
           docker logout ghcr.io || true
@@ -55,7 +55,7 @@ jobs:
         run: bash scripts/test_code_server_ftp_patch.sh ${{ matrix.arch }}
       - name: Preserve anonymous vulnerability report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: public-code-server-${{ matrix.arch }}-cves
           path: public-code-server.json
