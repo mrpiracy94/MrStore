@@ -6,6 +6,8 @@ on:
       - 'Apps/**'
       - 'scripts/**'
       - 'data/taglines-pt.json'
+      - 'data/image-digests.json'
+      - 'security/images/**'
       - 'data/zimaos-device-tests.json'
       - 'tests/**'
       - 'store-config.json'
@@ -76,6 +78,22 @@ jobs:
         run: |
           if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
           python scripts/privilege_policy.py --base "$BASE_SHA"
+      - name: Audit every app, container image, secret default and Dockerfile base
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if [ -z "$BASE_SHA" ] || [[ "$BASE_SHA" =~ ^0+$ ]]; then BASE_SHA=HEAD^; fi
+          python scripts/security_inventory.py --base-sha "$BASE_SHA" --fail-new-high
+      - name: Publish all-image inventory summary
+        if: always()
+        run: test ! -f out/all-image-security.md || cat out/all-image-security.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve all-image findings (not a CVE scan)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrstore-all-image-security
+          path: out/all-image-security.*
+          if-no-files-found: warn
       - name: Summary
         if: always()
         run: test ! -f out/audit.md || cat out/audit.md >> "$GITHUB_STEP_SUMMARY"

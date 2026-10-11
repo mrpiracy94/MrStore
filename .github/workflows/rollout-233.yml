@@ -10,6 +10,8 @@ on:
       - 'data/taglines-pt.json'
       - 'scripts/publish_editorial.py'
       - 'scripts/pin_editorial_images.py'
+      - 'scripts/security_inventory.py'
+      - 'security/images/**'
       - 'scripts/curate_taglines.py'
       - 'scripts/stage_storefront.py'
       - 'store-config.json'
@@ -102,6 +104,8 @@ jobs:
           cp out/release-selection.json dist/release-status.json
           python scripts/stage_storefront.py --source web --dist dist
           touch dist/.nojekyll
+      - name: Attach all-image security inventory (not CVE-certified)
+        run: python scripts/security_inventory.py --output dist/security-inventory.json --markdown out/all-image-security.md
       - name: Preserve complete build artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
