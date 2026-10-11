@@ -1,6 +1,7 @@
-# Publish the informational website independently of lengthy release-image CVE scans.
-# This workflow NEVER modifies any catalog JSON, app manifests, or security evidence.
-# A separate audited release workflow still controls publication of the app catalog.
+# Verify UI changes on PR/main; keep emergency/manual website-only publication.
+# Normal push publication is owned by rollout-233.yml, so website changes and
+# the 254-app index are deployed together. Prevent competing gh-pages writes.
+# This workflow NEVER modifies any catalog JSON or security evidence.
 name: Publish MrStore website
 on:
   push:
@@ -24,7 +25,7 @@ concurrency:
 
 jobs:
   verify_ui:
-    if: github.event_name == 'pull_request'
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -35,7 +36,7 @@ jobs:
       - name: Verify storefront without rebuilding or certifying app images
         run: python -m unittest discover -s tests -p 'test_storefront*.py' -v
   publish_site:
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

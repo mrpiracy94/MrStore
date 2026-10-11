@@ -4,12 +4,7 @@
 name: Withdraw retired SteamOS from public catalog
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/withdraw-retired-steamos.yml'
-      - 'scripts/withdraw_retired_public_app.py'
-      - 'tests/test_withdraw_retired_public_app.py'
+  # Manual-only legacy emergency operation; not a competing public publisher.
   workflow_dispatch:
 
 permissions:

@@ -2,10 +2,7 @@
 # ZimaOS distribution. This is NOT CVE certification.
 name: Publish exactly 233 MrStore applications
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/restore-public-233.yml'
+  # Historical 233-app recovery: never auto-run against the 254-app store.
   workflow_dispatch:
 permissions:
   contents: read
