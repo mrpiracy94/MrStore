@@ -43,11 +43,14 @@ A visão da MrStore abrange **UmbrelOS, Homeio, CasaOS, ZimaOS, Cosmos, Portaine
 | **Montra web** | Disponível | Pesquisa e filtros acessíveis num navegador, independentemente do sistema. |
 | **Definições Docker Compose** | Disponíveis no repositório | Cada manifesto tem requisitos e dependências próprios. |
 | **Integração de loja externa** | Formato ZimaOS App Store v2 | O formato está implementado; o funcionamento exige validação por versão, equipamento e aplicação. |
-| **Integração nativa nas restantes plataformas** | Em desenvolvimento | Não assumir suporte sem adaptador e testes reais. |
+| **CasaOS / Homeio** | Pacotes ZIP piloto exportáveis | Importação e persistência ainda requerem ensaios reais em cada sistema. |
+| **UmbrelOS** | Exportador de loja comunitária piloto | A saída precisa de um repositório Git próprio e testes antes de ser importada. |
+| **Docker / Portainer / Dockge** | Compose portátil piloto | A instalação é manual, com revisão de dados, redes e credenciais. |
+| **Cosmos / Runtipi / Olares / HomeDock OS** | Adaptadores futuros | Sem integração nativa demonstrada. |
 
 A identidade *multiplataforma* traduz a visão do projeto, **não uma certificação de funcionamento em todos os sistemas**. O URL público não é um instalador universal.
 
-📖 [Guia técnico de instalação da integração disponível](docs/ZIMAOS_INSTALLATION.md) · [Relatórios e ensaios em equipamento](docs/ZIMAOS_COMPATIBILITY.md)
+📖 [Integração multiplataforma, exportadores e limitações](docs/MULTIPLATFORM.md) · [Instalação ZimaOS](docs/ZIMAOS_INSTALLATION.md) · [Ensaios em dispositivo](docs/ZIMAOS_COMPATIBILITY.md)
 
 ## ⭐ Catálogo completo — 254 aplicações
 
@@ -117,6 +120,7 @@ python -m pip install -r requirements.txt
 python scripts/validate.py
 python -m unittest discover -s tests -v
 python scripts/compatibility.py
+python scripts/platform_export.py --platform all --output out/platforms
 ```
 
 A homepage pública é mantida em [`mrpiracy94.github.io`](https://github.com/mrpiracy94/mrpiracy94.github.io) e sincroniza automaticamente **todos os manifests** da MrStore. O catálogo técnico em `gh-pages` é publicado separadamente com o inventário completo e a indicação `not_assessed` nas edições editoriais; não altera os Compose instalados nos servidores.

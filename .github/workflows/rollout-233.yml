@@ -17,6 +17,8 @@ on:
       - 'security/images/**'
       - 'scripts/curate_taglines.py'
       - 'scripts/stage_storefront.py'
+      - 'scripts/platform_export.py'
+      - 'data/platform-pilots.json'
       - 'store-config.json'
       - 'supported-languages.json'
       - 'category-list.json'
@@ -134,6 +136,26 @@ jobs:
               raise SystemExit('Security inventory does not cover all published apps')
           print(f"All {index['app_count']} apps have a security inventory entry")
           PY
+      - name: Generate CasaOS/Homeio pilot ZIPs without changing the full catalog
+        run: |
+          python -m unittest discover -s tests -p 'test_platform_export.py' -v
+          python scripts/platform_export.py --platform all --output out/platforms
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('out/platforms/compatibility.json').read_text())
+          source={x.parent.name for x in Path('Apps').glob('*/docker-compose.yml')}
+          if data['certification'] != 'not_assessed' or {x['app'] for x in data['apps']} != source:
+              raise SystemExit('Refusing to publish incomplete or misrepresented compatibility coverage')
+          for platform in ('casaos', 'homeio'):
+              target=Path('out/platforms')/platform/f'mrstore-{platform}.zip'
+              if not target.is_file() or target.stat().st_size < 1024:
+                  raise SystemExit(f'Missing approved {platform} ZIP')
+          PY
+          mkdir -p dist/platforms
+          cp out/platforms/casaos/mrstore-casaos.zip dist/platforms/
+          cp out/platforms/homeio/mrstore-homeio.zip dist/platforms/
+          cp out/platforms/compatibility.json dist/platforms/
       - name: Preserve complete build artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

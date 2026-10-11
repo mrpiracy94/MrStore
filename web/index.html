@@ -88,25 +88,25 @@
     <section class="platform-section" id="ecossistema" aria-labelledby="platform-title">
       <div class="shell">
         <div class="platform-heading platform-heading-new">
-          <div><span class="section-kicker dark-kicker">✦ O ECOSSISTEMA MRSTORE</span><h2 id="platform-title">Funciona com as tuas <strong>plataformas favoritas.</strong></h2></div>
+          <div><span class="section-kicker dark-kicker">✦ O ECOSSISTEMA MRSTORE</span><h2 id="platform-title">Um catálogo para <strong>várias plataformas.</strong></h2></div>
           <p>Explora o ecossistema self-hosted. As integrações de instalação são desenvolvidas e testadas separadamente para cada sistema.</p>
         </div>
         <div class="platform-grid" aria-label="Plataformas do ecossistema">
-          <div class="system-card"><span class="system-glyph purple">∩</span><strong>UmbrelOS</strong><small>Integração planeada</small></div>
-          <div class="system-card"><span class="system-glyph cyan">●</span><strong>CasaOS</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph purple">∩</span><strong>UmbrelOS</strong><small>Exportador piloto</small></div>
+          <div class="system-card"><span class="system-glyph cyan">●</span><strong>CasaOS</strong><small>ZIP piloto disponível</small></div>
           <div class="system-card system-ready"><span class="system-glyph midnight">▣</span><strong>ZimaOS</strong><small>Catálogo v2 disponível</small></div>
-          <div class="system-card"><span class="system-glyph blue">▤</span><strong>Portainer</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph blue">▤</span><strong>Portainer</strong><small>Compose para importar</small></div>
           <div class="system-card"><span class="system-glyph deep">◉</span><strong>Cosmos</strong><small>Integração planeada</small></div>
-          <div class="system-card"><span class="system-glyph sky">⬡</span><strong>Dockge</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph sky">⬡</span><strong>Dockge</strong><small>Compose para importar</small></div>
           <div class="system-card"><span class="system-glyph ruby">⬢</span><strong>Runtipi</strong><small>Integração planeada</small></div>
-          <div class="system-card"><span class="system-glyph aqua">⚙</span><strong>Docker / Linux</strong><small>Integração planeada</small></div>
-          <div class="system-card"><span class="system-glyph platform-logo" aria-hidden="true"><img src="./assets/platform-homeio.png" width="42" height="42" alt="" loading="lazy" decoding="async"></span><strong>Homeio</strong><small>Integração planeada</small></div>
+          <div class="system-card"><span class="system-glyph aqua">⚙</span><strong>Docker / Linux</strong><small>Compose piloto</small></div>
+          <div class="system-card"><span class="system-glyph platform-logo" aria-hidden="true"><img src="./assets/platform-homeio.png" width="42" height="42" alt="" loading="lazy" decoding="async"></span><strong>Homeio</strong><small>ZIP piloto disponível</small></div>
           <div class="system-card"><span class="system-glyph platform-logo" aria-hidden="true"><img src="./assets/platform-homedock.svg" width="42" height="42" alt="" loading="lazy" decoding="async"></span><strong>HomeDock OS</strong><small>Integração planeada</small></div>
           <div class="system-card"><span class="system-glyph platform-logo" aria-hidden="true"><img src="./assets/platform-olares.svg" width="42" height="42" alt="" loading="lazy" decoding="async"></span><strong>Olares</strong><small>Integração planeada</small></div>
         </div>
         <div class="platform-status">
           <span class="platform-label">COMPATIBILIDADE · FORMATO ATUAL E PLATAFORMAS-ALVO</span>
-          <p><strong>Explorar é diferente de instalar:</strong> a montra funciona num navegador. O catálogo de loja externa utiliza atualmente o formato ZimaOS App Store v2; as restantes integrações nativas necessitam de adaptadores e testes. <a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/ZIMAOS_INSTALLATION.md">Ver documentação técnica ↗</a></p>
+          <p><strong>Explorar é diferente de instalar:</strong> a montra funciona num navegador. A integração ZimaOS App Store v2 mantém-se disponível; CasaOS e Homeio têm pacotes ZIP piloto, e UmbrelOS tem um exportador de manifestos. Estes pacotes ainda exigem testes reais por dispositivo e aplicação. <a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/MULTIPLATFORM.md">Ver integrações multiplataforma ↗</a> · <a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/ZIMAOS_INSTALLATION.md">Guia ZimaOS ↗</a></p>
         </div>
       </div>
     </section>
@@ -169,7 +169,7 @@
           <p>Explora aplicações e confirma os requisitos antes de instalar. A montra não instala nem atualiza contentores automaticamente; a compatibilidade nativa depende de cada plataforma.</p>
           <div class="install-address"><code id="store-address">https://mrpiracy94.github.io/MrStore</code><button id="copy-store" type="button" aria-label="Copiar endereço da MrStore">Copiar <span aria-hidden="true">⧉</span></button></div>
           <span class="copy-feedback" id="copy-feedback" role="status" aria-live="polite"></span>
-          <p class="installation-technical">O endereço público não é um instalador universal. Consulta o <a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/ZIMAOS_INSTALLATION.md" rel="noopener noreferrer">guia de integração disponível ↗</a> antes de adicionar uma loja externa.</p>
+          <p class="installation-technical">O endereço público não é um instalador universal. Consulta o <a href="https://github.com/mrpiracy94/MrStore/blob/main/docs/MULTIPLATFORM.md" rel="noopener noreferrer">guia de integração por sistema ↗</a> antes de adicionar uma loja externa. CasaOS/Homeio: ZIP piloto sujeito a publicação e validação.</p>
         </div>
         <ol class="steps">
           <li><span>01</span><div><strong>Descobre aplicações</strong><p>Pesquisa por nome, categoria e arquitetura.</p></div></li>

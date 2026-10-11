@@ -6,8 +6,8 @@
     "pt_PT": "MrStore"
   },
   "description": {
-    "en_US": "Community ZimaOS app catalog with vulnerability and container update monitoring.",
-    "pt_PT": "Catálogo comunitário ZimaOS com monitorização de vulnerabilidades e atualizações de imagens Docker."
+    "en_US": "Independent multi-platform self-hosted app catalog with transparent container security monitoring.",
+    "pt_PT": "Catálogo comunitário multiplataforma de aplicações self-hosted, com monitorização transparente da segurança dos contentores."
   },
   "maintainer": "mrpiracy94",
   "url": "https://github.com/mrpiracy94/MrStore"
