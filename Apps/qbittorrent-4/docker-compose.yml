@@ -1,7 +1,7 @@
 name: qbittorrent-4
 services:
   qbittorrent-4:
-    image: ghcr.io/mrpiracy94/mrstore-qbittorrent:5.2.4-libtorrentv1-secfix-20261009@sha256:6e0475093e34571c90fc0d1ede2920ca847f1b4a1ac127351931eab6e12c6c4c
+    image: ghcr.io/mrpiracy94/mrstore-qbittorrent:5.2.4-libtorrentv1-secfix-20261009@sha256:1db38c4f8cf812a83a1ac1ec9c48dc1c776dc85dc6806e430e9af5a0f5ee740e
     container_name: qbittorrent-4
     restart: unless-stopped
     environment:
