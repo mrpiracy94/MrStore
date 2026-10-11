@@ -19,7 +19,8 @@ class CatalogOpsTests(unittest.TestCase):
                 {"id": "io.github.mrpiracy94.a"}, {"id": "io.github.mrpiracy94.b"}]},
             "release-status.json": {"source_apps": 3, "approved_count": 2,
                                     "quarantined_count": 1, "approved": ["a", "b"],
-                                    "quarantined": {"c": ["HIGH"]}},
+                                    "quarantined": {"c": ["HIGH"]},
+                                     "certification": "verified"},
         }
         fetch = lambda url: docs[url.rsplit("/", 1)[-1]]
         self.assertEqual(verify_live("https://example.test", fetch)["approved"], 2)
@@ -34,7 +35,7 @@ class CatalogOpsTests(unittest.TestCase):
             "index.json": {"version": 2, "app_count": 2, "apps": [entry, entry]},
             "release-status.json": {"source_apps": 2, "approved_count": 2,
                                     "quarantined_count": 0, "approved": ["a", "b"],
-                                    "quarantined": {}},
+                                    "quarantined": {}, "certification": "verified"},
         })[url.rsplit("/", 1)[-1]]
         with self.assertRaisesRegex(ValueError, "Duplicate"):
             verify_live("https://example.test", fetch)
