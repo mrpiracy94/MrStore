@@ -50,9 +50,12 @@ class StoreTests(unittest.TestCase):
 
     def test_image_usage(self):
         usage=image_usage(apps())
-        self.assertIn('ghcr.io/immich-app/immich-server:release',usage)
+        baseline=json.loads((ROOT/'data/image-digests.json').read_text())['images']
+        for ref in ('ghcr.io/immich-app/immich-server:release',
+                    'ghcr.io/actualbudget/actual:latest'):
+            with self.subTest(image=ref):
+                self.assertIn(ref+'@'+baseline[ref], usage)
         self.assertGreaterEqual(len(usage),257)
-        self.assertIn('ghcr.io/actualbudget/actual:latest', usage)
         self.assertNotIn('actualbudget/actual-server:latest', usage)
 
     def test_publication_uses_full_evidence_and_per_app_quarantine(self):
