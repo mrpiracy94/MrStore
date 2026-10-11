@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-10-11T15:28:13Z",
+  "updated_at": "2026-10-11T16:35:10Z",
   "app_count": 254,
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "apps": [
@@ -1920,7 +1920,7 @@
       "thumbnail": "/apps/io.github.mrpiracy94.jdownloader/assets/jdownloader.webp",
       "compose_url": "/apps/io.github.mrpiracy94.jdownloader/docker-compose.yml",
       "meta_url": "/apps/io.github.mrpiracy94.jdownloader/meta.json",
-      "content_hash": "95956e1e",
+      "content_hash": "b84b6384",
       "version": "1.0.2"
     },
     {

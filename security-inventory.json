@@ -107,7 +107,7 @@
     "ghcr.io/mrpiracy94/mrstore-it-tools:static-nginx-alpine-secfix-20261010@sha256:36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073": [
       "it-tools/it-tools"
     ],
-    "ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:4b7e4ba450fb511da21ffa56d2618d012d4cb6d5c553da1bd2797b1eb4b06769": [
+    "ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:b0778ccce498d81b3a10f16beb52525b6e7b93e204cb00a308719915dacf62cf": [
       "jdownloader/jdownloader"
     ],
     "ghcr.io/mrpiracy94/mrstore-lowcve-ngircd:secfix-38353c004df31ee7ac721591496f8937b9013dc9@sha256:8ec35cbc9b8cfbc0ba5645a2a7274662e48b3d706d2447a5f2781195847cc40a": [
@@ -883,6 +883,7 @@
       "seccomp_unconfined"
     ],
     "bookstack": [
+      "configuration_placeholder",
       "credential_placeholder",
       "floating_image"
     ],
@@ -984,6 +985,8 @@
       "sensitive_bind"
     ],
     "duckdns": [
+      "configuration_placeholder",
+      "credential_placeholder",
       "floating_image"
     ],
     "duckstation": [
@@ -1071,6 +1074,8 @@
       "floating_image"
     ],
     "gluetun": [
+      "configuration_placeholder",
+      "credential_placeholder",
       "floating_image"
     ],
     "grav": [
@@ -1091,9 +1096,11 @@
       "seccomp_unconfined"
     ],
     "healthchecks": [
+      "configuration_placeholder",
       "credential_placeholder"
     ],
     "hedgedoc": [
+      "configuration_placeholder",
       "credential_placeholder",
       "floating_image"
     ],
@@ -1108,6 +1115,7 @@
       "floating_image"
     ],
     "homarr": [
+      "credential_placeholder",
       "floating_image"
     ],
     "homeassistant": [
@@ -1168,6 +1176,7 @@
       "seccomp_unconfined"
     ],
     "kimai": [
+      "configuration_placeholder",
       "floating_image"
     ],
     "kometa": [
@@ -1290,6 +1299,7 @@
     ],
     "netbootxyz": [],
     "netbox": [
+      "configuration_placeholder",
       "credential_placeholder",
       "floating_image"
     ],
@@ -1362,6 +1372,7 @@
       "floating_image"
     ],
     "paperless-ngx": [
+      "credential_placeholder",
       "floating_image",
       "public_sensitive_ui"
     ],
@@ -1390,6 +1401,7 @@
       "floating_image"
     ],
     "planka": [
+      "credential_placeholder",
       "floating_image"
     ],
     "plex": [],
@@ -1551,6 +1563,7 @@
       "floating_image"
     ],
     "tailscale": [
+      "credential_placeholder",
       "floating_image",
       "host_network",
       "sensitive_bind"
@@ -1686,12 +1699,13 @@
     ]
   },
   "counts_by_rule": {
-    "credential_placeholder": 15,
+    "configuration_placeholder": 10,
+    "credential_placeholder": 25,
     "floating_dockerfile_base": 9,
     "floating_image": 243,
     "host_network": 2,
     "privileged": 1,
-    "public_sensitive_ui": 28,
+    "public_sensitive_ui": 24,
     "seccomp_unconfined": 91,
     "sensitive_bind": 6,
     "unresolved_dockerfile_base": 3
@@ -1890,7 +1904,21 @@
       "file": "Apps/bookstack/docker-compose.yml",
       "service": "bookstack",
       "code": "credential_placeholder",
-      "detail": "Credencial DB_PASSWORD não configurada",
+      "detail": "Credencial APP_KEY não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/bookstack/docker-compose.yml",
+      "service": "bookstack",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação DB_HOST não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/bookstack/docker-compose.yml",
+      "service": "bookstack",
+      "code": "credential_placeholder",
+      "detail": "Credencial DB_PASSWORD não configurado",
       "level": "warning"
     },
     {
@@ -1995,7 +2023,7 @@
       "file": "Apps/cloudflared/docker-compose.yml",
       "service": "cloudflared",
       "code": "credential_placeholder",
-      "detail": "Credencial TUNNEL_TOKEN não configurada",
+      "detail": "Credencial TUNNEL_TOKEN não configurado",
       "level": "warning"
     },
     {
@@ -2202,6 +2230,20 @@
       "level": "warning"
     },
     {
+      "file": "Apps/duckdns/docker-compose.yml",
+      "service": "duckdns",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação SUBDOMAINS não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/duckdns/docker-compose.yml",
+      "service": "duckdns",
+      "code": "credential_placeholder",
+      "detail": "Credencial TOKEN não configurado",
+      "level": "warning"
+    },
+    {
       "file": "Apps/duckstation/docker-compose.yml",
       "service": "duckstation",
       "code": "floating_image",
@@ -2394,7 +2436,7 @@
       "file": "Apps/frigate/docker-compose.yml",
       "service": "frigate",
       "code": "credential_placeholder",
-      "detail": "Credencial FRIGATE_RTSP_PASSWORD não configurada",
+      "detail": "Credencial FRIGATE_RTSP_PASSWORD não configurado",
       "level": "warning"
     },
     {
@@ -2475,6 +2517,20 @@
       "level": "warning"
     },
     {
+      "file": "Apps/gluetun/docker-compose.yml",
+      "service": "gluetun",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação VPN_SERVICE_PROVIDER não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gluetun/docker-compose.yml",
+      "service": "gluetun",
+      "code": "credential_placeholder",
+      "detail": "Credencial WIREGUARD_PRIVATE_KEY não configurado",
+      "level": "warning"
+    },
+    {
       "file": "Apps/grav/docker-compose.yml",
       "service": "grav",
       "code": "floating_image",
@@ -2527,7 +2583,21 @@
       "file": "Apps/healthchecks/docker-compose.yml",
       "service": "healthchecks",
       "code": "credential_placeholder",
-      "detail": "Credencial SUPERUSER_PASSWORD não configurada",
+      "detail": "Credencial SECRET_KEY não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/healthchecks/docker-compose.yml",
+      "service": "healthchecks",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação SUPERUSER_EMAIL não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/healthchecks/docker-compose.yml",
+      "service": "healthchecks",
+      "code": "credential_placeholder",
+      "detail": "Credencial SUPERUSER_PASSWORD não configurado",
       "level": "warning"
     },
     {
@@ -2540,8 +2610,22 @@
     {
       "file": "Apps/hedgedoc/docker-compose.yml",
       "service": "hedgedoc",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação DB_HOST não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/hedgedoc/docker-compose.yml",
+      "service": "hedgedoc",
       "code": "credential_placeholder",
-      "detail": "Credencial DB_PASS não configurada",
+      "detail": "Credencial DB_PASS não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/hedgedoc/docker-compose.yml",
+      "service": "hedgedoc",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação CMD_DOMAIN não configurado",
       "level": "warning"
     },
     {
@@ -2580,6 +2664,13 @@
       "level": "warning"
     },
     {
+      "file": "Apps/homarr/docker-compose.yml",
+      "service": "homarr",
+      "code": "credential_placeholder",
+      "detail": "Credencial SECRET_ENCRYPTION_KEY não configurado",
+      "level": "warning"
+    },
+    {
       "file": "Apps/homeassistant/docker-compose.yml",
       "service": "homeassistant",
       "code": "floating_image",
@@ -2611,7 +2702,7 @@
       "file": "Apps/immich/docker-compose.yml",
       "service": "immich-server",
       "code": "credential_placeholder",
-      "detail": "Credencial DB_PASSWORD não configurada",
+      "detail": "Credencial DB_PASSWORD não configurado",
       "level": "warning"
     },
     {
@@ -2646,7 +2737,7 @@
       "file": "Apps/immich/docker-compose.yml",
       "service": "immich-database",
       "code": "credential_placeholder",
-      "detail": "Credencial POSTGRES_PASSWORD não configurada",
+      "detail": "Credencial POSTGRES_PASSWORD não configurado",
       "level": "warning"
     },
     {
@@ -2716,7 +2807,14 @@
       "file": "Apps/karakeep/docker-compose.yml",
       "service": "karakeep",
       "code": "credential_placeholder",
-      "detail": "Credencial NEXTAUTH_SECRET não configurada",
+      "detail": "Credencial NEXTAUTH_SECRET não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/karakeep/docker-compose.yml",
+      "service": "karakeep",
+      "code": "credential_placeholder",
+      "detail": "Credencial MEILI_MASTER_KEY não configurado",
       "level": "warning"
     },
     {
@@ -2724,6 +2822,13 @@
       "service": "karakeep-chrome",
       "code": "floating_image",
       "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/karakeep/docker-compose.yml",
+      "service": "karakeep-meilisearch",
+      "code": "credential_placeholder",
+      "detail": "Credencial MEILI_MASTER_KEY não configurado",
       "level": "warning"
     },
     {
@@ -2808,6 +2913,13 @@
       "service": "kimai",
       "code": "floating_image",
       "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kimai/docker-compose.yml",
+      "service": "kimai",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação ADMINPASS não configurado",
       "level": "warning"
     },
     {
@@ -2898,21 +3010,21 @@
       "file": "Apps/lldap/docker-compose.yml",
       "service": "lldap",
       "code": "credential_placeholder",
-      "detail": "Credencial LLDAP_JWT_SECRET não configurada",
+      "detail": "Credencial LLDAP_JWT_SECRET não configurado",
       "level": "warning"
     },
     {
       "file": "Apps/lldap/docker-compose.yml",
       "service": "lldap",
       "code": "credential_placeholder",
-      "detail": "Credencial LLDAP_KEY_SEED não configurada",
+      "detail": "Credencial LLDAP_KEY_SEED não configurado",
       "level": "warning"
     },
     {
       "file": "Apps/lldap/docker-compose.yml",
       "service": "lldap",
       "code": "credential_placeholder",
-      "detail": "Credencial LLDAP_LDAP_USER_PASS não configurada",
+      "detail": "Credencial LLDAP_LDAP_USER_PASS não configurado",
       "level": "warning"
     },
     {
@@ -3010,7 +3122,7 @@
       "file": "Apps/mariadb/docker-compose.yml",
       "service": "mariadb",
       "code": "credential_placeholder",
-      "detail": "Credencial MYSQL_ROOT_PASSWORD não configurada",
+      "detail": "Credencial MYSQL_ROOT_PASSWORD não configurado",
       "level": "warning"
     },
     {
@@ -3191,15 +3303,36 @@
     {
       "file": "Apps/netbox/docker-compose.yml",
       "service": "netbox",
-      "code": "credential_placeholder",
-      "detail": "Credencial SUPERUSER_PASSWORD não configurada",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação SUPERUSER_EMAIL não configurado",
       "level": "warning"
     },
     {
       "file": "Apps/netbox/docker-compose.yml",
       "service": "netbox",
       "code": "credential_placeholder",
-      "detail": "Credencial DB_PASSWORD não configurada",
+      "detail": "Credencial SUPERUSER_PASSWORD não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netbox/docker-compose.yml",
+      "service": "netbox",
+      "code": "credential_placeholder",
+      "detail": "Credencial DB_PASSWORD não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netbox/docker-compose.yml",
+      "service": "netbox",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação DB_HOST não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netbox/docker-compose.yml",
+      "service": "netbox",
+      "code": "configuration_placeholder",
+      "detail": "Parâmetro de instalação REDIS_HOST não configurado",
       "level": "warning"
     },
     {
@@ -3263,20 +3396,6 @@
       "service": "nginx-proxy-manager",
       "code": "public_sensitive_ui",
       "detail": "Porta de serviço sensível sem binding local: 81",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/nginx-proxy-manager/docker-compose.yml",
-      "service": "nginx-proxy-manager",
-      "code": "public_sensitive_ui",
-      "detail": "Porta de serviço sensível sem binding local: 30009",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/nginx-proxy-manager/docker-compose.yml",
-      "service": "nginx-proxy-manager",
-      "code": "public_sensitive_ui",
-      "detail": "Porta de serviço sensível sem binding local: 30010",
       "level": "warning"
     },
     {
@@ -3429,6 +3548,13 @@
     {
       "file": "Apps/paperless-ngx/docker-compose.yml",
       "service": "paperless-ngx",
+      "code": "credential_placeholder",
+      "detail": "Credencial PAPERLESS_SECRET_KEY não configurado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/paperless-ngx/docker-compose.yml",
+      "service": "paperless-ngx",
       "code": "public_sensitive_ui",
       "detail": "Porta de serviço sensível sem binding local: 30020",
       "level": "warning"
@@ -3472,7 +3598,7 @@
       "file": "Apps/photoprism/docker-compose.yml",
       "service": "photoprism",
       "code": "credential_placeholder",
-      "detail": "Credencial PHOTOPRISM_ADMIN_PASSWORD não configurada",
+      "detail": "Credencial PHOTOPRISM_ADMIN_PASSWORD não configurado",
       "level": "warning"
     },
     {
@@ -3515,6 +3641,13 @@
       "service": "planka",
       "code": "floating_image",
       "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/planka/docker-compose.yml",
+      "service": "planka",
+      "code": "credential_placeholder",
+      "detail": "Credencial SECRET_KEY não configurado",
       "level": "warning"
     },
     {
@@ -3602,24 +3735,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/qbittorrent/docker-compose.yml",
-      "service": "qbittorrent",
-      "code": "public_sensitive_ui",
-      "detail": "Porta de serviço sensível sem binding local: 6881",
-      "level": "warning"
-    },
-    {
       "file": "Apps/qbittorrent-4/docker-compose.yml",
       "service": "qbittorrent-4",
       "code": "public_sensitive_ui",
       "detail": "Porta de serviço sensível sem binding local: 20069",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/qbittorrent-4/docker-compose.yml",
-      "service": "qbittorrent-4",
-      "code": "public_sensitive_ui",
-      "detail": "Porta de serviço sensível sem binding local: 20070",
       "level": "warning"
     },
     {
@@ -3984,6 +4103,13 @@
       "service": "tailscale",
       "code": "floating_image",
       "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/tailscale/docker-compose.yml",
+      "service": "tailscale",
+      "code": "credential_placeholder",
+      "detail": "Credencial TS_AUTHKEY não configurado",
       "level": "warning"
     },
     {

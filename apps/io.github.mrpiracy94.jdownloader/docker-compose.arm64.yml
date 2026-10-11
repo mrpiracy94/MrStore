@@ -1,7 +1,7 @@
 name: jdownloader
 services:
   jdownloader:
-    image: ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:4b7e4ba450fb511da21ffa56d2618d012d4cb6d5c553da1bd2797b1eb4b06769
+    image: ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:b0778ccce498d81b3a10f16beb52525b6e7b93e204cb00a308719915dacf62cf
     container_name: jdownloader
     restart: unless-stopped
     environment:
