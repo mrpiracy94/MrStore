@@ -66,7 +66,7 @@ class FidelityRegressionTests(unittest.TestCase):
         self.assertEqual(len(cards), 3)
         self.assertIn('Formato de loja v2', self.html)
         self.assertIn('Docker Compose', self.html)
-        self.assertIn('Instalação', self.html)
+        self.assertIn('INSTALAÇÃO SUJEITA A VALIDAÇÃO', self.html)
         self.assertNotIn('ZIP piloto', self.html)
 
     def test_actual_catalog_powers_cards_and_preview(self):
