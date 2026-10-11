@@ -1,7 +1,7 @@
 name: webgrabplus
 services:
   webgrabplus:
-    image: lscr.io/linuxserver/webgrabplus:latest@sha256:92859e0a4467c77dfae36ec098b41c5b49a5dd503bc0f9ad308e9419ec427c27
+    image: lscr.io/linuxserver/webgrabplus:latest@sha256:8d5dd403b0f16d4a96ff19a8360ee75193f9429c95bd343c7a2922075fefc056
     container_name: webgrabplus
     restart: unless-stopped
     environment:

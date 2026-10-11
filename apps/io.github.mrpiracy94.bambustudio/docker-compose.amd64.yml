@@ -1,7 +1,7 @@
 name: bambustudio
 services:
   bambustudio:
-    image: lscr.io/linuxserver/bambustudio:latest@sha256:d3c8c4cbe8beb5ae9aac8fedf843132e3798f201df6cbbd9c7479b45a8ee8fc1
+    image: lscr.io/linuxserver/bambustudio:latest@sha256:056f90dada957824cec32f1a09eaec322a8b1af08e9d117cf5c4dadf89693aeb
     container_name: bambustudio
     restart: unless-stopped
     environment:

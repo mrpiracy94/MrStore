@@ -1,7 +1,7 @@
 name: pycharm
 services:
   pycharm:
-    image: lscr.io/linuxserver/pycharm:latest
+    image: lscr.io/linuxserver/pycharm:latest@sha256:1e5bf310e12c9d870d3c97824a0c59eed2aefda7648c6d2c75a21194663afb97
     container_name: pycharm
     restart: unless-stopped
     environment:

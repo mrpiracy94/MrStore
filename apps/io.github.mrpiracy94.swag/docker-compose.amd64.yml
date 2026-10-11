@@ -1,7 +1,7 @@
 name: swag
 services:
   swag:
-    image: lscr.io/linuxserver/swag:latest@sha256:e524c83b48669eb187134bc51d4a7bcec602abe86dcf33ad03691c03bbde35e6
+    image: lscr.io/linuxserver/swag:latest@sha256:2fc60133a4c153a7182fdf7700ae72c6a31447fe263baf02851466c33a5111f0
     container_name: swag
     restart: unless-stopped
     environment:

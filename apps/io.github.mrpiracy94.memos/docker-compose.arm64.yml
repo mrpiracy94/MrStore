@@ -1,7 +1,7 @@
 name: memos
 services:
   memos:
-    image: neosmemo/memos:stable@sha256:75fb9be48500b56541d3499cba4264082b1258c89efabe3d473c1c3ebee02e2b
+    image: neosmemo/memos:stable@sha256:24c2707ddd8fbd2ceaa7a61ecab86a53cdcde640b24ce572b73da14b00b5785f
     container_name: memos
     restart: unless-stopped
     ports:

@@ -1,7 +1,7 @@
 name: wizarr
 services:
   wizarr:
-    image: ghcr.io/wizarrrr/wizarr:latest@sha256:091ecf81ead34318a6bb11c4222076ba9a353127628c0138af7cd5548dac2709
+    image: ghcr.io/wizarrrr/wizarr:latest@sha256:3e89f4850092d60f532406209100f5e929e06dd679bfd78c5f3559065f2854e0
     container_name: wizarr
     restart: unless-stopped
     environment:

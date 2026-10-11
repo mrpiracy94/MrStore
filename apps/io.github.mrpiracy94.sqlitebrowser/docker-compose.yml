@@ -1,7 +1,7 @@
 name: sqlitebrowser
 services:
   sqlitebrowser:
-    image: lscr.io/linuxserver/sqlitebrowser:latest
+    image: lscr.io/linuxserver/sqlitebrowser:latest@sha256:b96da9fe6e7f24a32a206aeefa93272ada4bf3c4c8c336998c3bbd95fef5d26b
     container_name: sqlitebrowser
     restart: unless-stopped
     environment:

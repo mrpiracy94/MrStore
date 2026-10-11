@@ -1,7 +1,7 @@
 name: ungoogled-chromium
 services:
   ungoogled-chromium:
-    image: lscr.io/linuxserver/ungoogled-chromium:latest@sha256:d642bdd8d6e2900403af42a7c37906440ebdfb961a16f1fcfc3728a07a133baf
+    image: lscr.io/linuxserver/ungoogled-chromium:latest@sha256:d0730ec58f4befff20dc4cd6651c88fa656e1689fb1a084452be4841ee794cad
     container_name: ungoogled-chromium
     restart: unless-stopped
     environment:

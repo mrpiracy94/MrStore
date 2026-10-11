@@ -1,7 +1,7 @@
 name: grocy
 services:
   grocy:
-    image: lscr.io/linuxserver/grocy:latest@sha256:7589ab58ddd292340427a85086a2524f80b13df91effb239a2d1cff1efd0fb5b
+    image: lscr.io/linuxserver/grocy:latest@sha256:c0d0d9d22d3a54fe3f779a743baa2d7bab96b73fad5597ff1a631e2be4b863c8
     container_name: grocy
     restart: unless-stopped
     environment:

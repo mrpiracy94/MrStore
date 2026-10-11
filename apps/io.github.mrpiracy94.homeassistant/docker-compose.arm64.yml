@@ -1,7 +1,7 @@
 name: homeassistant
 services:
   homeassistant:
-    image: lscr.io/linuxserver/homeassistant:latest@sha256:719ec1a90b4b01f37e901e13e13f84fa354f87e286ca528d0477770368e8ada6
+    image: lscr.io/linuxserver/homeassistant:latest@sha256:2fc1dbb6818d62bebb4eb418a2f2332f1d8b3ee116b546df78b902d1f28f13fa
     container_name: homeassistant
     restart: unless-stopped
     environment:

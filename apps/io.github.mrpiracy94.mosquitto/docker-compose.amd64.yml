@@ -1,7 +1,7 @@
 name: mosquitto
 services:
   mosquitto:
-    image: eclipse-mosquitto:2@sha256:12436df85d6b2b91e63c71184da35ec89400a98abdc688a78b1403a11ecf44b4
+    image: eclipse-mosquitto:2@sha256:38c0da4f2ef84284d47b3b3eeea1cb3bdeabe81ee10caf0cd5c5ff61ee3ea408
     container_name: mosquitto
     restart: unless-stopped
     ports:

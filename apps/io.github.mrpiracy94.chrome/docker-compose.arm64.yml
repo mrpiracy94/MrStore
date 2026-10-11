@@ -1,7 +1,7 @@
 name: chrome
 services:
   chrome:
-    image: lscr.io/linuxserver/chrome:latest@sha256:a7b769aa34af492108145766d9c8fcef55da09a1f717a0ba5c3b646b50ca366d
+    image: lscr.io/linuxserver/chrome:latest@sha256:84219d3d4049b7ec93daea4aa4aaa02b1fc6ccdcd67dc2e22562a3027ae13ea4
     container_name: chrome
     restart: unless-stopped
     environment:

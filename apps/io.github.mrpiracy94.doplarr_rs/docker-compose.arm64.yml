@@ -1,7 +1,7 @@
 name: doplarr_rs
 services:
   doplarr_rs:
-    image: lscr.io/linuxserver/doplarr_rs:latest@sha256:bef7c384d193e7627a84495ac1e46ebe33d2772f3b7392d9c6809f777cd08c5a
+    image: lscr.io/linuxserver/doplarr_rs:latest@sha256:6b3617fc61d3603b1272c4489b83e4bb2d2694d4ca15f1b48bfaf4f62475aec6
     container_name: doplarr_rs
     restart: unless-stopped
     environment:

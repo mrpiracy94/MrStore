@@ -9,7 +9,7 @@
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.dozzle/assets/dozzle.webp",
   "tagline": "Consulta logs Docker em tempo real",
-  "description": "Logs Docker em tempo real. Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "description": "Logs Docker em tempo real. Logs Docker via proxy GET-only na rede interna; o proxy continua a ter acesso ao socket. Protege a UI com firewall e autenticação.",
   "title": "Dozzle",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.dozzle",
@@ -19,7 +19,7 @@
   ],
   "min_memory": 0,
   "min_image_size": {
-    "amd64": 27328811,
-    "arm64": 25205179
+    "amd64": 34427587,
+    "arm64": 32567580
   }
 }

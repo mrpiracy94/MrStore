@@ -1,7 +1,7 @@
 name: filebrowser
 services:
   filebrowser:
-    image: filebrowser/filebrowser:v2.43.0@sha256:e3ea5bdb834fae91f43de573f866d30ee926e3763acb7d4f2407cae4a3a845ec
+    image: filebrowser/filebrowser:v2.43.0@sha256:1d0bcba4bd7d8886cc6f77c791694d69f9c7c78e889c4ed3a5734529daed9fa1
     container_name: mrstore-filebrowser
     restart: unless-stopped
     user: "1000:1000"

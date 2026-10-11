@@ -1,7 +1,7 @@
 name: audacity
 services:
   audacity:
-    image: lscr.io/linuxserver/audacity:latest
+    image: lscr.io/linuxserver/audacity:latest@sha256:6e0761fff5269228c515e754e6d2bef8be353f939cf2a2eca3d30af7b4a6ee0f
     container_name: audacity
     restart: unless-stopped
     environment:

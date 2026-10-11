@@ -1,7 +1,7 @@
 name: syncthing
 services:
   syncthing:
-    image: lscr.io/linuxserver/syncthing:latest@sha256:1057516adc137eb2eb0f6035f39bebdcf6359c24b5fa64a8b22c8d8aea301c75
+    image: lscr.io/linuxserver/syncthing:latest@sha256:8a381a5a11225475cc4a14ad4fee7c627fdc4fa5804fe3a34febe3aeda9f4e23
     container_name: syncthing
     restart: unless-stopped
     environment:

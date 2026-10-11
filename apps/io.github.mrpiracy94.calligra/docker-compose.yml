@@ -1,7 +1,7 @@
 name: calligra
 services:
   calligra:
-    image: lscr.io/linuxserver/calligra:latest
+    image: lscr.io/linuxserver/calligra:latest@sha256:e78dbca86e4381bc9cc4ef5835d02915e944ce77fd7ae58cb2bbf6a3c42ed003
     container_name: calligra
     restart: unless-stopped
     environment:

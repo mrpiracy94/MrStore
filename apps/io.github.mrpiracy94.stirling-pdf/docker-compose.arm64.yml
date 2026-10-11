@@ -1,7 +1,7 @@
 name: stirling-pdf
 services:
   stirling-pdf:
-    image: docker.io/stirlingtools/stirling-pdf:latest@sha256:63859e7302a0533a773655c99071756bbc4a0c710ea3259f1e02671b56cdf8dd
+    image: docker.io/stirlingtools/stirling-pdf:latest@sha256:b5b9e400c086e5334a4947a0d7cd589808f743f29267d7f41c18200cf4bc48b4
     container_name: stirling-pdf
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: bazarr
 services:
   bazarr:
-    image: lscr.io/linuxserver/bazarr:latest@sha256:866f25e24322cbaffeb84ec06a84ef589ba0ffa33b8dc16c41dccfd434870dae
+    image: lscr.io/linuxserver/bazarr:latest@sha256:c1673816321156b904af9b7e6415ea547ae9622e4acc375358f1e1eb9ed1e904
     container_name: bazarr
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: modrinth
 services:
   modrinth:
-    image: lscr.io/linuxserver/modrinth:latest@sha256:30d83669414a0e6465e6771230dbfd8678e9211144e919f44c9bbbe88ac39ea6
+    image: lscr.io/linuxserver/modrinth:latest@sha256:091374a836e68847b4ecd7ed5d7875ded4572ba5c5bb3e5311691bc11e95a2dd
     container_name: modrinth
     restart: unless-stopped
     environment:

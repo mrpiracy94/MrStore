@@ -1,7 +1,7 @@
 name: navidrome
 services:
   navidrome:
-    image: deluan/navidrome:latest@sha256:59ce76e6e06193fbfbb1736a93b8468227e1ea663fc7b25b1da13fbb97f5197b
+    image: deluan/navidrome:latest@sha256:38dc2727bfcfd5ede290f8ada114fc90368146f265ae4701ddddbcbe2a44ee52
     container_name: navidrome
     restart: unless-stopped
     environment:

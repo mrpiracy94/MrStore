@@ -1,7 +1,7 @@
 name: ferdium
 services:
   ferdium:
-    image: lscr.io/linuxserver/ferdium:latest
+    image: lscr.io/linuxserver/ferdium:latest@sha256:dac53f9bd3a5b5d3a99c2f914ac1ca5925cf5f23c49b647768b7f454f243e62f
     container_name: ferdium
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: apprise-api
 services:
   apprise-api:
-    image: lscr.io/linuxserver/apprise-api:latest@sha256:19b6f979f48efe1a87f8acf4f9609d474bd8067085dbdb80e628e1ce298a9f48
+    image: lscr.io/linuxserver/apprise-api:latest@sha256:742580f9c5e8e94e8009be3406bd557c012457d00acde7684066b3f897753d52
     container_name: apprise-api
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: homepage
 services:
   homepage:
-    image: ghcr.io/gethomepage/homepage:latest@sha256:1c7732541505c18a8f6e82fc6afbcdbed7316491bcc538930d518381056c4b56
+    image: ghcr.io/gethomepage/homepage:latest@sha256:57c4a0531937889c0b968b120fe9c2560bbe036b5c9e18c49a9e2479de9975d1
     container_name: homepage
     restart: unless-stopped
     environment:

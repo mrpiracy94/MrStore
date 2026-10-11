@@ -1,7 +1,7 @@
 name: thunderbird
 services:
   thunderbird:
-    image: lscr.io/linuxserver/thunderbird:latest@sha256:4b779855ae0649ee415c6cc53ce6f246d729ad140c0e25d0c9177bf2dcf982fe
+    image: lscr.io/linuxserver/thunderbird:latest@sha256:e438bba5d079de2a29915e2a4590fb64ed8e0ed9ab4bddef65316a65f97dc267
     container_name: thunderbird
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: qui
 services:
   qui:
-    image: ghcr.io/autobrr/qui:latest@sha256:72f04433cf22d2e64d12b630230a3471135e1efedabd756fa0df9211376a6f54
+    image: ghcr.io/autobrr/qui:latest@sha256:6ee1cf6df0a82687089e6e181aad09edb826b4b779603c56a28c803d19db99fd
     container_name: qui
     restart: unless-stopped
     environment:

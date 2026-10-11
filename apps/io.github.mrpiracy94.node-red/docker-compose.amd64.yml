@@ -1,7 +1,7 @@
 name: node-red
 services:
   node-red:
-    image: nodered/node-red:latest@sha256:148cf534d628591aa605f808971153d7de03b5ea5ca84b569daeadd97dc52769
+    image: nodered/node-red:latest@sha256:b5adb6c9dd29ab80c852d82bc87daed84e729dcff9b00ca1bf958e6de470f2c1
     container_name: node-red
     restart: unless-stopped
     environment:

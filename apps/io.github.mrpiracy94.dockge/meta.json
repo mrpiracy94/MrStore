@@ -9,7 +9,7 @@
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.dockge/assets/dockge.webp",
   "tagline": "Gere stacks Docker Compose numa interface web",
-  "description": "Gestor de stacks Docker Compose (alternativa ao Portainer). Estado: projeto muito ativo (conhecimento até meados de 2026); NÃO verificado em out/2026. Confirma portas e variáveis na documentação do projeto.",
+  "description": "ATENÇÃO: gestão de Docker via docker.sock concede controlo praticamente root sobre o host. Instalar apenas em rede administrativa autenticada, nunca expor a UI à Internet.",
   "title": "Dockge",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.dockge",

@@ -333,7 +333,7 @@
       "doublecommander: dangerous security_opt=seccomp:unconfined"
     ],
     "dozzle": [
-      "dozzle: dangerous sensitive_mount=/var/run/docker.sock"
+      "dozzle-socket-proxy: dangerous sensitive_mount=/var/run/docker.sock"
     ],
     "duckdns": [
       "duckdns: default credentials not configured"
@@ -483,8 +483,7 @@
     "netdata": [
       "netdata: dangerous cap_add=SYS_PTRACE",
       "netdata: dangerous sensitive_mount=/proc",
-      "netdata: dangerous sensitive_mount=/sys",
-      "netdata: dangerous sensitive_mount=/var/run/docker.sock"
+      "netdata: dangerous sensitive_mount=/sys"
     ],
     "obsidian": [
       "obsidian: dangerous security_opt=seccomp:unconfined"

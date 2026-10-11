@@ -1,7 +1,7 @@
 name: adguardhome-sync
 services:
   adguardhome-sync:
-    image: lscr.io/linuxserver/adguardhome-sync:latest@sha256:08baf3b9c2de297123c382756d4aa335fbd82a2d8bc699a6d0cda8eaf7fa2e33
+    image: lscr.io/linuxserver/adguardhome-sync:latest@sha256:290cb744c10d37b926ee3d065b29c03c128ad561c63053c5a4154a14671ffd91
     container_name: adguardhome-sync
     restart: unless-stopped
     environment:

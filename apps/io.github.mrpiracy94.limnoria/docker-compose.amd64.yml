@@ -1,7 +1,7 @@
 name: limnoria
 services:
   limnoria:
-    image: lscr.io/linuxserver/limnoria:latest@sha256:a511704388d4c157823b9287383c20307daa7997ab599ba716481299c2868130
+    image: lscr.io/linuxserver/limnoria:latest@sha256:4b6eae67efc3799d5467268fe86cf3964bc7175f2bb5bafffd8734564cd45565
     container_name: limnoria
     restart: unless-stopped
     environment:

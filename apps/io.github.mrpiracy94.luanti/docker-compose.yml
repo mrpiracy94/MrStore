@@ -1,7 +1,7 @@
 name: luanti
 services:
   luanti:
-    image: lscr.io/linuxserver/luanti:latest
+    image: lscr.io/linuxserver/luanti:latest@sha256:8088008f96480583f85570811e2d0b0e150c64a9400879378bda0182013cc4ce
     container_name: luanti
     restart: unless-stopped
     environment:

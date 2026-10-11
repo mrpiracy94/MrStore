@@ -1,7 +1,7 @@
 name: projectsend
 services:
   projectsend:
-    image: lscr.io/linuxserver/projectsend:latest@sha256:8a8bc2343806b36b53b812179644c342b7664e0a236088353fab25c6d0b22505
+    image: lscr.io/linuxserver/projectsend:latest@sha256:cd6011a3270c9b91e0ca83554bce43af07424750b525ea306feb7161bcd18ccb
     container_name: projectsend
     restart: unless-stopped
     environment:

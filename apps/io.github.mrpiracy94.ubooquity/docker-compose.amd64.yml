@@ -1,7 +1,7 @@
 name: ubooquity
 services:
   ubooquity:
-    image: lscr.io/linuxserver/ubooquity:latest@sha256:1e70c57381ea86533cfcf1f824926599ef5b1f8038ff69bda68776910761f257
+    image: lscr.io/linuxserver/ubooquity:latest@sha256:d4017ee0d38ca647eb2664773255567108d8364fc34ebf6acb138723623b37b6
     container_name: ubooquity
     restart: unless-stopped
     environment:

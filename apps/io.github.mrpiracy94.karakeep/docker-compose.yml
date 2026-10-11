@@ -1,7 +1,7 @@
 name: karakeep
 services:
   karakeep:
-    image: ghcr.io/karakeep-app/karakeep:release
+    image: ghcr.io/karakeep-app/karakeep:release@sha256:b069e4307dec06ea06d16989c6861c30a1ff208568be44ed5fb5d422cd3e950c
     container_name: karakeep
     restart: unless-stopped
     depends_on:
@@ -23,7 +23,7 @@ services:
         source: /DATA/AppData/karakeep/data
         target: /data
   karakeep-chrome:
-    image: ghcr.io/karakeep-app/karakeep-chrome:release
+    image: ghcr.io/karakeep-app/karakeep-chrome:release@sha256:5b19bbb160e9ff60681a3abd97e1c4ec9f64212301410de658c3900ab7ef31e7
     container_name: karakeep-chrome
     restart: unless-stopped
     init: true

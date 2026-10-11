@@ -1,7 +1,7 @@
 name: audiobookshelf
 services:
   audiobookshelf:
-    image: ghcr.io/advplyr/audiobookshelf:latest
+    image: ghcr.io/advplyr/audiobookshelf:latest@sha256:581d68b2a6fc7ebf58d81c878a9f387cbbc0d88ac9d37b298b9cee10168af85b
     container_name: audiobookshelf
     restart: unless-stopped
     environment:

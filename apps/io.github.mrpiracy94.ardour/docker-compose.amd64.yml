@@ -1,7 +1,7 @@
 name: ardour
 services:
   ardour:
-    image: lscr.io/linuxserver/ardour:latest@sha256:d482dc4ba93c0e8e71cd78e3beb6584fc5868496067e78e89ed07cb3f5cfdea4
+    image: lscr.io/linuxserver/ardour:latest@sha256:720a44efc9e158e56fd1f12e00f190746f73bcf1fa20aa508c8e9c59f27dc423
     container_name: ardour
     restart: unless-stopped
     environment:

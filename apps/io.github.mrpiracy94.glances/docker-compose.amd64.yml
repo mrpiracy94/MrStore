@@ -1,7 +1,7 @@
 name: glances
 services:
   glances:
-    image: nicolargo/glances:latest-full@sha256:786bb647bae919532e8deec277b7d2d6b23cb329c7e5d3f85fbf657146db61a2
+    image: nicolargo/glances:latest-full@sha256:2a7f42503f165c5a50fc3f88f820517e2bd905447ddf578e44bee7db3b52821c
     container_name: glances
     restart: unless-stopped
     environment:

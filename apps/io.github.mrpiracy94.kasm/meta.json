@@ -9,7 +9,7 @@
   "category": "Others",
   "thumbnail": "/apps/io.github.mrpiracy94.kasm/assets/kasm.webp",
   "tagline": "Ambientes de trabalho e aplicações no navegador",
-  "description": "Kasm Workspaces — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kasm:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kasm/",
+  "description": "ATENÇÃO: requer privileged: true para Docker-in-Docker (risco elevado para o host). Instalar apenas num host/VM isolado, com rede administrativa protegida; não equivale a uma app Docker confinada. Consultar docs LinuxServer. Docs: https://docs.linuxserver.io/images/docker-kasm/",
   "title": "Kasm Workspaces",
   "base_url": "https://mrpiracy94.github.io/MrStore",
   "id": "io.github.mrpiracy94.kasm",

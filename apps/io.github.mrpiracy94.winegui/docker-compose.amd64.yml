@@ -1,7 +1,7 @@
 name: winegui
 services:
   winegui:
-    image: lscr.io/linuxserver/winegui:latest@sha256:c194e95b6cc114494c8d1601e20520bf7d107dd6093bb9d7f74a6f8a37bb62f2
+    image: lscr.io/linuxserver/winegui:latest@sha256:41a12b6613072df63bae0d05331386a84c8a347095f4b99b4f20a9bb72b8517f
     container_name: winegui
     restart: unless-stopped
     environment:

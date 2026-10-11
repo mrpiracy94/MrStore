@@ -1,7 +1,7 @@
 name: opera
 services:
   opera:
-    image: lscr.io/linuxserver/opera:latest@sha256:12d8c1c2487a98bc99e214c4c09ffaa10c100663fd271cf70902d13cd3641782
+    image: lscr.io/linuxserver/opera:latest@sha256:8c24ac8975f6bae95cf60481be8401c2850552633b2a6dfa9a5971edad8b1960
     container_name: opera
     restart: unless-stopped
     environment:

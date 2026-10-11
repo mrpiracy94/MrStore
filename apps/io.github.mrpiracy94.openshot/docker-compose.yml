@@ -1,7 +1,7 @@
 name: openshot
 services:
   openshot:
-    image: lscr.io/linuxserver/openshot:latest
+    image: lscr.io/linuxserver/openshot:latest@sha256:b26dec3801aec4350babeb7ae44496ceebcc3060aae1c32bbd96919a99946ee9
     container_name: openshot
     restart: unless-stopped
     environment:

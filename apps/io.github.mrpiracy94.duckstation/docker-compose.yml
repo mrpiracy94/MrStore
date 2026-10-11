@@ -1,7 +1,7 @@
 name: duckstation
 services:
   duckstation:
-    image: lscr.io/linuxserver/duckstation:latest
+    image: lscr.io/linuxserver/duckstation:latest@sha256:974ba9044fb0d557a021947e9f835b5df32fc600486b6c7174d77be693ab4bb0
     container_name: duckstation
     restart: unless-stopped
     environment:

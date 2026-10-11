@@ -1,7 +1,7 @@
 name: librespeed
 services:
   librespeed:
-    image: lscr.io/linuxserver/librespeed:latest@sha256:b825e58d2752e666afb08f48d1571e5fbf3d7d2df8b828c1916369ea462cb3c5
+    image: lscr.io/linuxserver/librespeed:latest@sha256:cebf3af16a406cbdaa49a27266371fa21228901c3d5e5efad54bbd56350335f6
     container_name: librespeed
     restart: unless-stopped
     environment:

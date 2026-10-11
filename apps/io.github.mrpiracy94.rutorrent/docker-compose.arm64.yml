@@ -1,7 +1,7 @@
 name: rutorrent
 services:
   rutorrent:
-    image: crazymax/rtorrent-rutorrent:latest@sha256:82aa3fce97495c47c4acbf620af6665e3dc15907509e9fff1b033b71b1df5f06
+    image: crazymax/rtorrent-rutorrent:latest@sha256:ff1d1af242c66af99932c2de882cf79e175c2fdec27be48438cd4f87e1739c74
     container_name: rutorrent
     restart: unless-stopped
     environment:

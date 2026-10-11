@@ -1,7 +1,7 @@
 name: azahar
 services:
   azahar:
-    image: lscr.io/linuxserver/azahar:latest@sha256:ce06fa704b4274d74bbde751fd0c55fae7b4dfc3a09b12b6c3b765d5028cbaa5
+    image: lscr.io/linuxserver/azahar:latest@sha256:31508bb1f84718378b2a48789f3bea015fc758043d4a557bdd517b0bee1a596f
     container_name: azahar
     restart: unless-stopped
     environment:

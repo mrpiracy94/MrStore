@@ -1,7 +1,7 @@
 name: rawtherapee
 services:
   rawtherapee:
-    image: lscr.io/linuxserver/rawtherapee:latest
+    image: lscr.io/linuxserver/rawtherapee:latest@sha256:48febebce9f7bb82a7af5dbe96094edcf6128e9be76619e4d51d6ddf65fff70b
     container_name: rawtherapee
     restart: unless-stopped
     environment:

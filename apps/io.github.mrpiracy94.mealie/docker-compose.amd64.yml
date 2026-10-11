@@ -1,7 +1,7 @@
 name: mealie
 services:
   mealie:
-    image: ghcr.io/mealie-recipes/mealie:latest@sha256:3e57058bfcb4343bd7c43d8f04306f6d37523d06ef7a7a395ebfcfc2a752cee4
+    image: ghcr.io/mealie-recipes/mealie:latest@sha256:8b02290f4d1806f02acac6f25f6d48a3c965612fda1f8e914d5af533276f8688
     container_name: mealie
     restart: unless-stopped
     environment:

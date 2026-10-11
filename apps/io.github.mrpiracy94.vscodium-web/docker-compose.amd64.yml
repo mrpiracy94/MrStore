@@ -1,7 +1,7 @@
 name: vscodium-web
 services:
   vscodium-web:
-    image: lscr.io/linuxserver/vscodium-web:latest@sha256:97dc4d04e42c8d89a060df80ee48c98bf1965ab75669a59257bc393e059d3026
+    image: lscr.io/linuxserver/vscodium-web:latest@sha256:c1bc670d4f9bf10994090715923d0e62ff339749c19028c2d483759568e139e6
     container_name: vscodium-web
     restart: unless-stopped
     environment:

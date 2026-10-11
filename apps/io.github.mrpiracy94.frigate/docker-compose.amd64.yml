@@ -1,7 +1,7 @@
 name: frigate
 services:
   frigate:
-    image: ghcr.io/blakeblackshear/frigate:stable@sha256:b1f339cf08ae9148b0fac4295cf59f8e158455f6e72d29af32b773a3d8129851
+    image: ghcr.io/blakeblackshear/frigate:stable@sha256:9678a83a76e4730ac7d9ea7428370e32ae656d6b312aaad30d6c69f3fef14d35
     container_name: frigate
     restart: unless-stopped
     shm_size: "512mb"

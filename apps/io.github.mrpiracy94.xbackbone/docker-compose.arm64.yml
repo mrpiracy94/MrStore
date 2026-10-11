@@ -1,7 +1,7 @@
 name: xbackbone
 services:
   xbackbone:
-    image: lscr.io/linuxserver/xbackbone:latest@sha256:fb9c36debf75af171d45b5ff40aed588301ec3036d9e413a55eb88b821306020
+    image: lscr.io/linuxserver/xbackbone:latest@sha256:c95e7777660c282453a5c16036b3fb05656b0e84ffe1a9a0b987335bd9eb9d7e
     container_name: xbackbone
     restart: unless-stopped
     environment:

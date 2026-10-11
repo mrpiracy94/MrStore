@@ -1,7 +1,7 @@
 name: flaresolverr
 services:
   flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest@sha256:91c0774e7d634f8b55a69d5027fa13a7fcad9b59b420efb286364fc8236634f1
+    image: ghcr.io/flaresolverr/flaresolverr:latest@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767
     container_name: flaresolverr
     restart: unless-stopped
     environment:

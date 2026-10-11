@@ -1,7 +1,7 @@
 name: openssh-server
 services:
   openssh-server:
-    image: lscr.io/linuxserver/openssh-server:latest@sha256:aa72ca296f6bfefaaa01cf4f1e389d90994f20ecb59286cedb7bfd059acf557b
+    image: lscr.io/linuxserver/openssh-server:latest@sha256:46f115de7c251558297e7e87566fc3fc08544b63e55502b5cf294454db5d29d1
     container_name: openssh-server
     restart: unless-stopped
     environment:

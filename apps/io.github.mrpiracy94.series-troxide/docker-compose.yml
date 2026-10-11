@@ -1,7 +1,7 @@
 name: series-troxide
 services:
   series-troxide:
-    image: lscr.io/linuxserver/series-troxide:latest
+    image: lscr.io/linuxserver/series-troxide:latest@sha256:a86c0f9b6500be2596e3fdf12bf3b341f6b842c1b1fc88d44b6ef3362f9b58df
     container_name: series-troxide
     restart: unless-stopped
     environment:

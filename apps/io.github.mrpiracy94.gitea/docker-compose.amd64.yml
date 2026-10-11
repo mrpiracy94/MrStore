@@ -1,7 +1,7 @@
 name: gitea
 services:
   gitea:
-    image: docker.io/gitea/gitea:latest@sha256:52b4862a6baa25ba8f9769fb99355aaca4fa5cdf41031dad223686199eaecda4
+    image: docker.io/gitea/gitea:latest@sha256:f505a0d3a41323b786e05942fc7a4075e07ae7c169fd9485649aa55ee543a21a
     container_name: gitea
     restart: unless-stopped
     environment:

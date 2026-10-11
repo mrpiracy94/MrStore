@@ -1,7 +1,7 @@
 name: calibre
 services:
   calibre:
-    image: lscr.io/linuxserver/calibre:latest@sha256:8bff661d2509d8c2dc006c40064ccd440da769af2f667350e7b9c13499468b7f
+    image: lscr.io/linuxserver/calibre:latest@sha256:4b1673b28f18c170e8d6c48c791e67520df44dc4f9b9e8f63fef21d23910abab
     container_name: calibre
     restart: unless-stopped
     environment:

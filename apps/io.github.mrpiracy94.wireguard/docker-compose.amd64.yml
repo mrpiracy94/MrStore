@@ -1,7 +1,7 @@
 name: wireguard
 services:
   wireguard:
-    image: lscr.io/linuxserver/wireguard:latest@sha256:f9194fcf2353fc63bac023487f3a67b35f8334abb0ba4f79e81bd876de9f3e1e
+    image: lscr.io/linuxserver/wireguard:latest@sha256:437a490f7afc6969434251351ba47455a3829e71cef9c6172f3f533332d04063
     container_name: wireguard
     restart: unless-stopped
     environment:

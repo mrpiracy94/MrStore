@@ -1,7 +1,7 @@
 name: telegram
 services:
   telegram:
-    image: lscr.io/linuxserver/telegram:latest
+    image: lscr.io/linuxserver/telegram:latest@sha256:26ae3c38bcc68d55e493f614deee30b015d2431fd075511ff9cd758c9fa885cd
     container_name: telegram
     restart: unless-stopped
     environment:

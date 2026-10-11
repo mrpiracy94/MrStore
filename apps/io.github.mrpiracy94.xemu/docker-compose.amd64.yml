@@ -1,7 +1,7 @@
 name: xemu
 services:
   xemu:
-    image: lscr.io/linuxserver/xemu:latest@sha256:a363a96b09dd5ab8e91f2dc2d7bf540d04f63f94c15f6e7b893e18460704cf37
+    image: lscr.io/linuxserver/xemu:latest@sha256:ce23bd30c9fe166b3a167b87d6bcb88ee9b29740769ad9fd1ca2182ddb5544cf
     container_name: xemu
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: airsonic-advanced
 services:
   airsonic-advanced:
-    image: lscr.io/linuxserver/airsonic-advanced:latest@sha256:52e60b8bc75b173ba21420f43976f3ba239bfa8b6519a4c59e7b608b6d0042fa
+    image: lscr.io/linuxserver/airsonic-advanced:latest@sha256:bae6dde843d7e207e4f97322c4e5cacf57f6ad10000a1e70a901d273cd4ff237
     container_name: airsonic-advanced
     restart: unless-stopped
     environment:

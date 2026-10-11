@@ -1,7 +1,7 @@
 name: whisparr
 services:
   whisparr:
-    image: ghcr.io/hotio/whisparr:latest@sha256:cf59f0aff0e3f5da3dcb58cd07dacc3f194aaf6c2d6b933d2c92224d9664067b
+    image: ghcr.io/hotio/whisparr:latest@sha256:4cbc45dcdf9e41e00a3c4ab8d6b0150731e6113018d27489f6960e43022d1b27
     container_name: whisparr
     restart: unless-stopped
     environment:

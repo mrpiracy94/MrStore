@@ -1,7 +1,7 @@
 name: tvheadend
 services:
   tvheadend:
-    image: lscr.io/linuxserver/tvheadend:latest@sha256:3e705a3aa59f559cc3e75dbc755b8262ae58bdbefe33febdc41fcb6d6d9cc74f
+    image: lscr.io/linuxserver/tvheadend:latest@sha256:fcc4b2091c573bd0b5ec04cf09db9acf0907e23d3bca9b53b0a0111bc8ae1fc3
     container_name: tvheadend
     restart: unless-stopped
     environment:

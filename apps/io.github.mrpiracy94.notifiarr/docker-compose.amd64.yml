@@ -1,7 +1,7 @@
 name: notifiarr
 services:
   notifiarr:
-    image: golift/notifiarr:latest@sha256:27d992ea7feafed4f8f0aa4e278bc9f81017965fe39386c91188dd6d19118345
+    image: golift/notifiarr:latest@sha256:2b0a8784d8a43177cbc5a19110e7eb066d9321572c3352eda79c0a89898c7735
     container_name: notifiarr
     restart: unless-stopped
     environment:

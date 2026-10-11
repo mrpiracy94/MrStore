@@ -1,7 +1,7 @@
 name: netdata
 services:
   netdata:
-    image: netdata/netdata:stable@sha256:fbc243dc5c3f1bc9d592ea5627c1a7ac4a821185de575f6bef14f21e2b5ef35d
+    image: netdata/netdata:stable@sha256:5cfa05a5fa5686b98e0c70e884f00685fb3c662e9c5d727cf46c96d8e37b7818
     container_name: netdata
     restart: unless-stopped
     cap_add:
@@ -27,10 +27,6 @@ services:
       - type: bind
         source: /sys
         target: /host/sys
-        read_only: true
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
         read_only: true
 x-casaos:
   id: io.github.mrpiracy94.netdata

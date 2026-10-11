@@ -1,7 +1,7 @@
 name: lldap
 services:
   lldap:
-    image: lldap/lldap:stable@sha256:90b849059c42ed8f92b95624ae71e38ca137a994736c68fb25dd167f2bbc9808
+    image: lldap/lldap:stable@sha256:2a8454b668c1aba7157e832eab0e242e1e7eb5fb7591d7e7774ba05286511ca8
     container_name: lldap
     restart: unless-stopped
     environment:

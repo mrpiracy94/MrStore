@@ -1,7 +1,7 @@
 name: unpackerr
 services:
   unpackerr:
-    image: golift/unpackerr:latest@sha256:5b4589fd9153a9468502efbc9148b3c1d9a3678299c40c244accaf34f81f584b
+    image: golift/unpackerr:latest@sha256:244fc45cb207308f60e8f52dd703c2b3463385752de0f9517c58ff9d331ed15e
     container_name: unpackerr
     restart: unless-stopped
     environment:

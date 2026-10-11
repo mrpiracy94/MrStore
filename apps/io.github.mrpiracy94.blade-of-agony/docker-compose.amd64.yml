@@ -1,7 +1,7 @@
 name: blade-of-agony
 services:
   blade-of-agony:
-    image: lscr.io/linuxserver/blade-of-agony:latest@sha256:a4fff0e69ae1427e11bc53d8778cf2a288a5a230acd725ffddca3c306de80c73
+    image: lscr.io/linuxserver/blade-of-agony:latest@sha256:cef2f190c8ce4676a8d413927825b4ba366bac6d7ee1d75a5a15f27ef21cc7c5
     container_name: blade-of-agony
     restart: unless-stopped
     environment:

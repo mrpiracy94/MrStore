@@ -1,7 +1,7 @@
 name: tailscale
 services:
   tailscale:
-    image: tailscale/tailscale:latest@sha256:08a1bc6c82fee62d1a135788fb67fefa9d22deea3830e8a45ebe1a3cb116e325
+    image: tailscale/tailscale:latest@sha256:c507f3a2a6ab1cabd8d809b98edeb41edbd5c3fb6ad9632ffd098b4c7d0b4065
     container_name: tailscale
     restart: unless-stopped
     network_mode: host

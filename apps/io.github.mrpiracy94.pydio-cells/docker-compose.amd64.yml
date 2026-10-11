@@ -1,7 +1,7 @@
 name: pydio-cells
 services:
   pydio-cells:
-    image: lscr.io/linuxserver/pydio-cells:latest@sha256:98384469e5ad8d35c0224ff43dba2b099f920809d5af63f281573000013579bd
+    image: lscr.io/linuxserver/pydio-cells:latest@sha256:fa339560b49539a9ca4872b94805444d0a66bd8755af4cb6978ea94f73652657
     container_name: pydio-cells
     restart: unless-stopped
     environment:

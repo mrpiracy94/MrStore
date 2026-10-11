@@ -1,7 +1,7 @@
 name: babybuddy
 services:
   babybuddy:
-    image: lscr.io/linuxserver/babybuddy:latest@sha256:b2c5fae64dd981947f00ef1b6468dc51fed29715e556a3a432c2469384825fcb
+    image: lscr.io/linuxserver/babybuddy:latest@sha256:d03f380d9bc4a0139015744dd0c402818aed83dbedf5d36a01754e5e600f7f77
     container_name: babybuddy
     restart: unless-stopped
     environment:

@@ -1,7 +1,7 @@
 name: mastodon
 services:
   mastodon:
-    image: lscr.io/linuxserver/mastodon:latest@sha256:ca8a919032bd1d9f4679df3a296e7c5d5f10eccc7f7a6f419912ae7bcf2ec9c9
+    image: lscr.io/linuxserver/mastodon:latest@sha256:b4e6b0b8378e5bc2a26a593b9f32aa32c51f2e54c41e60fef0a68d7a82346424
     container_name: mastodon
     restart: unless-stopped
     environment:

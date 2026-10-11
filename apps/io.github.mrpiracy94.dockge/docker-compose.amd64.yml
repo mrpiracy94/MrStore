@@ -1,7 +1,7 @@
 name: dockge
 services:
   dockge:
-    image: louislam/dockge:1@sha256:edee39b74f238378ebfe0d9d12b3833f9d1e123aea9dfaf5149ad45c9afe2527
+    image: louislam/dockge:1@sha256:335c6368b880ecc203236ed89e6e5232e0d6578e8ef5920e4a502390451502bf
     container_name: dockge
     restart: unless-stopped
     environment:

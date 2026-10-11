@@ -1,7 +1,7 @@
 name: maintainerr
 services:
   maintainerr:
-    image: ghcr.io/maintainerr/maintainerr:latest@sha256:6dbbe8b1223bceb2334b61b3e39bc5642e9562edfc31accc1b271d80cf0dabf4
+    image: ghcr.io/maintainerr/maintainerr:latest@sha256:8251a1f0ba5d71acc878846a727fba566ec87cbfbf6a914fb881a5953af53d46
     container_name: maintainerr
     restart: unless-stopped
     environment:

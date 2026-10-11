@@ -1,7 +1,7 @@
 name: heimdall
 services:
   heimdall:
-    image: lscr.io/linuxserver/heimdall:latest@sha256:099f15897d0a9992bc8635a63ba120fc7d286f30be4c248a7b480a2810e4d1f5
+    image: lscr.io/linuxserver/heimdall:latest@sha256:3c9e97c416c7f6d72a3fc12af01a37bd0e71d9e6588d25c40b47e391f39ff7fd
     container_name: heimdall
     restart: unless-stopped
     environment:

@@ -1,17 +1,52 @@
 name: dozzle
 services:
   dozzle:
-    image: amir20/dozzle:latest
+    image: amir20/dozzle:latest@sha256:ba65da5af3d2147cfc2ee68ea5a6e35b75d2dff7eeff226151a65c9d77831c02
     container_name: dozzle
     restart: unless-stopped
     ports:
       - target: 8080
         published: "30011"
         protocol: tcp
+    environment:
+      - DOZZLE_REMOTE_HOST=tcp://dozzle-socket-proxy:2375
+      - DOZZLE_ENABLE_ACTIONS=false
+      - DOZZLE_ENABLE_SHELL=false
+    networks:
+      - default
+      - docker-api
+
+  dozzle-socket-proxy:
+    # The socket is held by a restricted API proxy, not the Dozzle UI.
+    image: lscr.io/linuxserver/socket-proxy:latest@sha256:362cadf55b3c7920189347d0f4d60b389e2f80e929581bf10793f2371aab41e5
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /run
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - CONTAINERS=1
+      - EVENTS=1
+      - INFO=1
+      - VERSION=1
+      - ALLOW_LOGS=1
+      - POST=0
+      - EXEC=0
+      - BUILD=0
+      - AUTH=0
+      - SECRETS=0
     volumes:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
+        read_only: true
+    networks:
+      - docker-api
+networks:
+  docker-api:
+    internal: true
+
 x-casaos:
   id: io.github.mrpiracy94.dozzle
   version: "1.0.1"

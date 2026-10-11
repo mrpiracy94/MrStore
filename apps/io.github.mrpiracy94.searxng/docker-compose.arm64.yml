@@ -1,7 +1,7 @@
 name: searxng
 services:
   searxng:
-    image: searxng/searxng:latest@sha256:75d0375be07a8a9337525bcd7c2f5ee2d13361d2aa9b1bf240255041bd07987f
+    image: searxng/searxng:latest@sha256:85492ba800a861e3e8ff6014c430e81369fe6ca766a9990595f616d1ce95b272
     container_name: searxng
     restart: unless-stopped
     environment:

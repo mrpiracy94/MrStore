@@ -1,7 +1,7 @@
 name: keepassxc
 services:
   keepassxc:
-    image: lscr.io/linuxserver/keepassxc:latest@sha256:a7a914f202f54c927d9cd34b3c28423d2970249d935a605bb74906ede11f85aa
+    image: lscr.io/linuxserver/keepassxc:latest@sha256:accf6914aa95ba027f197e0ab4d4c8e177728b9e5ad16a912febe7a6dd46c2f8
     container_name: keepassxc
     restart: unless-stopped
     environment:

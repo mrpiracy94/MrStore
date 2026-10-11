@@ -1,7 +1,7 @@
 name: digikam
 services:
   digikam:
-    image: lscr.io/linuxserver/digikam:latest
+    image: lscr.io/linuxserver/digikam:latest@sha256:553255834b2fcb5fb8001d22adf3efb6058005d067fa1c950402f1e3f3d63ca0
     container_name: digikam
     restart: unless-stopped
     environment:
