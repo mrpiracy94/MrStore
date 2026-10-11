@@ -61,6 +61,6 @@ x-casaos:
   tagline:
     en_US: "Kasm Workspaces (LinuxServer.io)"
   description:
-    en_US: "Kasm Workspaces — origem: LinuxServer.io. Imagem: lscr.io/linuxserver/kasm:latest. Verifica portas/variáveis na documentação do projeto. Docs: https://docs.linuxserver.io/images/docker-kasm/"
+    en_US: "ATENÇÃO: requer privileged: true para Docker-in-Docker (risco elevado para o host). Instalar apenas num host/VM isolado, com rede administrativa protegida; não equivale a uma app Docker confinada. Consultar docs LinuxServer. Docs: https://docs.linuxserver.io/images/docker-kasm/"
   port_map: "20040"
   index: /
