@@ -1,14 +1,14 @@
 <div align="center">
-  <img src="web/assets/mrstore-hero.webp" alt="MrStore — O teu homelab. As tuas apps. Uma só loja. Um ecossistema, múltiplas plataformas." width="100%">
+  <img src="web/assets/mrstore-hero.webp" alt="MrStore — catálogo comunitário de aplicações self-hosted." width="100%">
 
   <h1>MrStore · The Homelab App Hub</h1>
 
-  <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Descobre aplicações self-hosted num catálogo comunitário pensado para unir sistemas, servidores e plataformas. Uma identidade independente do teu sistema operativo.</p>
+  <p><strong>O teu homelab. As tuas apps. Uma só loja.</strong><br>Descobre aplicações self-hosted num catálogo comunitário para servidores e NAS. Consulta aplicações no navegador, usa o formato ZimaOS v2 quando adequado ou prepara manualmente os manifestos Docker Compose.</p>
 
   <p>
     <a href="https://mrpiracy94.github.io/"><strong>🌐 Explorar a loja</strong></a>
     &nbsp; · &nbsp;
-    <a href="#-plataformas-e-compatibilidade"><strong>🌍 Plataformas</strong></a>
+    <a href="#-plataformas-e-compatibilidade"><strong>📦 Formatos disponíveis</strong></a>
     &nbsp; · &nbsp;
     <a href="#-segurança-e-transparência"><strong>🛡️ Segurança</strong></a>
     &nbsp; · &nbsp;
