@@ -1,0 +1,4494 @@
+{
+  "scope": "all_container_images_and_app_manifests",
+  "certification": "not_assessed",
+  "apps_total": 254,
+  "unique_images_total": 259,
+  "dockerfiles_total": 9,
+  "image_usage": {
+    "amir20/dozzle:latest@sha256:ba65da5af3d2147cfc2ee68ea5a6e35b75d2dff7eeff226151a65c9d77831c02": [
+      "dozzle/dozzle"
+    ],
+    "cloudflare/cloudflared:latest": [
+      "cloudflared/cloudflared"
+    ],
+    "crazymax/rtorrent-rutorrent:latest": [
+      "rutorrent/rutorrent"
+    ],
+    "deluan/navidrome:latest": [
+      "navidrome/navidrome"
+    ],
+    "docker.io/gitea/gitea:latest": [
+      "gitea/gitea"
+    ],
+    "docker.io/library/redis:8.10.1-alpine": [
+      "paperless-ngx/paperless-broker"
+    ],
+    "docker.io/stirlingtools/stirling-pdf:latest": [
+      "stirling-pdf/stirling-pdf"
+    ],
+    "docker.io/valkey/valkey:9": [
+      "immich/immich-redis"
+    ],
+    "eclipse-mosquitto:2": [
+      "mosquitto/mosquitto"
+    ],
+    "filebrowser/filebrowser:v2.43.0": [
+      "filebrowser/filebrowser"
+    ],
+    "getmeili/meilisearch:v1.54.3@sha256:e68913ab7d6f5b159529e472cfd362ce3c741fafd3c127961b2142abbe41b3c9": [
+      "karakeep/karakeep-meilisearch"
+    ],
+    "ghcr.io/actualbudget/actual:latest": [
+      "actual-budget/actual-budget"
+    ],
+    "ghcr.io/advplyr/audiobookshelf:latest": [
+      "audiobookshelf/audiobookshelf"
+    ],
+    "ghcr.io/alexta69/metube:latest": [
+      "metube/metube"
+    ],
+    "ghcr.io/autobrr/autobrr:latest": [
+      "autobrr/autobrr"
+    ],
+    "ghcr.io/autobrr/qui:latest": [
+      "qui/qui"
+    ],
+    "ghcr.io/blakeblackshear/frigate:stable": [
+      "frigate/frigate"
+    ],
+    "ghcr.io/cross-seed/cross-seed:latest": [
+      "cross-seed/cross-seed"
+    ],
+    "ghcr.io/esphome/esphome:latest": [
+      "esphome/esphome"
+    ],
+    "ghcr.io/flaresolverr/flaresolverr:latest": [
+      "flaresolverr/flaresolverr"
+    ],
+    "ghcr.io/gethomepage/homepage:latest": [
+      "homepage/homepage"
+    ],
+    "ghcr.io/haveagitgat/tdarr:latest": [
+      "tdarr/tdarr"
+    ],
+    "ghcr.io/homarr-labs/homarr:latest": [
+      "homarr/homarr"
+    ],
+    "ghcr.io/hotio/whisparr:latest": [
+      "whisparr/whisparr"
+    ],
+    "ghcr.io/immich-app/immich-machine-learning:release": [
+      "immich/immich-machine-learning"
+    ],
+    "ghcr.io/immich-app/immich-server:release": [
+      "immich/immich-server"
+    ],
+    "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0": [
+      "immich/immich-database"
+    ],
+    "ghcr.io/karakeep-app/karakeep-chrome:release": [
+      "karakeep/karakeep-chrome"
+    ],
+    "ghcr.io/karakeep-app/karakeep:release": [
+      "karakeep/karakeep"
+    ],
+    "ghcr.io/maintainerr/maintainerr:latest": [
+      "maintainerr/maintainerr"
+    ],
+    "ghcr.io/mealie-recipes/mealie:latest": [
+      "mealie/mealie"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe": [
+      "code-server/code-server"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-healthchecks@sha256:32c4096680c75431b0e7c20a0064f3e54b25cf55e67c012092f29d1fe61b4b81": [
+      "healthchecks/healthchecks"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-it-tools:static-nginx-alpine-secfix-20261010@sha256:36768ba51ba7fbac1f2dac8d1786c2fc7f9cf6f5afd077e677d77749d0425073": [
+      "it-tools/it-tools"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-jdownloader:v26.09.1-alpine-secfix-20261010@sha256:4b7e4ba450fb511da21ffa56d2618d012d4cb6d5c553da1bd2797b1eb4b06769": [
+      "jdownloader/jdownloader"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-lowcve-ngircd:secfix-38353c004df31ee7ac721591496f8937b9013dc9@sha256:8ec35cbc9b8cfbc0ba5645a2a7274662e48b3d706d2447a5f2781195847cc40a": [
+      "ngircd/ngircd"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-netbootxyz:2026-10-09-secfix@sha256:2a3fda1f77563529dcff6dcb0f4cbc44a48694291ca071f01995a157cc451527": [
+      "netbootxyz/netbootxyz"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-pebble-ffmpeg@sha256:f162f645eec4d4c4b91ee3323a52ccbf8798faef184edb75ad12a0f772d8cb97": [
+      "ffmpeg/ffmpeg"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-pebble-jellyfin@sha256:3d572cac49486117afc12d5fa5bf4a1823a57b15d370e26bcc4d8a9e92d09979": [
+      "jellyfin/jellyfin"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-pebble-plex@sha256:0d624cc85c6911c0d5af20f33fd733f90f86d612ae15f84424dab0e0187bcbbb": [
+      "plex/plex"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-phpmyadmin:lsio-composer-twig-symfony-secfix-20261010@sha256:e013e13d834b9ae5c0cf47f9edb5501aa99a60109813ef3280131621498b1749": [
+      "phpmyadmin/phpmyadmin"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-python-beets@sha256:731e25db040b766afade34c113195d361575806de141f6b1227447ae64ad1ab0": [
+      "beets/beets"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-python-nzbget@sha256:9c45c7e1b8b72de8874540a9d9e5a8b9a94c7c0c25b9b88ba3d319120807d8a6": [
+      "nzbget/nzbget"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-python-sickgear@sha256:01e888bbe243143797e5d6e9247f87c2d90d985ac6af54f700d84b42d5e58562": [
+      "sickgear/sickgear"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-python-tautulli@sha256:6d9fa8bf48dd804b6b6ba2833a892f2cebfe05ffcbaf365c9474a9efe1c29c8b": [
+      "tautulli/tautulli"
+    ],
+    "ghcr.io/mrpiracy94/mrstore-qbittorrent:5.2.4-libtorrentv1-secfix-20261009@sha256:6e0475093e34571c90fc0d1ede2920ca847f1b4a1ac127351931eab6e12c6c4c": [
+      "qbittorrent-4/qbittorrent-4"
+    ],
+    "ghcr.io/open-webui/open-webui:main": [
+      "open-webui/open-webui"
+    ],
+    "ghcr.io/paperless-ngx/paperless-ngx:latest": [
+      "paperless-ngx/paperless-ngx"
+    ],
+    "ghcr.io/pocket-id/pocket-id:latest": [
+      "pocket-id/pocket-id"
+    ],
+    "ghcr.io/recyclarr/recyclarr:8": [
+      "recyclarr/recyclarr"
+    ],
+    "ghcr.io/seerr-team/seerr:latest": [
+      "seerr/seerr"
+    ],
+    "ghcr.io/wizarrrr/wizarr:latest": [
+      "wizarr/wizarr"
+    ],
+    "golift/notifiarr:latest": [
+      "notifiarr/notifiarr"
+    ],
+    "golift/unpackerr:latest": [
+      "unpackerr/unpackerr"
+    ],
+    "henrygd/beszel:latest": [
+      "beszel/beszel"
+    ],
+    "jc21/nginx-proxy-manager:latest": [
+      "nginx-proxy-manager/nginx-proxy-manager"
+    ],
+    "lissy93/dashy:latest": [
+      "dashy/dashy"
+    ],
+    "lldap/lldap:stable": [
+      "lldap/lldap"
+    ],
+    "louislam/dockge:1": [
+      "dockge/dockge"
+    ],
+    "louislam/uptime-kuma:2.5.6": [
+      "uptime-kuma/uptime-kuma"
+    ],
+    "lscr.io/linuxserver/adguardhome-sync:latest": [
+      "adguardhome-sync/adguardhome-sync"
+    ],
+    "lscr.io/linuxserver/airsonic-advanced:latest": [
+      "airsonic-advanced/airsonic-advanced"
+    ],
+    "lscr.io/linuxserver/altus:latest": [
+      "altus/altus"
+    ],
+    "lscr.io/linuxserver/apprise-api:latest": [
+      "apprise-api/apprise-api"
+    ],
+    "lscr.io/linuxserver/ardour:latest": [
+      "ardour/ardour"
+    ],
+    "lscr.io/linuxserver/audacity:latest": [
+      "audacity/audacity"
+    ],
+    "lscr.io/linuxserver/azahar:latest": [
+      "azahar/azahar"
+    ],
+    "lscr.io/linuxserver/babybuddy:latest": [
+      "babybuddy/babybuddy"
+    ],
+    "lscr.io/linuxserver/bambustudio:latest": [
+      "bambustudio/bambustudio"
+    ],
+    "lscr.io/linuxserver/bazarr:latest": [
+      "bazarr/bazarr"
+    ],
+    "lscr.io/linuxserver/bitcoin-knots:latest": [
+      "bitcoin-knots/bitcoin-knots"
+    ],
+    "lscr.io/linuxserver/blade-of-agony:latest": [
+      "blade-of-agony/blade-of-agony"
+    ],
+    "lscr.io/linuxserver/blender:latest": [
+      "blender/blender"
+    ],
+    "lscr.io/linuxserver/boinc:latest": [
+      "boinc/boinc"
+    ],
+    "lscr.io/linuxserver/bookstack:latest": [
+      "bookstack/bookstack"
+    ],
+    "lscr.io/linuxserver/brave:latest": [
+      "brave/brave"
+    ],
+    "lscr.io/linuxserver/budge:latest": [
+      "budge/budge"
+    ],
+    "lscr.io/linuxserver/calibre-web:latest": [
+      "calibre-web/calibre-web"
+    ],
+    "lscr.io/linuxserver/calibre:latest": [
+      "calibre/calibre"
+    ],
+    "lscr.io/linuxserver/calligra:latest": [
+      "calligra/calligra"
+    ],
+    "lscr.io/linuxserver/changedetection.io:latest": [
+      "changedetection.io/changedetection.io"
+    ],
+    "lscr.io/linuxserver/chrome:latest": [
+      "chrome/chrome"
+    ],
+    "lscr.io/linuxserver/chromium:latest": [
+      "chromium/chromium"
+    ],
+    "lscr.io/linuxserver/cops:latest": [
+      "cops/cops"
+    ],
+    "lscr.io/linuxserver/cura:latest": [
+      "cura/cura"
+    ],
+    "lscr.io/linuxserver/darktable:latest": [
+      "darktable/darktable"
+    ],
+    "lscr.io/linuxserver/ddclient:latest": [
+      "ddclient/ddclient"
+    ],
+    "lscr.io/linuxserver/deluge:latest": [
+      "deluge/deluge"
+    ],
+    "lscr.io/linuxserver/digikam:latest": [
+      "digikam/digikam"
+    ],
+    "lscr.io/linuxserver/diskover:latest": [
+      "diskover/diskover"
+    ],
+    "lscr.io/linuxserver/dogwalk:latest": [
+      "dogwalk/dogwalk"
+    ],
+    "lscr.io/linuxserver/dokuwiki:latest": [
+      "dokuwiki/dokuwiki"
+    ],
+    "lscr.io/linuxserver/dolphin:latest": [
+      "dolphin/dolphin"
+    ],
+    "lscr.io/linuxserver/doplarr_rs:latest": [
+      "doplarr_rs/doplarr_rs"
+    ],
+    "lscr.io/linuxserver/dosbox-staging:latest": [
+      "dosbox-staging/dosbox-staging"
+    ],
+    "lscr.io/linuxserver/doublecommander:latest": [
+      "doublecommander/doublecommander"
+    ],
+    "lscr.io/linuxserver/duckdns:latest": [
+      "duckdns/duckdns"
+    ],
+    "lscr.io/linuxserver/duckstation:latest": [
+      "duckstation/duckstation"
+    ],
+    "lscr.io/linuxserver/duplicati:latest": [
+      "duplicati/duplicati"
+    ],
+    "lscr.io/linuxserver/eden:latest": [
+      "eden/eden"
+    ],
+    "lscr.io/linuxserver/emby:latest": [
+      "emby/emby"
+    ],
+    "lscr.io/linuxserver/fail2ban:latest": [
+      "fail2ban/fail2ban"
+    ],
+    "lscr.io/linuxserver/faster-whisper:latest": [
+      "faster-whisper/faster-whisper"
+    ],
+    "lscr.io/linuxserver/ferdium:latest": [
+      "ferdium/ferdium"
+    ],
+    "lscr.io/linuxserver/filezilla:latest": [
+      "filezilla/filezilla"
+    ],
+    "lscr.io/linuxserver/firefox:latest": [
+      "firefox/firefox"
+    ],
+    "lscr.io/linuxserver/flexget:latest": [
+      "flexget/flexget"
+    ],
+    "lscr.io/linuxserver/flycast:latest": [
+      "flycast/flycast"
+    ],
+    "lscr.io/linuxserver/foldingathome:latest": [
+      "foldingathome/foldingathome"
+    ],
+    "lscr.io/linuxserver/freecad:latest": [
+      "freecad/freecad"
+    ],
+    "lscr.io/linuxserver/freshrss:latest": [
+      "freshrss/freshrss"
+    ],
+    "lscr.io/linuxserver/gimp:latest": [
+      "gimp/gimp"
+    ],
+    "lscr.io/linuxserver/github-desktop:latest": [
+      "github-desktop/github-desktop"
+    ],
+    "lscr.io/linuxserver/gitqlient:latest": [
+      "gitqlient/gitqlient"
+    ],
+    "lscr.io/linuxserver/grav:latest": [
+      "grav/grav"
+    ],
+    "lscr.io/linuxserver/grocy:latest": [
+      "grocy/grocy"
+    ],
+    "lscr.io/linuxserver/gzdoom:latest": [
+      "gzdoom/gzdoom"
+    ],
+    "lscr.io/linuxserver/habridge:latest": [
+      "habridge/habridge"
+    ],
+    "lscr.io/linuxserver/handbrake:latest": [
+      "handbrake/handbrake"
+    ],
+    "lscr.io/linuxserver/hedgedoc:latest": [
+      "hedgedoc/hedgedoc"
+    ],
+    "lscr.io/linuxserver/heimdall:latest": [
+      "heimdall/heimdall"
+    ],
+    "lscr.io/linuxserver/helium:latest": [
+      "helium/helium"
+    ],
+    "lscr.io/linuxserver/hishtory-server:latest": [
+      "hishtory-server/hishtory-server"
+    ],
+    "lscr.io/linuxserver/homeassistant:latest": [
+      "homeassistant/homeassistant"
+    ],
+    "lscr.io/linuxserver/inkscape:latest": [
+      "inkscape/inkscape"
+    ],
+    "lscr.io/linuxserver/intellij-idea:latest": [
+      "intellij-idea/intellij-idea"
+    ],
+    "lscr.io/linuxserver/jackett:latest": [
+      "jackett/jackett"
+    ],
+    "lscr.io/linuxserver/joplin:latest": [
+      "joplin/joplin"
+    ],
+    "lscr.io/linuxserver/kali-linux:latest": [
+      "kali-linux/kali-linux"
+    ],
+    "lscr.io/linuxserver/kasm:latest": [
+      "kasm/kasm"
+    ],
+    "lscr.io/linuxserver/kavita:latest": [
+      "kavita/kavita"
+    ],
+    "lscr.io/linuxserver/kdenlive:latest": [
+      "kdenlive/kdenlive"
+    ],
+    "lscr.io/linuxserver/keepassxc:latest": [
+      "keepassxc/keepassxc"
+    ],
+    "lscr.io/linuxserver/kicad:latest": [
+      "kicad/kicad"
+    ],
+    "lscr.io/linuxserver/kimai:latest": [
+      "kimai/kimai"
+    ],
+    "lscr.io/linuxserver/kometa:latest": [
+      "kometa/kometa"
+    ],
+    "lscr.io/linuxserver/krita:latest": [
+      "krita/krita"
+    ],
+    "lscr.io/linuxserver/lazylibrarian:latest": [
+      "lazylibrarian/lazylibrarian"
+    ],
+    "lscr.io/linuxserver/libreoffice:latest": [
+      "libreoffice/libreoffice"
+    ],
+    "lscr.io/linuxserver/librespeed:latest": [
+      "librespeed/librespeed"
+    ],
+    "lscr.io/linuxserver/librewolf:latest": [
+      "librewolf/librewolf"
+    ],
+    "lscr.io/linuxserver/lidarr:latest": [
+      "lidarr/lidarr"
+    ],
+    "lscr.io/linuxserver/limnoria:latest": [
+      "limnoria/limnoria"
+    ],
+    "lscr.io/linuxserver/lm-studio:latest": [
+      "lm-studio/lm-studio"
+    ],
+    "lscr.io/linuxserver/lollypop:latest": [
+      "lollypop/lollypop"
+    ],
+    "lscr.io/linuxserver/luanti:latest": [
+      "luanti/luanti"
+    ],
+    "lscr.io/linuxserver/lychee:latest": [
+      "lychee/lychee"
+    ],
+    "lscr.io/linuxserver/mame:latest": [
+      "mame/mame"
+    ],
+    "lscr.io/linuxserver/manyfold:latest": [
+      "manyfold/manyfold"
+    ],
+    "lscr.io/linuxserver/mariadb:latest": [
+      "mariadb/mariadb"
+    ],
+    "lscr.io/linuxserver/mastodon:latest": [
+      "mastodon/mastodon"
+    ],
+    "lscr.io/linuxserver/mediaelch:latest": [
+      "mediaelch/mediaelch"
+    ],
+    "lscr.io/linuxserver/medusa:latest": [
+      "medusa/medusa"
+    ],
+    "lscr.io/linuxserver/melonds:latest": [
+      "melonds/melonds"
+    ],
+    "lscr.io/linuxserver/minisatip:latest": [
+      "minisatip/minisatip"
+    ],
+    "lscr.io/linuxserver/modmanager:latest": [
+      "modmanager/modmanager"
+    ],
+    "lscr.io/linuxserver/modrinth:latest": [
+      "modrinth/modrinth"
+    ],
+    "lscr.io/linuxserver/msedge:latest": [
+      "msedge/msedge"
+    ],
+    "lscr.io/linuxserver/mstream:latest": [
+      "mstream/mstream"
+    ],
+    "lscr.io/linuxserver/mullvad-browser:latest": [
+      "mullvad-browser/mullvad-browser"
+    ],
+    "lscr.io/linuxserver/mylar3:latest": [
+      "mylar3/mylar3"
+    ],
+    "lscr.io/linuxserver/mysql-workbench:latest": [
+      "mysql-workbench/mysql-workbench"
+    ],
+    "lscr.io/linuxserver/netbox:latest": [
+      "netbox/netbox"
+    ],
+    "lscr.io/linuxserver/nextcloud:latest": [
+      "nextcloud/nextcloud"
+    ],
+    "lscr.io/linuxserver/nginx:latest": [
+      "nginx/nginx"
+    ],
+    "lscr.io/linuxserver/nzbhydra2:latest": [
+      "nzbhydra2/nzbhydra2"
+    ],
+    "lscr.io/linuxserver/obsidian:latest": [
+      "obsidian/obsidian"
+    ],
+    "lscr.io/linuxserver/ombi:latest": [
+      "ombi/ombi"
+    ],
+    "lscr.io/linuxserver/onlyoffice:latest": [
+      "onlyoffice/onlyoffice"
+    ],
+    "lscr.io/linuxserver/openshot:latest": [
+      "openshot/openshot"
+    ],
+    "lscr.io/linuxserver/openssh-server:latest": [
+      "openssh-server/openssh-server"
+    ],
+    "lscr.io/linuxserver/opera:latest": [
+      "opera/opera"
+    ],
+    "lscr.io/linuxserver/orcaslicer:latest": [
+      "orcaslicer/orcaslicer"
+    ],
+    "lscr.io/linuxserver/oscam:latest": [
+      "oscam/oscam"
+    ],
+    "lscr.io/linuxserver/pairdrop:latest": [
+      "pairdrop/pairdrop"
+    ],
+    "lscr.io/linuxserver/pcsx2:latest": [
+      "pcsx2/pcsx2"
+    ],
+    "lscr.io/linuxserver/pelorus:latest": [
+      "pelorus/pelorus"
+    ],
+    "lscr.io/linuxserver/pidgin:latest": [
+      "pidgin/pidgin"
+    ],
+    "lscr.io/linuxserver/piper:latest": [
+      "piper/piper"
+    ],
+    "lscr.io/linuxserver/piwigo:latest": [
+      "piwigo/piwigo"
+    ],
+    "lscr.io/linuxserver/planka:latest": [
+      "planka/planka"
+    ],
+    "lscr.io/linuxserver/ppsspp:latest": [
+      "ppsspp/ppsspp"
+    ],
+    "lscr.io/linuxserver/projectsend:latest": [
+      "projectsend/projectsend"
+    ],
+    "lscr.io/linuxserver/prowlarr:latest": [
+      "prowlarr/prowlarr"
+    ],
+    "lscr.io/linuxserver/pwndrop:latest": [
+      "pwndrop/pwndrop"
+    ],
+    "lscr.io/linuxserver/pycharm:latest": [
+      "pycharm/pycharm"
+    ],
+    "lscr.io/linuxserver/pydio-cells:latest": [
+      "pydio-cells/pydio-cells"
+    ],
+    "lscr.io/linuxserver/pyload-ng:latest": [
+      "pyload-ng/pyload-ng"
+    ],
+    "lscr.io/linuxserver/qbittorrent:latest": [
+      "qbittorrent/qbittorrent"
+    ],
+    "lscr.io/linuxserver/qdirstat:latest": [
+      "qdirstat/qdirstat"
+    ],
+    "lscr.io/linuxserver/radarr:latest": [
+      "radarr-4k/radarr-4k",
+      "radarr/radarr"
+    ],
+    "lscr.io/linuxserver/raneto:latest": [
+      "raneto/raneto"
+    ],
+    "lscr.io/linuxserver/rawtherapee:latest": [
+      "rawtherapee/rawtherapee"
+    ],
+    "lscr.io/linuxserver/remmina:latest": [
+      "remmina/remmina"
+    ],
+    "lscr.io/linuxserver/resilio-sync:latest": [
+      "resilio-sync/resilio-sync"
+    ],
+    "lscr.io/linuxserver/retroarch:latest": [
+      "retroarch/retroarch"
+    ],
+    "lscr.io/linuxserver/rpcs3:latest": [
+      "rpcs3/rpcs3"
+    ],
+    "lscr.io/linuxserver/rsnapshot:latest": [
+      "rsnapshot/rsnapshot"
+    ],
+    "lscr.io/linuxserver/rustdesk:latest": [
+      "rustdesk/rustdesk"
+    ],
+    "lscr.io/linuxserver/sabnzbd:latest": [
+      "sabnzbd/sabnzbd"
+    ],
+    "lscr.io/linuxserver/scummvm:latest": [
+      "scummvm/scummvm"
+    ],
+    "lscr.io/linuxserver/sealskin:latest": [
+      "sealskin/sealskin"
+    ],
+    "lscr.io/linuxserver/series-troxide:latest": [
+      "series-troxide/series-troxide"
+    ],
+    "lscr.io/linuxserver/shadps4:latest": [
+      "shadps4/shadps4"
+    ],
+    "lscr.io/linuxserver/shotcut:latest": [
+      "shotcut/shotcut"
+    ],
+    "lscr.io/linuxserver/signal:latest": [
+      "signal/signal"
+    ],
+    "lscr.io/linuxserver/smokeping:latest": [
+      "smokeping/smokeping"
+    ],
+    "lscr.io/linuxserver/socket-proxy:latest": [
+      "socket-proxy/socket-proxy"
+    ],
+    "lscr.io/linuxserver/socket-proxy:latest@sha256:362cadf55b3c7920189347d0f4d60b389e2f80e929581bf10793f2371aab41e5": [
+      "dozzle/dozzle-socket-proxy"
+    ],
+    "lscr.io/linuxserver/sonarr:latest": [
+      "sonarr-4k/sonarr-4k",
+      "sonarr/sonarr"
+    ],
+    "lscr.io/linuxserver/speedtest-tracker:latest": [
+      "speedtest-tracker/speedtest-tracker"
+    ],
+    "lscr.io/linuxserver/spotube:latest": [
+      "spotube/spotube"
+    ],
+    "lscr.io/linuxserver/sqlitebrowser:latest": [
+      "sqlitebrowser/sqlitebrowser"
+    ],
+    "lscr.io/linuxserver/steam:latest": [
+      "steam/steam"
+    ],
+    "lscr.io/linuxserver/swag:latest": [
+      "swag/swag"
+    ],
+    "lscr.io/linuxserver/synclounge:latest": [
+      "synclounge/synclounge"
+    ],
+    "lscr.io/linuxserver/syncthing:latest": [
+      "syncthing/syncthing"
+    ],
+    "lscr.io/linuxserver/syslog-ng:latest": [
+      "syslog-ng/syslog-ng"
+    ],
+    "lscr.io/linuxserver/telegram:latest": [
+      "telegram/telegram"
+    ],
+    "lscr.io/linuxserver/thelounge:latest": [
+      "thelounge/thelounge"
+    ],
+    "lscr.io/linuxserver/thunderbird:latest": [
+      "thunderbird/thunderbird"
+    ],
+    "lscr.io/linuxserver/transmission:latest": [
+      "transmission/transmission"
+    ],
+    "lscr.io/linuxserver/tvheadend:latest": [
+      "tvheadend/tvheadend"
+    ],
+    "lscr.io/linuxserver/ubooquity:latest": [
+      "ubooquity/ubooquity"
+    ],
+    "lscr.io/linuxserver/ungoogled-chromium:latest": [
+      "ungoogled-chromium/ungoogled-chromium"
+    ],
+    "lscr.io/linuxserver/unifi-network-application:latest": [
+      "unifi-network-application/unifi-network-application"
+    ],
+    "lscr.io/linuxserver/vivaldi:latest": [
+      "vivaldi/vivaldi"
+    ],
+    "lscr.io/linuxserver/vlc:latest": [
+      "vlc/vlc"
+    ],
+    "lscr.io/linuxserver/vscode:latest": [
+      "vscode/vscode"
+    ],
+    "lscr.io/linuxserver/vscodium-web:latest": [
+      "vscodium-web/vscodium-web"
+    ],
+    "lscr.io/linuxserver/vscodium:latest": [
+      "vscodium/vscodium"
+    ],
+    "lscr.io/linuxserver/webcord:latest": [
+      "webcord/webcord"
+    ],
+    "lscr.io/linuxserver/webgrabplus:latest": [
+      "webgrabplus/webgrabplus"
+    ],
+    "lscr.io/linuxserver/webstation:latest": [
+      "webstation/webstation"
+    ],
+    "lscr.io/linuxserver/webtop:latest": [
+      "webtop/webtop"
+    ],
+    "lscr.io/linuxserver/weixin:latest": [
+      "weixin/weixin"
+    ],
+    "lscr.io/linuxserver/wikijs:latest": [
+      "wikijs/wikijs"
+    ],
+    "lscr.io/linuxserver/winegui:latest": [
+      "winegui/winegui"
+    ],
+    "lscr.io/linuxserver/wireguard:latest": [
+      "wireguard/wireguard"
+    ],
+    "lscr.io/linuxserver/wireshark:latest": [
+      "wireshark/wireshark"
+    ],
+    "lscr.io/linuxserver/wps-office:latest": [
+      "wps-office/wps-office"
+    ],
+    "lscr.io/linuxserver/xbackbone:latest": [
+      "xbackbone/xbackbone"
+    ],
+    "lscr.io/linuxserver/xemu:latest": [
+      "xemu/xemu"
+    ],
+    "lscr.io/linuxserver/yaak:latest": [
+      "yaak/yaak"
+    ],
+    "lscr.io/linuxserver/your_spotify:latest": [
+      "your_spotify/your_spotify"
+    ],
+    "lscr.io/linuxserver/zen:latest": [
+      "zen/zen"
+    ],
+    "lscr.io/linuxserver/znc:latest": [
+      "znc/znc"
+    ],
+    "lscr.io/linuxserver/zotero:latest": [
+      "zotero/zotero"
+    ],
+    "neosmemo/memos:stable": [
+      "memos/memos"
+    ],
+    "netdata/netdata:stable": [
+      "netdata/netdata"
+    ],
+    "nicolargo/glances:latest-full": [
+      "glances/glances"
+    ],
+    "nodered/node-red:latest": [
+      "node-red/node-red"
+    ],
+    "ollama/ollama:latest": [
+      "ollama/ollama"
+    ],
+    "organizr/organizr:latest": [
+      "organizr/organizr"
+    ],
+    "photoprism/photoprism:latest": [
+      "photoprism/photoprism"
+    ],
+    "qmcgaw/gluetun:latest": [
+      "gluetun/gluetun"
+    ],
+    "searxng/searxng:latest": [
+      "searxng/searxng"
+    ],
+    "tailscale/tailscale:latest": [
+      "tailscale/tailscale"
+    ],
+    "vaultwarden/server:1.37.4-alpine": [
+      "vaultwarden/vaultwarden"
+    ]
+  },
+  "dockerfile_bases": {
+    "security/images/code-server/Dockerfile": [
+      "node:22-alpine",
+      "lscr.io/linuxserver/code-server:latest"
+    ],
+    "security/images/healthchecks/Dockerfile": [
+      "docker.io/linuxserver/healthchecks:latest"
+    ],
+    "security/images/it-tools/Dockerfile": [
+      "corentinth/it-tools@sha256:8b8128748339583ca951af03dfe02a9a4d7363f61a216226fc28030731a5a61f",
+      "nginx:stable-alpine"
+    ],
+    "security/images/jdownloader/Dockerfile": [
+      "${UPSTREAM_IMAGE}"
+    ],
+    "security/images/netbootxyz/Dockerfile": [
+      "ghcr.io/netbootxyz/netbootxyz:latest"
+    ],
+    "security/images/pebble/Dockerfile": [
+      "golang:1.26.9-alpine",
+      "docker.io/linuxserver/${APP}:latest"
+    ],
+    "security/images/phpmyadmin/Dockerfile": [
+      "composer:2",
+      "lscr.io/linuxserver/phpmyadmin:latest"
+    ],
+    "security/images/python-deps/Dockerfile": [
+      "docker.io/linuxserver/${APP}:latest"
+    ],
+    "security/images/qbittorrent/Dockerfile": [
+      "lscr.io/linuxserver/qbittorrent:5.2.4-libtorrentv1"
+    ]
+  },
+  "app_findings": {
+    "actual-budget": [
+      "floating_image"
+    ],
+    "adguardhome-sync": [
+      "floating_image"
+    ],
+    "airsonic-advanced": [
+      "floating_image"
+    ],
+    "altus": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "apprise-api": [
+      "floating_image"
+    ],
+    "ardour": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "audacity": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "audiobookshelf": [
+      "floating_image"
+    ],
+    "autobrr": [
+      "floating_image"
+    ],
+    "azahar": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "babybuddy": [
+      "floating_image"
+    ],
+    "bambustudio": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "bazarr": [
+      "floating_image"
+    ],
+    "beets": [],
+    "beszel": [
+      "floating_image"
+    ],
+    "bitcoin-knots": [
+      "floating_image"
+    ],
+    "blade-of-agony": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "blender": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "boinc": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "bookstack": [
+      "credential_placeholder",
+      "floating_image"
+    ],
+    "brave": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "budge": [
+      "floating_image"
+    ],
+    "calibre": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "calibre-web": [
+      "floating_image"
+    ],
+    "calligra": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "changedetection.io": [
+      "floating_image"
+    ],
+    "chrome": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "chromium": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "cloudflared": [
+      "credential_placeholder",
+      "floating_image"
+    ],
+    "code-server": [
+      "public_sensitive_ui"
+    ],
+    "cops": [
+      "floating_image"
+    ],
+    "cross-seed": [
+      "floating_image"
+    ],
+    "cura": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "darktable": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "dashy": [
+      "floating_image"
+    ],
+    "ddclient": [
+      "floating_image"
+    ],
+    "deluge": [
+      "floating_image"
+    ],
+    "digikam": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "diskover": [
+      "floating_image"
+    ],
+    "dockge": [
+      "floating_image",
+      "public_sensitive_ui",
+      "sensitive_bind"
+    ],
+    "dogwalk": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "dokuwiki": [
+      "floating_image"
+    ],
+    "dolphin": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "doplarr_rs": [
+      "floating_image"
+    ],
+    "dosbox-staging": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "doublecommander": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "dozzle": [
+      "public_sensitive_ui",
+      "sensitive_bind"
+    ],
+    "duckdns": [
+      "floating_image"
+    ],
+    "duckstation": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "duplicati": [
+      "floating_image"
+    ],
+    "eden": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "emby": [
+      "floating_image"
+    ],
+    "esphome": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "fail2ban": [
+      "floating_image"
+    ],
+    "faster-whisper": [
+      "floating_image"
+    ],
+    "ferdium": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "ffmpeg": [],
+    "filebrowser": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "filezilla": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "firefox": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "flaresolverr": [
+      "floating_image"
+    ],
+    "flexget": [
+      "floating_image"
+    ],
+    "flycast": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "foldingathome": [
+      "floating_image"
+    ],
+    "freecad": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "freshrss": [
+      "floating_image"
+    ],
+    "frigate": [
+      "credential_placeholder",
+      "floating_image"
+    ],
+    "gimp": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "gitea": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "github-desktop": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "gitqlient": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "glances": [
+      "floating_image"
+    ],
+    "gluetun": [
+      "floating_image"
+    ],
+    "grav": [
+      "floating_image"
+    ],
+    "grocy": [
+      "floating_image"
+    ],
+    "gzdoom": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "habridge": [
+      "floating_image"
+    ],
+    "handbrake": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "healthchecks": [
+      "credential_placeholder"
+    ],
+    "hedgedoc": [
+      "credential_placeholder",
+      "floating_image"
+    ],
+    "heimdall": [
+      "floating_image"
+    ],
+    "helium": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "hishtory-server": [
+      "floating_image"
+    ],
+    "homarr": [
+      "floating_image"
+    ],
+    "homeassistant": [
+      "floating_image",
+      "host_network"
+    ],
+    "homepage": [
+      "floating_image"
+    ],
+    "immich": [
+      "credential_placeholder",
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "inkscape": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "intellij-idea": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "it-tools": [],
+    "jackett": [
+      "floating_image"
+    ],
+    "jdownloader": [],
+    "jellyfin": [],
+    "joplin": [
+      "floating_image"
+    ],
+    "kali-linux": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "karakeep": [
+      "credential_placeholder",
+      "floating_image"
+    ],
+    "kasm": [
+      "floating_image",
+      "privileged",
+      "public_sensitive_ui"
+    ],
+    "kavita": [
+      "floating_image"
+    ],
+    "kdenlive": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "keepassxc": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "kicad": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "kimai": [
+      "floating_image"
+    ],
+    "kometa": [
+      "floating_image"
+    ],
+    "krita": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "lazylibrarian": [
+      "floating_image"
+    ],
+    "libreoffice": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "librespeed": [
+      "floating_image"
+    ],
+    "librewolf": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "lidarr": [
+      "floating_image"
+    ],
+    "limnoria": [
+      "floating_image"
+    ],
+    "lldap": [
+      "credential_placeholder",
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "lm-studio": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "lollypop": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "luanti": [
+      "floating_image"
+    ],
+    "lychee": [
+      "floating_image"
+    ],
+    "maintainerr": [
+      "floating_image"
+    ],
+    "mame": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "manyfold": [
+      "floating_image"
+    ],
+    "mariadb": [
+      "credential_placeholder",
+      "floating_image"
+    ],
+    "mastodon": [
+      "floating_image"
+    ],
+    "mealie": [
+      "floating_image"
+    ],
+    "mediaelch": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "medusa": [
+      "floating_image"
+    ],
+    "melonds": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "memos": [
+      "floating_image"
+    ],
+    "metube": [
+      "floating_image"
+    ],
+    "minisatip": [
+      "floating_image"
+    ],
+    "modmanager": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "modrinth": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "mosquitto": [
+      "floating_image"
+    ],
+    "msedge": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "mstream": [
+      "floating_image"
+    ],
+    "mullvad-browser": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "mylar3": [
+      "floating_image"
+    ],
+    "mysql-workbench": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "navidrome": [
+      "floating_image"
+    ],
+    "netbootxyz": [],
+    "netbox": [
+      "credential_placeholder",
+      "floating_image"
+    ],
+    "netdata": [
+      "floating_image",
+      "public_sensitive_ui",
+      "sensitive_bind"
+    ],
+    "nextcloud": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "nginx": [
+      "floating_image"
+    ],
+    "nginx-proxy-manager": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "ngircd": [],
+    "node-red": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "notifiarr": [
+      "floating_image"
+    ],
+    "nzbget": [],
+    "nzbhydra2": [
+      "floating_image"
+    ],
+    "obsidian": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "ollama": [
+      "floating_image"
+    ],
+    "ombi": [
+      "floating_image"
+    ],
+    "onlyoffice": [
+      "floating_image"
+    ],
+    "open-webui": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "openshot": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "openssh-server": [
+      "floating_image"
+    ],
+    "opera": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "orcaslicer": [
+      "floating_image"
+    ],
+    "organizr": [
+      "floating_image"
+    ],
+    "oscam": [
+      "floating_image"
+    ],
+    "pairdrop": [
+      "floating_image"
+    ],
+    "paperless-ngx": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "pcsx2": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "pelorus": [
+      "floating_image"
+    ],
+    "photoprism": [
+      "credential_placeholder",
+      "floating_image"
+    ],
+    "phpmyadmin": [
+      "public_sensitive_ui"
+    ],
+    "pidgin": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "piper": [
+      "floating_image"
+    ],
+    "piwigo": [
+      "floating_image"
+    ],
+    "planka": [
+      "floating_image"
+    ],
+    "plex": [],
+    "pocket-id": [
+      "floating_image"
+    ],
+    "ppsspp": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "projectsend": [
+      "floating_image"
+    ],
+    "prowlarr": [
+      "floating_image"
+    ],
+    "pwndrop": [
+      "floating_image"
+    ],
+    "pycharm": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "pydio-cells": [
+      "floating_image"
+    ],
+    "pyload-ng": [
+      "floating_image"
+    ],
+    "qbittorrent": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "qbittorrent-4": [
+      "public_sensitive_ui"
+    ],
+    "qdirstat": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "qui": [
+      "floating_image"
+    ],
+    "radarr": [
+      "floating_image"
+    ],
+    "radarr-4k": [
+      "floating_image"
+    ],
+    "raneto": [
+      "floating_image"
+    ],
+    "rawtherapee": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "recyclarr": [
+      "floating_image"
+    ],
+    "remmina": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "resilio-sync": [
+      "floating_image"
+    ],
+    "retroarch": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "rpcs3": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "rsnapshot": [
+      "floating_image"
+    ],
+    "rustdesk": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "rutorrent": [
+      "floating_image"
+    ],
+    "sabnzbd": [
+      "floating_image"
+    ],
+    "scummvm": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "sealskin": [
+      "floating_image"
+    ],
+    "searxng": [
+      "floating_image"
+    ],
+    "seerr": [
+      "floating_image"
+    ],
+    "series-troxide": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "shadps4": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "shotcut": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "sickgear": [],
+    "signal": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "smokeping": [
+      "floating_image"
+    ],
+    "socket-proxy": [
+      "floating_image",
+      "sensitive_bind"
+    ],
+    "sonarr": [
+      "floating_image"
+    ],
+    "sonarr-4k": [
+      "floating_image"
+    ],
+    "speedtest-tracker": [
+      "floating_image"
+    ],
+    "spotube": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "sqlitebrowser": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "steam": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "stirling-pdf": [
+      "floating_image"
+    ],
+    "swag": [
+      "floating_image"
+    ],
+    "synclounge": [
+      "floating_image"
+    ],
+    "syncthing": [
+      "floating_image"
+    ],
+    "syslog-ng": [
+      "floating_image"
+    ],
+    "tailscale": [
+      "floating_image",
+      "host_network",
+      "sensitive_bind"
+    ],
+    "tautulli": [],
+    "tdarr": [
+      "floating_image"
+    ],
+    "telegram": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "thelounge": [
+      "floating_image"
+    ],
+    "thunderbird": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "transmission": [
+      "floating_image"
+    ],
+    "tvheadend": [
+      "floating_image"
+    ],
+    "ubooquity": [
+      "floating_image"
+    ],
+    "ungoogled-chromium": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "unifi-network-application": [
+      "floating_image"
+    ],
+    "unpackerr": [
+      "floating_image"
+    ],
+    "uptime-kuma": [
+      "floating_image"
+    ],
+    "vaultwarden": [
+      "floating_image",
+      "public_sensitive_ui"
+    ],
+    "vivaldi": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "vlc": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "vscode": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "vscodium": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "vscodium-web": [
+      "floating_image"
+    ],
+    "webcord": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "webgrabplus": [
+      "floating_image"
+    ],
+    "webstation": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "webtop": [
+      "floating_image",
+      "public_sensitive_ui",
+      "seccomp_unconfined"
+    ],
+    "weixin": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "whisparr": [
+      "floating_image"
+    ],
+    "wikijs": [
+      "floating_image"
+    ],
+    "winegui": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "wireguard": [
+      "floating_image"
+    ],
+    "wireshark": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "wizarr": [
+      "floating_image"
+    ],
+    "wps-office": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "xbackbone": [
+      "floating_image"
+    ],
+    "xemu": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "yaak": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "your_spotify": [
+      "floating_image"
+    ],
+    "zen": [
+      "floating_image",
+      "seccomp_unconfined"
+    ],
+    "znc": [
+      "floating_image"
+    ],
+    "zotero": [
+      "floating_image",
+      "seccomp_unconfined"
+    ]
+  },
+  "counts_by_rule": {
+    "credential_placeholder": 15,
+    "floating_dockerfile_base": 9,
+    "floating_image": 243,
+    "host_network": 2,
+    "privileged": 1,
+    "public_sensitive_ui": 28,
+    "seccomp_unconfined": 91,
+    "sensitive_bind": 6,
+    "unresolved_dockerfile_base": 3
+  },
+  "findings": [
+    {
+      "file": "Apps/actual-budget/docker-compose.yml",
+      "service": "actual-budget",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/adguardhome-sync/docker-compose.yml",
+      "service": "adguardhome-sync",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/airsonic-advanced/docker-compose.yml",
+      "service": "airsonic-advanced",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/altus/docker-compose.yml",
+      "service": "altus",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/altus/docker-compose.yml",
+      "service": "altus",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/apprise-api/docker-compose.yml",
+      "service": "apprise-api",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ardour/docker-compose.yml",
+      "service": "ardour",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ardour/docker-compose.yml",
+      "service": "ardour",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/audacity/docker-compose.yml",
+      "service": "audacity",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/audacity/docker-compose.yml",
+      "service": "audacity",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/audiobookshelf/docker-compose.yml",
+      "service": "audiobookshelf",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/autobrr/docker-compose.yml",
+      "service": "autobrr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/azahar/docker-compose.yml",
+      "service": "azahar",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/azahar/docker-compose.yml",
+      "service": "azahar",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/babybuddy/docker-compose.yml",
+      "service": "babybuddy",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/bambustudio/docker-compose.yml",
+      "service": "bambustudio",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/bambustudio/docker-compose.yml",
+      "service": "bambustudio",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/bazarr/docker-compose.yml",
+      "service": "bazarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/beszel/docker-compose.yml",
+      "service": "beszel",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/bitcoin-knots/docker-compose.yml",
+      "service": "bitcoin-knots",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/blade-of-agony/docker-compose.yml",
+      "service": "blade-of-agony",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/blade-of-agony/docker-compose.yml",
+      "service": "blade-of-agony",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/blender/docker-compose.yml",
+      "service": "blender",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/blender/docker-compose.yml",
+      "service": "blender",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/boinc/docker-compose.yml",
+      "service": "boinc",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/boinc/docker-compose.yml",
+      "service": "boinc",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/bookstack/docker-compose.yml",
+      "service": "bookstack",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/bookstack/docker-compose.yml",
+      "service": "bookstack",
+      "code": "credential_placeholder",
+      "detail": "Credencial DB_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/brave/docker-compose.yml",
+      "service": "brave",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/brave/docker-compose.yml",
+      "service": "brave",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/budge/docker-compose.yml",
+      "service": "budge",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/calibre/docker-compose.yml",
+      "service": "calibre",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/calibre/docker-compose.yml",
+      "service": "calibre",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/calibre-web/docker-compose.yml",
+      "service": "calibre-web",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/calligra/docker-compose.yml",
+      "service": "calligra",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/calligra/docker-compose.yml",
+      "service": "calligra",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/changedetection.io/docker-compose.yml",
+      "service": "changedetection.io",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/chrome/docker-compose.yml",
+      "service": "chrome",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/chrome/docker-compose.yml",
+      "service": "chrome",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/chromium/docker-compose.yml",
+      "service": "chromium",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/chromium/docker-compose.yml",
+      "service": "chromium",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/cloudflared/docker-compose.yml",
+      "service": "cloudflared",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/cloudflared/docker-compose.yml",
+      "service": "cloudflared",
+      "code": "credential_placeholder",
+      "detail": "Credencial TUNNEL_TOKEN não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/code-server/docker-compose.yml",
+      "service": "code-server",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 20045",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/cops/docker-compose.yml",
+      "service": "cops",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/cross-seed/docker-compose.yml",
+      "service": "cross-seed",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/cura/docker-compose.yml",
+      "service": "cura",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/cura/docker-compose.yml",
+      "service": "cura",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/darktable/docker-compose.yml",
+      "service": "darktable",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/darktable/docker-compose.yml",
+      "service": "darktable",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dashy/docker-compose.yml",
+      "service": "dashy",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ddclient/docker-compose.yml",
+      "service": "ddclient",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/deluge/docker-compose.yml",
+      "service": "deluge",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/digikam/docker-compose.yml",
+      "service": "digikam",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/digikam/docker-compose.yml",
+      "service": "digikam",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/diskover/docker-compose.yml",
+      "service": "diskover",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dockge/docker-compose.yml",
+      "service": "dockge",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dockge/docker-compose.yml",
+      "service": "dockge",
+      "code": "sensitive_bind",
+      "detail": "Montagem sensível do host: /var/run/docker.sock",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dockge/docker-compose.yml",
+      "service": "dockge",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 5001",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dogwalk/docker-compose.yml",
+      "service": "dogwalk",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dogwalk/docker-compose.yml",
+      "service": "dogwalk",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dokuwiki/docker-compose.yml",
+      "service": "dokuwiki",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dolphin/docker-compose.yml",
+      "service": "dolphin",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dolphin/docker-compose.yml",
+      "service": "dolphin",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/doplarr_rs/docker-compose.yml",
+      "service": "doplarr_rs",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dosbox-staging/docker-compose.yml",
+      "service": "dosbox-staging",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dosbox-staging/docker-compose.yml",
+      "service": "dosbox-staging",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/doublecommander/docker-compose.yml",
+      "service": "doublecommander",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/doublecommander/docker-compose.yml",
+      "service": "doublecommander",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dozzle/docker-compose.yml",
+      "service": "dozzle",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30011",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/dozzle/docker-compose.yml",
+      "service": "dozzle-socket-proxy",
+      "code": "sensitive_bind",
+      "detail": "Montagem sensível do host: /var/run/docker.sock",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/duckdns/docker-compose.yml",
+      "service": "duckdns",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/duckstation/docker-compose.yml",
+      "service": "duckstation",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/duckstation/docker-compose.yml",
+      "service": "duckstation",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/duplicati/docker-compose.yml",
+      "service": "duplicati",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/eden/docker-compose.yml",
+      "service": "eden",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/eden/docker-compose.yml",
+      "service": "eden",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/emby/docker-compose.yml",
+      "service": "emby",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/esphome/docker-compose.yml",
+      "service": "esphome",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/esphome/docker-compose.yml",
+      "service": "esphome",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 6052",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/fail2ban/docker-compose.yml",
+      "service": "fail2ban",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/faster-whisper/docker-compose.yml",
+      "service": "faster-whisper",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ferdium/docker-compose.yml",
+      "service": "ferdium",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ferdium/docker-compose.yml",
+      "service": "ferdium",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/filebrowser/docker-compose.yml",
+      "service": "filebrowser",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/filebrowser/docker-compose.yml",
+      "service": "filebrowser",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30154",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/filezilla/docker-compose.yml",
+      "service": "filezilla",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/filezilla/docker-compose.yml",
+      "service": "filezilla",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/firefox/docker-compose.yml",
+      "service": "firefox",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/firefox/docker-compose.yml",
+      "service": "firefox",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/flaresolverr/docker-compose.yml",
+      "service": "flaresolverr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/flexget/docker-compose.yml",
+      "service": "flexget",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/flycast/docker-compose.yml",
+      "service": "flycast",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/flycast/docker-compose.yml",
+      "service": "flycast",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/foldingathome/docker-compose.yml",
+      "service": "foldingathome",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/freecad/docker-compose.yml",
+      "service": "freecad",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/freecad/docker-compose.yml",
+      "service": "freecad",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/freshrss/docker-compose.yml",
+      "service": "freshrss",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/frigate/docker-compose.yml",
+      "service": "frigate",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/frigate/docker-compose.yml",
+      "service": "frigate",
+      "code": "credential_placeholder",
+      "detail": "Credencial FRIGATE_RTSP_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gimp/docker-compose.yml",
+      "service": "gimp",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gimp/docker-compose.yml",
+      "service": "gimp",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gitea/docker-compose.yml",
+      "service": "gitea",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gitea/docker-compose.yml",
+      "service": "gitea",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30000",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gitea/docker-compose.yml",
+      "service": "gitea",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30001",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/github-desktop/docker-compose.yml",
+      "service": "github-desktop",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/github-desktop/docker-compose.yml",
+      "service": "github-desktop",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gitqlient/docker-compose.yml",
+      "service": "gitqlient",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gitqlient/docker-compose.yml",
+      "service": "gitqlient",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/glances/docker-compose.yml",
+      "service": "glances",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gluetun/docker-compose.yml",
+      "service": "gluetun",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/grav/docker-compose.yml",
+      "service": "grav",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/grocy/docker-compose.yml",
+      "service": "grocy",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gzdoom/docker-compose.yml",
+      "service": "gzdoom",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/gzdoom/docker-compose.yml",
+      "service": "gzdoom",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/habridge/docker-compose.yml",
+      "service": "habridge",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/handbrake/docker-compose.yml",
+      "service": "handbrake",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/handbrake/docker-compose.yml",
+      "service": "handbrake",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/healthchecks/docker-compose.yml",
+      "service": "healthchecks",
+      "code": "credential_placeholder",
+      "detail": "Credencial SUPERUSER_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/hedgedoc/docker-compose.yml",
+      "service": "hedgedoc",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/hedgedoc/docker-compose.yml",
+      "service": "hedgedoc",
+      "code": "credential_placeholder",
+      "detail": "Credencial DB_PASS não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/heimdall/docker-compose.yml",
+      "service": "heimdall",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/helium/docker-compose.yml",
+      "service": "helium",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/helium/docker-compose.yml",
+      "service": "helium",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/hishtory-server/docker-compose.yml",
+      "service": "hishtory-server",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/homarr/docker-compose.yml",
+      "service": "homarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/homeassistant/docker-compose.yml",
+      "service": "homeassistant",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/homeassistant/docker-compose.yml",
+      "service": "homeassistant",
+      "code": "host_network",
+      "detail": "Acesso à rede do host",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/homepage/docker-compose.yml",
+      "service": "homepage",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/immich/docker-compose.yml",
+      "service": "immich-server",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/immich/docker-compose.yml",
+      "service": "immich-server",
+      "code": "credential_placeholder",
+      "detail": "Credencial DB_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/immich/docker-compose.yml",
+      "service": "immich-server",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 2283",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/immich/docker-compose.yml",
+      "service": "immich-machine-learning",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/immich/docker-compose.yml",
+      "service": "immich-redis",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/immich/docker-compose.yml",
+      "service": "immich-database",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/immich/docker-compose.yml",
+      "service": "immich-database",
+      "code": "credential_placeholder",
+      "detail": "Credencial POSTGRES_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/inkscape/docker-compose.yml",
+      "service": "inkscape",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/inkscape/docker-compose.yml",
+      "service": "inkscape",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/intellij-idea/docker-compose.yml",
+      "service": "intellij-idea",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/intellij-idea/docker-compose.yml",
+      "service": "intellij-idea",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/jackett/docker-compose.yml",
+      "service": "jackett",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/joplin/docker-compose.yml",
+      "service": "joplin",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kali-linux/docker-compose.yml",
+      "service": "kali-linux",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kali-linux/docker-compose.yml",
+      "service": "kali-linux",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/karakeep/docker-compose.yml",
+      "service": "karakeep",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/karakeep/docker-compose.yml",
+      "service": "karakeep",
+      "code": "credential_placeholder",
+      "detail": "Credencial NEXTAUTH_SECRET não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/karakeep/docker-compose.yml",
+      "service": "karakeep-chrome",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kasm/docker-compose.yml",
+      "service": "kasm",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kasm/docker-compose.yml",
+      "service": "kasm",
+      "code": "privileged",
+      "detail": "Contentor privilegiado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kasm/docker-compose.yml",
+      "service": "kasm",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 20040",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kasm/docker-compose.yml",
+      "service": "kasm",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 20041",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kavita/docker-compose.yml",
+      "service": "kavita",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kdenlive/docker-compose.yml",
+      "service": "kdenlive",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kdenlive/docker-compose.yml",
+      "service": "kdenlive",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/keepassxc/docker-compose.yml",
+      "service": "keepassxc",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/keepassxc/docker-compose.yml",
+      "service": "keepassxc",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kicad/docker-compose.yml",
+      "service": "kicad",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kicad/docker-compose.yml",
+      "service": "kicad",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kimai/docker-compose.yml",
+      "service": "kimai",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/kometa/docker-compose.yml",
+      "service": "kometa",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/krita/docker-compose.yml",
+      "service": "krita",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/krita/docker-compose.yml",
+      "service": "krita",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lazylibrarian/docker-compose.yml",
+      "service": "lazylibrarian",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/libreoffice/docker-compose.yml",
+      "service": "libreoffice",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/libreoffice/docker-compose.yml",
+      "service": "libreoffice",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/librespeed/docker-compose.yml",
+      "service": "librespeed",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/librewolf/docker-compose.yml",
+      "service": "librewolf",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/librewolf/docker-compose.yml",
+      "service": "librewolf",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lidarr/docker-compose.yml",
+      "service": "lidarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/limnoria/docker-compose.yml",
+      "service": "limnoria",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lldap/docker-compose.yml",
+      "service": "lldap",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lldap/docker-compose.yml",
+      "service": "lldap",
+      "code": "credential_placeholder",
+      "detail": "Credencial LLDAP_JWT_SECRET não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lldap/docker-compose.yml",
+      "service": "lldap",
+      "code": "credential_placeholder",
+      "detail": "Credencial LLDAP_KEY_SEED não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lldap/docker-compose.yml",
+      "service": "lldap",
+      "code": "credential_placeholder",
+      "detail": "Credencial LLDAP_LDAP_USER_PASS não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lldap/docker-compose.yml",
+      "service": "lldap",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 17170",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lldap/docker-compose.yml",
+      "service": "lldap",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 3890",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lm-studio/docker-compose.yml",
+      "service": "lm-studio",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lm-studio/docker-compose.yml",
+      "service": "lm-studio",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lollypop/docker-compose.yml",
+      "service": "lollypop",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lollypop/docker-compose.yml",
+      "service": "lollypop",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/luanti/docker-compose.yml",
+      "service": "luanti",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/lychee/docker-compose.yml",
+      "service": "lychee",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/maintainerr/docker-compose.yml",
+      "service": "maintainerr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mame/docker-compose.yml",
+      "service": "mame",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mame/docker-compose.yml",
+      "service": "mame",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/manyfold/docker-compose.yml",
+      "service": "manyfold",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mariadb/docker-compose.yml",
+      "service": "mariadb",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mariadb/docker-compose.yml",
+      "service": "mariadb",
+      "code": "credential_placeholder",
+      "detail": "Credencial MYSQL_ROOT_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mastodon/docker-compose.yml",
+      "service": "mastodon",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mealie/docker-compose.yml",
+      "service": "mealie",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mediaelch/docker-compose.yml",
+      "service": "mediaelch",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mediaelch/docker-compose.yml",
+      "service": "mediaelch",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/medusa/docker-compose.yml",
+      "service": "medusa",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/melonds/docker-compose.yml",
+      "service": "melonds",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/melonds/docker-compose.yml",
+      "service": "melonds",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/memos/docker-compose.yml",
+      "service": "memos",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/metube/docker-compose.yml",
+      "service": "metube",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/minisatip/docker-compose.yml",
+      "service": "minisatip",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/modmanager/docker-compose.yml",
+      "service": "modmanager",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/modmanager/docker-compose.yml",
+      "service": "modmanager",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/modrinth/docker-compose.yml",
+      "service": "modrinth",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/modrinth/docker-compose.yml",
+      "service": "modrinth",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mosquitto/docker-compose.yml",
+      "service": "mosquitto",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/msedge/docker-compose.yml",
+      "service": "msedge",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/msedge/docker-compose.yml",
+      "service": "msedge",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mstream/docker-compose.yml",
+      "service": "mstream",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mullvad-browser/docker-compose.yml",
+      "service": "mullvad-browser",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mullvad-browser/docker-compose.yml",
+      "service": "mullvad-browser",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mylar3/docker-compose.yml",
+      "service": "mylar3",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mysql-workbench/docker-compose.yml",
+      "service": "mysql-workbench",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/mysql-workbench/docker-compose.yml",
+      "service": "mysql-workbench",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/navidrome/docker-compose.yml",
+      "service": "navidrome",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netbox/docker-compose.yml",
+      "service": "netbox",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netbox/docker-compose.yml",
+      "service": "netbox",
+      "code": "credential_placeholder",
+      "detail": "Credencial SUPERUSER_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netbox/docker-compose.yml",
+      "service": "netbox",
+      "code": "credential_placeholder",
+      "detail": "Credencial DB_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netdata/docker-compose.yml",
+      "service": "netdata",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netdata/docker-compose.yml",
+      "service": "netdata",
+      "code": "sensitive_bind",
+      "detail": "Montagem sensível do host: /proc",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netdata/docker-compose.yml",
+      "service": "netdata",
+      "code": "sensitive_bind",
+      "detail": "Montagem sensível do host: /sys",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/netdata/docker-compose.yml",
+      "service": "netdata",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 19999",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/nextcloud/docker-compose.yml",
+      "service": "nextcloud",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/nextcloud/docker-compose.yml",
+      "service": "nextcloud",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 20019",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/nginx/docker-compose.yml",
+      "service": "nginx",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/nginx-proxy-manager/docker-compose.yml",
+      "service": "nginx-proxy-manager",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/nginx-proxy-manager/docker-compose.yml",
+      "service": "nginx-proxy-manager",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 81",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/nginx-proxy-manager/docker-compose.yml",
+      "service": "nginx-proxy-manager",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30009",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/nginx-proxy-manager/docker-compose.yml",
+      "service": "nginx-proxy-manager",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30010",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/node-red/docker-compose.yml",
+      "service": "node-red",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/node-red/docker-compose.yml",
+      "service": "node-red",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 1880",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/notifiarr/docker-compose.yml",
+      "service": "notifiarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/nzbhydra2/docker-compose.yml",
+      "service": "nzbhydra2",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/obsidian/docker-compose.yml",
+      "service": "obsidian",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/obsidian/docker-compose.yml",
+      "service": "obsidian",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ollama/docker-compose.yml",
+      "service": "ollama",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ombi/docker-compose.yml",
+      "service": "ombi",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/onlyoffice/docker-compose.yml",
+      "service": "onlyoffice",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/open-webui/docker-compose.yml",
+      "service": "open-webui",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/open-webui/docker-compose.yml",
+      "service": "open-webui",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30016",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/openshot/docker-compose.yml",
+      "service": "openshot",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/openshot/docker-compose.yml",
+      "service": "openshot",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/openssh-server/docker-compose.yml",
+      "service": "openssh-server",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/opera/docker-compose.yml",
+      "service": "opera",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/opera/docker-compose.yml",
+      "service": "opera",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/orcaslicer/docker-compose.yml",
+      "service": "orcaslicer",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/organizr/docker-compose.yml",
+      "service": "organizr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/oscam/docker-compose.yml",
+      "service": "oscam",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pairdrop/docker-compose.yml",
+      "service": "pairdrop",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/paperless-ngx/docker-compose.yml",
+      "service": "paperless-ngx",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/paperless-ngx/docker-compose.yml",
+      "service": "paperless-ngx",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30020",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/paperless-ngx/docker-compose.yml",
+      "service": "paperless-broker",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pcsx2/docker-compose.yml",
+      "service": "pcsx2",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pcsx2/docker-compose.yml",
+      "service": "pcsx2",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pelorus/docker-compose.yml",
+      "service": "pelorus",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/photoprism/docker-compose.yml",
+      "service": "photoprism",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/photoprism/docker-compose.yml",
+      "service": "photoprism",
+      "code": "credential_placeholder",
+      "detail": "Credencial PHOTOPRISM_ADMIN_PASSWORD não configurada",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/phpmyadmin/docker-compose.yml",
+      "service": "phpmyadmin",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 20042",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pidgin/docker-compose.yml",
+      "service": "pidgin",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pidgin/docker-compose.yml",
+      "service": "pidgin",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/piper/docker-compose.yml",
+      "service": "piper",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/piwigo/docker-compose.yml",
+      "service": "piwigo",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/planka/docker-compose.yml",
+      "service": "planka",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pocket-id/docker-compose.yml",
+      "service": "pocket-id",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ppsspp/docker-compose.yml",
+      "service": "ppsspp",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ppsspp/docker-compose.yml",
+      "service": "ppsspp",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/projectsend/docker-compose.yml",
+      "service": "projectsend",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/prowlarr/docker-compose.yml",
+      "service": "prowlarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pwndrop/docker-compose.yml",
+      "service": "pwndrop",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pycharm/docker-compose.yml",
+      "service": "pycharm",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pycharm/docker-compose.yml",
+      "service": "pycharm",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pydio-cells/docker-compose.yml",
+      "service": "pydio-cells",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/pyload-ng/docker-compose.yml",
+      "service": "pyload-ng",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/qbittorrent/docker-compose.yml",
+      "service": "qbittorrent",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/qbittorrent/docker-compose.yml",
+      "service": "qbittorrent",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 8080",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/qbittorrent/docker-compose.yml",
+      "service": "qbittorrent",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 6881",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/qbittorrent-4/docker-compose.yml",
+      "service": "qbittorrent-4",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 20069",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/qbittorrent-4/docker-compose.yml",
+      "service": "qbittorrent-4",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 20070",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/qdirstat/docker-compose.yml",
+      "service": "qdirstat",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/qdirstat/docker-compose.yml",
+      "service": "qdirstat",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/qui/docker-compose.yml",
+      "service": "qui",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/radarr/docker-compose.yml",
+      "service": "radarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/radarr-4k/docker-compose.yml",
+      "service": "radarr-4k",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/raneto/docker-compose.yml",
+      "service": "raneto",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/rawtherapee/docker-compose.yml",
+      "service": "rawtherapee",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/rawtherapee/docker-compose.yml",
+      "service": "rawtherapee",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/recyclarr/docker-compose.yml",
+      "service": "recyclarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/remmina/docker-compose.yml",
+      "service": "remmina",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/remmina/docker-compose.yml",
+      "service": "remmina",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/resilio-sync/docker-compose.yml",
+      "service": "resilio-sync",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/retroarch/docker-compose.yml",
+      "service": "retroarch",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/retroarch/docker-compose.yml",
+      "service": "retroarch",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/rpcs3/docker-compose.yml",
+      "service": "rpcs3",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/rpcs3/docker-compose.yml",
+      "service": "rpcs3",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/rsnapshot/docker-compose.yml",
+      "service": "rsnapshot",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/rustdesk/docker-compose.yml",
+      "service": "rustdesk",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/rustdesk/docker-compose.yml",
+      "service": "rustdesk",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/rutorrent/docker-compose.yml",
+      "service": "rutorrent",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/sabnzbd/docker-compose.yml",
+      "service": "sabnzbd",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/scummvm/docker-compose.yml",
+      "service": "scummvm",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/scummvm/docker-compose.yml",
+      "service": "scummvm",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/sealskin/docker-compose.yml",
+      "service": "sealskin",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/searxng/docker-compose.yml",
+      "service": "searxng",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/seerr/docker-compose.yml",
+      "service": "seerr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/series-troxide/docker-compose.yml",
+      "service": "series-troxide",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/series-troxide/docker-compose.yml",
+      "service": "series-troxide",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/shadps4/docker-compose.yml",
+      "service": "shadps4",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/shadps4/docker-compose.yml",
+      "service": "shadps4",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/shotcut/docker-compose.yml",
+      "service": "shotcut",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/shotcut/docker-compose.yml",
+      "service": "shotcut",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/signal/docker-compose.yml",
+      "service": "signal",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/signal/docker-compose.yml",
+      "service": "signal",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/smokeping/docker-compose.yml",
+      "service": "smokeping",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/socket-proxy/docker-compose.yml",
+      "service": "socket-proxy",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/socket-proxy/docker-compose.yml",
+      "service": "socket-proxy",
+      "code": "sensitive_bind",
+      "detail": "Montagem sensível do host: /var/run/docker.sock",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/sonarr/docker-compose.yml",
+      "service": "sonarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/sonarr-4k/docker-compose.yml",
+      "service": "sonarr-4k",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/speedtest-tracker/docker-compose.yml",
+      "service": "speedtest-tracker",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/spotube/docker-compose.yml",
+      "service": "spotube",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/spotube/docker-compose.yml",
+      "service": "spotube",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/sqlitebrowser/docker-compose.yml",
+      "service": "sqlitebrowser",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/sqlitebrowser/docker-compose.yml",
+      "service": "sqlitebrowser",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/steam/docker-compose.yml",
+      "service": "steam",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/steam/docker-compose.yml",
+      "service": "steam",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/stirling-pdf/docker-compose.yml",
+      "service": "stirling-pdf",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/swag/docker-compose.yml",
+      "service": "swag",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/synclounge/docker-compose.yml",
+      "service": "synclounge",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/syncthing/docker-compose.yml",
+      "service": "syncthing",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/syslog-ng/docker-compose.yml",
+      "service": "syslog-ng",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/tailscale/docker-compose.yml",
+      "service": "tailscale",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/tailscale/docker-compose.yml",
+      "service": "tailscale",
+      "code": "host_network",
+      "detail": "Acesso à rede do host",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/tailscale/docker-compose.yml",
+      "service": "tailscale",
+      "code": "sensitive_bind",
+      "detail": "Montagem sensível do host: /dev/net/tun",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/tdarr/docker-compose.yml",
+      "service": "tdarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/telegram/docker-compose.yml",
+      "service": "telegram",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/telegram/docker-compose.yml",
+      "service": "telegram",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/thelounge/docker-compose.yml",
+      "service": "thelounge",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/thunderbird/docker-compose.yml",
+      "service": "thunderbird",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/thunderbird/docker-compose.yml",
+      "service": "thunderbird",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/transmission/docker-compose.yml",
+      "service": "transmission",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/tvheadend/docker-compose.yml",
+      "service": "tvheadend",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ubooquity/docker-compose.yml",
+      "service": "ubooquity",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ungoogled-chromium/docker-compose.yml",
+      "service": "ungoogled-chromium",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/ungoogled-chromium/docker-compose.yml",
+      "service": "ungoogled-chromium",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/unifi-network-application/docker-compose.yml",
+      "service": "unifi-network-application",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/unpackerr/docker-compose.yml",
+      "service": "unpackerr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/uptime-kuma/docker-compose.yml",
+      "service": "uptime-kuma",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vaultwarden/docker-compose.yml",
+      "service": "vaultwarden",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vaultwarden/docker-compose.yml",
+      "service": "vaultwarden",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 30003",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vivaldi/docker-compose.yml",
+      "service": "vivaldi",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vivaldi/docker-compose.yml",
+      "service": "vivaldi",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vlc/docker-compose.yml",
+      "service": "vlc",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vlc/docker-compose.yml",
+      "service": "vlc",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vscode/docker-compose.yml",
+      "service": "vscode",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vscode/docker-compose.yml",
+      "service": "vscode",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vscodium/docker-compose.yml",
+      "service": "vscodium",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vscodium/docker-compose.yml",
+      "service": "vscodium",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/vscodium-web/docker-compose.yml",
+      "service": "vscodium-web",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webcord/docker-compose.yml",
+      "service": "webcord",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webcord/docker-compose.yml",
+      "service": "webcord",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webgrabplus/docker-compose.yml",
+      "service": "webgrabplus",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webstation/docker-compose.yml",
+      "service": "webstation",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webstation/docker-compose.yml",
+      "service": "webstation",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webtop/docker-compose.yml",
+      "service": "webtop",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webtop/docker-compose.yml",
+      "service": "webtop",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webtop/docker-compose.yml",
+      "service": "webtop",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 21166",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/webtop/docker-compose.yml",
+      "service": "webtop",
+      "code": "public_sensitive_ui",
+      "detail": "Porta de serviço sensível sem binding local: 21167",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/weixin/docker-compose.yml",
+      "service": "weixin",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/weixin/docker-compose.yml",
+      "service": "weixin",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/whisparr/docker-compose.yml",
+      "service": "whisparr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/wikijs/docker-compose.yml",
+      "service": "wikijs",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/winegui/docker-compose.yml",
+      "service": "winegui",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/winegui/docker-compose.yml",
+      "service": "winegui",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/wireguard/docker-compose.yml",
+      "service": "wireguard",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/wireshark/docker-compose.yml",
+      "service": "wireshark",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/wireshark/docker-compose.yml",
+      "service": "wireshark",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/wizarr/docker-compose.yml",
+      "service": "wizarr",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/wps-office/docker-compose.yml",
+      "service": "wps-office",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/wps-office/docker-compose.yml",
+      "service": "wps-office",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/xbackbone/docker-compose.yml",
+      "service": "xbackbone",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/xemu/docker-compose.yml",
+      "service": "xemu",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/xemu/docker-compose.yml",
+      "service": "xemu",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/yaak/docker-compose.yml",
+      "service": "yaak",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/yaak/docker-compose.yml",
+      "service": "yaak",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/your_spotify/docker-compose.yml",
+      "service": "your_spotify",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/zen/docker-compose.yml",
+      "service": "zen",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/zen/docker-compose.yml",
+      "service": "zen",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/znc/docker-compose.yml",
+      "service": "znc",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/zotero/docker-compose.yml",
+      "service": "zotero",
+      "code": "floating_image",
+      "detail": "Imagem de origem sem digest imutável",
+      "level": "warning"
+    },
+    {
+      "file": "Apps/zotero/docker-compose.yml",
+      "service": "zotero",
+      "code": "seccomp_unconfined",
+      "detail": "Seccomp desativado",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/code-server/Dockerfile",
+      "service": "FROM#1",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: node:22-alpine",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/code-server/Dockerfile",
+      "service": "FROM#2",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: lscr.io/linuxserver/code-server:latest",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/healthchecks/Dockerfile",
+      "service": "FROM#1",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: docker.io/linuxserver/healthchecks:latest",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/it-tools/Dockerfile",
+      "service": "FROM#2",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: nginx:stable-alpine",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/jdownloader/Dockerfile",
+      "service": "FROM#1",
+      "code": "unresolved_dockerfile_base",
+      "detail": "Imagem base dinâmica; digest não verificável estaticamente",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/netbootxyz/Dockerfile",
+      "service": "FROM#1",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: ghcr.io/netbootxyz/netbootxyz:latest",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/pebble/Dockerfile",
+      "service": "FROM#1",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: golang:1.26.9-alpine",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/pebble/Dockerfile",
+      "service": "FROM#2",
+      "code": "unresolved_dockerfile_base",
+      "detail": "Imagem base dinâmica; digest não verificável estaticamente",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/phpmyadmin/Dockerfile",
+      "service": "FROM#1",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: composer:2",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/phpmyadmin/Dockerfile",
+      "service": "FROM#2",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: lscr.io/linuxserver/phpmyadmin:latest",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/python-deps/Dockerfile",
+      "service": "FROM#1",
+      "code": "unresolved_dockerfile_base",
+      "detail": "Imagem base dinâmica; digest não verificável estaticamente",
+      "level": "warning"
+    },
+    {
+      "file": "security/images/qbittorrent/Dockerfile",
+      "service": "FROM#1",
+      "code": "floating_dockerfile_base",
+      "detail": "Imagem base sem digest imutável: lscr.io/linuxserver/qbittorrent:5.2.4-libtorrentv1",
+      "level": "warning"
+    }
+  ],
+  "limitations": [
+    "Static analysis only; not a vulnerability scan or security certification",
+    "Published digest does not imply vulnerability-free image",
+    "No registry, Docker daemon, host firewall, secrets or runtime configuration inspected",
+    "Dockerfile build-time bases may differ from published derivative images"
+  ],
+  "new_blocking_findings": []
+}
