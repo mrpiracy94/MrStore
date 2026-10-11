@@ -61,8 +61,8 @@ x-casaos:
   author: MrStore
   developer: netboot.xyz
   category: Networking
-  icon: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/netbootxyz.png
-  thumbnail: https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/netbootxyz.png
+  icon: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/netbootxyz/icon.svg
+  thumbnail: https://raw.githubusercontent.com/mrpiracy94/MrStore/main/Apps/netbootxyz/icon.svg
   title:
     en_US: "netboot.xyz"
   tagline:

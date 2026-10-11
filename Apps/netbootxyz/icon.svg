@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="netboot.xyz">
+  <rect width="256" height="256" rx="52" fill="#101c2b"/>
+  <rect x="42" y="49" width="172" height="122" rx="17" fill="#20384e" stroke="#46dcbe" stroke-width="8"/>
+  <path d="M76 91 L101 113 L76 135" fill="none" stroke="#46dcbe" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M118 136 H171" fill="none" stroke="#ffffff" stroke-opacity=".9" stroke-width="10" stroke-linecap="round"/>
+  <path d="M128 178 V207 M100 207 H156" stroke="#46dcbe" stroke-width="11" stroke-linecap="round"/>
+  <path d="M169 72 L195 91 L169 110" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity=".65"/>
+</svg>
