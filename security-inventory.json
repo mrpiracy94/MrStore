@@ -335,7 +335,7 @@
     "lscr.io/linuxserver/freecad:latest@sha256:79e4344533aa28a03799cb1a36376f17ffee98c78890ef78d8297908eed301e8": [
       "freecad/freecad"
     ],
-    "lscr.io/linuxserver/freshrss:latest@sha256:bd13d4a611959bad42bd79965d3202c518494bd775be4a0f61e4b81098b18b01": [
+    "lscr.io/linuxserver/freshrss:latest@sha256:d5a11c52ba6987702e899c2c3831946eb959b54af34db96b1fe41194286acfb2": [
       "freshrss/freshrss"
     ],
     "lscr.io/linuxserver/gimp:latest@sha256:964ff11b3d6e775df9f576fa6a3de27c69bbcfe45774fa1ce9d487b29f0ac742": [
@@ -503,7 +503,7 @@
     "lscr.io/linuxserver/nzbhydra2:latest@sha256:123782636d66dc299b3addb617fd720a55ac2f858fa8ca312892bf9176492d58": [
       "nzbhydra2/nzbhydra2"
     ],
-    "lscr.io/linuxserver/obsidian:latest@sha256:a3324c3380f40a70d98058636a47db4afaca261907751a720afa4132c7f4c14e": [
+    "lscr.io/linuxserver/obsidian:latest@sha256:ed9e6042c95b1fff9f11d3dcf5ec3c8b98fd725124a1621b8d63bb725b5819ea": [
       "obsidian/obsidian"
     ],
     "lscr.io/linuxserver/ombi:latest@sha256:6e5ac438dccc199addaf72fdb868ff6631cc5a67f91ecc7f10be1d6b4283f1dc": [
@@ -569,7 +569,7 @@
     "lscr.io/linuxserver/pyload-ng:latest@sha256:341a592a4ed3ddbe1a14eaeaf7587724455022578581418b7fb33c9f92302dd4": [
       "pyload-ng/pyload-ng"
     ],
-    "lscr.io/linuxserver/qbittorrent:latest@sha256:b522f9f4b769f8f36d49d22d5eb6a92e9aa18904c6a1830b1439df511ec21983": [
+    "lscr.io/linuxserver/qbittorrent:latest@sha256:97333cc1ccf903e0bbcd8eb67e3332e4970e9c1ecabe145e499e9c0847ebcaed": [
       "qbittorrent/qbittorrent"
     ],
     "lscr.io/linuxserver/qdirstat:latest@sha256:6551ad061d5821c9c69147b230c45016ee453dccad15c69a3ad608da1ea33c67": [
@@ -755,7 +755,7 @@
     "netdata/netdata:stable@sha256:5cfa05a5fa5686b98e0c70e884f00685fb3c662e9c5d727cf46c96d8e37b7818": [
       "netdata/netdata"
     ],
-    "nicolargo/glances:latest-full@sha256:2a7f42503f165c5a50fc3f88f820517e2bd905447ddf578e44bee7db3b52821c": [
+    "nicolargo/glances:latest-full@sha256:411fb0d71198c414d82756dac2b9c330a6ff490e3722227d583374c33f7370f8": [
       "glances/glances"
     ],
     "nodered/node-red:latest@sha256:b5adb6c9dd29ab80c852d82bc87daed84e729dcff9b00ca1bf958e6de470f2c1": [
