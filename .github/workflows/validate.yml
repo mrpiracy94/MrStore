@@ -34,6 +34,8 @@ jobs:
         run: python scripts/validate.py
       - name: Validate Portuguese app summaries (no modifications)
         run: python scripts/curate_taglines.py --check
+      - name: Reject mutable GitHub Action references across every workflow
+        run: python scripts/verify_action_pins.py
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
       - name: Inventory ZimaOS launcher compatibility (offline, not runtime proof)
