@@ -2,100 +2,100 @@
   "scope": "all_container_images_and_app_manifests",
   "certification": "not_assessed",
   "apps_total": 254,
-  "unique_images_total": 259,
+  "unique_images_total": 258,
   "dockerfiles_total": 9,
   "image_usage": {
     "amir20/dozzle:latest@sha256:ba65da5af3d2147cfc2ee68ea5a6e35b75d2dff7eeff226151a65c9d77831c02": [
       "dozzle/dozzle"
     ],
-    "cloudflare/cloudflared:latest": [
+    "cloudflare/cloudflared:latest@sha256:9b49eed8f62806d5d45ddf59ecefb5710429598ea6d3fcccd2af938f621b2b07": [
       "cloudflared/cloudflared"
     ],
-    "crazymax/rtorrent-rutorrent:latest": [
+    "crazymax/rtorrent-rutorrent:latest@sha256:ff1d1af242c66af99932c2de882cf79e175c2fdec27be48438cd4f87e1739c74": [
       "rutorrent/rutorrent"
     ],
-    "deluan/navidrome:latest": [
+    "deluan/navidrome:latest@sha256:38dc2727bfcfd5ede290f8ada114fc90368146f265ae4701ddddbcbe2a44ee52": [
       "navidrome/navidrome"
     ],
-    "docker.io/gitea/gitea:latest": [
+    "docker.io/gitea/gitea:latest@sha256:f505a0d3a41323b786e05942fc7a4075e07ae7c169fd9485649aa55ee543a21a": [
       "gitea/gitea"
     ],
-    "docker.io/library/redis:8.10.1-alpine": [
+    "docker.io/library/redis:8.10.1-alpine@sha256:ef216d85ec44f4fdf7c0e6df2d1757a4734ed32fbb278cabd3181b5a27353b79": [
       "paperless-ngx/paperless-broker"
     ],
-    "docker.io/stirlingtools/stirling-pdf:latest": [
+    "docker.io/stirlingtools/stirling-pdf:latest@sha256:b5b9e400c086e5334a4947a0d7cd589808f743f29267d7f41c18200cf4bc48b4": [
       "stirling-pdf/stirling-pdf"
     ],
-    "docker.io/valkey/valkey:9": [
+    "docker.io/valkey/valkey:9@sha256:418652cfb58ef879d4978c33553735d7147016032d5aefaa14c828e611eb9dfd": [
       "immich/immich-redis"
     ],
-    "eclipse-mosquitto:2": [
+    "eclipse-mosquitto:2@sha256:38c0da4f2ef84284d47b3b3eeea1cb3bdeabe81ee10caf0cd5c5ff61ee3ea408": [
       "mosquitto/mosquitto"
     ],
-    "filebrowser/filebrowser:v2.43.0": [
+    "filebrowser/filebrowser:v2.43.0@sha256:1d0bcba4bd7d8886cc6f77c791694d69f9c7c78e889c4ed3a5734529daed9fa1": [
       "filebrowser/filebrowser"
     ],
     "getmeili/meilisearch:v1.54.3@sha256:e68913ab7d6f5b159529e472cfd362ce3c741fafd3c127961b2142abbe41b3c9": [
       "karakeep/karakeep-meilisearch"
     ],
-    "ghcr.io/actualbudget/actual:latest": [
+    "ghcr.io/actualbudget/actual:latest@sha256:24645e971da6bb1a1f953d6859e307a0b29be1e8b4130a35b3220c209b5b860c": [
       "actual-budget/actual-budget"
     ],
-    "ghcr.io/advplyr/audiobookshelf:latest": [
+    "ghcr.io/advplyr/audiobookshelf:latest@sha256:581d68b2a6fc7ebf58d81c878a9f387cbbc0d88ac9d37b298b9cee10168af85b": [
       "audiobookshelf/audiobookshelf"
     ],
-    "ghcr.io/alexta69/metube:latest": [
+    "ghcr.io/alexta69/metube:latest@sha256:df929ef2453fd75c1f1cbd8dafb309ee03ff18d8705c7c1e01642b1202d4a650": [
       "metube/metube"
     ],
-    "ghcr.io/autobrr/autobrr:latest": [
+    "ghcr.io/autobrr/autobrr:latest@sha256:e200008d43fe6cd2d944c9bcf20900cfb8ba8a8e509625bb78ee51910b994005": [
       "autobrr/autobrr"
     ],
-    "ghcr.io/autobrr/qui:latest": [
+    "ghcr.io/autobrr/qui:latest@sha256:6ee1cf6df0a82687089e6e181aad09edb826b4b779603c56a28c803d19db99fd": [
       "qui/qui"
     ],
-    "ghcr.io/blakeblackshear/frigate:stable": [
+    "ghcr.io/blakeblackshear/frigate:stable@sha256:9678a83a76e4730ac7d9ea7428370e32ae656d6b312aaad30d6c69f3fef14d35": [
       "frigate/frigate"
     ],
-    "ghcr.io/cross-seed/cross-seed:latest": [
+    "ghcr.io/cross-seed/cross-seed:latest@sha256:a1fed512261fd968c55cb03c51cff9c6620aa76a34b3b591afca95c890aa8225": [
       "cross-seed/cross-seed"
     ],
-    "ghcr.io/esphome/esphome:latest": [
+    "ghcr.io/esphome/esphome:latest@sha256:776a845d508909bf426d2ee7bdd81796361ebe6a7f091807ce1d6d0b48985413": [
       "esphome/esphome"
     ],
-    "ghcr.io/flaresolverr/flaresolverr:latest": [
+    "ghcr.io/flaresolverr/flaresolverr:latest@sha256:c80ae007ce2ccdcd217a12426e4f039ef763ff90738c808d38810c3e59323767": [
       "flaresolverr/flaresolverr"
     ],
-    "ghcr.io/gethomepage/homepage:latest": [
+    "ghcr.io/gethomepage/homepage:latest@sha256:57c4a0531937889c0b968b120fe9c2560bbe036b5c9e18c49a9e2479de9975d1": [
       "homepage/homepage"
     ],
-    "ghcr.io/haveagitgat/tdarr:latest": [
+    "ghcr.io/haveagitgat/tdarr:latest@sha256:7ba5325ea64951181a30f2a8d5bbc4fc0985e4c275ea1d09d15491b47b4cd8d6": [
       "tdarr/tdarr"
     ],
-    "ghcr.io/homarr-labs/homarr:latest": [
+    "ghcr.io/homarr-labs/homarr:latest@sha256:447267051fd7f3c76087498ad96c8b969f57c6762eaeb78717b69388ae1a781a": [
       "homarr/homarr"
     ],
-    "ghcr.io/hotio/whisparr:latest": [
+    "ghcr.io/hotio/whisparr:latest@sha256:4cbc45dcdf9e41e00a3c4ab8d6b0150731e6113018d27489f6960e43022d1b27": [
       "whisparr/whisparr"
     ],
-    "ghcr.io/immich-app/immich-machine-learning:release": [
+    "ghcr.io/immich-app/immich-machine-learning:release@sha256:513c831cfb010ad319341a0c86b42c575a0d5b688d3e8cae346ee624074a58ed": [
       "immich/immich-machine-learning"
     ],
-    "ghcr.io/immich-app/immich-server:release": [
+    "ghcr.io/immich-app/immich-server:release@sha256:db996e352359771c6a3db121a0ed8761516b22f727fc092a0f46dcfef82c1bc1": [
       "immich/immich-server"
     ],
-    "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0": [
+    "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23": [
       "immich/immich-database"
     ],
-    "ghcr.io/karakeep-app/karakeep-chrome:release": [
+    "ghcr.io/karakeep-app/karakeep-chrome:release@sha256:5b19bbb160e9ff60681a3abd97e1c4ec9f64212301410de658c3900ab7ef31e7": [
       "karakeep/karakeep-chrome"
     ],
-    "ghcr.io/karakeep-app/karakeep:release": [
+    "ghcr.io/karakeep-app/karakeep:release@sha256:b069e4307dec06ea06d16989c6861c30a1ff208568be44ed5fb5d422cd3e950c": [
       "karakeep/karakeep"
     ],
-    "ghcr.io/maintainerr/maintainerr:latest": [
+    "ghcr.io/maintainerr/maintainerr:latest@sha256:8251a1f0ba5d71acc878846a727fba566ec87cbfbf6a914fb881a5953af53d46": [
       "maintainerr/maintainerr"
     ],
-    "ghcr.io/mealie-recipes/mealie:latest": [
+    "ghcr.io/mealie-recipes/mealie:latest@sha256:8b02290f4d1806f02acac6f25f6d48a3c965612fda1f8e914d5af533276f8688": [
       "mealie/mealie"
     ],
     "ghcr.io/mrpiracy94/mrstore-code-server:lsio-node-deps-secfix-20261010@sha256:af284b8788aeb604a86496242c23872cbdaa78e74f1b960c88fb146c984895fe": [
@@ -143,645 +143,643 @@
     "ghcr.io/mrpiracy94/mrstore-qbittorrent:5.2.4-libtorrentv1-secfix-20261009@sha256:6e0475093e34571c90fc0d1ede2920ca847f1b4a1ac127351931eab6e12c6c4c": [
       "qbittorrent-4/qbittorrent-4"
     ],
-    "ghcr.io/open-webui/open-webui:main": [
+    "ghcr.io/open-webui/open-webui:main@sha256:e597ba2ca4425ff40f1f677930baae1278cc1e44cea399d5f588d5ce53611910": [
       "open-webui/open-webui"
     ],
-    "ghcr.io/paperless-ngx/paperless-ngx:latest": [
+    "ghcr.io/paperless-ngx/paperless-ngx:latest@sha256:6b94799bc769a063b3340cc5847402e626d4d91d29a295a8e747f8e9bead4207": [
       "paperless-ngx/paperless-ngx"
     ],
-    "ghcr.io/pocket-id/pocket-id:latest": [
+    "ghcr.io/pocket-id/pocket-id:latest@sha256:323e7ef5bfacf7cf32f22f3d10ccdf48e0c97c94d67e7e40b0b996830deb5165": [
       "pocket-id/pocket-id"
     ],
-    "ghcr.io/recyclarr/recyclarr:8": [
+    "ghcr.io/recyclarr/recyclarr:8@sha256:9c6c74d52cfc6f740a5a3624aa83867e171bb70b90453ddb7a4048b8c80445f9": [
       "recyclarr/recyclarr"
     ],
-    "ghcr.io/seerr-team/seerr:latest": [
+    "ghcr.io/seerr-team/seerr:latest@sha256:27602401178d54f1964442287b9f23f67a3fa2252645ee8065839ea1c3f69e45": [
       "seerr/seerr"
     ],
-    "ghcr.io/wizarrrr/wizarr:latest": [
+    "ghcr.io/wizarrrr/wizarr:latest@sha256:3e89f4850092d60f532406209100f5e929e06dd679bfd78c5f3559065f2854e0": [
       "wizarr/wizarr"
     ],
-    "golift/notifiarr:latest": [
+    "golift/notifiarr:latest@sha256:2b0a8784d8a43177cbc5a19110e7eb066d9321572c3352eda79c0a89898c7735": [
       "notifiarr/notifiarr"
     ],
-    "golift/unpackerr:latest": [
+    "golift/unpackerr:latest@sha256:244fc45cb207308f60e8f52dd703c2b3463385752de0f9517c58ff9d331ed15e": [
       "unpackerr/unpackerr"
     ],
-    "henrygd/beszel:latest": [
+    "henrygd/beszel:latest@sha256:6b39a8b64f9b15d00a25e7683e31a93c46161182a54f62713525107064e10599": [
       "beszel/beszel"
     ],
-    "jc21/nginx-proxy-manager:latest": [
+    "jc21/nginx-proxy-manager:latest@sha256:4393e642e233e5efd5adeb7f10918d4aaea71c9ed875b94190273fc8e87f9594": [
       "nginx-proxy-manager/nginx-proxy-manager"
     ],
-    "lissy93/dashy:latest": [
+    "lissy93/dashy:latest@sha256:9671ff9eeb3490a7f1e81b90592262da64049b6b901cce1354ba74b178b09d71": [
       "dashy/dashy"
     ],
-    "lldap/lldap:stable": [
+    "lldap/lldap:stable@sha256:2a8454b668c1aba7157e832eab0e242e1e7eb5fb7591d7e7774ba05286511ca8": [
       "lldap/lldap"
     ],
-    "louislam/dockge:1": [
+    "louislam/dockge:1@sha256:335c6368b880ecc203236ed89e6e5232e0d6578e8ef5920e4a502390451502bf": [
       "dockge/dockge"
     ],
-    "louislam/uptime-kuma:2.5.6": [
+    "louislam/uptime-kuma:2.5.6@sha256:9912da7d7d9b6ddc0c2d904beb84d24689c1ed9c33b81419eb9008663a92a329": [
       "uptime-kuma/uptime-kuma"
     ],
-    "lscr.io/linuxserver/adguardhome-sync:latest": [
+    "lscr.io/linuxserver/adguardhome-sync:latest@sha256:290cb744c10d37b926ee3d065b29c03c128ad561c63053c5a4154a14671ffd91": [
       "adguardhome-sync/adguardhome-sync"
     ],
-    "lscr.io/linuxserver/airsonic-advanced:latest": [
+    "lscr.io/linuxserver/airsonic-advanced:latest@sha256:bae6dde843d7e207e4f97322c4e5cacf57f6ad10000a1e70a901d273cd4ff237": [
       "airsonic-advanced/airsonic-advanced"
     ],
-    "lscr.io/linuxserver/altus:latest": [
+    "lscr.io/linuxserver/altus:latest@sha256:e4df4114c1cc350bb475c4d2f6616dcf434659cf4557fa8738759c089fd51fea": [
       "altus/altus"
     ],
-    "lscr.io/linuxserver/apprise-api:latest": [
+    "lscr.io/linuxserver/apprise-api:latest@sha256:742580f9c5e8e94e8009be3406bd557c012457d00acde7684066b3f897753d52": [
       "apprise-api/apprise-api"
     ],
-    "lscr.io/linuxserver/ardour:latest": [
+    "lscr.io/linuxserver/ardour:latest@sha256:720a44efc9e158e56fd1f12e00f190746f73bcf1fa20aa508c8e9c59f27dc423": [
       "ardour/ardour"
     ],
-    "lscr.io/linuxserver/audacity:latest": [
+    "lscr.io/linuxserver/audacity:latest@sha256:6e0761fff5269228c515e754e6d2bef8be353f939cf2a2eca3d30af7b4a6ee0f": [
       "audacity/audacity"
     ],
-    "lscr.io/linuxserver/azahar:latest": [
+    "lscr.io/linuxserver/azahar:latest@sha256:31508bb1f84718378b2a48789f3bea015fc758043d4a557bdd517b0bee1a596f": [
       "azahar/azahar"
     ],
-    "lscr.io/linuxserver/babybuddy:latest": [
+    "lscr.io/linuxserver/babybuddy:latest@sha256:d03f380d9bc4a0139015744dd0c402818aed83dbedf5d36a01754e5e600f7f77": [
       "babybuddy/babybuddy"
     ],
-    "lscr.io/linuxserver/bambustudio:latest": [
+    "lscr.io/linuxserver/bambustudio:latest@sha256:056f90dada957824cec32f1a09eaec322a8b1af08e9d117cf5c4dadf89693aeb": [
       "bambustudio/bambustudio"
     ],
-    "lscr.io/linuxserver/bazarr:latest": [
+    "lscr.io/linuxserver/bazarr:latest@sha256:c1673816321156b904af9b7e6415ea547ae9622e4acc375358f1e1eb9ed1e904": [
       "bazarr/bazarr"
     ],
-    "lscr.io/linuxserver/bitcoin-knots:latest": [
+    "lscr.io/linuxserver/bitcoin-knots:latest@sha256:83c49da426dd4b7ae35e171069c0dbac2e4c4a2af461d3efe0106f962f25303c": [
       "bitcoin-knots/bitcoin-knots"
     ],
-    "lscr.io/linuxserver/blade-of-agony:latest": [
+    "lscr.io/linuxserver/blade-of-agony:latest@sha256:cef2f190c8ce4676a8d413927825b4ba366bac6d7ee1d75a5a15f27ef21cc7c5": [
       "blade-of-agony/blade-of-agony"
     ],
-    "lscr.io/linuxserver/blender:latest": [
+    "lscr.io/linuxserver/blender:latest@sha256:d66c5758fb64316bcc88a3e779b2d544df5c1d8c320f8003444994906657f230": [
       "blender/blender"
     ],
-    "lscr.io/linuxserver/boinc:latest": [
+    "lscr.io/linuxserver/boinc:latest@sha256:5fea740221b42fd49b9a1692b5546cc395a023fa41ad4f904eac4d6efe645991": [
       "boinc/boinc"
     ],
-    "lscr.io/linuxserver/bookstack:latest": [
+    "lscr.io/linuxserver/bookstack:latest@sha256:99cd1f5707c1911afad213adec5c9739763b76f843d1477142231834ecdcb6f7": [
       "bookstack/bookstack"
     ],
-    "lscr.io/linuxserver/brave:latest": [
+    "lscr.io/linuxserver/brave:latest@sha256:7463cbc9a089ab20a302bb6cc6b8f714a00c7fa8f39b8ce1e9c5b9982904a38c": [
       "brave/brave"
     ],
-    "lscr.io/linuxserver/budge:latest": [
+    "lscr.io/linuxserver/budge:latest@sha256:187a8087588bd1d8dc6601a81a771549fcfe3cb72388633acb5e19dea11f338e": [
       "budge/budge"
     ],
-    "lscr.io/linuxserver/calibre-web:latest": [
+    "lscr.io/linuxserver/calibre-web:latest@sha256:5dcbcb381d29c4ccb2236910eb547679f482c3eb1c9e458138729e89eceb4774": [
       "calibre-web/calibre-web"
     ],
-    "lscr.io/linuxserver/calibre:latest": [
+    "lscr.io/linuxserver/calibre:latest@sha256:4b1673b28f18c170e8d6c48c791e67520df44dc4f9b9e8f63fef21d23910abab": [
       "calibre/calibre"
     ],
-    "lscr.io/linuxserver/calligra:latest": [
+    "lscr.io/linuxserver/calligra:latest@sha256:e78dbca86e4381bc9cc4ef5835d02915e944ce77fd7ae58cb2bbf6a3c42ed003": [
       "calligra/calligra"
     ],
-    "lscr.io/linuxserver/changedetection.io:latest": [
+    "lscr.io/linuxserver/changedetection.io:latest@sha256:91a1670814112dfe910bd2dbf33fc92b856978e077024fd378923b0bf5b29343": [
       "changedetection.io/changedetection.io"
     ],
-    "lscr.io/linuxserver/chrome:latest": [
+    "lscr.io/linuxserver/chrome:latest@sha256:84219d3d4049b7ec93daea4aa4aaa02b1fc6ccdcd67dc2e22562a3027ae13ea4": [
       "chrome/chrome"
     ],
-    "lscr.io/linuxserver/chromium:latest": [
+    "lscr.io/linuxserver/chromium:latest@sha256:ab3cb0bfa2862e19dbfde4466b8c5f138e5acd946ba8ccc12a07fbb2d7da45bb": [
       "chromium/chromium"
     ],
-    "lscr.io/linuxserver/cops:latest": [
+    "lscr.io/linuxserver/cops:latest@sha256:c94974699131e87de2815e577d91c1677e3fd5a78b2316c658133d313326651d": [
       "cops/cops"
     ],
-    "lscr.io/linuxserver/cura:latest": [
+    "lscr.io/linuxserver/cura:latest@sha256:a5cbd23c61bf7db73a02e5e4ddf4926320ae6120735bb87d18bc74bfb67c0025": [
       "cura/cura"
     ],
-    "lscr.io/linuxserver/darktable:latest": [
+    "lscr.io/linuxserver/darktable:latest@sha256:35535cd2b8787253981c0946bcde3d6126006ad2475c243982eacfdfecc19ec6": [
       "darktable/darktable"
     ],
-    "lscr.io/linuxserver/ddclient:latest": [
+    "lscr.io/linuxserver/ddclient:latest@sha256:974d9aab3f1eb9944e88f4f461b5b4372a455132c7955a4977dff67a91a914fb": [
       "ddclient/ddclient"
     ],
-    "lscr.io/linuxserver/deluge:latest": [
+    "lscr.io/linuxserver/deluge:latest@sha256:bf306ddd5e6d4a85d3d05ce1b947ab6e344e7fca1b7740b77c58ce170118c7ff": [
       "deluge/deluge"
     ],
-    "lscr.io/linuxserver/digikam:latest": [
+    "lscr.io/linuxserver/digikam:latest@sha256:553255834b2fcb5fb8001d22adf3efb6058005d067fa1c950402f1e3f3d63ca0": [
       "digikam/digikam"
     ],
-    "lscr.io/linuxserver/diskover:latest": [
+    "lscr.io/linuxserver/diskover:latest@sha256:55e73fd48d91d5594aee57d157e2276fb51917968b06b15a2c9917bb4ed1a01b": [
       "diskover/diskover"
     ],
-    "lscr.io/linuxserver/dogwalk:latest": [
+    "lscr.io/linuxserver/dogwalk:latest@sha256:f3a627beff6d042b3153b5eb7e261f8eb94c45e1a292e7d449d7618fd3050370": [
       "dogwalk/dogwalk"
     ],
-    "lscr.io/linuxserver/dokuwiki:latest": [
+    "lscr.io/linuxserver/dokuwiki:latest@sha256:2a94a05587e8badf13a5500fe2bb2cfd0c1f74e9b2e952b96d304dc99aab126f": [
       "dokuwiki/dokuwiki"
     ],
-    "lscr.io/linuxserver/dolphin:latest": [
+    "lscr.io/linuxserver/dolphin:latest@sha256:84c81258be64cbffb3f5037b0dcbfb4b1afcc9460d847f2088ca382da42332f7": [
       "dolphin/dolphin"
     ],
-    "lscr.io/linuxserver/doplarr_rs:latest": [
+    "lscr.io/linuxserver/doplarr_rs:latest@sha256:6b3617fc61d3603b1272c4489b83e4bb2d2694d4ca15f1b48bfaf4f62475aec6": [
       "doplarr_rs/doplarr_rs"
     ],
-    "lscr.io/linuxserver/dosbox-staging:latest": [
+    "lscr.io/linuxserver/dosbox-staging:latest@sha256:8b1001b35ddf7bcd7b610cdfddcd0e01d8c705fb13e7e69819e83482488ba83a": [
       "dosbox-staging/dosbox-staging"
     ],
-    "lscr.io/linuxserver/doublecommander:latest": [
+    "lscr.io/linuxserver/doublecommander:latest@sha256:6c45a65d3470524ffd6b7679a6c60025d64cb38b8d7afb28b0df189bd0b919b6": [
       "doublecommander/doublecommander"
     ],
-    "lscr.io/linuxserver/duckdns:latest": [
+    "lscr.io/linuxserver/duckdns:latest@sha256:e6092fbf5b569c18aa62af87dd30a79dabdded52101c64057fe9213fac2bf212": [
       "duckdns/duckdns"
     ],
-    "lscr.io/linuxserver/duckstation:latest": [
+    "lscr.io/linuxserver/duckstation:latest@sha256:974ba9044fb0d557a021947e9f835b5df32fc600486b6c7174d77be693ab4bb0": [
       "duckstation/duckstation"
     ],
-    "lscr.io/linuxserver/duplicati:latest": [
+    "lscr.io/linuxserver/duplicati:latest@sha256:48897c65f01c7cb34a90d6aa722fd5674f3d5b9f3d82fa2f279141836826c1e3": [
       "duplicati/duplicati"
     ],
-    "lscr.io/linuxserver/eden:latest": [
+    "lscr.io/linuxserver/eden:latest@sha256:cf7267aaa8aeafcd67bfa107a966e5fe7eeed88022fc551a975cfda1cab6ded4": [
       "eden/eden"
     ],
-    "lscr.io/linuxserver/emby:latest": [
+    "lscr.io/linuxserver/emby:latest@sha256:435fcb7724d3d3ce15a5667075f37edee713fddff4b2854d49bd23a3a46e325d": [
       "emby/emby"
     ],
-    "lscr.io/linuxserver/fail2ban:latest": [
+    "lscr.io/linuxserver/fail2ban:latest@sha256:38d1e192507ede37200ec2e190d8562b90e5e9854537d5458ea6853d9bb98e15": [
       "fail2ban/fail2ban"
     ],
-    "lscr.io/linuxserver/faster-whisper:latest": [
+    "lscr.io/linuxserver/faster-whisper:latest@sha256:21748f512aea0843a3786a4b4bf87658b8cfcb951daff64d0610c94e19146b46": [
       "faster-whisper/faster-whisper"
     ],
-    "lscr.io/linuxserver/ferdium:latest": [
+    "lscr.io/linuxserver/ferdium:latest@sha256:dac53f9bd3a5b5d3a99c2f914ac1ca5925cf5f23c49b647768b7f454f243e62f": [
       "ferdium/ferdium"
     ],
-    "lscr.io/linuxserver/filezilla:latest": [
+    "lscr.io/linuxserver/filezilla:latest@sha256:e9aee91a1a9905ad7299022a34c99ce17244ff5ec5c8950e5efaccad03b82ea3": [
       "filezilla/filezilla"
     ],
-    "lscr.io/linuxserver/firefox:latest": [
+    "lscr.io/linuxserver/firefox:latest@sha256:1d8fc33b44f2d1c819c59af62d28724e3b32025b0f4dd2d525c0624b43947ada": [
       "firefox/firefox"
     ],
-    "lscr.io/linuxserver/flexget:latest": [
+    "lscr.io/linuxserver/flexget:latest@sha256:1ba560741ffa8d9ef6817b39c30beaeff343fbb44fa814a64722cc15e01c9ee0": [
       "flexget/flexget"
     ],
-    "lscr.io/linuxserver/flycast:latest": [
+    "lscr.io/linuxserver/flycast:latest@sha256:e5d9e7b56f1d2ada07ad7e61405bd86c77e54fd908882c62f4a07b9f27ce5628": [
       "flycast/flycast"
     ],
-    "lscr.io/linuxserver/foldingathome:latest": [
+    "lscr.io/linuxserver/foldingathome:latest@sha256:f24390034073903dbd7ec724eaef27abe464cd729164338701fe3a31927d2dbc": [
       "foldingathome/foldingathome"
     ],
-    "lscr.io/linuxserver/freecad:latest": [
+    "lscr.io/linuxserver/freecad:latest@sha256:79e4344533aa28a03799cb1a36376f17ffee98c78890ef78d8297908eed301e8": [
       "freecad/freecad"
     ],
-    "lscr.io/linuxserver/freshrss:latest": [
+    "lscr.io/linuxserver/freshrss:latest@sha256:bd13d4a611959bad42bd79965d3202c518494bd775be4a0f61e4b81098b18b01": [
       "freshrss/freshrss"
     ],
-    "lscr.io/linuxserver/gimp:latest": [
+    "lscr.io/linuxserver/gimp:latest@sha256:964ff11b3d6e775df9f576fa6a3de27c69bbcfe45774fa1ce9d487b29f0ac742": [
       "gimp/gimp"
     ],
-    "lscr.io/linuxserver/github-desktop:latest": [
+    "lscr.io/linuxserver/github-desktop:latest@sha256:8651e12fa3c6418b3a6f1a745ec629e9923294c52a653a87d81983a4bbaeba07": [
       "github-desktop/github-desktop"
     ],
-    "lscr.io/linuxserver/gitqlient:latest": [
+    "lscr.io/linuxserver/gitqlient:latest@sha256:1e4a60dae4ef0b6f20f083939c8a5f367a942bc74388126b09d0c27564486d49": [
       "gitqlient/gitqlient"
     ],
-    "lscr.io/linuxserver/grav:latest": [
+    "lscr.io/linuxserver/grav:latest@sha256:f5ad70c0b859f6cfde0481054ae3ecbe2c034a0700d22c9831a66ac8b41d03ec": [
       "grav/grav"
     ],
-    "lscr.io/linuxserver/grocy:latest": [
+    "lscr.io/linuxserver/grocy:latest@sha256:c0d0d9d22d3a54fe3f779a743baa2d7bab96b73fad5597ff1a631e2be4b863c8": [
       "grocy/grocy"
     ],
-    "lscr.io/linuxserver/gzdoom:latest": [
+    "lscr.io/linuxserver/gzdoom:latest@sha256:8478fecca91fbb34a975b4822fb5d391a354873e118a9cb6d99ed0a85ea82023": [
       "gzdoom/gzdoom"
     ],
-    "lscr.io/linuxserver/habridge:latest": [
+    "lscr.io/linuxserver/habridge:latest@sha256:e1b479165a5b32b0a072e8d3cdd3750266a2860ac304bbdb448635a4e1336e69": [
       "habridge/habridge"
     ],
-    "lscr.io/linuxserver/handbrake:latest": [
+    "lscr.io/linuxserver/handbrake:latest@sha256:fdf989652f8d616596d1753dfaa0a53e7c559051b7ba8bf25a945fd7a1d9e824": [
       "handbrake/handbrake"
     ],
-    "lscr.io/linuxserver/hedgedoc:latest": [
+    "lscr.io/linuxserver/hedgedoc:latest@sha256:4dfa8f686a78bc1e88b4eeff6857ea23dca42b4b530af7ff7e8a3b3a40dadac8": [
       "hedgedoc/hedgedoc"
     ],
-    "lscr.io/linuxserver/heimdall:latest": [
+    "lscr.io/linuxserver/heimdall:latest@sha256:3c9e97c416c7f6d72a3fc12af01a37bd0e71d9e6588d25c40b47e391f39ff7fd": [
       "heimdall/heimdall"
     ],
-    "lscr.io/linuxserver/helium:latest": [
+    "lscr.io/linuxserver/helium:latest@sha256:37a86a25692eb99afb9cd8ec8f08652b2943781240685bf6ccd4b4e19ced63f8": [
       "helium/helium"
     ],
-    "lscr.io/linuxserver/hishtory-server:latest": [
+    "lscr.io/linuxserver/hishtory-server:latest@sha256:2b2e29e5f616b7585f18a5077612d1f0d2416e58d6811b8f001e6e9f606219a7": [
       "hishtory-server/hishtory-server"
     ],
-    "lscr.io/linuxserver/homeassistant:latest": [
+    "lscr.io/linuxserver/homeassistant:latest@sha256:2fc1dbb6818d62bebb4eb418a2f2332f1d8b3ee116b546df78b902d1f28f13fa": [
       "homeassistant/homeassistant"
     ],
-    "lscr.io/linuxserver/inkscape:latest": [
+    "lscr.io/linuxserver/inkscape:latest@sha256:a7d4088f251e59123595acf94d0c5502ff17fc76ee38790b7b5335bf1377d52c": [
       "inkscape/inkscape"
     ],
-    "lscr.io/linuxserver/intellij-idea:latest": [
+    "lscr.io/linuxserver/intellij-idea:latest@sha256:c8e124dec890657d5010cf07a18e8790a9e1ded61d52c45fc3418cd3a3a76d0e": [
       "intellij-idea/intellij-idea"
     ],
-    "lscr.io/linuxserver/jackett:latest": [
+    "lscr.io/linuxserver/jackett:latest@sha256:1e3f3203b1f8bd947d534e854b9dbed03571b1532a7f3769399b21cb2de93c32": [
       "jackett/jackett"
     ],
-    "lscr.io/linuxserver/joplin:latest": [
+    "lscr.io/linuxserver/joplin:latest@sha256:eec9ce35ef4a275f1ca84d8c0d08fa6792359efa8ccaa63227cb57a4288bb407": [
       "joplin/joplin"
     ],
-    "lscr.io/linuxserver/kali-linux:latest": [
+    "lscr.io/linuxserver/kali-linux:latest@sha256:e19f5daea944e4caeeb1d61783509ff87e8bfaf1d4c00a2bd4b1aa4a65b70d95": [
       "kali-linux/kali-linux"
     ],
-    "lscr.io/linuxserver/kasm:latest": [
+    "lscr.io/linuxserver/kasm:latest@sha256:44f0565a2c444dec8b7a7d3a467f38903b9a99c6ae2f56e21e781c2d95d16f72": [
       "kasm/kasm"
     ],
-    "lscr.io/linuxserver/kavita:latest": [
+    "lscr.io/linuxserver/kavita:latest@sha256:1a74624c346fc00b6bbc5ea7fc4017dad7e4a0ba7e509e562a7387d5141379f1": [
       "kavita/kavita"
     ],
-    "lscr.io/linuxserver/kdenlive:latest": [
+    "lscr.io/linuxserver/kdenlive:latest@sha256:bf582df3fb9bd4ff4a468fb9f1826df42fde78f866927abcb4b4808df282f877": [
       "kdenlive/kdenlive"
     ],
-    "lscr.io/linuxserver/keepassxc:latest": [
+    "lscr.io/linuxserver/keepassxc:latest@sha256:accf6914aa95ba027f197e0ab4d4c8e177728b9e5ad16a912febe7a6dd46c2f8": [
       "keepassxc/keepassxc"
     ],
-    "lscr.io/linuxserver/kicad:latest": [
+    "lscr.io/linuxserver/kicad:latest@sha256:27683df5f08133af07588900e1bd8440a9cc3c7e77a5bcfc6bab652f9b185665": [
       "kicad/kicad"
     ],
-    "lscr.io/linuxserver/kimai:latest": [
+    "lscr.io/linuxserver/kimai:latest@sha256:02a9646e0ba5bcfd0da0f4580c718787951582eb73325c749c6333d6ed87e26e": [
       "kimai/kimai"
     ],
-    "lscr.io/linuxserver/kometa:latest": [
+    "lscr.io/linuxserver/kometa:latest@sha256:6cd9ebf316deecdd7d4dc6e339369f699f849749fdef9009bb51cdd882b0abe7": [
       "kometa/kometa"
     ],
-    "lscr.io/linuxserver/krita:latest": [
+    "lscr.io/linuxserver/krita:latest@sha256:3a36ff6d2571856cf893f99add3237ec91920401d6066bc44fed5ecad44eb3b5": [
       "krita/krita"
     ],
-    "lscr.io/linuxserver/lazylibrarian:latest": [
+    "lscr.io/linuxserver/lazylibrarian:latest@sha256:8c177a71185bbf31d752d10ddf9584cc8b8968bb98b993e2b1a1a362dac45cde": [
       "lazylibrarian/lazylibrarian"
     ],
-    "lscr.io/linuxserver/libreoffice:latest": [
+    "lscr.io/linuxserver/libreoffice:latest@sha256:98f0d5a2dc781b348565611122b88cd87e8d83d4c4a1039296c5831aeb2d327d": [
       "libreoffice/libreoffice"
     ],
-    "lscr.io/linuxserver/librespeed:latest": [
+    "lscr.io/linuxserver/librespeed:latest@sha256:cebf3af16a406cbdaa49a27266371fa21228901c3d5e5efad54bbd56350335f6": [
       "librespeed/librespeed"
     ],
-    "lscr.io/linuxserver/librewolf:latest": [
+    "lscr.io/linuxserver/librewolf:latest@sha256:91c034c43f4e00b92fa39c0d0cc470ba9554bb8ffd5db4008881b4e700241a64": [
       "librewolf/librewolf"
     ],
-    "lscr.io/linuxserver/lidarr:latest": [
+    "lscr.io/linuxserver/lidarr:latest@sha256:67887807b13ae025c0fe979da298347c8609969087ab064c81d8e9acc1e06bbf": [
       "lidarr/lidarr"
     ],
-    "lscr.io/linuxserver/limnoria:latest": [
+    "lscr.io/linuxserver/limnoria:latest@sha256:4b6eae67efc3799d5467268fe86cf3964bc7175f2bb5bafffd8734564cd45565": [
       "limnoria/limnoria"
     ],
-    "lscr.io/linuxserver/lm-studio:latest": [
+    "lscr.io/linuxserver/lm-studio:latest@sha256:a0f3c149770a6790a8c4ee324aba1f737655ab00378c244456119bae34c67c8a": [
       "lm-studio/lm-studio"
     ],
-    "lscr.io/linuxserver/lollypop:latest": [
+    "lscr.io/linuxserver/lollypop:latest@sha256:2237b0a1e9a81009b5f1b8838781b77c1fce172e6d71a0db2a9a215c64e2b755": [
       "lollypop/lollypop"
     ],
-    "lscr.io/linuxserver/luanti:latest": [
+    "lscr.io/linuxserver/luanti:latest@sha256:8088008f96480583f85570811e2d0b0e150c64a9400879378bda0182013cc4ce": [
       "luanti/luanti"
     ],
-    "lscr.io/linuxserver/lychee:latest": [
+    "lscr.io/linuxserver/lychee:latest@sha256:f91f70f5bc52c8e81f4ab62b527c33978f436e79b47854df9b0b23e40d984dad": [
       "lychee/lychee"
     ],
-    "lscr.io/linuxserver/mame:latest": [
+    "lscr.io/linuxserver/mame:latest@sha256:0968ba5bd934527a550d0b76cdaaff5bcf1cda16c6ac2850b7f5e68a4b7868d9": [
       "mame/mame"
     ],
-    "lscr.io/linuxserver/manyfold:latest": [
+    "lscr.io/linuxserver/manyfold:latest@sha256:5872d897cf181f9b5461bda49520ea32c0f2a0b75e485f6248673829a31d4d52": [
       "manyfold/manyfold"
     ],
-    "lscr.io/linuxserver/mariadb:latest": [
+    "lscr.io/linuxserver/mariadb:latest@sha256:7f993451c80a8984dabda504bce9660f4809f6aa1dc9ae4d534462af7058fd4b": [
       "mariadb/mariadb"
     ],
-    "lscr.io/linuxserver/mastodon:latest": [
+    "lscr.io/linuxserver/mastodon:latest@sha256:b4e6b0b8378e5bc2a26a593b9f32aa32c51f2e54c41e60fef0a68d7a82346424": [
       "mastodon/mastodon"
     ],
-    "lscr.io/linuxserver/mediaelch:latest": [
+    "lscr.io/linuxserver/mediaelch:latest@sha256:79b05cca059fa038537fbfc7c5eb3877fb5dd3aed6fee4cb514731c5e733d3a5": [
       "mediaelch/mediaelch"
     ],
-    "lscr.io/linuxserver/medusa:latest": [
+    "lscr.io/linuxserver/medusa:latest@sha256:1bcf3c427b2b16ecb07a7e9fe89577b6d58cf44e24fd1df44f44e664e16bc55c": [
       "medusa/medusa"
     ],
-    "lscr.io/linuxserver/melonds:latest": [
+    "lscr.io/linuxserver/melonds:latest@sha256:4a2fd446b6e29186ee22d9f7597216678c1fc54fb902f9a85867d983c46a1de8": [
       "melonds/melonds"
     ],
-    "lscr.io/linuxserver/minisatip:latest": [
+    "lscr.io/linuxserver/minisatip:latest@sha256:f2093ba2c9df0e0990cac5254f23b9c366d47d2fa09757f26db2eaa8b299d394": [
       "minisatip/minisatip"
     ],
-    "lscr.io/linuxserver/modmanager:latest": [
+    "lscr.io/linuxserver/modmanager:latest@sha256:39fb0d571f4afffa376399e3a009bd6fc2ec4b975c319a13a65eef901bcc0c26": [
       "modmanager/modmanager"
     ],
-    "lscr.io/linuxserver/modrinth:latest": [
+    "lscr.io/linuxserver/modrinth:latest@sha256:091374a836e68847b4ecd7ed5d7875ded4572ba5c5bb3e5311691bc11e95a2dd": [
       "modrinth/modrinth"
     ],
-    "lscr.io/linuxserver/msedge:latest": [
+    "lscr.io/linuxserver/msedge:latest@sha256:819faf7b2332f7965a58d9fc1add44ee352bfcf9f018c893323d16cb891a26e2": [
       "msedge/msedge"
     ],
-    "lscr.io/linuxserver/mstream:latest": [
+    "lscr.io/linuxserver/mstream:latest@sha256:ea4f5c37b94c3a3abba766177e75176f5c891945b2de5dfc917e5b2195823cea": [
       "mstream/mstream"
     ],
-    "lscr.io/linuxserver/mullvad-browser:latest": [
+    "lscr.io/linuxserver/mullvad-browser:latest@sha256:1aa06e17e52f5e2370b64919615bb5f13df07b71a9e6a82e487fad89c1752853": [
       "mullvad-browser/mullvad-browser"
     ],
-    "lscr.io/linuxserver/mylar3:latest": [
+    "lscr.io/linuxserver/mylar3:latest@sha256:8a8a76038a9b24670879e6486624884850171f07704e041e998d5ebb9e6b16ff": [
       "mylar3/mylar3"
     ],
-    "lscr.io/linuxserver/mysql-workbench:latest": [
+    "lscr.io/linuxserver/mysql-workbench:latest@sha256:e3e266f611846fb31a6741a9c46f6cd0b6e54e2fc3b3b77021aab75fe93762f6": [
       "mysql-workbench/mysql-workbench"
     ],
-    "lscr.io/linuxserver/netbox:latest": [
+    "lscr.io/linuxserver/netbox:latest@sha256:74ae9cafda27c5e22ee243547f766dcf24c9521f1d8876a1507fa7ab926b7674": [
       "netbox/netbox"
     ],
-    "lscr.io/linuxserver/nextcloud:latest": [
+    "lscr.io/linuxserver/nextcloud:latest@sha256:da439b3e182df81c65aac2e187e14d8ac4fb4f74902206c32d031ebe8fd10628": [
       "nextcloud/nextcloud"
     ],
-    "lscr.io/linuxserver/nginx:latest": [
+    "lscr.io/linuxserver/nginx:latest@sha256:18589f85a30440a4d4ebcd2967c948013bd0a02e9021c7df2378edff4d0a07aa": [
       "nginx/nginx"
     ],
-    "lscr.io/linuxserver/nzbhydra2:latest": [
+    "lscr.io/linuxserver/nzbhydra2:latest@sha256:123782636d66dc299b3addb617fd720a55ac2f858fa8ca312892bf9176492d58": [
       "nzbhydra2/nzbhydra2"
     ],
-    "lscr.io/linuxserver/obsidian:latest": [
+    "lscr.io/linuxserver/obsidian:latest@sha256:a3324c3380f40a70d98058636a47db4afaca261907751a720afa4132c7f4c14e": [
       "obsidian/obsidian"
     ],
-    "lscr.io/linuxserver/ombi:latest": [
+    "lscr.io/linuxserver/ombi:latest@sha256:6e5ac438dccc199addaf72fdb868ff6631cc5a67f91ecc7f10be1d6b4283f1dc": [
       "ombi/ombi"
     ],
-    "lscr.io/linuxserver/onlyoffice:latest": [
+    "lscr.io/linuxserver/onlyoffice:latest@sha256:3ed1abd99c17a8263bc83edc8eaab42460d9fdf6b60b9b32dd9631659f22cb20": [
       "onlyoffice/onlyoffice"
     ],
-    "lscr.io/linuxserver/openshot:latest": [
+    "lscr.io/linuxserver/openshot:latest@sha256:b26dec3801aec4350babeb7ae44496ceebcc3060aae1c32bbd96919a99946ee9": [
       "openshot/openshot"
     ],
-    "lscr.io/linuxserver/openssh-server:latest": [
+    "lscr.io/linuxserver/openssh-server:latest@sha256:46f115de7c251558297e7e87566fc3fc08544b63e55502b5cf294454db5d29d1": [
       "openssh-server/openssh-server"
     ],
-    "lscr.io/linuxserver/opera:latest": [
+    "lscr.io/linuxserver/opera:latest@sha256:8c24ac8975f6bae95cf60481be8401c2850552633b2a6dfa9a5971edad8b1960": [
       "opera/opera"
     ],
-    "lscr.io/linuxserver/orcaslicer:latest": [
+    "lscr.io/linuxserver/orcaslicer:latest@sha256:b6b97945debcfb9c63dcb9b40a772c46ebedf5c3b15594d2369e9d2b317b8ac9": [
       "orcaslicer/orcaslicer"
     ],
-    "lscr.io/linuxserver/oscam:latest": [
+    "lscr.io/linuxserver/oscam:latest@sha256:130480fdbbd9cf1a41ba72bb1c6f1dc75104180251d3d6bfbfbe1d0943b00fac": [
       "oscam/oscam"
     ],
-    "lscr.io/linuxserver/pairdrop:latest": [
+    "lscr.io/linuxserver/pairdrop:latest@sha256:5f4504b22a75ed20606beeb1700a9324f647c480a4ccdfce100ba033c481ac15": [
       "pairdrop/pairdrop"
     ],
-    "lscr.io/linuxserver/pcsx2:latest": [
+    "lscr.io/linuxserver/pcsx2:latest@sha256:cf33a35769e299772ec213b595c3113cc10416ad67da10ef9f2275c32a3bd83d": [
       "pcsx2/pcsx2"
     ],
-    "lscr.io/linuxserver/pelorus:latest": [
+    "lscr.io/linuxserver/pelorus:latest@sha256:2ce1c2b9b6add922a6592cafae11481b988d3a5dc6bb7ed0634ec31db2f0bc0a": [
       "pelorus/pelorus"
     ],
-    "lscr.io/linuxserver/pidgin:latest": [
+    "lscr.io/linuxserver/pidgin:latest@sha256:12c0f4103b37b53b4e84e3c5b7cea10992ff16e6f103c652d8eedfae11ba15a4": [
       "pidgin/pidgin"
     ],
-    "lscr.io/linuxserver/piper:latest": [
+    "lscr.io/linuxserver/piper:latest@sha256:a3ed248731b22e49ecce2f4289602e8b95296e48311781fac0c7c55293ba7442": [
       "piper/piper"
     ],
-    "lscr.io/linuxserver/piwigo:latest": [
+    "lscr.io/linuxserver/piwigo:latest@sha256:31d9358e30878318f847e1df06ec001ef15ee62d26489db3361adb1066c05167": [
       "piwigo/piwigo"
     ],
-    "lscr.io/linuxserver/planka:latest": [
+    "lscr.io/linuxserver/planka:latest@sha256:a06a8cbe2bc5437be94855ea981f4496b236780b2ecaae99aa1ff25a8dc972f9": [
       "planka/planka"
     ],
-    "lscr.io/linuxserver/ppsspp:latest": [
+    "lscr.io/linuxserver/ppsspp:latest@sha256:a237f0248e5f20eb5d9f459bc9d88e354ad956779361cb21605fc5375a45bf65": [
       "ppsspp/ppsspp"
     ],
-    "lscr.io/linuxserver/projectsend:latest": [
+    "lscr.io/linuxserver/projectsend:latest@sha256:cd6011a3270c9b91e0ca83554bce43af07424750b525ea306feb7161bcd18ccb": [
       "projectsend/projectsend"
     ],
-    "lscr.io/linuxserver/prowlarr:latest": [
+    "lscr.io/linuxserver/prowlarr:latest@sha256:f9151e5bc1025c6d0a630d503210cdcb6bb55a7cc098562609d96a408d838902": [
       "prowlarr/prowlarr"
     ],
-    "lscr.io/linuxserver/pwndrop:latest": [
+    "lscr.io/linuxserver/pwndrop:latest@sha256:2e5428b3c612d0b8413e584539f444b59ddc388d31d71bb5cc6fd348286a5904": [
       "pwndrop/pwndrop"
     ],
-    "lscr.io/linuxserver/pycharm:latest": [
+    "lscr.io/linuxserver/pycharm:latest@sha256:1e5bf310e12c9d870d3c97824a0c59eed2aefda7648c6d2c75a21194663afb97": [
       "pycharm/pycharm"
     ],
-    "lscr.io/linuxserver/pydio-cells:latest": [
+    "lscr.io/linuxserver/pydio-cells:latest@sha256:fa339560b49539a9ca4872b94805444d0a66bd8755af4cb6978ea94f73652657": [
       "pydio-cells/pydio-cells"
     ],
-    "lscr.io/linuxserver/pyload-ng:latest": [
+    "lscr.io/linuxserver/pyload-ng:latest@sha256:341a592a4ed3ddbe1a14eaeaf7587724455022578581418b7fb33c9f92302dd4": [
       "pyload-ng/pyload-ng"
     ],
-    "lscr.io/linuxserver/qbittorrent:latest": [
+    "lscr.io/linuxserver/qbittorrent:latest@sha256:b522f9f4b769f8f36d49d22d5eb6a92e9aa18904c6a1830b1439df511ec21983": [
       "qbittorrent/qbittorrent"
     ],
-    "lscr.io/linuxserver/qdirstat:latest": [
+    "lscr.io/linuxserver/qdirstat:latest@sha256:6551ad061d5821c9c69147b230c45016ee453dccad15c69a3ad608da1ea33c67": [
       "qdirstat/qdirstat"
     ],
-    "lscr.io/linuxserver/radarr:latest": [
+    "lscr.io/linuxserver/radarr:latest@sha256:7dfd049e79c00b16fbc29c3f5d96a9e7b9e73a23930b4c5b3c4541d60b366814": [
       "radarr-4k/radarr-4k",
       "radarr/radarr"
     ],
-    "lscr.io/linuxserver/raneto:latest": [
+    "lscr.io/linuxserver/raneto:latest@sha256:cf9d477e458b039f121ae12bca48e1d00b7c9b45cd85e6b5ccc166cf5b3757f3": [
       "raneto/raneto"
     ],
-    "lscr.io/linuxserver/rawtherapee:latest": [
+    "lscr.io/linuxserver/rawtherapee:latest@sha256:48febebce9f7bb82a7af5dbe96094edcf6128e9be76619e4d51d6ddf65fff70b": [
       "rawtherapee/rawtherapee"
     ],
-    "lscr.io/linuxserver/remmina:latest": [
+    "lscr.io/linuxserver/remmina:latest@sha256:99a10c613e87f8f31acb1f25565b4c7c8d96b8fbe2c6528897b03d179a8918a6": [
       "remmina/remmina"
     ],
-    "lscr.io/linuxserver/resilio-sync:latest": [
+    "lscr.io/linuxserver/resilio-sync:latest@sha256:04c1b89e139c9486c0311c573cb6db2e386ba7fe19c0e22df1c2e77c37667da3": [
       "resilio-sync/resilio-sync"
     ],
-    "lscr.io/linuxserver/retroarch:latest": [
+    "lscr.io/linuxserver/retroarch:latest@sha256:f26b343bfacbb5d6d7ecac9221d69eeb5b9451476b0280fc834b18e13e04a696": [
       "retroarch/retroarch"
     ],
-    "lscr.io/linuxserver/rpcs3:latest": [
+    "lscr.io/linuxserver/rpcs3:latest@sha256:f997eebe15f5e0ea2578c80b488171ee56e3f6eee3cc137270f91e6c42921caf": [
       "rpcs3/rpcs3"
     ],
-    "lscr.io/linuxserver/rsnapshot:latest": [
+    "lscr.io/linuxserver/rsnapshot:latest@sha256:92547730d7276ec5b2748bdc3f26bad6b05ba7c6413da41bf865fb931d30c2f9": [
       "rsnapshot/rsnapshot"
     ],
-    "lscr.io/linuxserver/rustdesk:latest": [
+    "lscr.io/linuxserver/rustdesk:latest@sha256:bb4c5161f1df20602c791a025c69a6dbb88231e4b3e33801f1771f04a6d06487": [
       "rustdesk/rustdesk"
     ],
-    "lscr.io/linuxserver/sabnzbd:latest": [
+    "lscr.io/linuxserver/sabnzbd:latest@sha256:382f9bd4e3f6df2abf7bcc92edada0c5bd4d4ff26eb5416f257ac54989464fa1": [
       "sabnzbd/sabnzbd"
     ],
-    "lscr.io/linuxserver/scummvm:latest": [
+    "lscr.io/linuxserver/scummvm:latest@sha256:bc35e660a1c1f8a7daec895b75f71135cbc4ade6812f7ed74efac82c3308aaf4": [
       "scummvm/scummvm"
     ],
-    "lscr.io/linuxserver/sealskin:latest": [
+    "lscr.io/linuxserver/sealskin:latest@sha256:f3bb5d844a65a8815586ff9822a69a1d84ede54e53bc209ba11b50577d9caaa4": [
       "sealskin/sealskin"
     ],
-    "lscr.io/linuxserver/series-troxide:latest": [
+    "lscr.io/linuxserver/series-troxide:latest@sha256:a86c0f9b6500be2596e3fdf12bf3b341f6b842c1b1fc88d44b6ef3362f9b58df": [
       "series-troxide/series-troxide"
     ],
-    "lscr.io/linuxserver/shadps4:latest": [
+    "lscr.io/linuxserver/shadps4:latest@sha256:15d0908b074d3a32a90909b9caf225fd26206365aae9a660881c224c2b3eccb1": [
       "shadps4/shadps4"
     ],
-    "lscr.io/linuxserver/shotcut:latest": [
+    "lscr.io/linuxserver/shotcut:latest@sha256:7cbfc1a31a0b6a302978bf4b8c5c55f602ac4ec130caa4b82479ccdf59517d14": [
       "shotcut/shotcut"
     ],
-    "lscr.io/linuxserver/signal:latest": [
+    "lscr.io/linuxserver/signal:latest@sha256:c668a5ae3febc5c7b9b85183bd884ba0cfda0034b55a66fc92cab6ea0b347d56": [
       "signal/signal"
     ],
-    "lscr.io/linuxserver/smokeping:latest": [
+    "lscr.io/linuxserver/smokeping:latest@sha256:52ab5b6bb2cbe03e775f970ac110300964d4069917820fccdfd6db80dd5ac143": [
       "smokeping/smokeping"
     ],
-    "lscr.io/linuxserver/socket-proxy:latest": [
+    "lscr.io/linuxserver/socket-proxy:latest@sha256:362cadf55b3c7920189347d0f4d60b389e2f80e929581bf10793f2371aab41e5": [
+      "dozzle/dozzle-socket-proxy",
       "socket-proxy/socket-proxy"
     ],
-    "lscr.io/linuxserver/socket-proxy:latest@sha256:362cadf55b3c7920189347d0f4d60b389e2f80e929581bf10793f2371aab41e5": [
-      "dozzle/dozzle-socket-proxy"
-    ],
-    "lscr.io/linuxserver/sonarr:latest": [
+    "lscr.io/linuxserver/sonarr:latest@sha256:dffc730adcb8b4f4342792fbb27fcad9c62fb8660523f2aeb082416980d7fe0c": [
       "sonarr-4k/sonarr-4k",
       "sonarr/sonarr"
     ],
-    "lscr.io/linuxserver/speedtest-tracker:latest": [
+    "lscr.io/linuxserver/speedtest-tracker:latest@sha256:1eeed2307699c083407bd4c1eb86f14d5179f9e1cd960f57d4cbab6f1f8b8a42": [
       "speedtest-tracker/speedtest-tracker"
     ],
-    "lscr.io/linuxserver/spotube:latest": [
+    "lscr.io/linuxserver/spotube:latest@sha256:6208861b02289a8e19c49754595e70c06df09db50cf27458fb4f0ac5b0d171a7": [
       "spotube/spotube"
     ],
-    "lscr.io/linuxserver/sqlitebrowser:latest": [
+    "lscr.io/linuxserver/sqlitebrowser:latest@sha256:b96da9fe6e7f24a32a206aeefa93272ada4bf3c4c8c336998c3bbd95fef5d26b": [
       "sqlitebrowser/sqlitebrowser"
     ],
-    "lscr.io/linuxserver/steam:latest": [
+    "lscr.io/linuxserver/steam:latest@sha256:70daa8991f7e20bee8d93c818897b79828790f9eb7a7ef52f2060564cff71bc8": [
       "steam/steam"
     ],
-    "lscr.io/linuxserver/swag:latest": [
+    "lscr.io/linuxserver/swag:latest@sha256:2fc60133a4c153a7182fdf7700ae72c6a31447fe263baf02851466c33a5111f0": [
       "swag/swag"
     ],
-    "lscr.io/linuxserver/synclounge:latest": [
+    "lscr.io/linuxserver/synclounge:latest@sha256:0d21be07263d4b0187a290649d949ecb899bc8fa9994b3d1648546ca7e054ce7": [
       "synclounge/synclounge"
     ],
-    "lscr.io/linuxserver/syncthing:latest": [
+    "lscr.io/linuxserver/syncthing:latest@sha256:8a381a5a11225475cc4a14ad4fee7c627fdc4fa5804fe3a34febe3aeda9f4e23": [
       "syncthing/syncthing"
     ],
-    "lscr.io/linuxserver/syslog-ng:latest": [
+    "lscr.io/linuxserver/syslog-ng:latest@sha256:124b191502b82118ab3078a1dc02609517dd8fd4cb64442e14ef86c9998286f0": [
       "syslog-ng/syslog-ng"
     ],
-    "lscr.io/linuxserver/telegram:latest": [
+    "lscr.io/linuxserver/telegram:latest@sha256:26ae3c38bcc68d55e493f614deee30b015d2431fd075511ff9cd758c9fa885cd": [
       "telegram/telegram"
     ],
-    "lscr.io/linuxserver/thelounge:latest": [
+    "lscr.io/linuxserver/thelounge:latest@sha256:8793004304efb7744792c55911fc069495ecbc04c46e6054f06c12e7a44074e0": [
       "thelounge/thelounge"
     ],
-    "lscr.io/linuxserver/thunderbird:latest": [
+    "lscr.io/linuxserver/thunderbird:latest@sha256:e438bba5d079de2a29915e2a4590fb64ed8e0ed9ab4bddef65316a65f97dc267": [
       "thunderbird/thunderbird"
     ],
-    "lscr.io/linuxserver/transmission:latest": [
+    "lscr.io/linuxserver/transmission:latest@sha256:4813745e2c721997d8849f5718786fd4406b3c656fbef479f87a161e51383cbd": [
       "transmission/transmission"
     ],
-    "lscr.io/linuxserver/tvheadend:latest": [
+    "lscr.io/linuxserver/tvheadend:latest@sha256:fcc4b2091c573bd0b5ec04cf09db9acf0907e23d3bca9b53b0a0111bc8ae1fc3": [
       "tvheadend/tvheadend"
     ],
-    "lscr.io/linuxserver/ubooquity:latest": [
+    "lscr.io/linuxserver/ubooquity:latest@sha256:d4017ee0d38ca647eb2664773255567108d8364fc34ebf6acb138723623b37b6": [
       "ubooquity/ubooquity"
     ],
-    "lscr.io/linuxserver/ungoogled-chromium:latest": [
+    "lscr.io/linuxserver/ungoogled-chromium:latest@sha256:d0730ec58f4befff20dc4cd6651c88fa656e1689fb1a084452be4841ee794cad": [
       "ungoogled-chromium/ungoogled-chromium"
     ],
-    "lscr.io/linuxserver/unifi-network-application:latest": [
+    "lscr.io/linuxserver/unifi-network-application:latest@sha256:bb0510fedc3b9df67952d8e184dc2b6ddc9ca0ff570f91d1fdb62567ffc14298": [
       "unifi-network-application/unifi-network-application"
     ],
-    "lscr.io/linuxserver/vivaldi:latest": [
+    "lscr.io/linuxserver/vivaldi:latest@sha256:6a0dfbac6b44dcf78cdb0c075286f8b93eeccb810a579c63150daa264096383d": [
       "vivaldi/vivaldi"
     ],
-    "lscr.io/linuxserver/vlc:latest": [
+    "lscr.io/linuxserver/vlc:latest@sha256:53aec432d32137f182b9f9f18e984961c14a2d541dbb70514bfb7c675d3d69a1": [
       "vlc/vlc"
     ],
-    "lscr.io/linuxserver/vscode:latest": [
+    "lscr.io/linuxserver/vscode:latest@sha256:008276f42f301068df07ee08a9a271dc33c3cdddef50398c660e06859de2a55c": [
       "vscode/vscode"
     ],
-    "lscr.io/linuxserver/vscodium-web:latest": [
+    "lscr.io/linuxserver/vscodium-web:latest@sha256:c1bc670d4f9bf10994090715923d0e62ff339749c19028c2d483759568e139e6": [
       "vscodium-web/vscodium-web"
     ],
-    "lscr.io/linuxserver/vscodium:latest": [
+    "lscr.io/linuxserver/vscodium:latest@sha256:3a30e9ea4702b685ee6e4e884b9e785442b0db1d2e567c6f271799b1bd83827b": [
       "vscodium/vscodium"
     ],
-    "lscr.io/linuxserver/webcord:latest": [
+    "lscr.io/linuxserver/webcord:latest@sha256:56fd4fb3ed40ff914601424e63b81556fc169bec88607a24aded67017128cf2e": [
       "webcord/webcord"
     ],
-    "lscr.io/linuxserver/webgrabplus:latest": [
+    "lscr.io/linuxserver/webgrabplus:latest@sha256:8d5dd403b0f16d4a96ff19a8360ee75193f9429c95bd343c7a2922075fefc056": [
       "webgrabplus/webgrabplus"
     ],
-    "lscr.io/linuxserver/webstation:latest": [
+    "lscr.io/linuxserver/webstation:latest@sha256:e80246dc15f1688df59358527c0ec77ae66b59eab7c6ae6976dfd71dffd1cf6a": [
       "webstation/webstation"
     ],
-    "lscr.io/linuxserver/webtop:latest": [
+    "lscr.io/linuxserver/webtop:latest@sha256:529034b4cb77ac4ba3368b7667b50ebeb0c4b054943981d462c035a56ae4308b": [
       "webtop/webtop"
     ],
-    "lscr.io/linuxserver/weixin:latest": [
+    "lscr.io/linuxserver/weixin:latest@sha256:ef55da929cab5fae1f45b902b94918234604fa1473a7a7322383614a51573059": [
       "weixin/weixin"
     ],
-    "lscr.io/linuxserver/wikijs:latest": [
+    "lscr.io/linuxserver/wikijs:latest@sha256:995782758c4c4c34495bb2fcf1230897aa0b9d57c406f0205f059532e89c0b47": [
       "wikijs/wikijs"
     ],
-    "lscr.io/linuxserver/winegui:latest": [
+    "lscr.io/linuxserver/winegui:latest@sha256:41a12b6613072df63bae0d05331386a84c8a347095f4b99b4f20a9bb72b8517f": [
       "winegui/winegui"
     ],
-    "lscr.io/linuxserver/wireguard:latest": [
+    "lscr.io/linuxserver/wireguard:latest@sha256:437a490f7afc6969434251351ba47455a3829e71cef9c6172f3f533332d04063": [
       "wireguard/wireguard"
     ],
-    "lscr.io/linuxserver/wireshark:latest": [
+    "lscr.io/linuxserver/wireshark:latest@sha256:33647c4718f21746cedd9d791e4ba9e491706435524471c6894c96a4a1018fab": [
       "wireshark/wireshark"
     ],
-    "lscr.io/linuxserver/wps-office:latest": [
+    "lscr.io/linuxserver/wps-office:latest@sha256:3c1e8dc06b08b5f25fd205c50b4c057070e2e1fd2e127532f540cc84f8f350bd": [
       "wps-office/wps-office"
     ],
-    "lscr.io/linuxserver/xbackbone:latest": [
+    "lscr.io/linuxserver/xbackbone:latest@sha256:c95e7777660c282453a5c16036b3fb05656b0e84ffe1a9a0b987335bd9eb9d7e": [
       "xbackbone/xbackbone"
     ],
-    "lscr.io/linuxserver/xemu:latest": [
+    "lscr.io/linuxserver/xemu:latest@sha256:ce23bd30c9fe166b3a167b87d6bcb88ee9b29740769ad9fd1ca2182ddb5544cf": [
       "xemu/xemu"
     ],
-    "lscr.io/linuxserver/yaak:latest": [
+    "lscr.io/linuxserver/yaak:latest@sha256:baedb709835196606a4c9669e432f8d6f92732b4d6433fda445dad7f9c60c337": [
       "yaak/yaak"
     ],
-    "lscr.io/linuxserver/your_spotify:latest": [
+    "lscr.io/linuxserver/your_spotify:latest@sha256:34f592ef352cce88db8f64ca502d646b17aa2ecd6076df47e053241b0dbef2da": [
       "your_spotify/your_spotify"
     ],
-    "lscr.io/linuxserver/zen:latest": [
+    "lscr.io/linuxserver/zen:latest@sha256:0b150f21b27e0644277797a3f648b038440f5e0bf5b83fb6fd70deeeb51d7c3b": [
       "zen/zen"
     ],
-    "lscr.io/linuxserver/znc:latest": [
+    "lscr.io/linuxserver/znc:latest@sha256:51e139085d594ca3b90c415ef081fee2a394387668acb54d32cc9c2852a33823": [
       "znc/znc"
     ],
-    "lscr.io/linuxserver/zotero:latest": [
+    "lscr.io/linuxserver/zotero:latest@sha256:e976bdf12c1b384d37758a23545910ba5b74867241886901dafe20f91b8c57f1": [
       "zotero/zotero"
     ],
-    "neosmemo/memos:stable": [
+    "neosmemo/memos:stable@sha256:24c2707ddd8fbd2ceaa7a61ecab86a53cdcde640b24ce572b73da14b00b5785f": [
       "memos/memos"
     ],
-    "netdata/netdata:stable": [
+    "netdata/netdata:stable@sha256:5cfa05a5fa5686b98e0c70e884f00685fb3c662e9c5d727cf46c96d8e37b7818": [
       "netdata/netdata"
     ],
-    "nicolargo/glances:latest-full": [
+    "nicolargo/glances:latest-full@sha256:2a7f42503f165c5a50fc3f88f820517e2bd905447ddf578e44bee7db3b52821c": [
       "glances/glances"
     ],
-    "nodered/node-red:latest": [
+    "nodered/node-red:latest@sha256:b5adb6c9dd29ab80c852d82bc87daed84e729dcff9b00ca1bf958e6de470f2c1": [
       "node-red/node-red"
     ],
-    "ollama/ollama:latest": [
+    "ollama/ollama:latest@sha256:adca95a12c2b386a8f9a995e7fa0600e187e3323b5e5522f5a6c3b1ec73eff99": [
       "ollama/ollama"
     ],
-    "organizr/organizr:latest": [
+    "organizr/organizr:latest@sha256:1ce319d73cdfd2666ec7ef21e15907531fabc8a6f333c4ac61e2b2e9d2d162f5": [
       "organizr/organizr"
     ],
-    "photoprism/photoprism:latest": [
+    "photoprism/photoprism:latest@sha256:0f85369636ad99ca9a1c33f2d04df6c590802d16b7c33b4a1ea026b595be06d1": [
       "photoprism/photoprism"
     ],
-    "qmcgaw/gluetun:latest": [
+    "qmcgaw/gluetun:latest@sha256:2733bb22b27e3efa7a9f2cef9057ec12791b8b225793fcd3dbfd0508404dfc25": [
       "gluetun/gluetun"
     ],
-    "searxng/searxng:latest": [
+    "searxng/searxng:latest@sha256:85492ba800a861e3e8ff6014c430e81369fe6ca766a9990595f616d1ce95b272": [
       "searxng/searxng"
     ],
-    "tailscale/tailscale:latest": [
+    "tailscale/tailscale:latest@sha256:c507f3a2a6ab1cabd8d809b98edeb41edbd5c3fb6ad9632ffd098b4c7d0b4065": [
       "tailscale/tailscale"
     ],
-    "vaultwarden/server:1.37.4-alpine": [
+    "vaultwarden/server:1.37.4-alpine@sha256:19ea2b669945d842dadc3d500f2d6a795866a003330f59a47b9634658bae98bb": [
       "vaultwarden/vaultwarden"
     ]
   },
@@ -819,165 +817,100 @@
     ]
   },
   "app_findings": {
-    "actual-budget": [
-      "floating_image"
-    ],
-    "adguardhome-sync": [
-      "floating_image"
-    ],
-    "airsonic-advanced": [
-      "floating_image"
-    ],
+    "actual-budget": [],
+    "adguardhome-sync": [],
+    "airsonic-advanced": [],
     "altus": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "apprise-api": [
-      "floating_image"
-    ],
+    "apprise-api": [],
     "ardour": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "audacity": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "audiobookshelf": [
-      "floating_image"
-    ],
-    "autobrr": [
-      "floating_image"
-    ],
+    "audiobookshelf": [],
+    "autobrr": [],
     "azahar": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "babybuddy": [
-      "floating_image"
-    ],
+    "babybuddy": [],
     "bambustudio": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "bazarr": [
-      "floating_image"
-    ],
+    "bazarr": [],
     "beets": [],
-    "beszel": [
-      "floating_image"
-    ],
-    "bitcoin-knots": [
-      "floating_image"
-    ],
+    "beszel": [],
+    "bitcoin-knots": [],
     "blade-of-agony": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "blender": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "boinc": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "bookstack": [
       "configuration_placeholder",
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "brave": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "budge": [
-      "floating_image"
-    ],
+    "budge": [],
     "calibre": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "calibre-web": [
-      "floating_image"
-    ],
+    "calibre-web": [],
     "calligra": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "changedetection.io": [
-      "floating_image"
-    ],
+    "changedetection.io": [],
     "chrome": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "chromium": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "cloudflared": [
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "code-server": [
       "public_sensitive_ui"
     ],
-    "cops": [
-      "floating_image"
-    ],
-    "cross-seed": [
-      "floating_image"
-    ],
+    "cops": [],
+    "cross-seed": [],
     "cura": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "darktable": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "dashy": [
-      "floating_image"
-    ],
-    "ddclient": [
-      "floating_image"
-    ],
-    "deluge": [
-      "floating_image"
-    ],
+    "dashy": [],
+    "ddclient": [],
+    "deluge": [],
     "digikam": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "diskover": [
-      "floating_image"
-    ],
+    "diskover": [],
     "dockge": [
-      "floating_image",
       "public_sensitive_ui",
       "sensitive_bind"
     ],
     "dogwalk": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "dokuwiki": [
-      "floating_image"
-    ],
+    "dokuwiki": [],
     "dolphin": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "doplarr_rs": [
-      "floating_image"
-    ],
+    "doplarr_rs": [],
     "dosbox-staging": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "doublecommander": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "dozzle": [
@@ -986,113 +919,71 @@
     ],
     "duckdns": [
       "configuration_placeholder",
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "duckstation": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "duplicati": [
-      "floating_image"
-    ],
+    "duplicati": [],
     "eden": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "emby": [
-      "floating_image"
-    ],
+    "emby": [],
     "esphome": [
-      "floating_image",
       "public_sensitive_ui"
     ],
-    "fail2ban": [
-      "floating_image"
-    ],
-    "faster-whisper": [
-      "floating_image"
-    ],
+    "fail2ban": [],
+    "faster-whisper": [],
     "ferdium": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "ffmpeg": [],
     "filebrowser": [
-      "floating_image",
       "public_sensitive_ui"
     ],
     "filezilla": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "firefox": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "flaresolverr": [
-      "floating_image"
-    ],
-    "flexget": [
-      "floating_image"
-    ],
+    "flaresolverr": [],
+    "flexget": [],
     "flycast": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "foldingathome": [
-      "floating_image"
-    ],
+    "foldingathome": [],
     "freecad": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "freshrss": [
-      "floating_image"
-    ],
+    "freshrss": [],
     "frigate": [
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "gimp": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "gitea": [
-      "floating_image",
       "public_sensitive_ui"
     ],
     "github-desktop": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "gitqlient": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "glances": [
-      "floating_image"
-    ],
+    "glances": [],
     "gluetun": [
       "configuration_placeholder",
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
-    "grav": [
-      "floating_image"
-    ],
-    "grocy": [
-      "floating_image"
-    ],
+    "grav": [],
+    "grocy": [],
     "gzdoom": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "habridge": [
-      "floating_image"
-    ],
+    "habridge": [],
     "handbrake": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "healthchecks": [
@@ -1101,600 +992,353 @@
     ],
     "hedgedoc": [
       "configuration_placeholder",
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
-    "heimdall": [
-      "floating_image"
-    ],
+    "heimdall": [],
     "helium": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "hishtory-server": [
-      "floating_image"
-    ],
+    "hishtory-server": [],
     "homarr": [
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "homeassistant": [
-      "floating_image",
       "host_network"
     ],
-    "homepage": [
-      "floating_image"
-    ],
+    "homepage": [],
     "immich": [
       "credential_placeholder",
-      "floating_image",
       "public_sensitive_ui"
     ],
     "inkscape": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "intellij-idea": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "it-tools": [],
-    "jackett": [
-      "floating_image"
-    ],
+    "jackett": [],
     "jdownloader": [],
     "jellyfin": [],
-    "joplin": [
-      "floating_image"
-    ],
+    "joplin": [],
     "kali-linux": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "karakeep": [
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "kasm": [
-      "floating_image",
       "privileged",
       "public_sensitive_ui"
     ],
-    "kavita": [
-      "floating_image"
-    ],
+    "kavita": [],
     "kdenlive": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "keepassxc": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "kicad": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "kimai": [
-      "configuration_placeholder",
-      "floating_image"
+      "configuration_placeholder"
     ],
-    "kometa": [
-      "floating_image"
-    ],
+    "kometa": [],
     "krita": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "lazylibrarian": [
-      "floating_image"
-    ],
+    "lazylibrarian": [],
     "libreoffice": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "librespeed": [
-      "floating_image"
-    ],
+    "librespeed": [],
     "librewolf": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "lidarr": [
-      "floating_image"
-    ],
-    "limnoria": [
-      "floating_image"
-    ],
+    "lidarr": [],
+    "limnoria": [],
     "lldap": [
       "credential_placeholder",
-      "floating_image",
       "public_sensitive_ui"
     ],
     "lm-studio": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "lollypop": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "luanti": [
-      "floating_image"
-    ],
-    "lychee": [
-      "floating_image"
-    ],
-    "maintainerr": [
-      "floating_image"
-    ],
+    "luanti": [],
+    "lychee": [],
+    "maintainerr": [],
     "mame": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "manyfold": [
-      "floating_image"
-    ],
+    "manyfold": [],
     "mariadb": [
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
-    "mastodon": [
-      "floating_image"
-    ],
-    "mealie": [
-      "floating_image"
-    ],
+    "mastodon": [],
+    "mealie": [],
     "mediaelch": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "medusa": [
-      "floating_image"
-    ],
+    "medusa": [],
     "melonds": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "memos": [
-      "floating_image"
-    ],
-    "metube": [
-      "floating_image"
-    ],
-    "minisatip": [
-      "floating_image"
-    ],
+    "memos": [],
+    "metube": [],
+    "minisatip": [],
     "modmanager": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "modrinth": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "mosquitto": [
-      "floating_image"
-    ],
+    "mosquitto": [],
     "msedge": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "mstream": [
-      "floating_image"
-    ],
+    "mstream": [],
     "mullvad-browser": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "mylar3": [
-      "floating_image"
-    ],
+    "mylar3": [],
     "mysql-workbench": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "navidrome": [
-      "floating_image"
-    ],
+    "navidrome": [],
     "netbootxyz": [],
     "netbox": [
       "configuration_placeholder",
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "netdata": [
-      "floating_image",
       "public_sensitive_ui",
       "sensitive_bind"
     ],
     "nextcloud": [
-      "floating_image",
       "public_sensitive_ui"
     ],
-    "nginx": [
-      "floating_image"
-    ],
+    "nginx": [],
     "nginx-proxy-manager": [
-      "floating_image",
       "public_sensitive_ui"
     ],
     "ngircd": [],
     "node-red": [
-      "floating_image",
       "public_sensitive_ui"
     ],
-    "notifiarr": [
-      "floating_image"
-    ],
+    "notifiarr": [],
     "nzbget": [],
-    "nzbhydra2": [
-      "floating_image"
-    ],
+    "nzbhydra2": [],
     "obsidian": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "ollama": [
-      "floating_image"
-    ],
-    "ombi": [
-      "floating_image"
-    ],
-    "onlyoffice": [
-      "floating_image"
-    ],
+    "ollama": [],
+    "ombi": [],
+    "onlyoffice": [],
     "open-webui": [
-      "floating_image",
       "public_sensitive_ui"
     ],
     "openshot": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "openssh-server": [
-      "floating_image"
-    ],
+    "openssh-server": [],
     "opera": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "orcaslicer": [
-      "floating_image"
-    ],
-    "organizr": [
-      "floating_image"
-    ],
-    "oscam": [
-      "floating_image"
-    ],
-    "pairdrop": [
-      "floating_image"
-    ],
+    "orcaslicer": [],
+    "organizr": [],
+    "oscam": [],
+    "pairdrop": [],
     "paperless-ngx": [
       "credential_placeholder",
-      "floating_image",
       "public_sensitive_ui"
     ],
     "pcsx2": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "pelorus": [
-      "floating_image"
-    ],
+    "pelorus": [],
     "photoprism": [
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "phpmyadmin": [
       "public_sensitive_ui"
     ],
     "pidgin": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "piper": [
-      "floating_image"
-    ],
-    "piwigo": [
-      "floating_image"
-    ],
+    "piper": [],
+    "piwigo": [],
     "planka": [
-      "credential_placeholder",
-      "floating_image"
+      "credential_placeholder"
     ],
     "plex": [],
-    "pocket-id": [
-      "floating_image"
-    ],
+    "pocket-id": [],
     "ppsspp": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "projectsend": [
-      "floating_image"
-    ],
-    "prowlarr": [
-      "floating_image"
-    ],
-    "pwndrop": [
-      "floating_image"
-    ],
+    "projectsend": [],
+    "prowlarr": [],
+    "pwndrop": [],
     "pycharm": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "pydio-cells": [
-      "floating_image"
-    ],
-    "pyload-ng": [
-      "floating_image"
-    ],
+    "pydio-cells": [],
+    "pyload-ng": [],
     "qbittorrent": [
-      "floating_image",
       "public_sensitive_ui"
     ],
     "qbittorrent-4": [
       "public_sensitive_ui"
     ],
     "qdirstat": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "qui": [
-      "floating_image"
-    ],
-    "radarr": [
-      "floating_image"
-    ],
-    "radarr-4k": [
-      "floating_image"
-    ],
-    "raneto": [
-      "floating_image"
-    ],
+    "qui": [],
+    "radarr": [],
+    "radarr-4k": [],
+    "raneto": [],
     "rawtherapee": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "recyclarr": [
-      "floating_image"
-    ],
+    "recyclarr": [],
     "remmina": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "resilio-sync": [
-      "floating_image"
-    ],
+    "resilio-sync": [],
     "retroarch": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "rpcs3": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "rsnapshot": [
-      "floating_image"
-    ],
+    "rsnapshot": [],
     "rustdesk": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "rutorrent": [
-      "floating_image"
-    ],
-    "sabnzbd": [
-      "floating_image"
-    ],
+    "rutorrent": [],
+    "sabnzbd": [],
     "scummvm": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "sealskin": [
-      "floating_image"
-    ],
-    "searxng": [
-      "floating_image"
-    ],
-    "seerr": [
-      "floating_image"
-    ],
+    "sealskin": [],
+    "searxng": [],
+    "seerr": [],
     "series-troxide": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "shadps4": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "shotcut": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "sickgear": [],
     "signal": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "smokeping": [
-      "floating_image"
-    ],
+    "smokeping": [],
     "socket-proxy": [
-      "floating_image",
       "sensitive_bind"
     ],
-    "sonarr": [
-      "floating_image"
-    ],
-    "sonarr-4k": [
-      "floating_image"
-    ],
-    "speedtest-tracker": [
-      "floating_image"
-    ],
+    "sonarr": [],
+    "sonarr-4k": [],
+    "speedtest-tracker": [],
     "spotube": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "sqlitebrowser": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "steam": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "stirling-pdf": [
-      "floating_image"
-    ],
-    "swag": [
-      "floating_image"
-    ],
-    "synclounge": [
-      "floating_image"
-    ],
-    "syncthing": [
-      "floating_image"
-    ],
-    "syslog-ng": [
-      "floating_image"
-    ],
+    "stirling-pdf": [],
+    "swag": [],
+    "synclounge": [],
+    "syncthing": [],
+    "syslog-ng": [],
     "tailscale": [
       "credential_placeholder",
-      "floating_image",
       "host_network",
       "sensitive_bind"
     ],
     "tautulli": [],
-    "tdarr": [
-      "floating_image"
-    ],
+    "tdarr": [],
     "telegram": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "thelounge": [
-      "floating_image"
-    ],
+    "thelounge": [],
     "thunderbird": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "transmission": [
-      "floating_image"
-    ],
-    "tvheadend": [
-      "floating_image"
-    ],
-    "ubooquity": [
-      "floating_image"
-    ],
+    "transmission": [],
+    "tvheadend": [],
+    "ubooquity": [],
     "ungoogled-chromium": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "unifi-network-application": [
-      "floating_image"
-    ],
-    "unpackerr": [
-      "floating_image"
-    ],
-    "uptime-kuma": [
-      "floating_image"
-    ],
+    "unifi-network-application": [],
+    "unpackerr": [],
+    "uptime-kuma": [],
     "vaultwarden": [
-      "floating_image",
       "public_sensitive_ui"
     ],
     "vivaldi": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "vlc": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "vscode": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "vscodium": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "vscodium-web": [
-      "floating_image"
-    ],
+    "vscodium-web": [],
     "webcord": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "webgrabplus": [
-      "floating_image"
-    ],
+    "webgrabplus": [],
     "webstation": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "webtop": [
-      "floating_image",
       "public_sensitive_ui",
       "seccomp_unconfined"
     ],
     "weixin": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "whisparr": [
-      "floating_image"
-    ],
-    "wikijs": [
-      "floating_image"
-    ],
+    "whisparr": [],
+    "wikijs": [],
     "winegui": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "wireguard": [
-      "floating_image"
-    ],
+    "wireguard": [],
     "wireshark": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "wizarr": [
-      "floating_image"
-    ],
+    "wizarr": [],
     "wps-office": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "xbackbone": [
-      "floating_image"
-    ],
+    "xbackbone": [],
     "xemu": [
-      "floating_image",
       "seccomp_unconfined"
     ],
     "yaak": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "your_spotify": [
-      "floating_image"
-    ],
+    "your_spotify": [],
     "zen": [
-      "floating_image",
       "seccomp_unconfined"
     ],
-    "znc": [
-      "floating_image"
-    ],
+    "znc": [],
     "zotero": [
-      "floating_image",
       "seccomp_unconfined"
     ]
   },
@@ -1702,7 +1346,6 @@
     "configuration_placeholder": 10,
     "credential_placeholder": 25,
     "floating_dockerfile_base": 9,
-    "floating_image": 243,
     "host_network": 2,
     "privileged": 1,
     "public_sensitive_ui": 24,
@@ -1712,52 +1355,10 @@
   },
   "findings": [
     {
-      "file": "Apps/actual-budget/docker-compose.yml",
-      "service": "actual-budget",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/adguardhome-sync/docker-compose.yml",
-      "service": "adguardhome-sync",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/airsonic-advanced/docker-compose.yml",
-      "service": "airsonic-advanced",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/altus/docker-compose.yml",
-      "service": "altus",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/altus/docker-compose.yml",
       "service": "altus",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/apprise-api/docker-compose.yml",
-      "service": "apprise-api",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/ardour/docker-compose.yml",
-      "service": "ardour",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -1770,36 +1371,8 @@
     {
       "file": "Apps/audacity/docker-compose.yml",
       "service": "audacity",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/audacity/docker-compose.yml",
-      "service": "audacity",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/audiobookshelf/docker-compose.yml",
-      "service": "audiobookshelf",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/autobrr/docker-compose.yml",
-      "service": "autobrr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/azahar/docker-compose.yml",
-      "service": "azahar",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -1810,52 +1383,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/babybuddy/docker-compose.yml",
-      "service": "babybuddy",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/bambustudio/docker-compose.yml",
-      "service": "bambustudio",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/bambustudio/docker-compose.yml",
       "service": "bambustudio",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/bazarr/docker-compose.yml",
-      "service": "bazarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/beszel/docker-compose.yml",
-      "service": "beszel",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/bitcoin-knots/docker-compose.yml",
-      "service": "bitcoin-knots",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/blade-of-agony/docker-compose.yml",
-      "service": "blade-of-agony",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -1868,13 +1399,6 @@
     {
       "file": "Apps/blender/docker-compose.yml",
       "service": "blender",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/blender/docker-compose.yml",
-      "service": "blender",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
       "level": "warning"
@@ -1882,22 +1406,8 @@
     {
       "file": "Apps/boinc/docker-compose.yml",
       "service": "boinc",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/boinc/docker-compose.yml",
-      "service": "boinc",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/bookstack/docker-compose.yml",
-      "service": "bookstack",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -1924,29 +1434,8 @@
     {
       "file": "Apps/brave/docker-compose.yml",
       "service": "brave",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/brave/docker-compose.yml",
-      "service": "brave",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/budge/docker-compose.yml",
-      "service": "budge",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/calibre/docker-compose.yml",
-      "service": "calibre",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -1957,38 +1446,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/calibre-web/docker-compose.yml",
-      "service": "calibre-web",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/calligra/docker-compose.yml",
-      "service": "calligra",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/calligra/docker-compose.yml",
       "service": "calligra",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/changedetection.io/docker-compose.yml",
-      "service": "changedetection.io",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/chrome/docker-compose.yml",
-      "service": "chrome",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2001,22 +1462,8 @@
     {
       "file": "Apps/chromium/docker-compose.yml",
       "service": "chromium",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/chromium/docker-compose.yml",
-      "service": "chromium",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/cloudflared/docker-compose.yml",
-      "service": "cloudflared",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2034,27 +1481,6 @@
       "level": "warning"
     },
     {
-      "file": "Apps/cops/docker-compose.yml",
-      "service": "cops",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/cross-seed/docker-compose.yml",
-      "service": "cross-seed",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/cura/docker-compose.yml",
-      "service": "cura",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/cura/docker-compose.yml",
       "service": "cura",
       "code": "seccomp_unconfined",
@@ -2064,43 +1490,8 @@
     {
       "file": "Apps/darktable/docker-compose.yml",
       "service": "darktable",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/darktable/docker-compose.yml",
-      "service": "darktable",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/dashy/docker-compose.yml",
-      "service": "dashy",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/ddclient/docker-compose.yml",
-      "service": "ddclient",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/deluge/docker-compose.yml",
-      "service": "deluge",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/digikam/docker-compose.yml",
-      "service": "digikam",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2108,20 +1499,6 @@
       "service": "digikam",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/diskover/docker-compose.yml",
-      "service": "diskover",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/dockge/docker-compose.yml",
-      "service": "dockge",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2141,29 +1518,8 @@
     {
       "file": "Apps/dogwalk/docker-compose.yml",
       "service": "dogwalk",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/dogwalk/docker-compose.yml",
-      "service": "dogwalk",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/dokuwiki/docker-compose.yml",
-      "service": "dokuwiki",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/dolphin/docker-compose.yml",
-      "service": "dolphin",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2174,31 +1530,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/doplarr_rs/docker-compose.yml",
-      "service": "doplarr_rs",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/dosbox-staging/docker-compose.yml",
-      "service": "dosbox-staging",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/dosbox-staging/docker-compose.yml",
       "service": "dosbox-staging",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/doublecommander/docker-compose.yml",
-      "service": "doublecommander",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2225,13 +1560,6 @@
     {
       "file": "Apps/duckdns/docker-compose.yml",
       "service": "duckdns",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/duckdns/docker-compose.yml",
-      "service": "duckdns",
       "code": "configuration_placeholder",
       "detail": "Parâmetro de instalação SUBDOMAINS não configurado",
       "level": "warning"
@@ -2246,29 +1574,8 @@
     {
       "file": "Apps/duckstation/docker-compose.yml",
       "service": "duckstation",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/duckstation/docker-compose.yml",
-      "service": "duckstation",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/duplicati/docker-compose.yml",
-      "service": "duplicati",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/eden/docker-compose.yml",
-      "service": "eden",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2276,20 +1583,6 @@
       "service": "eden",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/emby/docker-compose.yml",
-      "service": "emby",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/esphome/docker-compose.yml",
-      "service": "esphome",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2300,38 +1593,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/fail2ban/docker-compose.yml",
-      "service": "fail2ban",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/faster-whisper/docker-compose.yml",
-      "service": "faster-whisper",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/ferdium/docker-compose.yml",
-      "service": "ferdium",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/ferdium/docker-compose.yml",
       "service": "ferdium",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/filebrowser/docker-compose.yml",
-      "service": "filebrowser",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2344,13 +1609,6 @@
     {
       "file": "Apps/filezilla/docker-compose.yml",
       "service": "filezilla",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/filezilla/docker-compose.yml",
-      "service": "filezilla",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
       "level": "warning"
@@ -2358,36 +1616,8 @@
     {
       "file": "Apps/firefox/docker-compose.yml",
       "service": "firefox",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/firefox/docker-compose.yml",
-      "service": "firefox",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/flaresolverr/docker-compose.yml",
-      "service": "flaresolverr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/flexget/docker-compose.yml",
-      "service": "flexget",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/flycast/docker-compose.yml",
-      "service": "flycast",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2398,38 +1628,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/foldingathome/docker-compose.yml",
-      "service": "foldingathome",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/freecad/docker-compose.yml",
-      "service": "freecad",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/freecad/docker-compose.yml",
       "service": "freecad",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/freshrss/docker-compose.yml",
-      "service": "freshrss",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/frigate/docker-compose.yml",
-      "service": "frigate",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2442,22 +1644,8 @@
     {
       "file": "Apps/gimp/docker-compose.yml",
       "service": "gimp",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/gimp/docker-compose.yml",
-      "service": "gimp",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/gitea/docker-compose.yml",
-      "service": "gitea",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2477,13 +1665,6 @@
     {
       "file": "Apps/github-desktop/docker-compose.yml",
       "service": "github-desktop",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/github-desktop/docker-compose.yml",
-      "service": "github-desktop",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
       "level": "warning"
@@ -2491,29 +1672,8 @@
     {
       "file": "Apps/gitqlient/docker-compose.yml",
       "service": "gitqlient",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/gitqlient/docker-compose.yml",
-      "service": "gitqlient",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/glances/docker-compose.yml",
-      "service": "glances",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/gluetun/docker-compose.yml",
-      "service": "gluetun",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2531,45 +1691,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/grav/docker-compose.yml",
-      "service": "grav",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/grocy/docker-compose.yml",
-      "service": "grocy",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/gzdoom/docker-compose.yml",
-      "service": "gzdoom",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/gzdoom/docker-compose.yml",
       "service": "gzdoom",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/habridge/docker-compose.yml",
-      "service": "habridge",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/handbrake/docker-compose.yml",
-      "service": "handbrake",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2603,13 +1728,6 @@
     {
       "file": "Apps/hedgedoc/docker-compose.yml",
       "service": "hedgedoc",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/hedgedoc/docker-compose.yml",
-      "service": "hedgedoc",
       "code": "configuration_placeholder",
       "detail": "Parâmetro de instalação DB_HOST não configurado",
       "level": "warning"
@@ -2629,38 +1747,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/heimdall/docker-compose.yml",
-      "service": "heimdall",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/helium/docker-compose.yml",
-      "service": "helium",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/helium/docker-compose.yml",
       "service": "helium",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/hishtory-server/docker-compose.yml",
-      "service": "hishtory-server",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/homarr/docker-compose.yml",
-      "service": "homarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2673,29 +1763,8 @@
     {
       "file": "Apps/homeassistant/docker-compose.yml",
       "service": "homeassistant",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/homeassistant/docker-compose.yml",
-      "service": "homeassistant",
       "code": "host_network",
       "detail": "Acesso à rede do host",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/homepage/docker-compose.yml",
-      "service": "homepage",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/immich/docker-compose.yml",
-      "service": "immich-server",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2714,27 +1783,6 @@
     },
     {
       "file": "Apps/immich/docker-compose.yml",
-      "service": "immich-machine-learning",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/immich/docker-compose.yml",
-      "service": "immich-redis",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/immich/docker-compose.yml",
-      "service": "immich-database",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/immich/docker-compose.yml",
       "service": "immich-database",
       "code": "credential_placeholder",
       "detail": "Credencial POSTGRES_PASSWORD não configurado",
@@ -2743,13 +1791,6 @@
     {
       "file": "Apps/inkscape/docker-compose.yml",
       "service": "inkscape",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/inkscape/docker-compose.yml",
-      "service": "inkscape",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
       "level": "warning"
@@ -2757,36 +1798,8 @@
     {
       "file": "Apps/intellij-idea/docker-compose.yml",
       "service": "intellij-idea",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/intellij-idea/docker-compose.yml",
-      "service": "intellij-idea",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/jackett/docker-compose.yml",
-      "service": "jackett",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/joplin/docker-compose.yml",
-      "service": "joplin",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/kali-linux/docker-compose.yml",
-      "service": "kali-linux",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2794,13 +1807,6 @@
       "service": "kali-linux",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/karakeep/docker-compose.yml",
-      "service": "karakeep",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2819,23 +1825,9 @@
     },
     {
       "file": "Apps/karakeep/docker-compose.yml",
-      "service": "karakeep-chrome",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/karakeep/docker-compose.yml",
       "service": "karakeep-meilisearch",
       "code": "credential_placeholder",
       "detail": "Credencial MEILI_MASTER_KEY não configurado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/kasm/docker-compose.yml",
-      "service": "kasm",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2860,31 +1852,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/kavita/docker-compose.yml",
-      "service": "kavita",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/kdenlive/docker-compose.yml",
-      "service": "kdenlive",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/kdenlive/docker-compose.yml",
       "service": "kdenlive",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/keepassxc/docker-compose.yml",
-      "service": "keepassxc",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2897,22 +1868,8 @@
     {
       "file": "Apps/kicad/docker-compose.yml",
       "service": "kicad",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/kicad/docker-compose.yml",
-      "service": "kicad",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/kimai/docker-compose.yml",
-      "service": "kimai",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2923,38 +1880,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/kometa/docker-compose.yml",
-      "service": "kometa",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/krita/docker-compose.yml",
-      "service": "krita",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/krita/docker-compose.yml",
       "service": "krita",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/lazylibrarian/docker-compose.yml",
-      "service": "lazylibrarian",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/libreoffice/docker-compose.yml",
-      "service": "libreoffice",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -2965,45 +1894,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/librespeed/docker-compose.yml",
-      "service": "librespeed",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/librewolf/docker-compose.yml",
-      "service": "librewolf",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/librewolf/docker-compose.yml",
       "service": "librewolf",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/lidarr/docker-compose.yml",
-      "service": "lidarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/limnoria/docker-compose.yml",
-      "service": "limnoria",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/lldap/docker-compose.yml",
-      "service": "lldap",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3044,13 +1938,6 @@
     {
       "file": "Apps/lm-studio/docker-compose.yml",
       "service": "lm-studio",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/lm-studio/docker-compose.yml",
-      "service": "lm-studio",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
       "level": "warning"
@@ -3058,43 +1945,8 @@
     {
       "file": "Apps/lollypop/docker-compose.yml",
       "service": "lollypop",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/lollypop/docker-compose.yml",
-      "service": "lollypop",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/luanti/docker-compose.yml",
-      "service": "luanti",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/lychee/docker-compose.yml",
-      "service": "lychee",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/maintainerr/docker-compose.yml",
-      "service": "maintainerr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/mame/docker-compose.yml",
-      "service": "mame",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3102,20 +1954,6 @@
       "service": "mame",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/manyfold/docker-compose.yml",
-      "service": "manyfold",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/mariadb/docker-compose.yml",
-      "service": "mariadb",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3126,27 +1964,6 @@
       "level": "warning"
     },
     {
-      "file": "Apps/mastodon/docker-compose.yml",
-      "service": "mastodon",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/mealie/docker-compose.yml",
-      "service": "mealie",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/mediaelch/docker-compose.yml",
-      "service": "mediaelch",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/mediaelch/docker-compose.yml",
       "service": "mediaelch",
       "code": "seccomp_unconfined",
@@ -3154,52 +1971,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/medusa/docker-compose.yml",
-      "service": "medusa",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/melonds/docker-compose.yml",
-      "service": "melonds",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/melonds/docker-compose.yml",
       "service": "melonds",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/memos/docker-compose.yml",
-      "service": "memos",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/metube/docker-compose.yml",
-      "service": "metube",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/minisatip/docker-compose.yml",
-      "service": "minisatip",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/modmanager/docker-compose.yml",
-      "service": "modmanager",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3212,29 +1987,8 @@
     {
       "file": "Apps/modrinth/docker-compose.yml",
       "service": "modrinth",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/modrinth/docker-compose.yml",
-      "service": "modrinth",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/mosquitto/docker-compose.yml",
-      "service": "mosquitto",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/msedge/docker-compose.yml",
-      "service": "msedge",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3245,20 +1999,6 @@
       "level": "warning"
     },
     {
-      "file": "Apps/mstream/docker-compose.yml",
-      "service": "mstream",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/mullvad-browser/docker-compose.yml",
-      "service": "mullvad-browser",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/mullvad-browser/docker-compose.yml",
       "service": "mullvad-browser",
       "code": "seccomp_unconfined",
@@ -3266,38 +2006,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/mylar3/docker-compose.yml",
-      "service": "mylar3",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/mysql-workbench/docker-compose.yml",
-      "service": "mysql-workbench",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/mysql-workbench/docker-compose.yml",
       "service": "mysql-workbench",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/navidrome/docker-compose.yml",
-      "service": "navidrome",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/netbox/docker-compose.yml",
-      "service": "netbox",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3338,13 +2050,6 @@
     {
       "file": "Apps/netdata/docker-compose.yml",
       "service": "netdata",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/netdata/docker-compose.yml",
-      "service": "netdata",
       "code": "sensitive_bind",
       "detail": "Montagem sensível do host: /proc",
       "level": "warning"
@@ -3366,29 +2071,8 @@
     {
       "file": "Apps/nextcloud/docker-compose.yml",
       "service": "nextcloud",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/nextcloud/docker-compose.yml",
-      "service": "nextcloud",
       "code": "public_sensitive_ui",
       "detail": "Porta de serviço sensível sem binding local: 20019",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/nginx/docker-compose.yml",
-      "service": "nginx",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/nginx-proxy-manager/docker-compose.yml",
-      "service": "nginx-proxy-manager",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3401,36 +2085,8 @@
     {
       "file": "Apps/node-red/docker-compose.yml",
       "service": "node-red",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/node-red/docker-compose.yml",
-      "service": "node-red",
       "code": "public_sensitive_ui",
       "detail": "Porta de serviço sensível sem binding local: 1880",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/notifiarr/docker-compose.yml",
-      "service": "notifiarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/nzbhydra2/docker-compose.yml",
-      "service": "nzbhydra2",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/obsidian/docker-compose.yml",
-      "service": "obsidian",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3438,34 +2094,6 @@
       "service": "obsidian",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/ollama/docker-compose.yml",
-      "service": "ollama",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/ombi/docker-compose.yml",
-      "service": "ombi",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/onlyoffice/docker-compose.yml",
-      "service": "onlyoffice",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/open-webui/docker-compose.yml",
-      "service": "open-webui",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3478,29 +2106,8 @@
     {
       "file": "Apps/openshot/docker-compose.yml",
       "service": "openshot",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/openshot/docker-compose.yml",
-      "service": "openshot",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/openssh-server/docker-compose.yml",
-      "service": "openssh-server",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/opera/docker-compose.yml",
-      "service": "opera",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3508,41 +2115,6 @@
       "service": "opera",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/orcaslicer/docker-compose.yml",
-      "service": "orcaslicer",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/organizr/docker-compose.yml",
-      "service": "organizr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/oscam/docker-compose.yml",
-      "service": "oscam",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/pairdrop/docker-compose.yml",
-      "service": "pairdrop",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/paperless-ngx/docker-compose.yml",
-      "service": "paperless-ngx",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3560,38 +2132,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/paperless-ngx/docker-compose.yml",
-      "service": "paperless-broker",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/pcsx2/docker-compose.yml",
-      "service": "pcsx2",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/pcsx2/docker-compose.yml",
       "service": "pcsx2",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/pelorus/docker-compose.yml",
-      "service": "pelorus",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/photoprism/docker-compose.yml",
-      "service": "photoprism",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3611,36 +2155,8 @@
     {
       "file": "Apps/pidgin/docker-compose.yml",
       "service": "pidgin",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/pidgin/docker-compose.yml",
-      "service": "pidgin",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/piper/docker-compose.yml",
-      "service": "piper",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/piwigo/docker-compose.yml",
-      "service": "piwigo",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/planka/docker-compose.yml",
-      "service": "planka",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3651,20 +2167,6 @@
       "level": "warning"
     },
     {
-      "file": "Apps/pocket-id/docker-compose.yml",
-      "service": "pocket-id",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/ppsspp/docker-compose.yml",
-      "service": "ppsspp",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/ppsspp/docker-compose.yml",
       "service": "ppsspp",
       "code": "seccomp_unconfined",
@@ -3672,59 +2174,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/projectsend/docker-compose.yml",
-      "service": "projectsend",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/prowlarr/docker-compose.yml",
-      "service": "prowlarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/pwndrop/docker-compose.yml",
-      "service": "pwndrop",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/pycharm/docker-compose.yml",
-      "service": "pycharm",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/pycharm/docker-compose.yml",
       "service": "pycharm",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/pydio-cells/docker-compose.yml",
-      "service": "pydio-cells",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/pyload-ng/docker-compose.yml",
-      "service": "pyload-ng",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/qbittorrent/docker-compose.yml",
-      "service": "qbittorrent",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3744,50 +2197,8 @@
     {
       "file": "Apps/qdirstat/docker-compose.yml",
       "service": "qdirstat",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/qdirstat/docker-compose.yml",
-      "service": "qdirstat",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/qui/docker-compose.yml",
-      "service": "qui",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/radarr/docker-compose.yml",
-      "service": "radarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/radarr-4k/docker-compose.yml",
-      "service": "radarr-4k",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/raneto/docker-compose.yml",
-      "service": "raneto",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/rawtherapee/docker-compose.yml",
-      "service": "rawtherapee",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3798,38 +2209,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/recyclarr/docker-compose.yml",
-      "service": "recyclarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/remmina/docker-compose.yml",
-      "service": "remmina",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/remmina/docker-compose.yml",
       "service": "remmina",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/resilio-sync/docker-compose.yml",
-      "service": "resilio-sync",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/retroarch/docker-compose.yml",
-      "service": "retroarch",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3842,29 +2225,8 @@
     {
       "file": "Apps/rpcs3/docker-compose.yml",
       "service": "rpcs3",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/rpcs3/docker-compose.yml",
-      "service": "rpcs3",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/rsnapshot/docker-compose.yml",
-      "service": "rsnapshot",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/rustdesk/docker-compose.yml",
-      "service": "rustdesk",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3875,59 +2237,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/rutorrent/docker-compose.yml",
-      "service": "rutorrent",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/sabnzbd/docker-compose.yml",
-      "service": "sabnzbd",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/scummvm/docker-compose.yml",
-      "service": "scummvm",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/scummvm/docker-compose.yml",
       "service": "scummvm",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/sealskin/docker-compose.yml",
-      "service": "sealskin",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/searxng/docker-compose.yml",
-      "service": "searxng",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/seerr/docker-compose.yml",
-      "service": "seerr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/series-troxide/docker-compose.yml",
-      "service": "series-troxide",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3940,22 +2253,8 @@
     {
       "file": "Apps/shadps4/docker-compose.yml",
       "service": "shadps4",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/shadps4/docker-compose.yml",
-      "service": "shadps4",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/shotcut/docker-compose.yml",
-      "service": "shotcut",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -3968,29 +2267,8 @@
     {
       "file": "Apps/signal/docker-compose.yml",
       "service": "signal",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/signal/docker-compose.yml",
-      "service": "signal",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/smokeping/docker-compose.yml",
-      "service": "smokeping",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/socket-proxy/docker-compose.yml",
-      "service": "socket-proxy",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4001,45 +2279,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/sonarr/docker-compose.yml",
-      "service": "sonarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/sonarr-4k/docker-compose.yml",
-      "service": "sonarr-4k",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/speedtest-tracker/docker-compose.yml",
-      "service": "speedtest-tracker",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/spotube/docker-compose.yml",
-      "service": "spotube",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/spotube/docker-compose.yml",
       "service": "spotube",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/sqlitebrowser/docker-compose.yml",
-      "service": "sqlitebrowser",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4052,57 +2295,8 @@
     {
       "file": "Apps/steam/docker-compose.yml",
       "service": "steam",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/steam/docker-compose.yml",
-      "service": "steam",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/stirling-pdf/docker-compose.yml",
-      "service": "stirling-pdf",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/swag/docker-compose.yml",
-      "service": "swag",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/synclounge/docker-compose.yml",
-      "service": "synclounge",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/syncthing/docker-compose.yml",
-      "service": "syncthing",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/syslog-ng/docker-compose.yml",
-      "service": "syslog-ng",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/tailscale/docker-compose.yml",
-      "service": "tailscale",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4127,38 +2321,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/tdarr/docker-compose.yml",
-      "service": "tdarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/telegram/docker-compose.yml",
-      "service": "telegram",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/telegram/docker-compose.yml",
       "service": "telegram",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/thelounge/docker-compose.yml",
-      "service": "thelounge",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/thunderbird/docker-compose.yml",
-      "service": "thunderbird",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4169,66 +2335,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/transmission/docker-compose.yml",
-      "service": "transmission",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/tvheadend/docker-compose.yml",
-      "service": "tvheadend",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/ubooquity/docker-compose.yml",
-      "service": "ubooquity",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/ungoogled-chromium/docker-compose.yml",
-      "service": "ungoogled-chromium",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/ungoogled-chromium/docker-compose.yml",
       "service": "ungoogled-chromium",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/unifi-network-application/docker-compose.yml",
-      "service": "unifi-network-application",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/unpackerr/docker-compose.yml",
-      "service": "unpackerr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/uptime-kuma/docker-compose.yml",
-      "service": "uptime-kuma",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/vaultwarden/docker-compose.yml",
-      "service": "vaultwarden",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4241,22 +2351,8 @@
     {
       "file": "Apps/vivaldi/docker-compose.yml",
       "service": "vivaldi",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/vivaldi/docker-compose.yml",
-      "service": "vivaldi",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/vlc/docker-compose.yml",
-      "service": "vlc",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4269,13 +2365,6 @@
     {
       "file": "Apps/vscode/docker-compose.yml",
       "service": "vscode",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/vscode/docker-compose.yml",
-      "service": "vscode",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
       "level": "warning"
@@ -4283,29 +2372,8 @@
     {
       "file": "Apps/vscodium/docker-compose.yml",
       "service": "vscodium",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/vscodium/docker-compose.yml",
-      "service": "vscodium",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/vscodium-web/docker-compose.yml",
-      "service": "vscodium-web",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/webcord/docker-compose.yml",
-      "service": "webcord",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4316,31 +2384,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/webgrabplus/docker-compose.yml",
-      "service": "webgrabplus",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/webstation/docker-compose.yml",
-      "service": "webstation",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/webstation/docker-compose.yml",
       "service": "webstation",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/webtop/docker-compose.yml",
-      "service": "webtop",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4367,36 +2414,8 @@
     {
       "file": "Apps/weixin/docker-compose.yml",
       "service": "weixin",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/weixin/docker-compose.yml",
-      "service": "weixin",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/whisparr/docker-compose.yml",
-      "service": "whisparr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/wikijs/docker-compose.yml",
-      "service": "wikijs",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/winegui/docker-compose.yml",
-      "service": "winegui",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4407,20 +2426,6 @@
       "level": "warning"
     },
     {
-      "file": "Apps/wireguard/docker-compose.yml",
-      "service": "wireguard",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/wireshark/docker-compose.yml",
-      "service": "wireshark",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/wireshark/docker-compose.yml",
       "service": "wireshark",
       "code": "seccomp_unconfined",
@@ -4428,38 +2433,10 @@
       "level": "warning"
     },
     {
-      "file": "Apps/wizarr/docker-compose.yml",
-      "service": "wizarr",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/wps-office/docker-compose.yml",
-      "service": "wps-office",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
       "file": "Apps/wps-office/docker-compose.yml",
       "service": "wps-office",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/xbackbone/docker-compose.yml",
-      "service": "xbackbone",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/xemu/docker-compose.yml",
-      "service": "xemu",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4472,29 +2449,8 @@
     {
       "file": "Apps/yaak/docker-compose.yml",
       "service": "yaak",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/yaak/docker-compose.yml",
-      "service": "yaak",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/your_spotify/docker-compose.yml",
-      "service": "your_spotify",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/zen/docker-compose.yml",
-      "service": "zen",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
@@ -4502,20 +2458,6 @@
       "service": "zen",
       "code": "seccomp_unconfined",
       "detail": "Seccomp desativado",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/znc/docker-compose.yml",
-      "service": "znc",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
-      "level": "warning"
-    },
-    {
-      "file": "Apps/zotero/docker-compose.yml",
-      "service": "zotero",
-      "code": "floating_image",
-      "detail": "Imagem de origem sem digest imutável",
       "level": "warning"
     },
     {
