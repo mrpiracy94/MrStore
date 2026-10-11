@@ -63,10 +63,11 @@ class FidelityRegressionTests(unittest.TestCase):
 
     def test_platform_cards_never_invent_integrations(self):
         cards = re.findall(r'<div class="system-card[^"]*"', self.html)
-        self.assertEqual(len(cards), 11)
-        self.assertIn("Catálogo v2 disponível", self.html)
-        self.assertIn("Integração planeada", self.html)
-        self.assertIn("As integrações", self.html)
+        self.assertEqual(len(cards), 3)
+        self.assertIn('Formato de loja v2', self.html)
+        self.assertIn('Docker Compose', self.html)
+        self.assertIn('Instalação', self.html)
+        self.assertNotIn('ZIP piloto', self.html)
 
     def test_actual_catalog_powers_cards_and_preview(self):
         self.assertIn('fetch("./index.json"', self.js)
@@ -82,7 +83,7 @@ class FidelityRegressionTests(unittest.TestCase):
 
     def test_responsive_css_and_offline_assets(self):
         for fragment in ["@media(max-width:960px)", "@media(max-width:520px)",
-                         "grid-template-columns:repeat(8,minmax(0,1fr))",
+                         "grid-template-columns:repeat(3,minmax(0,1fr))",
                          ".app-card-cover{display:none!important}", "[hidden]{display:none!important}"]:
             self.assertIn(fragment, self.css)
         for fragment in ['src="./assets/mark.svg"', 'src="./assets/mrstore-hero.webp"']:
