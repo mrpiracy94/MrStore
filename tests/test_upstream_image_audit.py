@@ -17,7 +17,7 @@ class UpstreamImageTests(unittest.TestCase):
         self.assertEqual(report["unique_images"], 258)
         self.assertEqual(sum(report["publisher_classes"].values()), 258)
         self.assertEqual(report["publisher_classes"]["third_party_linuxserver"], 187)
-        self.assertEqual(len(report["candidates"]), 4)
+        self.assertEqual(len(report["candidates"]), 6)
         for row in report["candidates"]:
             self.assertRegex(row["current_image"], auditor.PINNED)
             self.assertEqual(row["migration_status"], "needs_runtime_validation")
