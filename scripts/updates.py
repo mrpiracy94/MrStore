@@ -101,12 +101,10 @@ def monitor(usage: dict[str, list[str]], before: dict, resolver=digest, workers:
             state[tag] = value
     result = {'checked_at': datetime.now(timezone.utc).isoformat(),
               'images': dict(sorted(state.items()))}
-    details = {'checked': len(usage), 'resolved': len(eligible) - (len(failures) - (len(usage) - len(eligible))),
+    details = {'checked': len(usage), 'resolved': len(usage) - len(failures),
                'changed': sorted(changed, key=lambda x: x['image']),
                'first_seen': sorted(unseen, key=lambda x: x['image']),
                'failed': sorted(failures, key=lambda x: x['image'])}
-    # Count complete image references, not only successful unique tag lookups.
-    details['resolved'] = len(usage) - len(failures)
     return result, details
 
 
