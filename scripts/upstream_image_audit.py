@@ -137,6 +137,8 @@ def compare(item):
     try:
         official_pinned = resolve_digest(item["candidate_image"])
         result["candidate_pinned"] = official_pinned
+        any_improvement = False
+        all_nonregressing = True
         for arch in item["architectures"]:
             current = trivy_counts(item["current_image"], arch)
             candidate = trivy_counts(official_pinned, arch)
@@ -144,11 +146,13 @@ def compare(item):
                      candidate["high"] <= current["high"] and
                      (candidate["critical"] < current["critical"] or
                       candidate["high"] < current["high"]))
+            any_improvement = any_improvement or lower
+            all_nonregressing = all_nonregressing and (candidate["critical"] <= current["critical"] and candidate["high"] <= current["high"])
             result["architectures"][arch] = {
                 "current": current, "candidate": candidate, "lower_cves": lower}
         result["classification"] = (
             "candidate_lower_observed_cves"
-            if all(x["lower_cves"] for x in result["architectures"].values())
+            if all_nonregressing and any_improvement
             else "not_better_on_all_architectures")
     except (ValueError, RuntimeError, OSError, subprocess.TimeoutExpired) as exc:
         result["classification"] = "inconclusive"
