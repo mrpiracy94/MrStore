@@ -22,7 +22,15 @@ class ContinuousRemediationTests(unittest.TestCase):
         cls.usage = image_usage(apps(ROOT))
 
     def resolver(self, tag):
-        return (NEW if tag == TAG else self.baseline["images"].get(tag), None)
+        if tag == TAG:
+            return NEW, None
+        approved = self.baseline["images"].get(tag)
+        if approved is None:
+            for ref, value in self.baseline["images"].items():
+                if ref.startswith(tag + "@sha256:"):
+                    approved = value
+                    break
+        return approved, None
 
     def test_full_catalog_covered_in_eight_disjoint_shards(self):
         self.assertEqual(len(apps(ROOT)), 254)
@@ -52,7 +60,7 @@ class ContinuousRemediationTests(unittest.TestCase):
 
     def test_registry_failure_remains_inconclusive(self):
         def failing(tag):
-            return (None, "429") if tag == TAG else (self.baseline["images"].get(tag), None)
+            return (None, "429") if tag == TAG else self.resolver(tag)
         report = sweep.inspect(ROOT, shard=0, shards=1, resolver=failing,
                                scanner=lambda *args: self.fail("unchanged must not scan"))
         self.assertFalse(report["complete"])
