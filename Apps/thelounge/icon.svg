@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="The Lounge">
+  <title>The Lounge</title>
+  <rect width="128" height="128" rx="27" fill="#203151"/>
+  <path d="M29 37h70v46H67l-18 16V83H29z" fill="#4CA8EF"/>
+  <path d="M43 52h42M43 65h29" stroke="#F8FCFF" stroke-width="7" stroke-linecap="round"/>
+</svg>
