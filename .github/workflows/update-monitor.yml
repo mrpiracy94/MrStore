@@ -40,6 +40,7 @@ jobs:
           name: mrstore-image-updates
           path: |
             out/updates.*
+            out/updates-live-digests.json
             data/image-digests.json
           if-no-files-found: warn
       - name: Open an issue for actual digest changes

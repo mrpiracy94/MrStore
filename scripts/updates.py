@@ -1,6 +1,6 @@
 """Observe Docker registry digests without changing source apps or installed containers.
 
-Floating tags are monitored by SHA256 digest; the Renovate bot can separately
+Compare mutable tags against the SHA256 pinned in every source Compose; the Renovate bot can separately
 propose new semver tags, but it must be enabled on the GitHub repository.
 """
 import argparse
@@ -47,27 +47,61 @@ def digest(image: str, binary: str = 'crane') -> tuple[str | None, str | None]:
 
 
 def monitor(usage: dict[str, list[str]], before: dict, resolver=digest, workers: int = 4) -> tuple[dict, dict]:
+    """Compare LIVE mutable registry tags with the REVIEWED immutable Compose baseline.
+
+    Resolve the tag, NEVER the manifest's @sha256 reference: resolving an already
+    pinned image simply returns its old digest and hides available updates.
+    The returned snapshot is diagnostics only and is not an approval baseline.
+    """
     prior = before.get('images', {})
-    state = {name: prior[name] for name in usage if name in prior}
+    if not isinstance(prior, dict):
+        raise ValueError('Malformed reviewed digest baseline')
+    state = dict(prior)
     changed, unseen, failures = [], [], []
+    eligible = {}
+    pinned = re.compile(r'^(.+)@(sha256:[0-9a-f]{64})$')
+    for image, app_refs in usage.items():
+        match = pinned.fullmatch(image)
+        tag = match.group(1) if match else image
+        approved = prior.get(image, prior.get(tag))
+        if match and (not SHA256.fullmatch(str(approved)) or match.group(2) != approved):
+            failures.append({'image': image, 'error': 'Pinned digest is missing from or differs from reviewed baseline'})
+            continue
+        if not match and approved is not None and not SHA256.fullmatch(str(approved)):
+            failures.append({'image': image, 'error': 'Reviewed baseline contains invalid digest'})
+            continue
+        if tag in eligible:
+            if eligible[tag]['approved'] != approved:
+                failures.append({'image': image, 'error': 'Conflicting approved digests for the same tag'})
+            else:
+                eligible[tag]['apps'].update(app_refs)
+            continue
+        eligible[tag] = {'original': image, 'approved': approved, 'apps': set(app_refs)}
     with ThreadPoolExecutor(max_workers=max(1, min(8, workers))) as executor:
-        jobs = {executor.submit(resolver, ref): ref for ref in usage}
+        jobs = {executor.submit(resolver, tag): tag for tag in eligible}
         for future in as_completed(jobs):
-            image = jobs[future]
+            tag = jobs[future]
+            entry = eligible[tag]
             try:
                 value, error = future.result()
             except Exception as exc:
                 value, error = None, str(exc)
             if error or not value or not SHA256.fullmatch(value):
-                failures.append({'image': image, 'error': error or 'invalid registry digest'})
+                failures.append({'image': tag, 'error': error or 'Invalid registry digest'})
                 continue
-            if image not in prior:
-                unseen.append({'image': image, 'digest': value, 'apps': usage[image]})
-            elif prior[image] != value:
-                changed.append({'image': image, 'old': prior[image], 'new': value, 'apps': usage[image]})
-            state[image] = value
-    result = {'checked_at': datetime.now(timezone.utc).isoformat(), 'images': dict(sorted(state.items()))}
-    details = {'checked': len(usage), 'resolved': len(usage)-len(failures),
+            old = entry['approved']
+            app_refs = sorted(entry['apps'])
+            if old is None:
+                unseen.append({'image': tag, 'digest': value, 'apps': app_refs})
+            elif old != value:
+                changed.append({'image': tag, 'source_image': entry['original'],
+                                'old': old, 'new': value, 'apps': app_refs})
+            # Only the diagnostic snapshot receives the live digest.
+            # Committed data/image-digests.json must NEVER change in this script.
+            state[tag] = value
+    result = {'checked_at': datetime.now(timezone.utc).isoformat(),
+              'images': dict(sorted(state.items()))}
+    details = {'checked': len(usage), 'resolved': len(usage) - len(failures),
                'changed': sorted(changed, key=lambda x: x['image']),
                'first_seen': sorted(unseen, key=lambda x: x['image']),
                'failed': sorted(failures, key=lambda x: x['image'])}
@@ -103,9 +137,9 @@ def main() -> int:
     opts.summary.parent.mkdir(parents=True, exist_ok=True)
     opts.summary.write_text(summarize(details), encoding='utf-8')
     if not details['failed'] and details['resolved'] == details['checked']:
-        opts.snapshot.parent.mkdir(parents=True, exist_ok=True)
-        opts.snapshot.write_text(
-            json.dumps(snapshot, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
+        # Nunca sobrescrever a baseline aprovada; guardar evidência separada.
+        live = opts.output.with_name('updates-live-digests.json')
+        live.write_text(json.dumps(snapshot, indent=2, ensure_ascii=False)+'\n', encoding='utf-8')
     print(f"Digests: {details['resolved']}/{details['checked']}; changed {len(details['changed'])}; failed {len(details['failed'])}")
     return 2 if details['failed'] else 0
 
