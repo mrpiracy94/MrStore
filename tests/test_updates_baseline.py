@@ -1,5 +1,6 @@
 """Regression tests: incomplete registry scans never advance digest baseline."""
 import json
+import subprocess
 from pathlib import Path
 import sys
 import tempfile
@@ -106,7 +107,8 @@ class PinnedSourceUpdateTests(unittest.TestCase):
                     "--summary", str(root / "updates.md")]
             with patch.object(updates, "apps", return_value=[]), \
                  patch.object(updates, "image_usage", return_value={pinned: ["x"]}), \
-                 patch.object(updates, "digest", return_value=(self.NEW, None)), \
+                 patch.object(updates.subprocess, "run", return_value=subprocess.CompletedProcess(
+                         ["crane"], 0, self.NEW + "\n", "")), \
                  patch.object(sys, "argv", args):
                 self.assertEqual(updates.main(), 0)
             self.assertEqual(json.loads(snapshot.read_text()), original)
