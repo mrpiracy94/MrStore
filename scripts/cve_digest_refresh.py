@@ -68,6 +68,8 @@ def evaluate(item: dict, resolver=resolve, scanner=trivy_counts) -> dict:
         if target == item["current_digest"]:
             output["result"] = "unchanged"
             return output
+        any_improvement = False
+        all_nonregressing = True
         for arch in item["architectures"]:
             old = scanner(item["current_image"], arch)
             new = scanner(output["candidate_image"], arch)
@@ -80,11 +82,12 @@ def evaluate(item: dict, resolver=resolve, scanner=trivy_counts) -> dict:
             improved = (new["critical"] <= old["critical"] and
                         new["high"] <= old["high"] and
                         (new["critical"] < old["critical"] or new["high"] < old["high"]))
+            any_improvement = any_improvement or improved
+            all_nonregressing = all_nonregressing and (new["critical"] <= old["critical"] and new["high"] <= old["high"])
             output["platforms"][arch] = {
                 "current": old, "candidate": new, "lower_cves": improved}
-        output["result"] = ("lower_observed_cves" if all(
-            row["lower_cves"] for row in output["platforms"].values()
-        ) else "not_better_on_all_architectures")
+        output["result"] = ("lower_observed_cves" if all_nonregressing and any_improvement
+                            else "not_better_on_all_architectures")
     except (ValueError, RuntimeError, OSError, TimeoutError) as exc:
         output["result"] = "inconclusive"
         output["error"] = str(exc)[:1000]

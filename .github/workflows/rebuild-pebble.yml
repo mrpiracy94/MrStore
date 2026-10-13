@@ -103,11 +103,10 @@ jobs:
   publish_and_promote:
     name: Publish public multiarch and integrate verified digests
     needs: verify
-    if: always()
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     permissions:
-      contents: write
+      contents: read
       packages: write
     env:
       REGISTRY: ghcr.io/${{ github.repository_owner }}
@@ -188,4 +187,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add Apps/ffmpeg/docker-compose.yml Apps/jellyfin/docker-compose.yml Apps/plex/docker-compose.yml
           git commit -m 'fix(batch): deploy zero-HIGH Pebble Go images by immutable digest'
-          git push origin HEAD:main
+          echo 'Promotion commit prepared locally only; direct push to main is forbidden.'
+          echo 'Create a reviewed PR with immutable digests and required checks before promotion.' >> "$GITHUB_STEP_SUMMARY"

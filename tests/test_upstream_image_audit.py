@@ -43,7 +43,7 @@ class UpstreamImageTests(unittest.TestCase):
         self.assertEqual(report["classification"], "candidate_lower_observed_cves")
         self.assertFalse(report["automatic_migration_allowed"])
 
-    def test_require_improvement_on_every_architecture(self):
+    def test_improvement_on_one_architecture_without_regression_is_eligible(self):
         item = {"app": "test", "current_image": "test/old:1@sha256:" + "a" * 64,
                 "candidate_image": "test/new:1", "architectures": ["amd64", "arm64"]}
         def simulate(image, arch):
@@ -53,7 +53,8 @@ class UpstreamImageTests(unittest.TestCase):
                           return_value="test/new:1@sha256:" + "b" * 64), \
              patch.object(auditor, "trivy_counts", side_effect=simulate):
             report = auditor.compare(item)
-        self.assertEqual(report["classification"], "not_better_on_all_architectures")
+        self.assertEqual(report["classification"], "candidate_lower_observed_cves")
+        self.assertFalse(report["automatic_migration_allowed"])
 
     def test_scanner_failure_is_never_a_clean_result(self):
         item = {"app": "test", "current_image": "test/old:1@sha256:" + "a" * 64,

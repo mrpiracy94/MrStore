@@ -52,6 +52,32 @@ class RefreshTests(unittest.TestCase):
         report = audit.evaluate(sample(), resolver=lambda tag: (OTHER, None), scanner=scanner)
         self.assertEqual(report["result"], "not_better_on_all_architectures")
 
+    def test_improvement_on_one_arch_and_unchanged_on_other_is_eligible(self):
+        def scanner(image, arch):
+            old = {"critical": 2, "high": 10}
+            if OTHER in image and arch == "amd64":
+                return {"critical": 1, "high": 7}
+            return old
+        report = audit.evaluate(sample(), resolver=lambda tag: (OTHER, None), scanner=scanner)
+        self.assertEqual(report["result"], "lower_observed_cves")
+        self.assertTrue(report["platforms"]["amd64"]["lower_cves"])
+        self.assertFalse(report["platforms"]["arm64"]["lower_cves"])
+        self.assertFalse(report["automatic_update_allowed"])
+
+    def test_no_improvement_anywhere_does_not_qualify(self):
+        report = audit.evaluate(sample(), resolver=lambda tag: (OTHER, None),
+                                scanner=lambda image, arch: {"critical": 1, "high": 8})
+        self.assertEqual(report["result"], "not_better_on_all_architectures")
+
+    def test_high_regression_on_one_arch_blocks_despite_other_improvement(self):
+        def scanner(image, arch):
+            old = {"critical": 2, "high": 10}
+            if OTHER not in image:
+                return old
+            return {"critical": 1, "high": 9} if arch == "amd64" else {"critical": 2, "high": 11}
+        report = audit.evaluate(sample(), resolver=lambda tag: (OTHER, None), scanner=scanner)
+        self.assertEqual(report["result"], "not_better_on_all_architectures")
+
     def test_registry_failure_is_inconclusive(self):
         report = audit.evaluate(sample(), resolver=lambda tag: (None, "429"))
         self.assertEqual(report["result"], "inconclusive")
