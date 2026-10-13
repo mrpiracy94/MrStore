@@ -39,3 +39,16 @@ class MultiarchTests(unittest.TestCase):
     def test_scan_failure_is_inconclusive(self):
         with patch.object(audit, "resolve_digest", side_effect=RuntimeError("429")):
             self.assertEqual(audit.compare(ITEM)["classification"], "inconclusive")
+
+    def test_missing_counts_are_inconclusive(self):
+        report = self.check({"amd64": {"critical": 0}, "arm64": {"critical": 2, "high": 10}})
+        self.assertEqual(report["classification"], "inconclusive")
+        self.assertFalse(report["automatic_migration_allowed"])
+
+    def test_negative_counts_are_inconclusive(self):
+        report = self.check({"amd64": {"critical": -1, "high": 0}, "arm64": {"critical": 2, "high": 10}})
+        self.assertEqual(report["classification"], "inconclusive")
+
+    def test_boolean_counts_are_inconclusive(self):
+        report = self.check({"amd64": {"critical": False, "high": 0}, "arm64": {"critical": 2, "high": 10}})
+        self.assertEqual(report["classification"], "inconclusive")
